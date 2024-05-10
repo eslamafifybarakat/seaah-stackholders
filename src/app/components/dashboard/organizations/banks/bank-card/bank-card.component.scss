@@ -1,0 +1,26 @@
+#bank-card {
+  hr {
+    border-color: #8c95a32e;
+  }
+  .badge-btn {
+    border-radius: 11px;
+    min-width: 5rem;
+    height: 2.6rem;
+    border: none;
+    padding: 0.9rem;
+    background-color: #00377e2b;
+    color: var(--text-main-color);
+  }
+  .badge-danger {
+    background: #e5555530;
+    color: #e55555;
+  }
+  .organization-image {
+    width: 6.5rem;
+    min-width: 6.5rem;
+    height: 6.5rem;
+    img {
+      border-radius: 10px;
+    }
+  }
+}

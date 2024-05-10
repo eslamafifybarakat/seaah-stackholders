@@ -1,0 +1,215 @@
+<div id="bank-details">
+  <div class="container-fluid ">
+    <form [formGroup]="bankForm" id="modal-form" aria-label="client-details-form">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <h4 class="mb-0 text-capitalize">
+          {{'dashboard.banks.bankDetails'|translate}}
+        </h4>
+        <div class="d-flex gap-3 flex-lg-nowrap flex-wrap">
+          <button type="submit" class="btn btn-solid-main d-flex align-items-center gap-2 me-auto" (click)="editItem()">
+            <svg width="23" height="21" viewBox="0 0 23 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M0.5625 19.3125H22.4375V20.875H0.5625V19.3125ZM18.8438 6.03125C19.4688 5.40625 19.4688 4.46875 18.8438 3.84375L16.0312 1.03125C15.4062 0.40625 14.4688 0.40625 13.8438 1.03125L2.125 12.75V17.75H7.125L18.8438 6.03125ZM14.9375 2.125L17.75 4.9375L15.4062 7.28125L12.5938 4.46875L14.9375 2.125ZM3.6875 16.1875V13.375L11.5 5.5625L14.3125 8.375L6.5 16.1875H3.6875Z"
+                fill="white" />
+            </svg>
+            <span>
+              {{'general.edit'|translate}}
+            </span>
+          </button>
+          <button class="btn btn-outline-main d-flex align-items-center gap-2 me-auto">
+            <i class="pi pi-times-circle"></i>
+            <span>
+              {{'general.cancel'|translate}}
+            </span>
+          </button>
+        </div>
+      </div>
+      <ng-container *ngIf="isLoadingBankData; else noLoadingGetBank">
+        <div class="mt-4">
+          <skeleton [type]="'editClient'"></skeleton>
+        </div>
+      </ng-container>
+      <ng-template #noLoadingGetBank>
+        <div class="global-card mt-4 p-4 pb-3">
+          <div class="d-flex justify-content-between gap-2">
+            <div class="organization-image">
+              <img class="w-100 h-100" [src]="this.bankData?.image_path" alt="organization">
+            </div>
+            <div class="data-style d-md-flex d-none align-items-center gap-2 p-2">
+              <a class="scaleX-rtl" [class.active]="dataStyleType=='list'" (click)="changeDateStyle('list')">
+                <app-dynamic-svg [name]="'list'"></app-dynamic-svg>
+              </a>
+              <a class="scaleX-rtl" [class.active]="dataStyleType=='grid'" (click)="changeDateStyle('grid')">
+                <app-dynamic-svg [name]="'grid'"></app-dynamic-svg>
+              </a>
+            </div>
+          </div>
+          <ng-container *ngIf="dataStyleType=='list'">
+            <div class="mt-3 d-flex justify-content-between gap-3 flex-wrap">
+              <div>
+                <label class="mb-1 text-muted-color">
+                  {{'labels.name'|translate}}
+                </label>
+                <p>
+                  {{bankData.name||'---'}}
+                </p>
+              </div>
+              <div>
+                <label class="mb-1 text-muted-color">
+                  {{'labels.location'|translate}}
+                </label>
+                <p>
+                  {{bankData.location||'---'}}
+                </p>
+              </div>
+              <div>
+                <label class="mb-1 text-muted-color">
+                  {{'labels.startTime'|translate}}
+                </label>
+                <p>
+                  {{bankData.start_time||'---'}}
+                </p>
+              </div>
+              <div>
+                <label class="mb-1 text-muted-color">
+                  {{'labels.endTime'|translate}}
+                </label>
+                <p>
+                  {{bankData.end_time||'---'}}
+                </p>
+              </div>
+              <div>
+                <label class="mb-1 text-muted-color">
+                  {{'labels.installmentWays'|translate}}
+                </label>
+                <p class="d-flex gap-2 flex-wrap">
+                  <span class="chid text-nowrap bg-main-color text-white-color" *ngFor="let item of bankData.installment_ways">
+                    {{item.name}}
+                  </span>
+                </p>
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="dataStyleType=='grid'">
+            <div class="row mt-3">
+              <div class="col-lg-4 col-md-6">
+                <div class="mb-3">
+                  <label for="name" class="mb-2">
+                    {{'labels.name'|translate}}
+                  </label>
+                  <input type="text" class="form-control" formControlName="name"
+                    (input)="publicService?.clearValidationErrors(formControls?.name)"
+                    [class.border-red]="formControls?.name?.invalid && (formControls?.name?.dirty || formControls?.name?.touched)"
+                    placeholder="{{'placeholders.name'|translate}}">
+                  <div class="mt-2">
+                    <ng-container
+                      *ngIf="formControls?.name?.invalid && (formControls?.name?.dirty || formControls?.name?.touched)">
+                      <ng-container *ngIf="formControls?.name?.errors?.['required']">
+                        <span class="text-danger fs-8">
+                          {{'validations.requiredField'|translate}}
+                        </span>
+                      </ng-container>
+
+                      <ng-container *ngIf="formControls?.name?.errors?.['minlength']">
+                        <span class="text-danger fs-8 d-block">
+                          {{'validations.nameLength'|translate}}
+                        </span>
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6">
+                <div class="mb-3">
+                  <label for="location" class="mb-2">
+                    {{'labels.location'|translate}}
+                  </label>
+                  <input type="text" class="form-control" formControlName="location"
+                    (input)="publicService?.clearValidationErrors(formControls?.location)" [class.border-red]=" formControls?.location?.invalid && (formControls?.location?.dirty ||
+                    formControls?.location?.touched)"
+                    [class.is-valid]="formControls?.location?.valid && (formControls?.location?.dirty || formControls?.location?.touched)"
+                    placeholder="{{'placeholders.location'|translate}}">
+                  <div class="mt-2">
+                    <ng-container
+                      *ngIf="formControls?.location?.invalid && (formControls?.location?.dirty || formControls?.location?.touched)">
+                      <ng-container *ngIf="formControls?.location?.errors?.['required']">
+                        <span class="text-danger fs-8">
+                          {{'validations.requiredField'|translate}}
+                        </span>
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6">
+                <div class="mb-3">
+                  <label for="startTime" class="mb-2">
+                    {{'labels.startTime'|translate}}
+                  </label>
+                  <div
+                    [class.border-red]="formControls?.startTime?.invalid && (formControls?.startTime?.dirty || formControls?.startTime?.touched)"
+                    class="startTime">
+                    <p-calendar formControlName="startTime" appendTo="body" [showIcon]="true" inputId="icon"
+                      [readonlyInput]="true" [styleClass]="'date-picker'" [timeOnly]="true"
+                      placeholder="{{'placeholders.formateTime'| translate}}" [showButtonBar]="true"
+                      [todayButtonStyleClass]="'d-none'" dateFormat="dd/mm/yy" hourFormat="12"></p-calendar>
+                  </div>
+                  <div class="mt-2">
+                    <ng-container
+                      *ngIf="formControls?.startTime?.invalid && (formControls?.startTime?.dirty || formControls?.startTime?.touched)">
+                      <ng-container *ngIf="formControls?.startTime?.errors?.['required']">
+                        <span class="text-danger fs-8">
+                          {{'validations.requiredField'|translate}}
+                        </span>
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6">
+                <div class="mb-3">
+                  <label for="endTime" class="mb-2">
+                    {{'labels.endTime'|translate}}
+                  </label>
+                  <div
+                    [class.border-red]="formControls?.endTime?.invalid && (formControls?.endTime?.dirty || formControls?.endTime?.touched)"
+                    [class.disabled]="bankForm.value.startTime==null" class="endTime">
+                    <p-calendar formControlName="endTime" appendTo="body" [showIcon]="true" inputId="icon"
+                      [styleClass]="'date-picker'" placeholder="{{'placeholders.formateTime'| translate}}"
+                      [showButtonBar]="true" [todayButtonStyleClass]="'d-none'" dateFormat="dd/mm/yy" [timeOnly]="true"
+                      hourFormat="12"></p-calendar>
+                  </div>
+                  <div class="mt-2">
+                    <ng-container
+                      *ngIf="formControls?.endTime?.invalid && (formControls?.endTime?.dirty || formControls?.endTime?.touched)">
+                      <ng-container *ngIf="formControls?.endTime?.errors?.['required']">
+                        <span class="text-danger fs-8">
+                          {{'validations.requiredField'|translate}}
+                        </span>
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6">
+                <div class="mb-3">
+                  <label for="installmentWays" class="mb-2">
+                    {{'labels.installmentWays'|translate}}
+                  </label>
+                  <div class="form-control d-flex gap-2 align-items-center flex-wrap ways">
+                    <span class="chid text-nowrap" *ngFor="let item of bankData.installment_ways">
+                      {{item.name}}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </ng-template>
+    </form>
+    <div class="global-card my-4 pt-4">
+      <app-users-list [showMeta]="false"></app-users-list>
+    </div>
+  </div>
+</div>

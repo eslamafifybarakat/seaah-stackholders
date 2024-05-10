@@ -1,0 +1,142 @@
+<div id="modal-form">
+  <form [formGroup]="schoolForm" (ngSubmit)="submit()" aria-label="add-client-form">
+    <div class="form-content">
+      <div class="row m-0">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="name" class="mb-2 required">
+              {{'labels.name'|translate}}
+            </label>
+            <input type="text" class="form-control" formControlName="name"
+              (input)="publicService?.clearValidationErrors(formControls?.name)"
+              [class.border-red]="formControls?.name?.invalid && (formControls?.name?.dirty || formControls?.name?.touched)"
+              placeholder="{{'placeholders.name'|translate}}">
+            <div class="mt-2">
+              <ng-container
+                *ngIf="formControls?.name?.invalid && (formControls?.name?.dirty || formControls?.name?.touched)">
+                <ng-container *ngIf="formControls?.name?.errors?.['required']">
+                  <span class="text-danger fs-8">
+                    {{'validations.requiredField'|translate}}
+                  </span>
+                </ng-container>
+
+                <ng-container *ngIf="formControls?.name?.errors?.['minlength']">
+                  <span class="text-danger fs-8 d-block">
+                    {{'validations.nameLength'|translate}}
+                  </span>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="location" class="mb-2 required">
+              {{'labels.location'|translate}}
+            </label>
+            <input type="text" class="form-control" formControlName="location"
+              (input)="publicService?.clearValidationErrors(formControls?.location)" [class.border-red]=" formControls?.location?.invalid && (formControls?.location?.dirty ||
+              formControls?.location?.touched)"
+              [class.is-valid]="formControls?.location?.valid && (formControls?.location?.dirty || formControls?.location?.touched)"
+              placeholder="{{'placeholders.location'|translate}}">
+            <div class="mt-2">
+              <ng-container
+                *ngIf="formControls?.location?.invalid && (formControls?.location?.dirty || formControls?.location?.touched)">
+                <ng-container *ngIf="formControls?.location?.errors?.['required']">
+                  <span class="text-danger fs-8">
+                    {{'validations.requiredField'|translate}}
+                  </span>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="startTime" class="mb-2 required">
+              {{'labels.startTime'|translate}}
+            </label>
+            <div
+              [class.border-red]="formControls?.startTime?.invalid && (formControls?.startTime?.dirty || formControls?.startTime?.touched)"
+              class="startTime">
+              <p-calendar formControlName="startTime" appendTo="body" [showIcon]="true" inputId="icon"
+                [readonlyInput]="true" [styleClass]="'date-picker'" [timeOnly]="true"
+                placeholder="{{'placeholders.formateTime'| translate}}" [showButtonBar]="true"
+                [todayButtonStyleClass]="'d-none'" dateFormat="dd/mm/yy" hourFormat="12"
+                (onSelect)="onSelectStartTime($event)" (onClearClick)="clearStartTime()"></p-calendar>
+            </div>
+            <div class="mt-2">
+              <ng-container
+                *ngIf="formControls?.startTime?.invalid && (formControls?.startTime?.dirty || formControls?.startTime?.touched)">
+                <ng-container *ngIf="formControls?.startTime?.errors?.['required']">
+                  <span class="text-danger fs-8">
+                    {{'validations.requiredField'|translate}}
+                  </span>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="endTime" class="mb-2 required">
+              {{'labels.endTime'|translate}}
+            </label>
+            <div
+              [class.border-red]="formControls?.endTime?.invalid && (formControls?.endTime?.dirty || formControls?.endTime?.touched)"
+              [class.disabled]="schoolForm.value.startTime==null" class="endTime">
+              <p-calendar formControlName="endTime" appendTo="body" [showIcon]="true" inputId="icon"
+                [minDate]="minEndTime" [styleClass]="'date-picker'"
+                placeholder="{{'placeholders.formateTime'| translate}}" [showButtonBar]="true"
+                [todayButtonStyleClass]="'d-none'" dateFormat="dd/mm/yy" [timeOnly]="true" hourFormat="12"></p-calendar>
+            </div>
+            <div class="mt-2">
+              <ng-container
+                *ngIf="formControls?.endTime?.invalid && (formControls?.endTime?.dirty || formControls?.endTime?.touched)">
+                <ng-container *ngIf="formControls?.endTime?.errors?.['required']">
+                  <span class="text-danger fs-8">
+                    {{'validations.requiredField'|translate}}
+                  </span>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="mb-3">
+            <label for="uploadFile" class="mb-2" [class.required]="!isEdit  ">
+              {{'labels.uploadFile'|translate}}
+            </label>
+            <app-file-upload (uploadHandler)="uploadFile($event)" [isEdit]="isEdit"
+              [imageSrc]="schoolFileSrc"></app-file-upload>
+            <div class="mt-2">
+              <ng-container
+                *ngIf="formControls?.schoolFile?.invalid && (formControls?.schoolFile?.dirty || formControls?.schoolFile?.touched)">
+                <ng-container *ngIf="formControls?.schoolFile?.errors?.['required']">
+                  <span class="text-danger fs-8">
+                    {{'validations.requiredField'|translate}}
+                  </span>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-end gap-3 flex-wrap mt-4">
+      <button type="submit" class="btn btn-solid-main d-flex align-items-center justify-content-center gap-2">
+        <span>
+          {{'general.save'|translate}}
+        </span>
+        <i class="pi pi-save"></i>
+      </button>
+      <button type="button" class="btn btn-outline-main d-flex align-items-center gap-2" (click)="cancel()">
+        <span>
+          {{'general.cancel'|translate}}
+        </span>
+        <i class="pi pi-times"></i>
+      </button>
+    </div>
+  </form>
+</div>

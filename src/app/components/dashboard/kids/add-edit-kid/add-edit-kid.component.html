@@ -1,0 +1,186 @@
+<div id="modal-form">
+  <form [formGroup]="kidForm" (ngSubmit)="submit()" aria-label="add-kid-form">
+    <div class="form-content">
+      <div class="row m-0">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="name" class="mb-2 required">
+              {{'labels.name'|translate}}
+            </label>
+            <input type="text" class="form-control" formControlName="name"
+              (input)="publicService?.clearValidationErrors(formControls?.name)"
+              [class.border-red]="formControls?.name?.invalid && (formControls?.name?.dirty || formControls?.name?.touched)"
+              placeholder="{{'placeholders.name'|translate}}">
+            <div class="mt-2">
+              <ng-container
+                *ngIf="formControls?.name?.invalid && (formControls?.name?.dirty || formControls?.name?.touched)">
+                <ng-container *ngIf="formControls?.name?.errors?.['required']">
+                  <span class="text-danger fs-8">
+                    {{'validations.requiredField'|translate}}
+                  </span>
+                </ng-container>
+
+                <ng-container *ngIf="formControls?.name?.errors?.['minlength']">
+                  <span class="text-danger fs-8 d-block">
+                    {{'validations.nameLength'|translate}}
+                  </span>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="code" class="mb-2 required">
+              {{'labels.code'|translate}}
+            </label>
+            <input type="text" class="form-control" formControlName="code"
+              (input)="publicService?.clearValidationErrors(formControls?.code)" [class.border-red]=" formControls?.code?.invalid && (formControls?.code?.dirty ||
+              formControls?.code?.touched)" placeholder="{{'placeholders.code'|translate}}">
+            <div class="mt-2">
+              <ng-container
+                *ngIf="formControls?.code?.invalid && (formControls?.code?.dirty || formControls?.code?.touched)">
+                <ng-container *ngIf="formControls?.code?.errors?.['required']">
+                  <span class="text-danger fs-8">
+                    {{'validations.requiredField'|translate}}
+                  </span>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label class="mb-2 required">
+              {{'labels.level'|translate}}
+            </label>
+            <span class="p-input-icon-right select-loading d-block"
+              [class.border-red]="formControls?.level?.invalid && (formControls?.level?.dirty || formControls?.level?.touched)">
+              <p-dropdown [options]="levels" formControlName="level" optionLabel="level" [filter]="true"
+                [dropdownIcon]="'fas fa-caret-down'" [virtualScroll]="true" [virtualScrollItemSize]="38"
+                filterBy="level" appendTo="body" [filterPlaceholder]="'placeholders.search'|translate"
+                [readonly]="isLoadingLevels" scrollHeight="200px" emptyMessage="{{'general.no_result_found'|translate}}"
+                [showClear]="true" placeholder="{{'placeholders.level'|translate}}">
+              </p-dropdown>
+              <ng-container *ngIf="isLoadingLevels">
+                <i class="pi pi-spin pi-spinner"></i>
+              </ng-container>
+            </span>
+            <div class="mt-2">
+              <ng-container
+                *ngIf="formControls?.level?.invalid && (formControls?.level?.dirty || formControls?.level?.touched)">
+                <ng-container *ngIf="formControls?.level?.errors?.['required']">
+                  <span class="text-danger fs-8">
+                    {{'validations.requiredField'|translate}}
+                  </span>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="class" class="mb-2 required">
+              {{'labels.class'|translate}}
+            </label>
+            <input type="text" class="form-control" formControlName="class"
+              (input)="publicService?.clearValidationErrors(formControls?.class)" [class.border-red]=" formControls?.class?.invalid && (formControls?.class?.dirty ||
+              formControls?.class?.touched)" placeholder="{{'placeholders.class'|translate}}">
+            <div class="mt-2">
+              <ng-container
+                *ngIf="formControls?.class?.invalid && (formControls?.class?.dirty || formControls?.class?.touched)">
+                <ng-container *ngIf="formControls?.class?.errors?.['required']">
+                  <span class="text-danger fs-8">
+                    {{'validations.requiredField'|translate}}
+                  </span>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="address" class="mb-2 required">
+              {{'labels.address'|translate}}
+            </label>
+            <input type="text" class="form-control" formControlName="address"
+              (input)="publicService?.clearValidationErrors(formControls?.address)" [class.border-red]=" formControls?.address?.invalid && (formControls?.address?.dirty ||
+              formControls?.address?.touched)" placeholder="{{'placeholders.address'|translate}}">
+            <div class="mt-2">
+              <ng-container
+                *ngIf="formControls?.address?.invalid && (formControls?.address?.dirty || formControls?.address?.touched)">
+                <ng-container *ngIf="formControls?.address?.errors?.['required']">
+                  <span class="text-danger fs-8">
+                    {{'validations.requiredField'|translate}}
+                  </span>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="col-md-6">
+          <div class="mb-3">
+            <label for="paidStatus" class="mb-2 required">
+              {{'labels.paidStatus'|translate}}
+            </label>
+            <span class="p-input-icon-right select-loading d-block"
+              [class.border-red]="formControls?.paidStatus?.invalid && (formControls?.paidStatus?.dirty || formControls?.paidStatus?.touched)">
+              <p-dropdown [options]="statuses" formControlName="paidStatus" optionLabel="name" [filter]="true"
+                [dropdownIcon]="'fas fa-caret-down'" [virtualScroll]="true" [virtualScrollItemSize]="38" filterBy="name"
+                appendTo="body" [filterPlaceholder]="'placeholders.search'|translate" [readonly]="isLoadingStatuses"
+                scrollHeight="200px" emptyMessage="{{'general.no_result_found'|translate}}" [showClear]="true"
+                placeholder="{{'placeholders.paidStatus'|translate}}">
+              </p-dropdown>
+              <ng-container *ngIf="isLoadingStatuses">
+                <i class="pi pi-spin pi-spinner"></i>
+              </ng-container>
+            </span>
+            <div class="mt-2">
+              <ng-container
+                *ngIf="formControls?.paidStatus?.invalid && (formControls?.paidStatus?.dirty || formControls?.paidStatus?.touched)">
+                <ng-container *ngIf="formControls?.paidStatus?.errors?.['required']">
+                  <span class="text-danger fs-8">
+                    {{'validations.requiredField'|translate}}
+                  </span>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </div> -->
+        <div class="col-xl-6">
+          <div class="mb-3">
+            <label for="uploadFile" class="mb-2 required">
+              {{'labels.uploadFile'|translate}}
+            </label>
+            <app-file-upload (uploadHandler)="uploadFile($event)" [isEdit]="isEdit"
+              [imageSrc]="kidFileSrc"></app-file-upload>
+            <div class="mt-2">
+              <ng-container
+                *ngIf="formControls?.organizationFile?.invalid && (formControls?.organizationFile?.dirty || formControls?.organizationFile?.touched)">
+                <ng-container *ngIf="formControls?.organizationFile?.errors?.['required']">
+                  <span class="text-danger fs-8">
+                    {{'validations.requiredField'|translate}}
+                  </span>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-end gap-3 flex-wrap mt-4">
+      <button type="submit" class="btn btn-solid-main d-flex align-items-center justify-content-center gap-2">
+        <span>
+          {{'general.save'|translate}}
+        </span>
+        <i class="pi pi-save"></i>
+      </button>
+      <button type="button" class="btn btn-outline-main d-flex align-items-center gap-2" (click)="cancel()">
+        <span>
+          {{'general.cancel'|translate}}
+        </span>
+        <i class="pi pi-times"></i>
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,141 @@
+<div id="login" class="auth-form">
+  <div class="d-flex justify-content-end mb-md-4 mb-2">
+    <a class="lang-item">
+      <language-selector></language-selector>
+    </a>
+  </div>
+  <div class="d-flex justify-content-center align-items-center gap-3 flex-wrap mb-3">
+    <img src="assets/images/logo/logo.svg" class="form-logo mb-2 pointer" [loading]="'lazy'" alt="logo" [routerLink]="['/']">
+  </div>
+  <div>
+    <h1 class="fs-2 text-center">
+      {{'auth.loginToYourAccount' | translate}}
+    </h1>
+  </div>
+  <form [formGroup]="loginForm" (ngSubmit)="loginNow()" class="pt-sm-4 pt-2">
+    <div class="mb-3">
+      <label for="email">
+        {{'labels.email' | translate}}
+      </label>
+      <input id="email" class="form-control" type="text" placeholder="{{'placeholders.email' | translate}}"
+        formControlName="email" (input)="publicService?.clearValidationErrors(formControls.email)"
+        [class.border-red]="(formControls?.email?.touched||formControls?.email?.dirty)&&formControls?.email?.invalid" />
+      <ng-container
+        *ngIf="formControls?.email?.invalid && (formControls?.email?.dirty || formControls?.email?.touched)">
+        <div class="mt-1">
+          <ng-container *ngIf="formControls?.email?.errors?.required">
+            <span class="text-danger fs-8">
+              {{'validations.email'|translate}}
+            </span>
+          </ng-container>
+          <ng-container *ngIf="formControls?.email?.errors?.pattern">
+            <span class="text-danger fs-8">
+              {{'validations.emailNotCorrect'|translate}}
+            </span>
+          </ng-container>
+        </div>
+      </ng-container>
+    </div>
+    <div class="mb-2">
+      <label for="password">
+        {{'labels.password' | translate}}
+      </label>
+      <div class="rounded-input p-mask"
+        [class.border-red]="formControls?.password?.invalid && (formControls?.password?.dirty || formControls?.password?.touched)">
+        <p-password [toggleMask]="true" id="p-password" formControlName="password"
+          placeholder="{{'placeholders.password'|translate}}" [attr.autocomplete]="'current-password'"
+          [feedback]="false">
+        </p-password>
+      </div>
+      <ng-container
+        *ngIf="formControls?.password?.invalid && (formControls?.password?.dirty || formControls?.password?.touched) ">
+        <div class="mt-1">
+          <ng-container *ngIf="formControls?.password?.errors?.['required']">
+            <span class="text-danger fs-8">
+              {{'validations.password'|translate}}
+            </span>
+          </ng-container>
+        </div>
+      </ng-container>
+    </div>
+    <div class="d-flex align-items-center gap-2 mt-3">
+      <p-checkbox name="remember"></p-checkbox>
+      <label for="remember" class="mb-0">
+        {{'auth.remember'|translate}}
+      </label>
+    </div>
+    <button type="submit" class="btn w-100 btn-solid-main form-btn mt-4 fs-6">
+      {{'auth.signIn'|translate}}
+    </button>
+
+    <!-- <div class="mt-4 fs-8 d-flex justify-content-center align-items-center gap-1 flex-wrap text-center">
+      <p class="mb-0">
+        {{'auth.forgotPassword' | translate}}
+      </p>
+      <a class="text-main-color" [routerLink]="['/Auth/Forget-password']">
+        {{'auth.resetPassword'|translate}}
+      </a>
+    </div>
+    <div class="mt-3 d-flex gap-2 align-items-center">
+      <hr class="w-100">
+      <div class="fs-8 text-nowrap">
+        {{'auth.or'|translate}}
+      </div>
+      <hr class="w-100">
+    </div> -->
+    <!-- Start Social -->
+    <!-- <div class="mt-3 d-flex justify-content-center align-items-center gap-3">
+      <div class="social d-flex justify-content-center align-items-center apple">
+        <svg width="17" height="20" viewBox="0 0 17 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M11.0837 3.19C11.4618 2.75428 11.75 2.24817 11.9319 1.70074C12.1138 1.1533 12.1858 0.575328 12.1437 0C10.9831 0.093687 9.90571 0.639556 9.14371 1.52C8.77881 1.94198 8.50229 2.43288 8.33052 2.96364C8.15875 3.49441 8.09523 4.05424 8.14371 4.61C8.70986 4.61472 9.26949 4.4891 9.77931 4.24286C10.2891 3.99662 10.7354 3.63637 11.0837 3.19ZM13.6037 10.63C13.6104 9.86374 13.8123 9.11182 14.1902 8.4452C14.5681 7.77859 15.1096 7.21926 15.7637 6.82C15.3509 6.22524 14.8053 5.73483 14.17 5.38767C13.5347 5.04052 12.8272 4.84615 12.1037 4.82C10.5437 4.66 9.10371 5.73 8.27371 5.73C7.44371 5.73 6.27371 4.84 4.97371 4.86C4.12384 4.888 3.29573 5.13578 2.57016 5.57919C1.84458 6.02259 1.24632 6.64648 0.83371 7.39C-0.92629 10.45 0.38371 15 2.14371 17.47C2.94371 18.68 3.94371 20.05 5.26371 20C6.58371 19.95 7.01371 19.18 8.54371 19.18C10.0737 19.18 10.5437 20 11.8437 19.97C13.1437 19.94 14.0637 18.73 14.9037 17.52C15.4988 16.6415 15.9636 15.6816 16.2837 14.67C15.4912 14.332 14.815 13.7693 14.3387 13.0513C13.8625 12.3333 13.6069 11.4916 13.6037 10.63Z"
+            fill="currentColor" />
+        </svg>
+
+      </div>
+      <div class="social d-flex justify-content-center align-items-center google">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M21.8055 10.0415H21V10H12V14H17.6515C16.827 16.3285 14.6115 18 12 18C8.6865 18 6 15.3135 6 12C6 8.6865 8.6865 6 12 6C13.5295 6 14.921 6.577 15.9805 7.5195L18.809 4.691C17.023 3.0265 14.634 2 12 2C6.4775 2 2 6.4775 2 12C2 17.5225 6.4775 22 12 22C17.5225 22 22 17.5225 22 12C22 11.3295 21.931 10.675 21.8055 10.0415Z"
+            fill="#FFC107" />
+          <path
+            d="M3.15302 7.3455L6.43851 9.755C7.32752 7.554 9.48052 6 12 6C13.5295 6 14.921 6.577 15.9805 7.5195L18.809 4.691C17.023 3.0265 14.634 2 12 2C8.15902 2 4.82802 4.1685 3.15302 7.3455Z"
+            fill="#FF3D00" />
+          <path
+            d="M12 22.0001C14.583 22.0001 16.93 21.0116 18.7045 19.4041L15.6095 16.7851C14.5718 17.5743 13.3037 18.0011 12 18.0001C9.399 18.0001 7.1905 16.3416 6.3585 14.0271L3.0975 16.5396C4.7525 19.7781 8.1135 22.0001 12 22.0001Z"
+            fill="#4CAF50" />
+          <path
+            d="M21.8055 10.0415H21V10H12V14H17.6515C17.2571 15.1082 16.5467 16.0766 15.608 16.7855L15.6095 16.7845L18.7045 19.4035C18.4855 19.6025 22 17 22 12C22 11.3295 21.931 10.675 21.8055 10.0415Z"
+            fill="#1976D2" />
+        </svg>
+
+      </div>
+      <div class="social d-flex justify-content-center align-items-center facebook">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g clip-path="url(#clip0_1_515)">
+            <path
+              d="M24 12C24 5.37262 18.6274 0 12 0C5.37262 0 0 5.37262 0 12C0 17.9895 4.38825 22.954 10.125 23.8542V15.4688H7.07812V12H10.125V9.35625C10.125 6.34875 11.9166 4.6875 14.6576 4.6875C15.9705 4.6875 17.3438 4.92188 17.3438 4.92188V7.875H15.8306C14.3399 7.875 13.875 8.80003 13.875 9.74906V12H17.2031L16.6711 15.4688H13.875V23.8542C19.6117 22.954 24 17.9896 24 12Z"
+              fill="#1877F2" />
+            <path
+              d="M16.6711 15.4688L17.2031 12H13.875V9.74906C13.875 8.79994 14.3399 7.875 15.8306 7.875H17.3438V4.92188C17.3438 4.92188 15.9705 4.6875 14.6575 4.6875C11.9166 4.6875 10.125 6.34875 10.125 9.35625V12H7.07812V15.4688H10.125V23.8542C10.7453 23.9514 11.3722 24.0002 12 24C12.6278 24.0002 13.2547 23.9514 13.875 23.8542V15.4688H16.6711Z"
+              fill="white" />
+          </g>
+          <defs>
+            <clipPath id="clip0_1_515">
+              <rect width="24" height="24" fill="white" />
+            </clipPath>
+          </defs>
+        </svg>
+      </div>
+    </div> -->
+    <!-- End Social -->
+    <!-- <div class="mt-4 fs-8 d-flex justify-content-center align-items-center gap-1 flex-wrap text-center">
+      <p class="mb-0">
+        {{'auth.notHaveAccount' | translate}}
+      </p>
+      <a class="text-main-color" [routerLink]="['/Auth/Register']">
+        {{'auth.register'|translate}}
+      </a>
+    </div> -->
+  </form>
+</div>

@@ -1,0 +1,114 @@
+<div id="modal-form">
+  <form [formGroup]="tuitionForm" (ngSubmit)="submit()" aria-label="add-tuition-form">
+    <div class="form-content">
+      <div class="row m-0">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="title" class="mb-2 required">
+              {{'labels.title'|translate}}
+            </label>
+            <input type="text" class="form-control" formControltitle="title"
+              (input)="publicService?.clearValidationErrors(formControls?.title)"
+              [class.border-red]="formControls?.title?.invalid && (formControls?.title?.dirty || formControls?.title?.touched)"
+              placeholder="{{'placeholders.title'|translate}}">
+            <div class="mt-2">
+              <ng-container
+                *ngIf="formControls?.title?.invalid && (formControls?.title?.dirty || formControls?.title?.touched)">
+                <ng-container *ngIf="formControls?.title?.errors?.['required']">
+                  <span class="text-danger fs-8">
+                    {{'validations.requiredField'|translate}}
+                  </span>
+                </ng-container>
+
+                <ng-container *ngIf="formControls?.title?.errors?.['minlength']">
+                  <span class="text-danger fs-8 d-block">
+                    {{'validations.length'|translate}}
+                  </span>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="details" class="mb-2 required">
+              {{'labels.details'|translate}}
+            </label>
+            <input type="text" class="form-control" formControlName="details"
+              (input)="publicService?.clearValidationErrors(formControls?.details)" [class.border-red]=" formControls?.details?.invalid && (formControls?.details?.dirty ||
+              formControls?.details?.touched)" placeholder="{{'placeholders.details'|translate}}">
+            <div class="mt-2">
+              <ng-container
+                *ngIf="formControls?.details?.invalid && (formControls?.details?.dirty || formControls?.details?.touched)">
+                <ng-container *ngIf="formControls?.details?.errors?.['required']">
+                  <span class="text-danger fs-8">
+                    {{'validations.requiredField'|translate}}
+                  </span>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="level" class="mb-2 required">
+              {{'labels.level'|translate}}
+            </label>
+            <input type="text" class="form-control" formControlName="level"
+              (input)="publicService?.clearValidationErrors(formControls?.level)" [class.border-red]=" formControls?.level?.invalid && (formControls?.level?.dirty ||
+              formControls?.level?.touched)" placeholder="{{'placeholders.level'|translate}}">
+            <div class="mt-2">
+              <ng-container
+                *ngIf="formControls?.level?.invalid && (formControls?.level?.dirty || formControls?.level?.touched)">
+                <ng-container *ngIf="formControls?.level?.errors?.['required']">
+                  <span class="text-danger fs-8">
+                    {{'validations.requiredField'|translate}}
+                  </span>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="deservedDate" class="mb-2 required">
+              {{'labels.deservedDate'|translate}}
+            </label>
+            <div
+              [class.border-red]="formControls?.deservedDate?.invalid && (formControls?.deservedDate?.dirty || formControls?.deservedDate?.touched)"
+              class="deservedDate">
+              <p-calendar formControlName="deservedDate" appendTo="body" [showIcon]="true" inputId="icon"
+                [readonlyInput]="true" [styleClass]="'date-picker'"
+                placeholder="{{'placeholders.dateFormat'| translate}}" [showButtonBar]="true"
+                [todayButtonStyleClass]="'d-none'" dateFormat="dd/mm/yy" hourFormat="12"></p-calendar>
+            </div>
+            <div class="mt-2">
+              <ng-container
+                *ngIf="formControls?.deservedDate?.invalid && (formControls?.deservedDate?.dirty || formControls?.deservedDate?.touched)">
+                <ng-container *ngIf="formControls?.deservedDate?.errors?.['required']">
+                  <span class="text-danger fs-8">
+                    {{'validations.requiredField'|translate}}
+                  </span>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-end gap-3 flex-wrap mt-4">
+      <button type="submit" class="btn btn-solid-main d-flex align-items-center justify-content-center gap-2">
+        <span>
+          {{'general.save'|translate}}
+        </span>
+        <i class="pi pi-save"></i>
+      </button>
+      <button type="button" class="btn btn-outline-main d-flex align-items-center gap-2" (click)="cancel()">
+        <span>
+          {{'general.cancel'|translate}}
+        </span>
+        <i class="pi pi-times"></i>
+      </button>
+    </div>
+  </form>
+</div>

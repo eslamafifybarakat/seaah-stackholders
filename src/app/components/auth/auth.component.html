@@ -1,0 +1,40 @@
+<div class="auth" id="auth-form">
+  <div class="row g-0">
+    <div class="d-flex align-items-center justify-content-between flex-column"
+      [ngClass]="!showSlider?'col-12':'col-lg-7'">
+      <div class="form-content row align-items-center justify-content-center form-h w-100 m-0">
+        <div class="col-md-8 col-sm-10 col-11 m-auto">
+          <div class="py-4 bg-transparent">
+            <!-- <div class="d-flex">
+              <a [routerLink]="['/']" class="form-logo d-flex">
+                <img src="assets/images/logo/logo.webp" alt="logo" class="w-100 h-100">
+              </a>
+            </div> -->
+            <router-outlet></router-outlet>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-container *ngIf="showSlider">
+      <div class="col-lg-5 d-lg-block d-none p-0 position-fixed slider">
+        <div class="bg-form" [class.round-banner]="isRoundBanner">
+          <div class="p-5 d-flex align-items-center min-h">
+            <div class="text-center w-100">
+              <ng-container *ngIf="sliderType=='banner'">
+                <div class="banner d-flex justify-content-center">
+                  <img src="assets/images/logo/logo.svg" alt="logo">
+                </div>
+              </ng-container>
+              <ng-container *ngIf="sliderType=='slider'">
+                <auth-carousel></auth-carousel>
+                <!-- <auth-carousel-v2></auth-carousel-v2> -->
+              </ng-container>
+            </div>
+            <div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
