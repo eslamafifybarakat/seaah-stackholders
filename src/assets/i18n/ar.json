@@ -14,30 +14,10 @@
   },
   "nav": {
     "home": "الرئيسية",
-    "services": {
-      "title": "الخدمات",
-      "items": {
-        "offices": "المكاتب",
-        "sponsorshipTransfer": "نقل الكفالة"
-      }
-    },
-    "aboutStructure": {
-      "title": "حول",
-      "items": {
-        "policies": "السياسات",
-        "journey": "الرحلة"
-      }
-    },
-    "support": {
-      "title": "الدعم",
-      "items": {
-        "contactUs": "اتصل بنا",
-        "faqs": "الأسئلة الشائعة"
-      }
-    }
+    "dashboard": "لوحة التحكم"
   },
   "general": {
-    "loading":"جاري التحميل",
+    "loading": "جاري التحميل",
     "backToHome": "العودة إلى الصفحة الرئيسية",
     "moreDetails": "تفاصيل أكثر",
     "location": "الموقع",
@@ -65,7 +45,14 @@
     "no_records_found": "لم يتم إضافة سجلات حتي الآن",
     "reset": "إعادة الضبط",
     "filter": "فلتر",
-    "noItemAdded":"لم تتم إضافة عنصر"
+    "noItemAdded": "لم تتم إضافة عنصر"
+  },
+  "home": {
+    "hero": {
+      "heroTitle": "رحلتك نحــو الصـحة النفسيـة والسعـــادة.",
+      "heroSubtitle": "نحــــــــن هنـــــا لدعمــــك في",
+      "heroDescription": "دعنا نساعدك في بناء جسر من الأمل والتفاؤل نحو غدٍ أفضل، حيث يكون السعادة والسلام النفسي هما السمتان السائدتان في حياتك."
+    }
   },
   "userInfo": {
     "my_profile": "الملف الشخصي",
@@ -84,34 +71,34 @@
     "logout": "تسجيل خروج"
   },
   "dashboard": {
-    "total":"الاجمالي",
+    "total": "الاجمالي",
     "isTotal": "يوجد اجمالا",
     "sideMenu": {
-      "tuitionExpenses":"مصاريف التعليم",
+      "tuitionExpenses": "مصاريف التعليم",
       "statistics": "الإحصائيات",
-      "users":"المستخدمين",
+      "users": "المستخدمين",
       "organizations": "المنظمات",
       "clients": "العملاء",
-      "installmentWays":"طرق التقسيط",
-      "kids":"الأطفال",
+      "installmentWays": "طرق التقسيط",
+      "kids": "الأطفال",
       "settings": "الإعدادات"
     },
     "hello": "مرحبًا",
     "tableHeader": {
-      "title":"العنوان",
-"details":"التفاصيل",
-"total":"الإجمالي",
-"deservedDate":"تاريخ الاستحقاق",
-      "code": "كود" ,
-"level": "مستوى" ,
-"class": "صنف",
-"paidStatus": "حالة الدفع",
-      "description":"الوصف",
-      "type":"النوع",
-      "startTime":"وقت البداية",
-      "endTime":"وقت النهاية",
-      "installmentWays":"طرق التقسيط",
-      "email":"البريد الإلكتروني",
+      "title": "العنوان",
+      "details": "التفاصيل",
+      "total": "الإجمالي",
+      "deservedDate": "تاريخ الاستحقاق",
+      "code": "كود",
+      "level": "مستوى",
+      "class": "صنف",
+      "paidStatus": "حالة الدفع",
+      "description": "الوصف",
+      "type": "النوع",
+      "startTime": "وقت البداية",
+      "endTime": "وقت النهاية",
+      "installmentWays": "طرق التقسيط",
+      "email": "البريد الإلكتروني",
       "time": "الوقت",
       "location": "الموقع",
       "address": "العنوان",
@@ -135,52 +122,52 @@
       "insuranceExpiryDate": "تاريخ إنتهاء التأمين",
       "formPhoto": "صورة الإستمارة"
     },
-    "users":{
-      "users":"المستخدمين",
+    "users": {
+      "users": "المستخدمين",
       "addUser": "إضافة مستخدم",
       "editUser": "تعديل مستخدم"
     },
-    "organizations":{
-      "organizations":"المنظمات",
+    "organizations": {
+      "organizations": "المنظمات",
       "addOrganization": "إضافة منظمة",
       "editOrganization": "تعديل المنظمة",
       "organizationDetails": "تفاصيل المنظمة"
     },
-    "banks":{
-      "banks":"البنوك",
+    "banks": {
+      "banks": "البنوك",
       "addBank": "إضافة بنك",
       "editBank": "تعديل بنك",
       "bankDetails": "تفاصيل البنك"
     },
-    "schools":{
-      "schools":"المدارس",
+    "schools": {
+      "schools": "المدارس",
       "addSchool": "إضافة مدرسة",
       "editSchool": "تعديل مدرسة",
       "schoolDetails": "تفاصيل المدرسة"
     },
-    "universities":{
-      "universities":"الجامعات",
+    "universities": {
+      "universities": "الجامعات",
       "addUniversity": "إضافة جامعة",
       "editUniversity": "تعديل جامعة",
       "universityDetails": "تفاصيل الجامعة"
     },
-    "installmentWays":{
-      "installmentWays":"طرق التقسيط",
+    "installmentWays": {
+      "installmentWays": "طرق التقسيط",
       "addInstallmentWay": "إضافة طريقة للتقسيط",
       "editInstallmentWay": "تعديل طريقة التقسيط",
-      "installmentWayDetails":"تفاصيل طريقة التقسيط"
+      "installmentWayDetails": "تفاصيل طريقة التقسيط"
     },
-    "kids":{
-      "kids":"الأطفال",
+    "kids": {
+      "kids": "الأطفال",
       "addKid": "إضافة طفل",
       "editKid": "تعديل الطفل",
-      "kidsDetails":"تفاصيل الطفل"
+      "kidsDetails": "تفاصيل الطفل"
     },
-    "tuitionExpenses":{
-      "tuitionExpenses":"مصاريف التعليم",
+    "tuitionExpenses": {
+      "tuitionExpenses": "مصاريف التعليم",
       "addExpense": "إضافة مصاؤيف التعليم",
       "editExpense": "تعديل مصاريف التعليم",
-      "expensesDetails":"تفاصيل مصاريف التعليم"
+      "expensesDetails": "تفاصيل مصاريف التعليم"
     },
     "statistics": {
       "hi": "أهلاً",
@@ -223,14 +210,14 @@
   },
   "auth": {
     "logout": "تسجيل الخروج",
-    "loginToYourAccount":"تسجيل الدخول لحسابك",
-    "remember":"تذكرني",
-    "createNewAccount":"انشاء حساب جديد كــ",
-    "createNAccount":"انشاء حساب جديد",
-    "as":"كــ",
-    "educationalFunding":"جهة تمويل تعليمي",
-    "educationalFacility":"منشأه تعليمية",
-    "educationalFinance":"طالب تمويل تعليمي",
+    "loginToYourAccount": "تسجيل الدخول لحسابك",
+    "remember": "تذكرني",
+    "createNewAccount": "انشاء حساب جديد كــ",
+    "createNAccount": "انشاء حساب جديد",
+    "as": "كــ",
+    "educationalFunding": "جهة تمويل تعليمي",
+    "educationalFacility": "منشأه تعليمية",
+    "educationalFinance": "طالب تمويل تعليمي",
     "startRecruitment": "ابدأ رحلة الإستقدام الأن",
     "joinMasdar": "انضم إلى منصة المصدر الدولي للإستقدام لتستطيع الحصول على العمالة المخصصة لك",
     "forgotPassword": "هل نسيت كلمة المرور؟",
@@ -282,18 +269,18 @@
     "joinNow": "انضم الأن"
   },
   "labels": {
-    "title":"العنوان",
-    "details":"التفاصيل",
-    "deservedDate":"تاريخ الاستحقاق",
-    "code": "كود" ,
-    "level": "مستوى" ,
+    "title": "العنوان",
+    "details": "التفاصيل",
+    "deservedDate": "تاريخ الاستحقاق",
+    "code": "كود",
+    "level": "مستوى",
     "class": "صنف",
     "paidStatus": "حالة الدفع",
-    "uploadFile":"تحميل ملف",
-    "installmentWays":"طرق التقسيط",
-    "startTime":"وقت البداية",
-    "endTime":"وقت النهاية",
-    "location":"الموقع",
+    "uploadFile": "تحميل ملف",
+    "installmentWays": "طرق التقسيط",
+    "startTime": "وقت البداية",
+    "endTime": "وقت النهاية",
+    "location": "الموقع",
     "apply": "تطبيق",
     "cancelClassification": "إلغاء التصنيف",
     "total": "الإجمالي",
@@ -308,8 +295,8 @@
     "lastName": "الاسم الأخير",
     "phone": "رقم الجوال",
     "confirmPassword": "تأكيد كلمة المرور",
-    "commercialRegister":"السجل التجاري",
-    "bankPhoneNumbers":"ارقام الهواتف المختلف للبنك",
+    "commercialRegister": "السجل التجاري",
+    "bankPhoneNumbers": "ارقام الهواتف المختلف للبنك",
     "hashCode": "الرمز التجزئة",
     "companyName": "اسم الشركة",
     "country": "البلد",
@@ -340,20 +327,20 @@
     "operatingCard": "كارت التشغيل",
     "insuranceExpiryDate": "تاريخ إنتهاء التأمين",
     "formPhoto": "صورة الإستمارة",
-    "description":"الوصف"
+    "description": "الوصف"
   },
   "placeholders": {
-    "title":"أدخل العنوان",
-    "details":"أدخل التفاصيل",
-    "total":"أدخل الإجمالي",
-    "code": "أدخل كود" ,
-    "level": "اختر المستوى" ,
+    "title": "أدخل العنوان",
+    "details": "أدخل التفاصيل",
+    "total": "أدخل الإجمالي",
+    "code": "أدخل كود",
+    "level": "اختر المستوى",
     "class": "صنف",
     "paidStatus": "اختر حالة الدفع",
-    "description":"أدخل الوصف",
-    "installmentWays":"اختر طرق التقسيط",
-    "formateTime":"ساعة:دقيقة",
-    "location":"أدخل الموقع",
+    "description": "أدخل الوصف",
+    "installmentWays": "اختر طرق التقسيط",
+    "formateTime": "ساعة:دقيقة",
+    "location": "أدخل الموقع",
     "searchEstkdam": "ابحث عن الإستقدام الذى تريده",
     "username": "أدخل اسم المستخدم",
     "password": "أدخل كلمة المرور",
@@ -364,8 +351,8 @@
     "lastName": "أدخل الاسم الأخير",
     "phone": "أدخل الهاتف",
     "confirmPassword": "أدخل تأكيد كلمة المرور",
-    "commercialRegister":"أدخل السجل التجاري",
-    "bankPhoneNumbers":"أدخل ارقام الهواتف المختلف للبنك",
+    "commercialRegister": "أدخل السجل التجاري",
+    "bankPhoneNumbers": "أدخل ارقام الهواتف المختلف للبنك",
     "hashCode": "أدخل الرمز التجزئة",
     "companyName": "أدخل اسم الشركة",
     "search": "ابحث",

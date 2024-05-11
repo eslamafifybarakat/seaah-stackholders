@@ -13,7 +13,8 @@ import { errorsChildrenRoutes } from './components/errors/errors-children-routes
 
 
 export const appRoutes: Routes = [
-  { path: '', redirectTo: 'Auth', pathMatch: 'full' },
+  { path: '', redirectTo: '/en/Home', pathMatch: 'full' },
+  // Authentication
   {
     path: 'Auth',
     canActivate: [AuthGuard], // Apply the guard here
@@ -33,24 +34,6 @@ export const appRoutes: Routes = [
     children: authChildrenRoutes
   },
   {
-    path: 'Dashboard2',
-    // canActivate: [AuthGuard], // Apply the guard here
-    loadComponent: () =>
-      import('./components/dashboard/dashboard.component').then(
-        (c) => c.DashboardComponent
-      ),
-    children: dashBoardChildrenRoutes
-  },
-  {
-    path: ':lang/Dashboard2',
-    // canActivate: [AuthGuard], // Apply the guard here
-    loadComponent: () =>
-      import('./components/dashboard/dashboard.component').then(
-        (c) => c.DashboardComponent
-      ),
-    children: dashBoardChildrenRoutes
-  },
-  {
     path: 'Dashboard',
     // canActivate: [AuthGuard], // Apply the guard here
     loadComponent: () =>
@@ -68,8 +51,24 @@ export const appRoutes: Routes = [
       ),
     children: dashBoardChildrenV2Routes
   },
-   // Errors
-   {
+  // Home Page
+  {
+    path: 'Home',
+    loadComponent: () =>
+      import('./components/home/home.component').then(
+        (c) => c.HomeComponent
+      )
+  },
+  {
+    path: ':lang/Home',
+    loadComponent: () =>
+      import('./components/home/home.component').then(
+        (c) => c.HomeComponent
+      )
+  },
+
+  // Errors
+  {
     path: ':lang/Errors',
     loadComponent: () =>
       import('./components/errors/errors.component').then(

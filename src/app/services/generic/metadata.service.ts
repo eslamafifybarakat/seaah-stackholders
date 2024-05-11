@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 export interface MetaDetails {
   title: string;
   description: string;
-  image: string;
+  image?: string;
 }
 
 @Injectable({

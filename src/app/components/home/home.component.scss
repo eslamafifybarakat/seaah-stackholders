@@ -1,0 +1,164 @@
+#home-page {
+  .pt-hero {
+    padding-top: 7rem;
+  }
+
+  #hero-section {
+    min-height: calc(100vh + 1rem);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+
+    .title {
+      font-size: 40px;
+      font-weight: 700;
+      line-height: 64px;
+      color: var(--bg-dark-color);
+    }
+
+    .sub-title {
+      color: var(--bg-dark-color);
+      font-size: 25px;
+      font-weight: 700;
+      line-height: 64px;
+    }
+
+    .description {
+      color: var(--bg-grey-color);
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 30px;
+    }
+
+    .apps-image {
+      height: 3rem;
+      width: 10rem;
+    }
+
+    .main-hero-image-container img {
+      width: 100%;
+      object-fit: fill;
+      transform: scale(1.25);
+    }
+  }
+
+  .btn-solid-main {
+    min-width: 7rem;
+    color: var(--text-white-color) !important;
+    background-color: var(--bg-main-color) !important;
+    border-color: var(--text-main-color) !important;
+    border-radius: 0.5rem;
+    padding: 0.65rem 1.25rem;
+    font-size: 1rem;
+    transition: all 0.4s ease-in-out;
+    z-index: 1;
+  }
+
+  .btn-solid-main:hover,
+  .btn-solid-main:focus {
+    color: var(--text-white-color) !important;
+  }
+
+  .btn-outline-main {
+    border: 2px solid var(--bg-main-color);
+    color: var(--text-main-color);
+    border-radius: 10px;
+    padding: 0.7rem 1.2rem;
+  }
+}
+
+@media only screen and (max-width: 1199px) {
+  #home-page {
+    #hero-section {
+      padding-top: 0rem;
+      padding-bottom: 1rem;
+
+      .title {
+        font-size: 2.5rem;
+      }
+
+      .description {
+        width: 100% !important;
+      }
+
+      .title,
+      .sub-title,
+      .description {
+        line-height: inherit;
+      }
+
+      .apps-image {
+        height: 2.6rem;
+        width: 8rem;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  #home-page {
+    #hero-section {
+      height: auto;
+      min-height: auto;
+
+      .title {
+        font-size: 2.2rem;
+      }
+
+      .apps-image {
+        height: 2rem;
+        width: 8rem;
+      }
+
+      .main-hero-image-container img {
+        transform: scale(1.1);
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  #home-page {
+
+    .fs-2,
+    .fs-1 {
+      font-size: 1.3rem !important;
+    }
+
+    .w-75 {
+      width: 100% !important;
+    }
+
+    .fs-5-2 {
+      font-size: 0.9rem !important;
+    }
+
+    #hero-section {
+      .title {
+        text-align: center;
+        margin: auto;
+        font-size: 1.4rem;
+      }
+
+      .sub-title {
+        text-align: center;
+        font-size: 1.1rem;
+      }
+
+      .description {
+        text-align: center;
+        font-size: 0.8rem;
+        margin-top: 0.25rem !important;
+      }
+
+      .apps-image {
+        height: 1.8rem;
+        width: 8rem;
+      }
+
+      .main-hero-image-container img {
+        transform: scale(1);
+      }
+    }
+  }
+}

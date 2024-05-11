@@ -14,30 +14,10 @@
   },
   "nav": {
     "home": "Home",
-    "services": {
-      "title": "Services",
-      "items": {
-        "offices": "Offices",
-        "sponsorshipTransfer": "Sponsorship Transfer"
-      }
-    },
-    "aboutStructure": {
-      "title": "About",
-      "items": {
-        "policies": "Policies",
-        "journey": "Journey"
-      }
-    },
-    "support": {
-      "title": "Support",
-      "items": {
-        "contactUs": "Contact Us",
-        "faqs": "FAQs"
-      }
-    }
+    "dashboard": "Dashboard"
   },
   "general": {
-    "loading":"Loading",
+    "loading": "Loading",
     "backToHome": "Back to home",
     "moreDetails": "More Details",
     "location": "Location",
@@ -65,7 +45,14 @@
     "no_records_found": "No records have been added yet",
     "reset": "Reset",
     "filter": "Filter",
-    "noItemAdded":"No Item Added"
+    "noItemAdded": "No Item Added"
+  },
+  "home": {
+    "hero": {
+      "heroTitle": "Your Journey to Mental Health and Happiness.",
+      "heroSubtitle": "We Are Here to Support You in",
+      "heroDescription": "Let us help you build a bridge of hope and optimism towards a better tomorrow, where happiness and mental peace are the prevailing features in your life."
+    }
   },
   "userInfo": {
     "my_profile": "My Profile",
@@ -84,32 +71,32 @@
     "logout": "Log Out"
   },
   "dashboard": {
-    "total":"Total",
+    "total": "Total",
     "isTotal": "There is a total",
     "sideMenu": {
-      "tuitionExpenses":"Tuition Expenses",
+      "tuitionExpenses": "Tuition Expenses",
       "statistics": "Statistics",
       "users": "Users",
       "organizations": "Organizations",
       "clients": "Clients",
-     "installmentWays":"Installment Ways",
-     "kids":"Kids",
+      "installmentWays": "Installment Ways",
+      "kids": "Kids",
       "settings": "Settings"
     },
     "tableHeader": {
-      "title":"Title",
-      "details":"Details",
-      "total":"Total",
-      "deservedDate":"Deserved Date",
-      "code":"Code",
-      "level":"Level",
-      "class":"Class",
-      "paidStatus":"Paid Status",
-      "description":"Description",
-      "type":"Type",
-      "startTime":"Start Time",
-      "endTime":"End Time",
-      "installmentWays":"Installment Ways",
+      "title": "Title",
+      "details": "Details",
+      "total": "Total",
+      "deservedDate": "Deserved Date",
+      "code": "Code",
+      "level": "Level",
+      "class": "Class",
+      "paidStatus": "Paid Status",
+      "description": "Description",
+      "type": "Type",
+      "startTime": "Start Time",
+      "endTime": "End Time",
+      "installmentWays": "Installment Ways",
       "time": "Time",
       "location": "Location",
       "address": "Address",
@@ -147,52 +134,52 @@
       "GoalVReality": "Goal versus reality",
       "customerSatisfactio": "Customer Satisfactio"
     },
-    "users":{
-      "users":"Users",
+    "users": {
+      "users": "Users",
       "addUser": "Add User",
       "editUser": "Edit User"
     },
-    "organizations":{
-      "organizations":"Organizations",
+    "organizations": {
+      "organizations": "Organizations",
       "addOrganization": "Add Organizations",
       "editOrganization": "Edit Organization",
       "organizationDetails": "Organization Details"
     },
-    "banks":{
-      "banks":"Banks",
+    "banks": {
+      "banks": "Banks",
       "addBank": "Add Bank",
       "editBank": "Edit Bank",
-      "bankDetails":"Bank Details"
+      "bankDetails": "Bank Details"
     },
-    "schools":{
-      "schools":"Schools",
+    "schools": {
+      "schools": "Schools",
       "addSchool": "Add School",
       "editSchool": "Edit School",
-      "schoolDetails":"School Details"
+      "schoolDetails": "School Details"
     },
-    "universities":{
-      "universities":"Universities",
+    "universities": {
+      "universities": "Universities",
       "addUniversity": "Add University",
       "editUniversity": "Edit University",
-      "universityDetails":"University Details"
+      "universityDetails": "University Details"
     },
-    "installmentWays":{
-      "installmentWays":"Installment Ways",
+    "installmentWays": {
+      "installmentWays": "Installment Ways",
       "addInstallmentWay": "Add Installment Ways",
       "editInstallmentWay": "Edit Installment Ways",
-      "installmentWayDetails":"Installment Way Details"
+      "installmentWayDetails": "Installment Way Details"
     },
-    "kids":{
-      "kids":"Kids",
+    "kids": {
+      "kids": "Kids",
       "addKid": "Add Kid",
       "editKid": "Edit Kid",
-      "kidsDetails":"Kid Details"
+      "kidsDetails": "Kid Details"
     },
-    "tuitionExpenses":{
-      "tuitionExpenses":"Tuition Expenses",
+    "tuitionExpenses": {
+      "tuitionExpenses": "Tuition Expenses",
       "addExpense": "Add Tuition Expense",
       "editExpense": "Edit Tuition Expense",
-      "expensesDetails":"Expense Tuition Details"
+      "expensesDetails": "Expense Tuition Details"
     },
     "customers": {
       "customers": "Clients",
@@ -224,15 +211,15 @@
   },
   "auth": {
     "logout": "Logout",
-    "loginToYourAccount":"Log in to your account",
-    "notHaveAccount":"Don't have an account?",
-    "remember":"Remember me",
-    "createNewAccount":"Create a new account as",
-    "as":"as",
-    "createNAccount":"Create a new account",
-    "educationalFunding":"Educational funding body",
-    "educationalFacility":"Educational facility",
-    "educationalFinance":"Educational finance student",
+    "loginToYourAccount": "Log in to your account",
+    "notHaveAccount": "Don't have an account?",
+    "remember": "Remember me",
+    "createNewAccount": "Create a new account as",
+    "as": "as",
+    "createNAccount": "Create a new account",
+    "educationalFunding": "Educational funding body",
+    "educationalFacility": "Educational facility",
+    "educationalFinance": "Educational finance student",
     "startRecruitment": "Start your recruitment journey now",
     "joinMasdar": "Join the Al Masdar International Recruitment platform to be able to obtain the workers allocated to you",
     "forgotPassword": "Forgot Password?",
@@ -281,18 +268,18 @@
     "joinNow": "Join now"
   },
   "labels": {
-    "title":"Title",
-      "details":"Details",
-      "deservedDate":"Deserved Date",
-    "code":"Code",
-    "level":"Level",
-    "class":"Class",
-    "paidStatus":"Paid Status",
-    "uploadFile":"Upload File",
-    "installmentWays":"Installment Ways",
-    "startTime":"Start Time",
-    "endTime":"End Time",
-    "location":"Location",
+    "title": "Title",
+    "details": "Details",
+    "deservedDate": "Deserved Date",
+    "code": "Code",
+    "level": "Level",
+    "class": "Class",
+    "paidStatus": "Paid Status",
+    "uploadFile": "Upload File",
+    "installmentWays": "Installment Ways",
+    "startTime": "Start Time",
+    "endTime": "End Time",
+    "location": "Location",
     "apply": "Apply",
     "cancelClassification": "Reset",
     "total": "Total",
@@ -307,8 +294,8 @@
     "lastName": "Last Name",
     "phone": "Phone Number",
     "confirmPassword": "Confirm Password",
-    "commercialRegister":"commercial register",
-    "bankPhoneNumbers":"Various bank phone numbers",
+    "commercialRegister": "commercial register",
+    "bankPhoneNumbers": "Various bank phone numbers",
     "hashCode": "Hash Code",
     "companyName": "Company Name",
     "country": "Country",
@@ -339,20 +326,20 @@
     "operatingCard": "Operating card",
     "insuranceExpiryDate": "Insurance expiry date",
     "formPhoto": "form photo",
-    "description":"Description"
+    "description": "Description"
   },
   "placeholders": {
-    "title":"Enter title",
-      "details":"Enter details",
-      "total":"Enter total",
-    "code":"Enter Code",
-    "level":"Select level",
-    "class":"Class",
-    "paidStatus":"Select paid status",
-    "description":"Enter description",
-    "installmentWays":"Select installment ways",
-    "formateTime":"A HH:mm",
-    "location":"Enter location",
+    "title": "Enter title",
+    "details": "Enter details",
+    "total": "Enter total",
+    "code": "Enter Code",
+    "level": "Select level",
+    "class": "Class",
+    "paidStatus": "Select paid status",
+    "description": "Enter description",
+    "installmentWays": "Select installment ways",
+    "formateTime": "A HH:mm",
+    "location": "Enter location",
     "searchEstkdam": "Find the employment you want",
     "username": "Enter username",
     "password": "Enter password",
@@ -363,8 +350,8 @@
     "lastName": "Enter last name",
     "phone": "Enter phone",
     "confirmPassword": "Enter confirm password",
-    "commercialRegister":"Enter commercial register",
-    "bankPhoneNumbers":"Enter various bank phone numbers",
+    "commercialRegister": "Enter commercial register",
+    "bankPhoneNumbers": "Enter various bank phone numbers",
     "hashCode": "Enter hash code",
     "companyName": "Enter company name",
     "search": "Search",
