@@ -5,11 +5,11 @@ import { Routes } from '@angular/router';
 // TS Files for child routes
 import { dashBoardChildrenRoutes } from './components/dashboard/dashboard-children-routes';
 import { authChildrenRoutes } from './components/auth/auth-children-routes';
-import { errorsChildrenRoutes } from './components/errors/errors-routes';
 
 //Services
 import { AuthGuard } from './services/authentication/guards/auth.guard';
 import { dashBoardChildrenV2Routes } from './components/dashboard-v2/dashboard-children-routes-v2';
+import { errorsChildrenRoutes } from './components/errors/errors-children-routes';
 
 
 export const appRoutes: Routes = [
@@ -68,11 +68,22 @@ export const appRoutes: Routes = [
       ),
     children: dashBoardChildrenV2Routes
   },
-  {
-    path: '**', loadComponent: () =>
+   // Errors
+   {
+    path: ':lang/Errors',
+    loadComponent: () =>
       import('./components/errors/errors.component').then(
         (c) => c.ErrorsComponent
       ),
     children: errorsChildrenRoutes
-  }
+  },
+  {
+    path: 'Errors',
+    loadComponent: () =>
+      import('./components/errors/errors.component').then(
+        (c) => c.ErrorsComponent
+      ),
+    children: errorsChildrenRoutes
+  },
+  { path: '**', redirectTo: '/en/Errors' } // Redirect all unknown paths to '/Errors'
 ];

@@ -1,25 +1,35 @@
-import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { keys } from '../../../shared/configs/localstorage-key';
-import { Component, Inject, PLATFORM_ID } from '@angular/core';
+// Modules
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { LocalizationLanguageService } from 'src/app/services/generic/localization-language.service';
+// Components
+// import { LanguageSelectorComponent } from '../../../shared/components/language-selector/language-selector.component';
+// Services
 
 @Component({
   selector: 'error404',
   standalone: true,
-  imports: [CommonModule, RouterModule, TranslateModule],
+  imports: [
+    // Modules
+    TranslateModule,
+    CommonModule,
+    RouterModule,
+    // Components
+    // LanguageSelectorComponent
+  ],
   templateUrl: './error404.component.html',
   styleUrls: ['./error404.component.scss']
 })
 export class Error404Component {
-  currentLanguage: string | null = '';
 
   constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
-  ) { }
+    private localizationLanguageService: LocalizationLanguageService
+  ) {
+    // localizationLanguageService.updatePathAccordingLang();
+  }
+
   ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      this.currentLanguage = window?.localStorage?.getItem(keys?.language);
-    }
   }
 }

@@ -7,7 +7,6 @@
   },
   "titles": {
     "projectName": "P-linker",
-    "error500": "Server error",
     "login": "Login",
     "signUp": "Sign Up",
     "allResults": "All Results",
@@ -67,11 +66,6 @@
     "reset": "Reset",
     "filter": "Filter",
     "noItemAdded":"No Item Added"
-  },
-  "summary": {
-    "faster": "Faster",
-    "less": "Less",
-    "office": "Office"
   },
   "userInfo": {
     "my_profile": "My Profile",
@@ -453,17 +447,13 @@
     "download": "Download our mobile app"
   },
   "errors": {
-    "backToHome": "Back to home",
-    "serverError": "A server error has occurred",
-    "pageNotFound": "Page not found"
-  },
-  "services": {
-    "offices": {
-      "heroTitle": "Recruitment offices",
-      "heroDescription": "Enjoy the ability to communicate with a large group of licensed recruitment offices around the Kingdom to obtain the best possible employment",
-      "heroSearchPlaceHolderText": "Are you looking for a specific office?",
-      "topicTitle": "Keywords",
-      "btnText": "Do you need help?"
+    "error404": {
+      "title": "Page Not Found",
+      "subtitle": "Sorry, the page you are looking for could not be found."
+    },
+    "error500": {
+      "title": "Internal Server Error.",
+      "subtitle": "We are already working to solve the problem."
     }
   },
   "primeng": {
