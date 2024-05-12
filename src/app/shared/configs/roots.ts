@@ -1,7 +1,8 @@
 export const roots = {
   auth: {
-    login: 'dashboard/login',
+    login: 'login-first-step',
     currentUserInformation: 'users/user-loggned',
+    registerParent:'register',
     logout: 'logout',
     forgetPassword: '/Account/ForgetPassword',
     validateCode: '/Account/ValidateCode',

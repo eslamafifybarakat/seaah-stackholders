@@ -14,8 +14,6 @@ import { patterns } from './../../../shared/configs/patterns';
 import { CommonModule, Location } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { PasswordModule } from 'primeng/password';
-import { CheckboxModule } from 'primeng/checkbox';
 import { Component } from '@angular/core';
 @Component({
   standalone: true,
@@ -26,8 +24,6 @@ import { Component } from '@angular/core';
     // Modules
     ReactiveFormsModule,
     TranslateModule,
-    CheckboxModule,
-    PasswordModule,
     CommonModule,
     RouterModule,
     FormsModule
@@ -40,9 +36,11 @@ export class LoginComponent {
   private subscriptions: Subscription[] = [];
 
   loginForm = this.fb.group({
-    email: ['', { validators: [Validators.required, Validators.pattern(patterns.email)], updateOn: 'blur' }],
-    password: ['', { validators: Validators.required, updateOn: 'blur' }],
-    remember: [false, []],
+    phone: ['', [
+      Validators.required,
+      //  Validators.pattern(/^\5\d{8}$/)
+      ]
+      ]
   });
   get formControls(): any {
     return this.loginForm?.controls;
@@ -78,8 +76,7 @@ export class LoginComponent {
     if (this.loginForm?.valid) {
       this.publicService.showGlobalLoader.next(true);
       let formData = new FormData();
-      formData.append('email', this.loginForm?.value?.email);
-      formData.append('password', this.loginForm?.value?.password);
+      formData.append('phone', this.loginForm?.value?.phone);
       //Send Request to login
       let loginSubscription: Subscription = this.authService?.login(formData)?.pipe(
         tap((res: LoginApiResponse) => this.handleSuccessLoggedIn(res)),
