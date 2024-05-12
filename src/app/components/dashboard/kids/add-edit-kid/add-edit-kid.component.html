@@ -52,6 +52,36 @@
         <div class="col-md-6">
           <div class="mb-3">
             <label class="mb-2 required">
+              {{'labels.school'|translate}}
+            </label>
+            <span class="p-input-icon-right select-loading d-block"
+              [class.border-red]="formControls?.school?.invalid && (formControls?.school?.dirty || formControls?.school?.touched)">
+              <p-dropdown [options]="schools" formControlName="school" optionLabel="school" [filter]="true"
+                [dropdownIcon]="'fas fa-caret-down'" [virtualScroll]="true" [virtualScrollItemSize]="38"
+                filterBy="school" appendTo="body" [filterPlaceholder]="'placeholders.search'|translate"
+                [readonly]="isLoadingSchools" scrollHeight="200px" emptyMessage="{{'general.no_result_found'|translate}}"
+                [showClear]="true" placeholder="{{'placeholders.school'|translate}}">
+              </p-dropdown>
+              <ng-container *ngIf="isLoadingSchools">
+                <i class="pi pi-spin pi-spinner"></i>
+              </ng-container>
+            </span>
+            <div class="mt-2">
+              <ng-container
+                *ngIf="formControls?.school?.invalid && (formControls?.school?.dirty || formControls?.school?.touched)">
+                <ng-container *ngIf="formControls?.school?.errors?.['required']">
+                  <span class="text-danger fs-8">
+                    {{'validations.requiredField'|translate}}
+                  </span>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label class="mb-2 required">
               {{'labels.level'|translate}}
             </label>
             <span class="p-input-icon-right select-loading d-block"
@@ -149,15 +179,15 @@
         </div> -->
         <div class="col-xl-6">
           <div class="mb-3">
-            <label for="uploadFile" class="mb-2 required">
-              {{'labels.uploadFile'|translate}}
+            <label for="kidImage" class="mb-2 required">
+              {{'labels.kidImage'|translate}}
             </label>
             <app-file-upload (uploadHandler)="uploadFile($event)" [isEdit]="isEdit"
-              [imageSrc]="kidFileSrc"></app-file-upload>
+              [imageSrc]="kidImageSrc"></app-file-upload>
             <div class="mt-2">
               <ng-container
-                *ngIf="formControls?.organizationFile?.invalid && (formControls?.organizationFile?.dirty || formControls?.organizationFile?.touched)">
-                <ng-container *ngIf="formControls?.organizationFile?.errors?.['required']">
+                *ngIf="formControls?.kidImage?.invalid && (formControls?.kidImage?.dirty || formControls?.kidImage?.touched)">
+                <ng-container *ngIf="formControls?.kidImage?.errors?.['required']">
                   <span class="text-danger fs-8">
                     {{'validations.requiredField'|translate}}
                   </span>

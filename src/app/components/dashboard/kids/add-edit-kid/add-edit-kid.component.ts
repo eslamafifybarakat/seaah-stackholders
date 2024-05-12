@@ -19,6 +19,7 @@ import { PublicService } from '../../../../services/generic/public.service';
 import { tap, catchError, finalize } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { SchoolsService } from '../../services/schools.service';
 
 @Component({
   standalone: true,
@@ -45,7 +46,14 @@ export class AddEditKidComponent {
 
   // Levels Variables
   levels: any = [];
+  schools: any =  [
+    { id: 1, school: 'school 1' },
+    { id: 2, school: 'school 2' },
+    { id: 3, school: 'school 3' },
+    { id: 4, school: 'school 4' },
+  ];
   isLoadingLevels: boolean = false;
+  isLoadingSchools: boolean = false;
 
   // Levels Variables
   statuses: any = [];
@@ -54,9 +62,11 @@ export class AddEditKidComponent {
   isEdit: boolean = false;
   kidId: number;
   kidData: any;
+  schoolData: any;
 
-  kidFile: any = null;
-  kidFileSrc: any;
+  kidImage: any = null;
+  kidImageSrc: any;
+  englishAndNumbersPattern = /^[a-zA-Z0-9\s]*$/;
 
   kidForm = this.fb?.group(
     {
@@ -67,7 +77,14 @@ export class AddEditKidComponent {
       }],
       code: ['', {
         validators: [
-          Validators.required], updateOn: "blur"
+                      Validators.required,
+                      Validators.pattern(this.englishAndNumbersPattern) 
+                    ], updateOn: "blur",
+          
+      }],
+      school: [null, {
+        validators: [
+          Validators.required]
       }],
       address: ['', {
         validators: [
@@ -81,11 +98,7 @@ export class AddEditKidComponent {
         validators: [
           Validators.required], updateOn: "blur"
       }],
-      // paidStatus: ['', {
-      //   validators: [
-      //     Validators.required], updateOn: "blur"
-      // }],
-      kidFile: [null, {
+      kidImage: [null, {
         validators: [
           Validators.required]
       }],
@@ -103,7 +116,8 @@ export class AddEditKidComponent {
     private config: DynamicDialogConfig,
     private kidsService: KidsService,
     private ref: DynamicDialogRef,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private schoolsService: SchoolsService,
   ) {
     localizationLanguageService.updatePathAccordingLang();
   }
@@ -137,20 +151,29 @@ export class AddEditKidComponent {
       // paidStatus: this.kidData?.item?.paid_status,
       address: this.kidData?.item?.address,
     });
-    this.kidFileSrc = this.kidData?.item?.image_path;
+    this.kidImageSrc = this.kidData?.item?.image_path;
     this.getLevels();
   }
 
   // Start Levels List Functions
   getLevels(): void {
-    this.isLoadingLevels = true;
-    let levelsSubscription: Subscription = this.kidsService?.getLevelsList()
-      .pipe(
-        tap((res: any) => this.processLevelsListResponse(res)),
-        catchError(err => this.handleError(err)),
-        finalize(() => this.finalizeLevelsListLoading())
-      ).subscribe();
-    this.subscriptions.push(levelsSubscription);
+    if (this.isEdit) {
+      let patchLevel: any = [];
+      this.levels.forEach((element: any) => {
+        if (this.kidData.level.id == element.id) {
+          patchLevel.push(element);
+        }
+      });
+      this.kidForm.get('level').setValue(patchLevel);
+    }
+    // this.isLoadingLevels = true;
+    // let levelsSubscription: Subscription = this.kidsService?.getLevelsList()
+    //   .pipe(
+    //     tap((res: any) => this.processLevelsListResponse(res)),
+    //     catchError(err => this.handleError(err)),
+    //     finalize(() => this.finalizeLevelsListLoading())
+    //   ).subscribe();
+    // this.subscriptions.push(levelsSubscription);
   }
   private processLevelsListResponse(response: any): void {
     if (response) {
@@ -180,10 +203,54 @@ export class AddEditKidComponent {
   }
   // End Levels List Functions
 
+    // Start Schools List Functions
+    getSchools(): void {
+      this.isLoadingSchools = true;
+      let schoolsSubscription: Subscription = this.schoolsService?.getSchoolsList()
+        .pipe(
+          tap((res: any) => {
+            console.log("schooooooooools " , res);
+            
+            this.processSchoolsListResponse(res)}),
+          catchError(err => this.handleError(err)),
+          finalize(() => this.finalizeSchoolsListLoading())
+        ).subscribe();
+      this.subscriptions.push(schoolsSubscription);
+    }
+    private processSchoolsListResponse(response: any): void {
+      if (response) {
+        this.schools = response?.data?.items;
+        if (this.isEdit) {
+          let patchLevel: any = [];
+          this.schools?.forEach((element: any) => {
+            if (this.schoolData?.school?.id == element.id) {
+              patchLevel.push(element);
+            }
+          });
+          this.kidForm?.get('school')?.setValue(patchLevel);
+        }
+      } else {
+        this.handleError(response.error);
+        return;
+      }
+    }
+    private finalizeSchoolsListLoading(): void {
+      console.log("finalizeSchoolsListLoading");
+      
+      this.isLoadingSchools = false;
+      this.schools = [
+        { id: 1, school: 'school 1' },
+        { id: 2, school: 'school 2' },
+        { id: 3, school: 'school 3' },
+        { id: 4, school: 'school 4' },
+      ]
+    }
+    // End Schools List Functions
+
   // Upload File
   uploadFile(event: any): void {
-    this.kidFile = event.file;
-    this.kidForm.get('kidFile').setValue(this.kidFile);
+    this.kidImage = event.file;
+    this.kidForm.get('kidImage').setValue(this.kidImage);
   }
 
   // Start Add Edit Kid
@@ -202,10 +269,10 @@ export class AddEditKidComponent {
     formData.append('level', this.kidForm?.value?.level);
     formData.append('class', this.kidForm?.value?.class);
     formData.append('address', this.kidForm?.value?.address);
-    formData.append('image', this.kidForm?.value?.kidFile);
+    formData.append('image', this.kidForm?.value?.kidImage);
     formData.append('paid_status', '0');
-    formData.append('school_id', this.kidData.school_id);
-    formData.append('parent_id', this.kidData.parent_id);
+    formData.append('school_id', this.kidData.school);
+    formData.append('parent_id', this.kidData.parent_id); 
     return formData;
   }
   private addEditKid(formData: any): void {
