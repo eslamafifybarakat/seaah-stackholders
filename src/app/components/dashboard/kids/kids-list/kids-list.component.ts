@@ -112,12 +112,13 @@ export class KidsListComponent {
       {
         field: 'image_path', header: '', title: '', type: 'img'
       },
-      { field: 'code', header: 'dashboard.tableHeader.code', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.email'), type: 'text', sort: true, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: true, },
+      { field: 'code', header: 'dashboard.tableHeader.code', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.code'), type: 'text', sort: true, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: true, },
+      { field: 'school_name', header: 'dashboard.tableHeader.schoolName', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.schoolName'), type: 'text', sort: true, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: true, },
       { field: 'name', header: 'dashboard.tableHeader.name', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.name'), type: 'text', sort: true, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: true, },
       { field: 'level', header: 'dashboard.tableHeader.level', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.level'), type: 'text', sort: true, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: true, },
       { field: 'class', header: 'dashboard.tableHeader.class', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.class'), type: 'text', sort: true, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: true, },
       { field: 'address', header: 'dashboard.tableHeader.address', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.address'), type: 'text', sort: true, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: true, },
-      { field: 'paid_status', header: 'dashboard.tableHeader.paidStatus', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.paidStatus'), type: 'text', sort: true, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: true, },
+
     ];
     this.updateMetaTagsForSEO();
     this.getAllKids();
@@ -164,7 +165,18 @@ export class KidsListComponent {
     isFiltering ? this.publicService.showSearchLoader.next(true) : this.isLoadingKidsList = true;
     let kidsSubscription: Subscription = this.kidsService?.getKidsList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null)
       .pipe(
-        tap((res: KidsListApiResponse) => this.processKidsListResponse(res)),
+        tap((res: KidsListApiResponse) => {
+          res?.data?.items.forEach((kid: any) => {
+            // Check if the kid item has a school_name property
+            if (!kid.school_name) {
+              // If not, add a default value
+              kid.school_name = 'Default School Name';
+            }
+          });
+          console.log("test  ==  ", res?.data?.items);
+
+          this.processKidsListResponse(res)
+        }),
         catchError(err => this.handleError(err)),
         finalize(() => this.finalizeKidListLoading())
       ).subscribe();
