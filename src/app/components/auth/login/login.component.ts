@@ -1,5 +1,6 @@
 // Components
 import { LanguageSelectorComponent } from './../../../shared/components/language-selector/language-selector.component';
+import { VerificationCodeComponent } from '../verification-code/verification-code.component';
 
 // Services
 import { LocalizationLanguageService } from 'src/app/services/generic/localization-language.service';
@@ -15,6 +16,7 @@ import { CommonModule, Location } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { Component } from '@angular/core';
+import { DialogService } from 'primeng/dynamicdialog';
 @Component({
   standalone: true,
   imports: [
@@ -38,9 +40,9 @@ export class LoginComponent {
   loginForm = this.fb.group({
     phone: ['', [
       Validators.required,
-      //  Validators.pattern(/^\5\d{8}$/)
-      ]
-      ]
+      Validators.pattern(patterns.phone)
+    ]
+    ]
   });
   get formControls(): any {
     return this.loginForm?.controls;
@@ -51,6 +53,7 @@ export class LoginComponent {
     private metadataService: MetadataService,
     private alertsService: AlertsService,
     public publicService: PublicService,
+    private dialogService: DialogService,
     private authService: AuthService,
     private location: Location,
     private fb: FormBuilder,
@@ -89,10 +92,12 @@ export class LoginComponent {
     }
   }
   private handleSuccessLoggedIn(res: LoginApiResponse): void {
-    if (res?.status == 200) {
-      this.authService.saveUserLoginData(res?.data);
-      this.authService.saveToken(res?.data?.user_info?.token);
-      this.getCurrentUserInformation();
+    if (res?.status == true) {
+      // this.authService.saveUserLoginData(res?.data);
+      // this.authService.saveToken(res?.data?.user_info?.token);
+      // this.getCurrentUserInformation();
+      this.handleSuccess(res?.message);
+      this.verfiyAccountModal(this.loginForm?.value);
     } else {
       this.handleError(res?.message);
     }
@@ -101,6 +106,30 @@ export class LoginComponent {
 
   }
   // End Login Functions
+
+  // Start Verfiy Account Modal
+  verfiyAccountModal(data?: any): void {
+    const ref: any = this.dialogService?.open(VerificationCodeComponent, {
+      data: {
+        data
+      },
+      header: this.publicService?.translateTextFromJson('auth.verificationOtp'),
+      dismissableMask: false,
+      width: '45%',
+      styleClass: 'custom-modal',
+    });
+    ref?.onClose?.subscribe((res: any) => {
+      if (res?.listChanged) {
+        this.loginForm.reset();
+        this.authService.saveUserLoginData(res?.data);
+        this.authService.saveCurrentUserInformation(res?.data);
+        this.authService.saveToken(res?.data?.token);
+        this.router.navigate(['/Dashboard/']);
+      }
+    });
+  }
+  // End Verfiy Account Modal
+
 
   // Start Current User Information Functions
   private getCurrentUserInformation(): void {
@@ -131,13 +160,13 @@ export class LoginComponent {
 
   /* --- Handle api requests messages --- */
   private handleSuccess(msg: string | null): any {
-    this.setMessage(msg || this.publicService.translateTextFromJson('general.successRequest'));
+    this.setMessage(msg || this.publicService.translateTextFromJson('general.successRequest'),'success');
   }
   private handleError(err: string | null): any {
-    this.setMessage(err || this.publicService.translateTextFromJson('general.errorOccur'));
+    this.setMessage(err || this.publicService.translateTextFromJson('general.errorOccur'),'error');
   }
-  private setMessage(message: string): void {
-    this.alertsService.openToast('error', 'error', message);
+  private setMessage(message: string,type?:string): void {
+    this.alertsService.openToast(type, type, message);
     this.publicService.showGlobalLoader.next(false);
   }
 

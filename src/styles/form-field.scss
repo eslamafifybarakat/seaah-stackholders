@@ -67,7 +67,7 @@ label {
     box-shadow: none !important;
     outline: none !important;
     height: 3.2rem;
-    background: rgba(255, 255, 255, 0.6980392157);
+    background: var(--bg-white-color) !important;
     border: 1px solid var(--second-border-color);
     border-radius: 10px;
     padding: 1rem;

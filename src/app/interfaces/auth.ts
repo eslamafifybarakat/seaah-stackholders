@@ -39,7 +39,7 @@ interface LoginRole {
   permissions: string[];
 }
 export interface LoginApiResponse {
-  status: number;
+  status: number |boolean |  string;
   message: string;
   data: {
     user_info: LoginUser;

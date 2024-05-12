@@ -29,7 +29,7 @@ export class UserInfoComponent {
 
   currentLanguage: string;
   userInfoList: MenuItem[] = userInfoMenu;
-  currentUserInformation: UserData | null;
+  currentUserInformation: any | null;
 
   constructor(
     private confirmationService: ConfirmationService,
@@ -48,6 +48,8 @@ export class UserInfoComponent {
 
   getCurrentUserInfo(): void {
     this.currentUserInformation = this.authService.getCurrentUserInformationLocally();
+    console.log(this.currentUserInformation);
+    
   }
   logOut(): void {
     this.confirmationService?.confirm({
@@ -73,8 +75,7 @@ export class UserInfoComponent {
   }
   // private processLogoutResponse(res: LogoutApiResponse): void {
   private processLogoutResponse(res: any): void {
-    // if (res.status === 200) {
-    if (res) {
+    if (res.status === 200) {
       this.authService.signOut();
       this.handleSuccess(res.message);
     } else {
@@ -82,15 +83,15 @@ export class UserInfoComponent {
     }
   }
 
-  /* --- Handle api requests messages --- */
-  private handleSuccess(msg: string | null): any {
-    this.setMessage(msg || this.publicService.translateTextFromJson('general.successRequest'));
+   /* --- Handle api requests messages --- */
+   private handleSuccess(msg: string | null): any {
+    this.setMessage(msg || this.publicService.translateTextFromJson('general.successRequest'),'success');
   }
   private handleError(err: string | null): any {
-    this.setMessage(err || this.publicService.translateTextFromJson('general.errorOccur'));
+    this.setMessage(err || this.publicService.translateTextFromJson('general.errorOccur'),'error');
   }
-  private setMessage(message: string): void {
-    this.alertsService.openToast('error', 'error', message);
+  private setMessage(message: string,type?:string): void {
+    this.alertsService.openToast(type, type, message);
     this.publicService.showGlobalLoader.next(false);
   }
 

@@ -210,6 +210,7 @@
     }
   },
   "auth": {
+    "send": "Send",
     "logout": "Logout",
     "loginToYourAccount": "Log in to your account",
     "notHaveAccount": "Don't have an account?",
@@ -255,8 +256,8 @@
     "backLogin": "Back to login",
     "resetPassword": "Reset Password",
     "confirmPassword": "Confirm password",
-    "verificationOtp": "Variable code sent",
-    "checkEmail": "Please enter the change code sent to your mobile number",
+    "verificationOtp": "Verification code sent",
+    "checkEmail": "Please enter the change code sent to your mobile number or email",
     "notReceive": "You did not receive the password?",
     "resend": "Resend",
     "next": "Next",

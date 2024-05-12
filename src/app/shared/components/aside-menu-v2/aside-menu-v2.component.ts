@@ -121,27 +121,29 @@ export class AsideMenuV2Component {
     this.subscriptions.push(logoutSubscription);
   }
   private processLogoutResponse(res: any): void {
-    const messageType = res ? 'success' : 'error';
-    const message = res?.message || '';
-
-    this.alertsService.openToast(messageType, messageType, message);
-    if (messageType === 'success') {
+    if (res.status === 200) {
       this.authService.signOut();
+      this.handleSuccess(res.message);
+    } else {
+      this.handleSuccess(res.message);
     }
   }
 
-  /* --- Handle api requests error messages --- */
-  private handleError(err: any): any {
-    this.setErrorMessage(err || this.publicService.translateTextFromJson('general.errorOccur'));
+   /* --- Handle api requests messages --- */
+   private handleSuccess(msg: string | null): any {
+    this.setMessage(msg || this.publicService.translateTextFromJson('general.successRequest'),'success');
   }
-  private setErrorMessage(message: string): void {
-    this.alertsService.openToast('error', 'error', message);
+  private handleError(err: string | null): any {
+    this.setMessage(err || this.publicService.translateTextFromJson('general.errorOccur'),'error');
+  }
+  private setMessage(message: string,type?:string): void {
+    this.alertsService.openToast(type, type, message);
     this.publicService.showGlobalLoader.next(false);
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription: Subscription) => {
-      if (subscription && subscription.closed) {
+      if (subscription && !subscription.closed) {
         subscription.unsubscribe();
       }
     });
