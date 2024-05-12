@@ -66,11 +66,10 @@ label {
   .p-dropdown {
     box-shadow: none !important;
     outline: none !important;
-    background-color: var(--bg-input-color);
-    border-color: var(--border-input-color);
-    border-width: 0.5px;
-    height: 3.5rem;
-    border-radius: var(--border-input-radius);
+    height: 3.2rem;
+    background: rgba(255, 255, 255, 0.6980392157);
+    border: 1px solid var(--second-border-color);
+    border-radius: 10px;
     padding: 1rem;
   }
   .p-dropdown {
@@ -398,7 +397,7 @@ input::-webkit-inner-spin-button {
     border: 1px solid var(--second-border-color);
     border-radius: 10px;
     .form-control {
-      height: 2.9rem;
+      height: 3.2rem;
       margin: 0 !important;
     }
     .input-group-text {

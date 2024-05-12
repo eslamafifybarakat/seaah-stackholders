@@ -120,58 +120,58 @@ export class AsideMenuService {
         permission: true,
         // permission: this.checkPermissionService.hasPermission('Pages.Products.List'),
       },
-    //   {
-    //     id: 'Kids',
-    //     text: 'dashboard.sideMenu.kids',
-    //     icon: `<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-fidget-spinner" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-    //     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-    //     <path d="M18 16v.01" />
-    //     <path d="M6 16v.01" />
-    //     <path d="M12 5v.01" />
-    //     <path d="M12 12v.01" />
-    //     <path d="M12 1a4 4 0 0 1 2.001 7.464l.001 .072a3.998 3.998 0 0 1 1.987 3.758l.22 .128a3.978 3.978 0 0 1 1.591 -.417l.2 -.005a4 4 0 1 1 -3.994 3.77l-.28 -.16c-.522 .25 -1.108 .39 -1.726 .39c-.619 0 -1.205 -.14 -1.728 -.391l-.279 .16l.007 .231a4 4 0 1 1 -2.212 -3.579l.222 -.129a3.998 3.998 0 0 1 1.988 -3.756l.002 -.071a4 4 0 0 1 -1.995 -3.265l-.005 -.2a4 4 0 0 1 4 -4z" />
-    //   </svg>
-    // `,
-    //     routerLink: '/Dashboard/Kids',
-    //     state: false, //Opened Or Closed
-    //     permission: true,
-    //     // permission: this.checkPermissionService.hasPermission('Pages.Messages.List'),
-    //   },
-    //   {
-    //     id: 'Tuition',
-    //     text: 'dashboard.sideMenu.tuitionExpenses',
-    //     icon: `<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moneybag" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-    //     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-    //     <path d="M9.5 3h5a1.5 1.5 0 0 1 1.5 1.5a3.5 3.5 0 0 1 -3.5 3.5h-1a3.5 3.5 0 0 1 -3.5 -3.5a1.5 1.5 0 0 1 1.5 -1.5z" />
-    //     <path d="M4 17v-1a8 8 0 1 1 16 0v1a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z" />
-    //   </svg> `,
-    //     routerLink: '/Dashboard/Tuition-Expenses',
-    //     state: false, //Opened Or Closed
-    //     permission: true,
-    //     // permission: this.checkPermissionService.hasPermission('Pages.Settings.List'),
-    //   },
-    //   {
-    //     id: 'Settings',
-    //     text: 'dashboard.sideMenu.settings',
-    //     icon: `<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-settings" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-    //     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-    //     <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" />
-    //     <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
-    //   </svg>
-    // `,
-    //     // routerLink: '/Dashboard/Organizations',
-    //     state: false, //Opened Or Closed
-    //     permission: true,
-    //     // permission: this.checkPermissionService.hasPermission('Pages.Sales.List'),
-    //     children: [
-    //       {
-    //         text: 'userInfo.my_profile',
-    //         routerLink: '/Profile',
-    //         icon: '',
-    //         state: false
-    //       },
-    //     ]
-    //   },
+      {
+        id: 'Kids',
+        text: 'dashboard.sideMenu.kids',
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-fidget-spinner" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+        <path d="M18 16v.01" />
+        <path d="M6 16v.01" />
+        <path d="M12 5v.01" />
+        <path d="M12 12v.01" />
+        <path d="M12 1a4 4 0 0 1 2.001 7.464l.001 .072a3.998 3.998 0 0 1 1.987 3.758l.22 .128a3.978 3.978 0 0 1 1.591 -.417l.2 -.005a4 4 0 1 1 -3.994 3.77l-.28 -.16c-.522 .25 -1.108 .39 -1.726 .39c-.619 0 -1.205 -.14 -1.728 -.391l-.279 .16l.007 .231a4 4 0 1 1 -2.212 -3.579l.222 -.129a3.998 3.998 0 0 1 1.988 -3.756l.002 -.071a4 4 0 0 1 -1.995 -3.265l-.005 -.2a4 4 0 0 1 4 -4z" />
+      </svg>
+    `,
+        routerLink: '/Dashboard/Kids',
+        state: false, //Opened Or Closed
+        permission: true,
+        // permission: this.checkPermissionService.hasPermission('Pages.Messages.List'),
+      },
+      {
+        id: 'Tuition',
+        text: 'dashboard.sideMenu.tuitionExpenses',
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moneybag" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+        <path d="M9.5 3h5a1.5 1.5 0 0 1 1.5 1.5a3.5 3.5 0 0 1 -3.5 3.5h-1a3.5 3.5 0 0 1 -3.5 -3.5a1.5 1.5 0 0 1 1.5 -1.5z" />
+        <path d="M4 17v-1a8 8 0 1 1 16 0v1a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z" />
+      </svg> `,
+        routerLink: '/Dashboard/Tuition-Expenses',
+        state: false, //Opened Or Closed
+        permission: true,
+        // permission: this.checkPermissionService.hasPermission('Pages.Settings.List'),
+      },
+      {
+        id: 'Settings',
+        text: 'dashboard.sideMenu.settings',
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-settings" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+        <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" />
+        <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+      </svg>
+    `,
+        // routerLink: '/Dashboard/Organizations',
+        state: false, //Opened Or Closed
+        permission: true,
+        // permission: this.checkPermissionService.hasPermission('Pages.Sales.List'),
+        children: [
+          {
+            text: 'userInfo.my_profile',
+            routerLink: '/Profile',
+            icon: '',
+            state: false
+          },
+        ]
+      },
     ];
 
     return menuListItems;

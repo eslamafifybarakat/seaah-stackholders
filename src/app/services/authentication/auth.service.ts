@@ -107,7 +107,7 @@ export class AuthService {
   resetPassword(data: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/${roots.auth.resetPassword}`, data);
   }
-  register(data: any): Observable<any> {
+  registerParent(data: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/${roots.auth.register}`, data);
   }
   updateProfile(data: any): Observable<any> {

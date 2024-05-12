@@ -1,4 +1,3 @@
-import { ConfirmPasswordValidator } from './../../../shared/configs/confirm-password-validator';
 // Components
 import { LanguageSelectorComponent } from '../../../shared/components/language-selector/language-selector.component';
 
@@ -9,14 +8,12 @@ import { MetaDetails, MetadataService } from 'src/app/services/generic/metadata.
 import { AuthService } from '../../../services/authentication/auth.service';
 import { AlertsService } from '../../../services/generic/alerts.service';
 import { PublicService } from '../../../services/generic/public.service';
-import { patterns } from '../../../shared/configs/patterns';
+import { Subscription, catchError, finalize, tap } from 'rxjs';
 import { CommonModule, Location } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { Subscription, catchError, tap } from 'rxjs';
-import { PasswordModule } from 'primeng/password';
-import { CheckboxModule } from 'primeng/checkbox';
 import { Component } from '@angular/core';
+import { patterns } from 'src/app/shared/configs/patterns';
 @Component({
   standalone: true,
   imports: [
@@ -26,8 +23,6 @@ import { Component } from '@angular/core';
     // Modules
     ReactiveFormsModule,
     TranslateModule,
-    CheckboxModule,
-    PasswordModule,
     CommonModule,
     RouterModule,
     FormsModule
@@ -39,20 +34,14 @@ import { Component } from '@angular/core';
 export class RegistrationV1Component {
   private subscriptions: Subscription[] = [];
 
-  loginForm = this.fb.group({
-    name: ['', { validators: [Validators.required], updateOn: 'blur' }],
-    email: ['', { validators: [Validators.required, Validators.pattern(patterns.email)], updateOn: 'blur' }],
-    password: ['', { validators: Validators.required, updateOn: 'blur' }],
-    confirmPassword: ['', { validators: Validators.required, updateOn: 'blur' }],
-    commercialRegister: ['', { validators: Validators.required, updateOn: 'blur' }],
-    phone: ['', { validators: Validators.required, updateOn: 'blur' }],
-    bankPhoneNumbers: ['', { validators: Validators.required, updateOn: 'blur' }],
-    remember: [false, []],
-  }, {
-    validator: ConfirmPasswordValidator.MatchPassword
+  registerationForm = this.fb.group({
+    name: ['', { validators: [Validators.required, Validators.minLength(2), Validators.maxLength(100)], updateOn: 'blur' }],
+    nationalIdentify: ['', { validators: [Validators.required, Validators.pattern('^[0-9]*$')], updateOn: 'blur' }],// ensures only numeric values
+    phone: ['', { validators: [Validators.required, Validators.pattern('^[0-10]*$')], updateOn: 'blur' }],// ensures only numeric values
+    email: ['', { validators: [Validators.required, Validators.pattern(patterns?.email)], updateOn: 'blur' }],
   });
   get formControls(): any {
-    return this.loginForm?.controls;
+    return this.registerationForm?.controls;
   }
 
   constructor(
@@ -80,66 +69,58 @@ export class RegistrationV1Component {
     this.metadataService.updateMetaTagsForSEO(metaData);
   }
 
-  // Start Login Functions
-  loginNow(): void {
-    if (this.loginForm?.valid) {
+  // Start Register Functions
+  registerNow(): void {
+    if (this.registerationForm?.valid) {
       this.publicService.showGlobalLoader.next(true);
-      let data = {
-        email: this.loginForm?.value?.email,
-        password: this.loginForm?.value?.password,
-      };
+      const data: any = this.excuteDataForm();
       //Send Request to login
-      let loginSubscription: Subscription = this.authService?.login(data)?.pipe(
-        tap(res => this.handleSuccessLoggedIn(res)),
-        catchError(err => this.handleError(err))
+      let registerSubscription: Subscription = this.authService?.registerParent(data)?.pipe(
+        tap(res => this.handleSuccessRegisteration(res)),
+        catchError(err => this.handleError(err)),
+        finalize(() => this.finalizeRegister())
       ).subscribe();
-      this.subscriptions.push(loginSubscription);
+      this.subscriptions.push(registerSubscription);
     } else {
-      this.publicService.validateAllFormFields(this.loginForm);
+      this.publicService.validateAllFormFields(this.registerationForm);
     }
   }
-  private handleSuccessLoggedIn(res: any): void {
-    if (res?.success == true) {
-      this.authService.saveUserLoginData(res?.data);
-      this.authService.saveToken(res?.token);
-      this.getCurrentUserInformation();
-    } else {
-      this.handleError(res?.error?.message || this.publicService.translateTextFromJson('general.errorOccur'));
-    }
+  private finalizeRegister(): void {
+    this.publicService.showGlobalLoader.next(false);
   }
-  // End Login Functions
-
-  // Start Current User Information Functions
-  private getCurrentUserInformation(): void {
-    let loginSubscription: Subscription = this.authService?.getCurrentUserInformation()?.pipe(
-      tap(res => this.handleSuccessCuurentUserInformation(res)),
-      catchError(err => this.handleError(err))
-    ).subscribe();
-    this.subscriptions.push(loginSubscription);
+  private excuteDataForm(): any {
+    let data: any = {
+      name: this.registerationForm?.value?.name,
+      phone: this.registerationForm?.value?.phone,
+      iqama_No: this.registerationForm?.value?.nationalIdentify,
+      email: this.registerationForm?.value?.email,
+      type: 'parent',
+      source_register: 'web',
+      type_coming_otp: 'email',
+      password: '123456'
+    };
+    return data;
   }
-  private handleSuccessCuurentUserInformation(res: any): void {
-    if (res?.success == true) {
-      this.authService.saveCurrentUserInformation(res?.result);
-      this.publicService.showGlobalLoader.next(false);
+  private handleSuccessRegisteration(res: any): void {
+    if (res.success) {
+      this.authService.saveToken(res.token);
       this.router.navigate(['/Dashboard']);
     } else {
-      this.handleError(res?.error?.message || this.publicService.translateTextFromJson('general.errorOccur'));
+      this.handleError(res.error.message || 'An error occurred during registration.');
     }
   }
-  // End Current User Information Functions
+  // End Register Functions
 
   back(): void {
     this.location.back();
   }
 
   /* --- Handle api requests error messages --- */
-  private handleError(err: any): any {
-    this.setErrorMessage(err || this.publicService.translateTextFromJson('general.errorOccur'));
+  private handleError(error: any): any {
+    this.setErrorMessage(error);
   }
   private setErrorMessage(message: string): void {
     this.alertsService.openToast('error', 'error', message);
-    this.publicService.showGlobalLoader.next(false);
-    this.router.navigate(['/Dashboard']);
   }
 
   ngOnDestroy(): void {
