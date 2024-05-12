@@ -1,5 +1,6 @@
 // Components
 import { LanguageSelectorComponent } from '../../../shared/components/language-selector/language-selector.component';
+import { VerificationCodeComponent } from '../verification-code/verification-code.component';
 
 // Services
 import { LocalizationLanguageService } from 'src/app/services/generic/localization-language.service';
@@ -9,11 +10,12 @@ import { AuthService } from '../../../services/authentication/auth.service';
 import { AlertsService } from '../../../services/generic/alerts.service';
 import { PublicService } from '../../../services/generic/public.service';
 import { Subscription, catchError, finalize, tap } from 'rxjs';
+import { patterns } from 'src/app/shared/configs/patterns';
 import { CommonModule, Location } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
+import { DialogService } from 'primeng/dynamicdialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { Component } from '@angular/core';
-import { patterns } from 'src/app/shared/configs/patterns';
 @Component({
   standalone: true,
   imports: [
@@ -36,8 +38,8 @@ export class RegistrationV1Component {
 
   registerationForm = this.fb.group({
     name: ['', { validators: [Validators.required, Validators.minLength(2), Validators.maxLength(100)], updateOn: 'blur' }],
-    nationalIdentify: ['', { validators: [Validators.required, Validators.pattern('^[0-9]*$')], updateOn: 'blur' }],// ensures only numeric values
-    phone: ['', { validators: [Validators.required, Validators.pattern('^[0-10]*$')], updateOn: 'blur' }],// ensures only numeric values
+    nationalIdentify: ['', { validators: [Validators.required, Validators.pattern(patterns?.nationalIdentity)], updateOn: 'blur' }],// ensures only numeric values
+    phone: ['', { validators: [Validators.required, Validators.pattern(patterns?.phone)], updateOn: 'blur' }],// ensures only numeric values
     email: ['', { validators: [Validators.required, Validators.pattern(patterns?.email)], updateOn: 'blur' }],
   });
   get formControls(): any {
@@ -48,6 +50,7 @@ export class RegistrationV1Component {
     private localizationLanguageService: LocalizationLanguageService,
     private metadataService: MetadataService,
     private alertsService: AlertsService,
+    private dialogService: DialogService,
     public publicService: PublicService,
     private authService: AuthService,
     private location: Location,
@@ -91,7 +94,7 @@ export class RegistrationV1Component {
   private excuteDataForm(): any {
     let data: any = {
       name: this.registerationForm?.value?.name,
-      phone: this.registerationForm?.value?.phone,
+      phone: this.registerationForm?.value?.phone?.toString(),
       iqama_No: this.registerationForm?.value?.nationalIdentify,
       email: this.registerationForm?.value?.email,
       type: 'parent',
@@ -102,18 +105,44 @@ export class RegistrationV1Component {
     return data;
   }
   private handleSuccessRegisteration(res: any): void {
-    if (res.success) {
-      this.authService.saveToken(res.token);
-      this.router.navigate(['/Dashboard']);
+    if (res.status) {
+    this.verfiyAccountModal(this.registerationForm?.value);
     } else {
       this.handleError(res.error.message || 'An error occurred during registration.');
     }
   }
   // End Register Functions
 
+  // Start Verfiy Account Modal
+  verfiyAccountModal(data?: any): void {
+    const ref:any = this.dialogService?.open(VerificationCodeComponent, {
+      data: {
+        data
+      },
+      header:this.publicService?.translateTextFromJson('auth.verificationOtp'),
+      dismissableMask: false,
+      width: '45%',
+      styleClass: 'custom-modal',
+    });
+    ref?.onClose?.subscribe((res: any) => {
+      if (res?.listChanged) {
+        this.registerationForm.reset();
+        this.router.navigate(['/Auth/Login']);
+      }
+    });
+  }
+   // End Verfiy Account Modal
+
   back(): void {
     this.location.back();
   }
+  handleInput(event: Event, max?:number | null): void {
+    const inputElement :any= event?.target as HTMLInputElement;
+    if (inputElement?.value?.length > max) {
+        inputElement.value = inputElement?.value?.slice(0, max);
+    }
+}
+
 
   /* --- Handle api requests error messages --- */
   private handleError(error: any): any {

@@ -55,7 +55,8 @@
           <input id="nationalIdentify" type="number" class="form-control" formControlName="nationalIdentify"
             placeholder="{{'placeholders.nationalIdentify'|translate}}"
             [class.border-red]="(formControls?.nationalIdentify?.touched||formControls?.nationalIdentify?.dirty)&&formControls?.nationalIdentify?.invalid"
-            (input)="publicService?.clearValidationErrors(formControls?.nationalIdentify)">
+            (input)="handleInput($event,10); publicService?.clearValidationErrors(formControls?.nationalIdentify)"
+            maxlength="10">
           <ng-container
             *ngIf="formControls?.nationalIdentify?.invalid && (formControls?.nationalIdentify?.dirty || formControls?.nationalIdentify?.touched)">
             <div class="mt-1 d-flex flex-column">
@@ -64,7 +65,8 @@
                   {{'validations.requiredField'|translate}}
                 </span>
               </ng-container>
-              <ng-container *ngIf="formControls?.nationalIdentify?.errors?.minlength || formControls?.nationalIdentify?.errors?.maxlength">
+              <ng-container
+                *ngIf="formControls?.nationalIdentify?.errors?.minlength || formControls?.nationalIdentify?.errors?.maxlength">
                 <span class="text-danger fs-8">
                   {{'validations.idLength'|translate}}
                 </span>
@@ -86,12 +88,12 @@
           </label>
           <div class="input-number input-group bg-white-color d-flex flex-nowrap w-100"
             [class.border-red]="formControls?.phone?.invalid && (formControls?.phone?.dirty || formControls?.phone?.touched)">
-            <span class="input-group-text border-0 text-muted-color fs-6-1 " id="basic-addon1">
+            <span class="input-group-text border-0 fs-6-1" id="basic-addon1">
               +966
             </span>
-              <input id="phone" type="number" class="form-control border-0" formControlName="phone"
+            <input id="phone" type="number" class="form-control border-0" formControlName="phone"
               placeholder="{{'placeholders.phone'|translate}}"
-              (input)="publicService?.clearValidationErrors(formControls?.phone)">
+              (input)="handleInput($event,9); publicService?.clearValidationErrors(formControls?.phone)" maxlength="9">
           </div>
           <ng-container
             *ngIf="formControls?.phone?.invalid && (formControls?.phone?.dirty || formControls?.phone?.touched)">

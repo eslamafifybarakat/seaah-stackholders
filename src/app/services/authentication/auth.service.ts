@@ -95,20 +95,22 @@ export class AuthService {
   login(data: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/${roots.auth.login}`, data);
   }
-  getCurrentUserInformation(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/${roots.auth.currentUserInformation}`);
-  }
-  forgetPassword(email: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/${roots.auth.forgetPassword}`, email);
-  }
   validateCode(code: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/${roots.auth.validateCode}`, code);
   }
+  registerParent(data: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/${roots.auth.registerParent}`, data);
+  }
+  getCurrentUserInformation(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/${roots.auth.currentUserInformation}`);
+  }
+
+  
+  forgetPassword(email: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/${roots.auth.forgetPassword}`, email);
+  }
   resetPassword(data: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/${roots.auth.resetPassword}`, data);
-  }
-  registerParent(data: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/${roots.auth.register}`, data);
   }
   updateProfile(data: any): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}/${roots.auth.updateProfile}`, data);
