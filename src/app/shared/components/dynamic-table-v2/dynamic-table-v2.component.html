@@ -358,7 +358,8 @@
     </ng-container>
     <ng-container *ngIf="col?.type=='status'">
       <td>
-        <span [class]="'item-badge status-' +  item[col.field]">{{ item[col.field]}}</span>
+        <!-- <h1 style="background-color: red !important;">test {{item  }}</h1> -->
+        <span  [class]="'item-badge status-' + item[col.field]" > </span>
       </td>
     </ng-container>
     <ng-container *ngIf="col?.type=='boolean'">

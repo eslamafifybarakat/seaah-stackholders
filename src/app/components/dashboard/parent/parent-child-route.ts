@@ -2,20 +2,23 @@
 import { PermissionGuard } from '../../../services/authentication/guards/permission.guard';
 import { errorsChildrenRoutes } from '../../errors/errors-children-routes';
 import { ErrorsComponent } from "../../errors/errors.component";
-import { KidsListComponent } from './kids-list/kids-list.component';
+import { kidsChildrenRoutes } from './kids/kids-children-routes';
 
 
-export const kidsChildrenRoutes: any[] = [
-  { path: '', redirectTo: 'List', pathMatch: 'full' },
+export const ParentChildrenRoutes: any[] = [
+  { path: '', redirectTo: 'Kids', pathMatch: 'full' },
   {
-    path: 'List',
-    component: KidsListComponent,
+    path: 'Kids',
     // canActivate: [PermissionGuard],
     data: {
-      permission: 'Pages.Client.List',
-      title: 'Appointments'
+      permission: 'Pages.kids.List',
+      title: 'kids'
     },
-    pathMatch: 'full'
+    loadComponent: () =>
+      import('./kids/kids.component').then(
+        (c) => c.KidsComponent
+      ),
+    children: kidsChildrenRoutes
   },
 
    // Errors

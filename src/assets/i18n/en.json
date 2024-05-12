@@ -120,7 +120,8 @@
       "residencePhoto": "residence photo",
       "operatingCard": "Operating card",
       "insuranceExpiryDate": "Insurance expiry date",
-      "formPhoto": "form photo"
+      "formPhoto": "form photo",
+      "schoolName":"School Name"
     },
     "hello": "Hello",
     "statistics": {
@@ -326,7 +327,10 @@
     "operatingCard": "Operating card",
     "insuranceExpiryDate": "Insurance expiry date",
     "formPhoto": "form photo",
-    "description": "Description"
+    "description": "Description",
+    "schoolName":"School Name",
+    "school":"School",
+    "kidImage":"Kid Image"
   },
   "placeholders": {
     "title": "Enter title",
@@ -383,7 +387,8 @@
     "operatingCard": "Enter operating card",
     "insuranceExpiryDate": "Enter insurance expiry date",
     "formPhoto": "Enter form photo",
-    "dateFormat": "mm/dd/yy"
+    "dateFormat": "mm/dd/yy",
+    "school":"Select school"
   },
   "validations": {
     "username": "Username is required",

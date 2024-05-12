@@ -4,24 +4,24 @@ import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 
 // Components
-import { DynamicTableLocalActionsComponent } from '../../../../shared/components/dynamic-table-local-actions/dynamic-table-local-actions.component';
-import { DynamicTableV2Component } from '../../../../shared/components/dynamic-table-v2/dynamic-table-v2.component';
-import { DynamicSvgComponent } from '../../../../shared/components/icons/dynamic-svg/dynamic-svg.component';
-import { DynamicTableComponent } from '../../../../shared/components/dynamic-table/dynamic-table.component';
-import { SkeletonComponent } from '../../../../shared/skeleton/skeleton/skeleton.component';
+import { DynamicTableLocalActionsComponent } from '../../../../../shared/components/dynamic-table-local-actions/dynamic-table-local-actions.component';
+import { DynamicTableV2Component } from '../../../../../shared/components/dynamic-table-v2/dynamic-table-v2.component';
+import { DynamicSvgComponent } from '../../../../../shared/components/icons/dynamic-svg/dynamic-svg.component';
+import { DynamicTableComponent } from '../../../../../shared/components/dynamic-table/dynamic-table.component';
+import { SkeletonComponent } from '../../../../../shared/skeleton/skeleton/skeleton.component';
 import { AddEditKidComponent } from '../add-edit-kid/add-edit-kid.component';
 import { KidCardComponent } from '../kid-card/kid-card.component';
 
 //Services
-import { LocalizationLanguageService } from '../../../../services/generic/localization-language.service';
-import { KidListingItem, KidsListApiResponse } from './../../../../interfaces/dashboard/kids';
-import { MetaDetails, MetadataService } from '../../../../services/generic/metadata.service';
-import { DeleteKidApiResponse } from '../../../../interfaces/dashboard/kids';
-import { AlertsService } from '../../../../services/generic/alerts.service';
-import { PublicService } from '../../../../services/generic/public.service';
+import { LocalizationLanguageService } from '../../../../../services/generic/localization-language.service';
+import { KidListingItem, KidsListApiResponse } from './../../../../../interfaces/dashboard/kids';
+import { MetaDetails, MetadataService } from '../../../../../services/generic/metadata.service';
+import { DeleteKidApiResponse } from '../../../../../interfaces/dashboard/kids';
+import { AlertsService } from '../../../../../services/generic/alerts.service';
+import { PublicService } from '../../../../../services/generic/public.service';
 import { catchError, debounceTime, finalize, tap } from 'rxjs/operators';
 import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
-import { KidsService } from '../../services/kids.service';
+import { KidsService } from '../../../services/kids.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Subject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
@@ -102,6 +102,8 @@ export class KidsListComponent {
     localizationLanguageService.updatePathAccordingLang();
   }
   ngOnInit(): void {
+    console.log("rrrrrrrrrrrrrrr");
+    
     this.loadData();
     this.searchSubject.pipe(
       debounceTime(500) // Throttle time in milliseconds (1 seconds)
@@ -113,7 +115,6 @@ export class KidsListComponent {
         field: 'image_path', header: '', title: '', type: 'img'
       },
       { field: 'status', header: 'dashboard.tableHeader.status', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.status'), type: 'status', sort: false, showDefaultSort: false, showAscSort: false, showDesSort: false, filter: false, },
-
       { field: 'code', header: 'dashboard.tableHeader.code', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.code'), type: 'text', sort: true, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: true, },
       { field: 'school_name', header: 'dashboard.tableHeader.schoolName', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.schoolName'), type: 'text', sort: true, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: true, },
       { field: 'name', header: 'dashboard.tableHeader.name', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.name'), type: 'text', sort: true, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: true, },
@@ -170,9 +171,15 @@ export class KidsListComponent {
         tap((res: KidsListApiResponse) => {
           res?.data?.items.forEach((kid: any) => {
             // Check if the kid item has a school_name property
-            if (!kid.school_name) {
+            if (!kid?.school_name) {
               // If not, add a default value
               kid.school_name = 'Default School Name';
+              console.log("$$$$$$$$$$$4 ",kid?.status);
+            }
+            
+            if (!kid?.status) {
+              // If not, add a default value
+              kid.status = 'success';
             }
           });
           console.log("test  ==  ", res?.data?.items);

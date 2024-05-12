@@ -71,7 +71,7 @@ export class AsideMenuV2Component {
 
   // Get menu items list
   getMenuItems(): void {
-    this.menuListItems = this.asideMenuService.getAsideMenuItemV2();
+    this.menuListItems = this.asideMenuService.getParentAsideMenuItem();
   }
 
   // Handle click event on menu item

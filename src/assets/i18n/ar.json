@@ -120,7 +120,8 @@
       "residencePhoto": "صورة الإقامة",
       "operatingCard": "كارت التشغيل",
       "insuranceExpiryDate": "تاريخ إنتهاء التأمين",
-      "formPhoto": "صورة الإستمارة"
+      "formPhoto": "صورة الإستمارة",
+      "schoolName":"اسم المدرسة"
     },
     "users": {
       "users": "المستخدمين",
@@ -327,7 +328,9 @@
     "operatingCard": "كارت التشغيل",
     "insuranceExpiryDate": "تاريخ إنتهاء التأمين",
     "formPhoto": "صورة الإستمارة",
-    "description": "الوصف"
+    "description": "الوصف",
+    "school":"المدرسة" ,
+    "kidImage" : "صورة الطفل"
   },
   "placeholders": {
     "title": "أدخل العنوان",
@@ -384,7 +387,8 @@
     "operatingCard": "أدخل كارت التشغيل",
     "insuranceExpiryDate": "أدخل تاريخ إنتهاء التأمين",
     "formPhoto": "أدخل صورة الإستمارة",
-    "dateFormat": "شهر / يوم / سنه"
+    "dateFormat": "شهر / يوم / سنه",
+    "school":"أختر المدرسة"
   },
   "validations": {
     "username": "اسم المستخدم مطلوب",

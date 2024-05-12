@@ -1,5 +1,29 @@
 :host::ng-deep {
   #dynamic-global-data-table {
+    // .item-badge{
+    //     .status-success {
+    //       background-color: green !important;
+    //     }
+    // }
+    .item-badge {
+      display: inline-block;
+      width: 12px; /* Set the width and height to create a circle */
+      height: 12px;
+      border-radius: 50%; /* Make the element a circle */
+    }
+    
+    /* Define different colors for different statuses */
+    .item-badge.status-pending {
+      background-color: yellow; /* Example color for pending status */
+    }
+    
+    .item-badge.status-success {
+      background-color: green; /* Example color for approved status */
+    }
+    
+    .item-badge.status-rejected {
+      background-color: red; /* Example color for rejected status */
+    }
     #table-skeleton {
       .p-datatable-table {
         // border-spacing: 0 0px !important;
