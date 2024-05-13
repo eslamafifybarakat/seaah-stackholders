@@ -35,7 +35,7 @@ export class KidsService {
   }
   addEditKid(data: any, id?: number): Observable<any> {
     if (id) {
-      return this.http?.put(`${this.baseUrl}/${roots?.dashboard?.kids.kids}/${id}`, data)
+      return this.http?.post(`${this.baseUrl}/${roots?.dashboard?.kids.kids}/${id}`, data)
     }
     return this.http?.post(`${this.baseUrl}/${roots?.dashboard?.kids.kids}`, data);
   }

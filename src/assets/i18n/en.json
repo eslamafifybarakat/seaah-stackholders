@@ -332,7 +332,8 @@
     "schoolName":"School Name",
     "school":"School",
     "kidImage":"Kid Image",
-    "region":"Region"
+    "region":"Region",
+    "street":"Street"
   },
   "placeholders": {
     "title": "Enter title",
@@ -391,7 +392,8 @@
     "formPhoto": "Enter form photo",
     "dateFormat": "mm/dd/yy",
     "school":"Select school" ,
-    "region":"Enter region"
+    "region":"Enter region" ,
+    "street":"Enter street"
   },
   "validations": {
     "username": "Username is required",

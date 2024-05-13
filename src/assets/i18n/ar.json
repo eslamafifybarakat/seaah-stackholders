@@ -332,7 +332,8 @@
     "description": "الوصف",
     "school":"المدرسة" ,
     "kidImage" : "صورة الطفل",
-    "region": "المنطقة"
+    "region": "المنطقة",
+    "street":"الشارع"
   },
   "placeholders": {
     "title": "أدخل العنوان",
@@ -391,7 +392,8 @@
     "formPhoto": "أدخل صورة الإستمارة",
     "dateFormat": "شهر / يوم / سنه",
     "school":"أختر المدرسة",
-    "region":"أدخل المنطقة"
+    "region":"أدخل المنطقة" ,
+    "street":"الشارع"
   },
   "validations": {
     "username": "اسم المستخدم مطلوب",

@@ -21,6 +21,7 @@ import { tap, catchError, finalize } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { SchoolsService } from '../../../services/schools.service';
+import { AuthService } from 'src/app/services/authentication/auth.service';
 
 @Component({
   standalone: true,
@@ -47,25 +48,19 @@ export class AddEditKidComponent {
 
   // Levels Variables
    levels: any = [
-    { id: 1, level: 1 },
-    { id: 2, level: 2 },
-    { id: 3, level: 3 },
-    { id: 4, level: 4 },
+    { id: "1", name: "1" },
+    { id: "2", name: "2" },
+    { id: "3", name: "3" },
+    { id: "4", name: "4" }
   ];
-  schools: any =  [
-    { id: 1, school: 1 },
-    { id: 2, school: 2 },
-    { id: 3, school: 3 },
-    { id: 4, school: 4 },
-  ];
+  schools: any =  [];
   classes: any =  [
-    { id: 1, class: 1 },
-    { id: 2, class: 2 },
-    { id: 3, class: 3 },
-    { id: 4, class: 4 },
+    { id: "A", name: "A" },
+    { id: "B", name: "B" }
   ];
   isLoadingLevels: boolean = false;
   isLoadingSchools: boolean = false;
+  isLoadingClasses: boolean = false;
 
   // Levels Variables
   statuses: any = [];
@@ -74,7 +69,6 @@ export class AddEditKidComponent {
   isEdit: boolean = false;
   kidId: number;
   kidData: any;
-  schoolData: any;
 
   kidImage: any = null;
   kidImageSrc: any;
@@ -106,11 +100,15 @@ export class AddEditKidComponent {
         validators: [
           Validators.required], updateOn: "blur"
       }],
+      street: ['', {
+        validators: [
+          Validators.required], updateOn: "blur"
+      }],
       level: [null, {
         validators: [
           Validators.required], updateOn: "blur"
       }],
-      class: ['', {
+      class: [null, {
         validators: [
           Validators.required], updateOn: "blur"
       }],
@@ -123,7 +121,7 @@ export class AddEditKidComponent {
   get formControls(): any {
     return this.kidForm?.controls;
   }
-
+  currentUserInformation: any | null;
   constructor(
     private localizationLanguageService: LocalizationLanguageService,
     private metadataService: MetadataService,
@@ -134,6 +132,7 @@ export class AddEditKidComponent {
     private ref: DynamicDialogRef,
     private fb: FormBuilder,
     private schoolsService: SchoolsService,
+    private authService: AuthService,
   ) {
     localizationLanguageService.updatePathAccordingLang();
   }
@@ -147,8 +146,16 @@ export class AddEditKidComponent {
       this.patchValue();
     } else {
       this.getLevels();
+      this.getSchools();
+      this.getClasses();
     }
     this.updateMetaTagsForSEO();
+    this.getCurrentUserInfo();
+  }
+  getCurrentUserInfo(): void {
+    this.currentUserInformation = this.authService.getCurrentUserInformationLocally();
+    console.log(this.currentUserInformation);
+    
   }
   private updateMetaTagsForSEO(): void {
     let metaData: MetaDetails = {
@@ -162,22 +169,35 @@ export class AddEditKidComponent {
     this.kidForm.patchValue({
       name: this.kidData?.item?.name,
       code: this.kidData?.item?.code,
-      level: this.kidData?.item?.level,
-      class: this.kidData?.item?.class,
-      // paidStatus: this.kidData?.item?.paid_status,
-      // address: this.kidData?.item?.address,
     });
     this.kidImageSrc = this.kidData?.item?.image_path;
+    this.patchStreet(this.kidData?.item?.address);
+    this.getSchools();
     this.getLevels();
+    this.getClasses();
+
+    let formPhoto:any = this.kidData?.item?.image_path;
+    this.formControls?.kidImage?.setValue(formPhoto);
   }
+
+  private patchStreet(data:any){
+
+    this.kidForm.patchValue({
+      city: data?.city,
+      region: data?.region || 'default region',
+      street: data?.street
+    });
+  }
+
+
 
   // Start Levels List Functions
   getLevels(): void {
     if (this.isEdit) {
-      let patchLevel: any = [];
+      let patchLevel: any ;
       this.levels.forEach((element: any) => {
-        if (this.kidData.level.id == element.id) {
-          patchLevel.push(element);
+       if (this.kidData?.item?.level == element?.id) {
+          patchLevel=element;
         }
       });
       this.kidForm.get('level').setValue(patchLevel);
@@ -219,31 +239,81 @@ export class AddEditKidComponent {
   }
   // End Levels List Functions
 
+    // Start Class List Functions
+    getClasses(): void {
+      if (this.isEdit) {
+        let patchClass: any;
+        console.log("tessssssssssssssst",this.classes?.length);
+        
+        this.classes?.forEach((element: any) => {
+          if (this.kidData?.item?.class == element?.id) {
+            patchClass= element;
+          }
+        });
+        this.kidForm?.get('class')?.setValue(patchClass);
+      }
+      // this.isLoadingClasses = true;
+      // let classesSubscription: Subscription = this.kidsService?.getClassesList()
+      //   .pipe(
+      //     tap((res: any) => this.processClassesListResponse(res)),
+      //     catchError(err => this.handleError(err)),
+      //     finalize(() => this.finalizeClassesListLoading())
+      //   ).subscribe();
+      // this.subscriptions.push(classesSubscription);
+    }
+    private processClassesListResponse(response: any): void {
+      if (response) {
+        this.levels = response?.data?.items;
+        if (this.isEdit) {
+          let patchLevel: any = [];
+          this.levels.forEach((element: any) => {
+            if (this.kidData.level.id == element.id) {
+              patchLevel.push(element);
+            }
+          });
+          this.kidForm.get('level').setValue(patchLevel);
+        }
+      } else {
+        this.handleError(response.error);
+        return;
+      }
+    }
+    private finalizeClassesListLoading(): void {
+      this.isLoadingClasses = false;
+    }
+    // End Class List Functions
+
     // Start Schools List Functions
     getSchools(): void {
-      // this.isLoadingSchools = true;
-      // let schoolsSubscription: Subscription = this.schoolsService?.getSchoolsList()
-      //   .pipe(
-      //     tap((res: any) => {
-      //       console.log("schooooooooools " , res);
-            
-      //       this.processSchoolsListResponse(res)}),
-      //     catchError(err => this.handleError(err)),
-      //     finalize(() => this.finalizeSchoolsListLoading())
-      //   ).subscribe();
-      // this.subscriptions.push(schoolsSubscription);
+      this.isLoadingSchools = true;
+      let schoolsSubscription: Subscription = this.schoolsService?.getSchoolsList()
+        .pipe(
+          tap((res: any) => {
+            this.processSchoolsListResponse(res)}),
+          catchError(err => this.handleError(err)),
+          finalize(() => this.finalizeSchoolsListLoading())
+        ).subscribe();
+      this.subscriptions.push(schoolsSubscription);
     }
     private processSchoolsListResponse(response: any): void {
       if (response) {
         this.schools = response?.data?.items;
+        this.schools?.forEach((item:any)=>{
+          let name:any = JSON.parse(item?.name || "{}") ;
+          item['schoolName'] =name[this.currentLanguage] ;
+        })
+           console.log("schooooll ",this.schools);
+           
         if (this.isEdit) {
-          let patchLevel: any = [];
+          let patchSchool: any;
           this.schools?.forEach((element: any) => {
-            if (this.schoolData?.school?.id == element.id) {
-              patchLevel.push(element);
+            if (this.kidData?.item?.school?.id == element?.id) {
+              patchSchool= element;
             }
+            console.log("eddddittttt ",patchSchool);
+            
           });
-          this.kidForm?.get('school')?.setValue(patchLevel);
+          this.kidForm?.get('school')?.setValue(patchSchool);
         }
       } else {
         this.handleError(response.error);
@@ -254,12 +324,6 @@ export class AddEditKidComponent {
       console.log("finalizeSchoolsListLoading");
       
       this.isLoadingSchools = false;
-      this.schools = [
-        { id: 1, school: 'school 1' },
-        { id: 2, school: 'school 2' },
-        { id: 3, school: 'school 3' },
-        { id: 4, school: 'school 4' },
-      ]
     }
     // End Schools List Functions
 
@@ -283,19 +347,26 @@ export class AddEditKidComponent {
     }
   }
   private extractFormData(): any {
-    let kidComeData:any=this.kidForm?.value
+    let kidFormData:any=this.kidForm?.value ;
     let formData = new FormData();
-    formData.append('name', this.kidForm?.value?.name ?? '');
-    formData.append('code', this.kidForm?.value?.code ?? '');
-    formData.append('level', kidComeData?.level.id ?? '');
-    formData.append('class', kidComeData?.class.id ?? '');
-    formData.append('address[city]', this.kidForm?.value?.city ?? '');
-    formData.append('address[street]', this.kidForm?.value?.region ?? '');
+    formData.append('name', kidFormData?.name ?? '');
+    formData.append('code', kidFormData?.code ?? '');
+    formData.append('school_id', kidFormData?.school?.id);
+    formData.append('class', kidFormData?.class?.id ?? '');
+    formData.append('level', kidFormData?.level?.id ?? '');
+    formData.append('address[region]', kidFormData?.region ?? '');
+    formData.append('address[city]', kidFormData?.city ?? '');
+    formData.append('address[street]', kidFormData?.region ?? '');
     formData.append('address[zip]', '14552');
-    formData.append('image', this.kidForm?.value?.kidImage ?? '');
+    if (this.isEdit) {
+      let photo: any = this.kidForm?.value?.kidImage;
+      photo?.name != null ? formData.append('image', this.kidImage) : '';
+      formData.append('_method', 'PUT');
+    }else {
+      formData.append('image', this.kidImage ?? '');
+    }
+    formData.append('parent_id', this.currentUserInformation?.id); 
     formData.append('paid_status', '0');
-    formData.append('school_id', '1');
-    formData.append('parent_id', "11"); 
     console.log(formData);
     
     return formData;

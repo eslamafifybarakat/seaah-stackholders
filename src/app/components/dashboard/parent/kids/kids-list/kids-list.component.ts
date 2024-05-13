@@ -86,6 +86,7 @@ export class KidsListComponent {
   showToggleAction: boolean = false;
   showActionFiles: boolean = false;
   // End Permissions Variables
+  currentLanguage :string ;
 
   // Dropdown Element
   @ViewChild('dropdown') dropdown: any;
@@ -103,6 +104,7 @@ export class KidsListComponent {
     localizationLanguageService.updatePathAccordingLang();
   }
   ngOnInit(): void {
+    this.currentLanguage = this.publicService.getCurrentLanguage();
     this.loadData();
     this.searchSubject.pipe(
       debounceTime(500) // Throttle time in milliseconds (1 seconds)
@@ -115,11 +117,11 @@ export class KidsListComponent {
       },
       // { field: 'status', header: 'dashboard.tableHeader.status', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.status'), type: 'status', sort: false, showDefaultSort: false, showAscSort: false, showDesSort: false, filter: false, },
       { field: 'code', header: 'dashboard.tableHeader.code', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.code'), type: 'text', sort: true, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: true, },
-      { field: 'school_name', header: 'dashboard.tableHeader.schoolName', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.schoolName'), type: 'text', sort: true, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: true, },
+      { field: 'schoolName', header: 'dashboard.tableHeader.schoolName', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.schoolName'), type: 'text', sort: true, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: true, },
       { field: 'name', header: 'dashboard.tableHeader.name', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.name'), type: 'text', sort: true, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: true, },
       { field: 'level', header: 'dashboard.tableHeader.level', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.level'), type: 'text', sort: true, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: true, },
       { field: 'class', header: 'dashboard.tableHeader.class', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.class'), type: 'text', sort: true, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: true, },
-      { field: 'address', header: 'dashboard.tableHeader.address', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.address'), type: 'text', sort: true, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: true, },
+      { field: 'addressName', header: 'dashboard.tableHeader.address', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.address'), type: 'text', sort: true, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: true, },
 
     ];
     this.updateMetaTagsForSEO();
@@ -168,22 +170,7 @@ export class KidsListComponent {
     let kidsSubscription: Subscription = this.kidsService?.getKidsList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null)
       .pipe(
         tap((res: KidsListApiResponse) => {
-          res?.data?.items.forEach((kid: any) => {
-            // Check if the kid item has a school_name property
-            if (!kid?.school) {
-              // If not, add a default value
-              kid.school_name = 'Default School Name';
-              console.log("$$$$$$$$$$$4 ",kid?.status);
-            }
-            
-            if (!kid?.status) {
-              // If not, add a default value
-              kid.status = 'success';
-            }
-          });
-          console.log("test  ==  ", res?.data?.items);
-
-          this.processKidsListResponse(res)
+           this.processKidsListResponse(res) ;
         }),
         catchError(err => this.handleError(err)),
         finalize(() => this.finalizeKidListLoading())
@@ -195,34 +182,14 @@ export class KidsListComponent {
       this.kidsCount = response?.data?.total;
       this.pagesCount = Math.ceil(this.kidsCount / this.perPage);
       this.kidsList = response?.data?.items;
-      // start dummy data
-     
-
-      // this.kidsList = [ {
-      //   id: 51,
-      //   name: "adam",
-      //     code: "SH114SH",
-      //     level: "2",
-      //     class: "3",
-      //     address: {
-      //       city: "Cairo",
-      //       street: "nasr",
-      //       zip: "14552"
-      //     },
-      //     paid_status: false,
-      //     school_id: "1",
-      //     parent_id: "11",
-      //     image_path: "https://saeeh.ora-systems.fun/uploads//tmp/phpH5hmAb",
-      //     full_code: "ET.-SH114SH",
-      //     approve_status: null
-      //   }];
-      //   this.kidsList.forEach((kid: any) => {
-      //     kid.address = `${kid.address.city } , ${kid.address.street}`
-      //     if (!kid?.school) {
-      //       kid.school_name = 'Default School Name';
-
-      //     }
-      //   });
+      console.log(this.kidsList);
+      this.kidsList?.forEach((item:any)=>{
+        item['addressName'] = `${item?.address?.city } , ${item?.address?.street} ` ;
+        let name:any =JSON.parse(item?.school?.name[this.currentLanguage]||'{}') ;
+        item['schoolName'] =name[this.currentLanguage] ;
+        // item['school_name'] = "default school"
+      })
+ 
     } else {
       this.handleError(response.message);
       return;
@@ -244,6 +211,8 @@ export class KidsListComponent {
   }
   // Add Edit Kid
   addEditItem(item?: any, type?: any): void {
+    console.log("item = ",item);
+    
     const ref = this.dialogService?.open(AddEditKidComponent, {
       data: {
         item,

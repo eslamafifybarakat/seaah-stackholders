@@ -56,7 +56,7 @@
             </label>
             <span class="p-input-icon-right select-loading d-block"
               [class.border-red]="formControls?.school?.invalid && (formControls?.school?.dirty || formControls?.school?.touched)">
-              <p-dropdown [options]="schools" formControlName="school" optionLabel="school" [filter]="true"
+              <p-dropdown [options]="schools" formControlName="school" optionLabel="schoolName" [filter]="true"
                 [dropdownIcon]="'fas fa-caret-down'" [virtualScroll]="true" [virtualScrollItemSize]="38"
                 filterBy="school" appendTo="body" [filterPlaceholder]="'placeholders.search'|translate"
                 [readonly]="isLoadingSchools" scrollHeight="200px" emptyMessage="{{'general.no_result_found'|translate}}"
@@ -86,9 +86,9 @@
             </label>
             <span class="p-input-icon-right select-loading d-block"
               [class.border-red]="formControls?.level?.invalid && (formControls?.level?.dirty || formControls?.level?.touched)">
-              <p-dropdown [options]="levels" formControlName="level" optionLabel="level" [filter]="true"
+              <p-dropdown [options]="levels" formControlName="level" optionLabel="name" [filter]="true"
                 [dropdownIcon]="'fas fa-caret-down'" [virtualScroll]="true" [virtualScrollItemSize]="38"
-                filterBy="level" appendTo="body" [filterPlaceholder]="'placeholders.search'|translate"
+                filterBy="name" appendTo="body" [filterPlaceholder]="'placeholders.search'|translate"
                 [readonly]="isLoadingLevels" scrollHeight="200px" emptyMessage="{{'general.no_result_found'|translate}}"
                 [showClear]="true" placeholder="{{'placeholders.level'|translate}}">
               </p-dropdown>
@@ -115,9 +115,9 @@
             </label>
             <span class="p-input-icon-right select-loading d-block"
               [class.border-red]="formControls?.class?.invalid && (formControls?.class?.dirty || formControls?.class?.touched)">
-              <p-dropdown [options]="classes" formControlName="class" optionLabel="class" [filter]="true"
+              <p-dropdown [options]="classes" formControlName="class" optionLabel="name" [filter]="true"
                 [dropdownIcon]="'fas fa-caret-down'" [virtualScroll]="true" [virtualScrollItemSize]="38"
-                filterBy="class" appendTo="body" [filterPlaceholder]="'placeholders.search'|translate"
+                filterBy="name" appendTo="body" [filterPlaceholder]="'placeholders.search'|translate"
                 [showClear]="true" placeholder="{{'placeholders.class'|translate}}">
               </p-dropdown>
               <!-- <ng-container *ngIf="isLoadingLevels">
@@ -176,6 +176,26 @@
             </div>
           </div>
         </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="street" class="mb-2 required">
+              {{'labels.street'|translate}}
+            </label>
+            <input type="text" class="form-control" formControlName="street"
+              (input)="publicService?.clearValidationErrors(formControls?.street)" [class.border-red]=" formControls?.street?.invalid && (formControls?.street?.dirty ||
+              formControls?.street?.touched)" placeholder="{{'placeholders.street'|translate}}">
+            <div class="mt-2">
+              <ng-container
+                *ngIf="formControls?.street?.invalid && (formControls?.street?.dirty || formControls?.street?.touched)">
+                <ng-container *ngIf="formControls?.street?.errors?.['required']">
+                  <span class="text-danger fs-8">
+                    {{'validations.requiredField'|translate}}
+                  </span>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </div>
         <!-- <div class="col-md-6">
           <div class="mb-3">
             <label for="paidStatus" class="mb-2 required">
@@ -207,7 +227,7 @@
         </div> -->
         <div class="col-xl-6">
           <div class="mb-3">
-            <label for="kidImage" class="mb-2 required">
+            <label for="kidImage" class="mb-2" [class.required]="!isEdit">
               {{'labels.kidImage'|translate}}
             </label>
             <app-file-upload (uploadHandler)="uploadFile($event)" [isEdit]="isEdit"
