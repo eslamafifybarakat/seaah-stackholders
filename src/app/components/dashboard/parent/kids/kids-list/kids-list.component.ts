@@ -99,8 +99,8 @@ export class KidsListComponent {
   statusesList: any = [
     { id: "0", name: "All" },
     { id: "1", name: "Pending" },
-    { id: "2", name: "Accepted" },
-    { id: "3", name: "Rejected" }
+    { id: "2", name: "Rejected" },
+    { id: "3", name: "Approved" }
   ];
   isLoadingStatuses: boolean = false;
   statusValue: string | number | null;
