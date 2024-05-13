@@ -359,7 +359,7 @@
     <ng-container *ngIf="col?.type=='status'">
       <td>
         <!-- <h1 style="background-color: red !important;">test {{item  }}</h1> -->
-        <span  [class]="'item-badge status-' + item[col.field]" > </span>
+        <span [class]="'item-badge status-' + item[col.field]"> </span>
       </td>
     </ng-container>
     <ng-container *ngIf="col?.type=='boolean'">
@@ -378,7 +378,9 @@
       <td>
         <div class="image">
           <p-image class="shadow" [src]="item[col.field]" [previewImageSrc]="item[col.field]" alt="Image" width="70"
-            [preview]="item[col.showPreview]?item[col.showPreview]:true"></p-image>
+            (error)="item[col.field] = 'assets/images/not-found/no-user.svg'"
+            [preview]="item[col.showPreview] ? item[col.showPreview] : true">
+          </p-image>
         </div>
       </td>
     </ng-container>

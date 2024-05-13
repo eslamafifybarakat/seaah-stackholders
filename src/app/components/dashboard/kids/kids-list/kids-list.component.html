@@ -81,7 +81,7 @@
           [enableConfirmDeleteDialog]="true" [keyDelete]="'name'"
           (paginateOptionsHandler)="onPaginatorOptionsChange($event)" [isSearch]="isSearch" [arrayChildKey]="'name'"
           [enableFilterDriverStatus]="true" [addBtnText]="'dashboard.kids.addKid'"
-          (addHandler)="addEditItem()"></dynamic-table-v2>
+          (addHandler)="addEditItem()" [notFoundImage]="'assets/images/not-found/no-user.svg'"></dynamic-table-v2>
       </ng-container>
       <!-- Card -->
       <ng-container *ngIf="dataStyleType=='grid'">

@@ -16,6 +16,7 @@ import { KidCardComponent } from '../kid-card/kid-card.component';
 import { LocalizationLanguageService } from '../../../../../services/generic/localization-language.service';
 import { KidListingItem, KidsListApiResponse } from './../../../../../interfaces/dashboard/kids';
 import { MetaDetails, MetadataService } from '../../../../../services/generic/metadata.service';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DeleteKidApiResponse } from '../../../../../interfaces/dashboard/kids';
 import { AlertsService } from '../../../../../services/generic/alerts.service';
 import { PublicService } from '../../../../../services/generic/public.service';
@@ -30,9 +31,11 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [
     // Modules
+    ReactiveFormsModule,
     TranslateModule,
     PaginatorModule,
     CommonModule,
+    FormsModule,
 
     // Components
     DynamicTableLocalActionsComponent,
@@ -40,7 +43,7 @@ import { Router } from '@angular/router';
     DynamicTableComponent,
     DynamicSvgComponent,
     KidCardComponent,
-    SkeletonComponent,
+    SkeletonComponent
   ],
   selector: 'app-kids-list',
   templateUrl: './kids-list.component.html',
@@ -86,10 +89,33 @@ export class KidsListComponent {
   showToggleAction: boolean = false;
   showActionFiles: boolean = false;
   // End Permissions Variables
-  currentLanguage :string ;
+  currentLanguage: string;
 
   // Dropdown Element
   @ViewChild('dropdown') dropdown: any;
+
+
+  // Statuses Variables
+  statusesList: any = [
+    { id: "0", name: "All" },
+    { id: "1", name: "Pending" },
+    { id: "2", name: "Accepted" },
+    { id: "3", name: "Rejected" }
+  ];
+  isLoadingStatuses: boolean = false;
+  statusValue: string | number | null;
+  // Statuses Variables
+  filterForm = this.fb?.group(
+    {
+      status: [null, {
+        validators: [
+          Validators.required], updateOn: "blur"
+      }],
+    }
+  );
+  get formControls(): any {
+    return this.filterForm?.controls;
+  }
 
   constructor(
     private localizationLanguageService: LocalizationLanguageService,
@@ -99,6 +125,7 @@ export class KidsListComponent {
     private alertsService: AlertsService,
     private kidsService: KidsService,
     private cdr: ChangeDetectorRef,
+    private fb: FormBuilder,
     private router: Router
   ) {
     localizationLanguageService.updatePathAccordingLang();
@@ -111,6 +138,7 @@ export class KidsListComponent {
     ).subscribe(event => { this.searchHandler(event) });
   }
   private loadData(): void {
+    this.getStatusList();
     this.tableHeaders = [
       {
         field: 'image_path', header: '', title: '', type: 'img'
@@ -167,10 +195,10 @@ export class KidsListComponent {
   // Start Kids List Functions
   getAllKids(isFiltering?: boolean): void {
     isFiltering ? this.publicService.showSearchLoader.next(true) : this.isLoadingKidsList = true;
-    let kidsSubscription: Subscription = this.kidsService?.getKidsList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null)
+    let kidsSubscription: Subscription = this.kidsService?.getKidsList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null, this.statusValue ?? null)
       .pipe(
         tap((res: KidsListApiResponse) => {
-           this.processKidsListResponse(res) ;
+          this.processKidsListResponse(res);
         }),
         catchError(err => this.handleError(err)),
         finalize(() => this.finalizeKidListLoading())
@@ -183,13 +211,13 @@ export class KidsListComponent {
       this.pagesCount = Math.ceil(this.kidsCount / this.perPage);
       this.kidsList = response?.data?.items;
       console.log(this.kidsList);
-      this.kidsList?.forEach((item:any)=>{
-        item['addressName'] = `${item?.address?.city } , ${item?.address?.street} ` ;
-        let name:any =JSON.parse(item?.school?.name[this.currentLanguage]||'{}') ;
-        item['schoolName'] =name[this.currentLanguage] ;
+      this.kidsList?.forEach((item: any) => {
+        item['addressName'] = `${item?.address?.city} , ${item?.address?.street} `;
+        let name: any = JSON.parse(item?.school?.name[this.currentLanguage] || '{}');
+        item['schoolName'] = name[this.currentLanguage];
         // item['school_name'] = "default school"
       })
- 
+
     } else {
       this.handleError(response.message);
       return;
@@ -211,8 +239,8 @@ export class KidsListComponent {
   }
   // Add Edit Kid
   addEditItem(item?: any, type?: any): void {
-    console.log("item = ",item);
-    
+    console.log("item = ", item);
+
     const ref = this.dialogService?.open(AddEditKidComponent, {
       data: {
         item,
@@ -414,6 +442,56 @@ export class KidsListComponent {
   hide(): void {
     this.dropdown?.accessibleViewChild?.nativeElement?.blur();
   }
+
+  // Start Status List Functions
+  getStatusList(): void {
+    let patchStatus: any;
+    patchStatus = this.statusesList[0];
+    this.filterForm?.get('status').setValue(patchStatus);
+    // this.isLoadingStatuses = true;
+    // let statuesSubscription: Subscription = this.kidsService?.getAllStatusesList()
+    //   .pipe(
+    //     tap((res: any) => this.processStatusListResponse(res)),
+    //     catchError(err => this.handleError(err)),
+    //     finalize(() => this.finalizeStatusListLoading())
+    //   ).subscribe();
+    // this.subscriptions.push(statuesSubscription);
+  }
+  private processStatusListResponse(response: any): void {
+    if (response) {
+      // this.levels = response?.data?.items;
+      // if (this.isEdit) {
+      //   let patchLevel: any = [];
+      //   this.levels.forEach((element: any) => {
+      //     if (this.kidData.level.id == element.id) {
+      //       patchLevel.push(element);
+      //     }
+      //   });
+      //   this.kidForm.get('level').setValue(patchLevel);
+      // }
+    } else {
+      this.handleError(response.error);
+      return;
+    }
+  }
+  private finalizeStatusListLoading(): void {
+    this.isLoadingStatuses = false;
+
+  }
+  onStatusSelected(event: any): void {
+    this.page = 1;
+    this.perPage = 10;
+    if (event?.value && event?.value?.id !== '0' && event?.value?.id !== 0) {
+      console.log(event?.value);
+      this.statusValue = event?.value?.id;
+    } else {
+      this.statusValue = null;
+      let patchStatus: any = this.statusesList[0];
+      this.filterForm?.get('status').setValue(patchStatus);
+    }
+    this.getAllKids();
+  }
+  // End Status List Functions
 
   /* --- Handle api requests messages --- */
   private handleSuccess(msg: string | null): any {

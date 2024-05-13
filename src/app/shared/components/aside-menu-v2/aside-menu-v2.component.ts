@@ -52,6 +52,8 @@ export class AsideMenuV2Component {
   @Input() showCollapseBtn: boolean = true;
   @Output() onToggleSideNav: EventEmitter<any> = new EventEmitter();
 
+  currentUserInformation: any | null;
+
   constructor(
     private confirmationService: ConfirmationService,
     private asideMenuService: AsideMenuService,
@@ -64,14 +66,22 @@ export class AsideMenuV2Component {
 
   ngOnInit(): void {
     this.url = this.router.url;
-
+    this.getCurrentUserInfo();
     this.getMenuItems();
     this.screenWidth = window?.innerWidth;
+
+  }
+  getCurrentUserInfo(): void {
+    this.currentUserInformation = this.authService.getCurrentUserInformationLocally();
+    console.log(this.currentUserInformation);
+    
   }
 
   // Get menu items list
   getMenuItems(): void {
-    this.menuListItems = this.asideMenuService.getParentAsideMenuItem();
+    if (this.currentUserInformation?.type == 'parent') {
+      this.menuListItems = this.asideMenuService.getParentAsideMenuItem();
+    }
   }
 
   // Handle click event on menu item

@@ -47,22 +47,29 @@ export class AddEditKidComponent {
   currentLanguage: string;
 
   // Levels Variables
-   levels: any = [
+  levels: any = [
     { id: "1", name: "1" },
     { id: "2", name: "2" },
     { id: "3", name: "3" },
-    { id: "4", name: "4" }
+    { id: "4", name: "4" },
+    { id: "5", name: "5" },
+    { id: "6", name: "6" },
+    { id: "7", name: "7" },
+    { id: "8", name: "8" },
+    { id: "9", name: "9" }
   ];
-  schools: any =  [];
-  classes: any =  [
+  isLoadingLevels: boolean = false;
+  // Levels Variables
+
+  classes: any = [
     { id: "A", name: "A" },
     { id: "B", name: "B" }
   ];
-  isLoadingLevels: boolean = false;
-  isLoadingSchools: boolean = false;
   isLoadingClasses: boolean = false;
 
-  // Levels Variables
+  schools: any = [];
+  isLoadingSchools: boolean = false;
+
   statuses: any = [];
   isLoadingStatuses: boolean = false;
 
@@ -83,10 +90,10 @@ export class AddEditKidComponent {
       }],
       code: ['', {
         validators: [
-                      Validators.required,
-                      Validators.pattern(this.englishAndNumbersPattern) 
-                    ], updateOn: "blur",
-          
+          Validators.required,
+          Validators.pattern(this.englishAndNumbersPattern)
+        ], updateOn: "blur",
+
       }],
       school: [null, {
         validators: [
@@ -121,7 +128,9 @@ export class AddEditKidComponent {
   get formControls(): any {
     return this.kidForm?.controls;
   }
+
   currentUserInformation: any | null;
+
   constructor(
     private localizationLanguageService: LocalizationLanguageService,
     private metadataService: MetadataService,
@@ -155,7 +164,7 @@ export class AddEditKidComponent {
   getCurrentUserInfo(): void {
     this.currentUserInformation = this.authService.getCurrentUserInformationLocally();
     console.log(this.currentUserInformation);
-    
+
   }
   private updateMetaTagsForSEO(): void {
     let metaData: MetaDetails = {
@@ -176,11 +185,11 @@ export class AddEditKidComponent {
     this.getLevels();
     this.getClasses();
 
-    let formPhoto:any = this.kidData?.item?.image_path;
+    let formPhoto: any = this.kidData?.item?.image_path;
     this.formControls?.kidImage?.setValue(formPhoto);
   }
 
-  private patchStreet(data:any){
+  private patchStreet(data: any) {
 
     this.kidForm.patchValue({
       city: data?.city,
@@ -194,10 +203,10 @@ export class AddEditKidComponent {
   // Start Levels List Functions
   getLevels(): void {
     if (this.isEdit) {
-      let patchLevel: any ;
+      let patchLevel: any;
       this.levels.forEach((element: any) => {
-       if (this.kidData?.item?.level == element?.id) {
-          patchLevel=element;
+        if (this.kidData?.item?.level == element?.id) {
+          patchLevel = element;
         }
       });
       this.kidForm.get('level').setValue(patchLevel);
@@ -239,93 +248,94 @@ export class AddEditKidComponent {
   }
   // End Levels List Functions
 
-    // Start Class List Functions
-    getClasses(): void {
+  // Start Class List Functions
+  getClasses(): void {
+    if (this.isEdit) {
+      let patchClass: any;
+      console.log("tessssssssssssssst", this.classes?.length);
+
+      this.classes?.forEach((element: any) => {
+        if (this.kidData?.item?.class == element?.id) {
+          patchClass = element;
+        }
+      });
+      this.kidForm?.get('class')?.setValue(patchClass);
+    }
+    // this.isLoadingClasses = true;
+    // let classesSubscription: Subscription = this.kidsService?.getClassesList()
+    //   .pipe(
+    //     tap((res: any) => this.processClassesListResponse(res)),
+    //     catchError(err => this.handleError(err)),
+    //     finalize(() => this.finalizeClassesListLoading())
+    //   ).subscribe();
+    // this.subscriptions.push(classesSubscription);
+  }
+  private processClassesListResponse(response: any): void {
+    if (response) {
+      this.levels = response?.data?.items;
       if (this.isEdit) {
-        let patchClass: any;
-        console.log("tessssssssssssssst",this.classes?.length);
-        
-        this.classes?.forEach((element: any) => {
-          if (this.kidData?.item?.class == element?.id) {
-            patchClass= element;
+        let patchLevel: any = [];
+        this.levels.forEach((element: any) => {
+          if (this.kidData.level.id == element.id) {
+            patchLevel.push(element);
           }
         });
-        this.kidForm?.get('class')?.setValue(patchClass);
+        this.kidForm.get('level').setValue(patchLevel);
       }
-      // this.isLoadingClasses = true;
-      // let classesSubscription: Subscription = this.kidsService?.getClassesList()
-      //   .pipe(
-      //     tap((res: any) => this.processClassesListResponse(res)),
-      //     catchError(err => this.handleError(err)),
-      //     finalize(() => this.finalizeClassesListLoading())
-      //   ).subscribe();
-      // this.subscriptions.push(classesSubscription);
+    } else {
+      this.handleError(response.error);
+      return;
     }
-    private processClassesListResponse(response: any): void {
-      if (response) {
-        this.levels = response?.data?.items;
-        if (this.isEdit) {
-          let patchLevel: any = [];
-          this.levels.forEach((element: any) => {
-            if (this.kidData.level.id == element.id) {
-              patchLevel.push(element);
-            }
-          });
-          this.kidForm.get('level').setValue(patchLevel);
-        }
-      } else {
-        this.handleError(response.error);
-        return;
-      }
-    }
-    private finalizeClassesListLoading(): void {
-      this.isLoadingClasses = false;
-    }
-    // End Class List Functions
+  }
+  private finalizeClassesListLoading(): void {
+    this.isLoadingClasses = false;
+  }
+  // End Class List Functions
 
-    // Start Schools List Functions
-    getSchools(): void {
-      this.isLoadingSchools = true;
-      let schoolsSubscription: Subscription = this.schoolsService?.getSchoolsList()
-        .pipe(
-          tap((res: any) => {
-            this.processSchoolsListResponse(res)}),
-          catchError(err => this.handleError(err)),
-          finalize(() => this.finalizeSchoolsListLoading())
-        ).subscribe();
-      this.subscriptions.push(schoolsSubscription);
-    }
-    private processSchoolsListResponse(response: any): void {
-      if (response) {
-        this.schools = response?.data?.items;
-        this.schools?.forEach((item:any)=>{
-          let name:any = JSON.parse(item?.name || "{}") ;
-          item['schoolName'] =name[this.currentLanguage] ;
-        })
-           console.log("schooooll ",this.schools);
-           
-        if (this.isEdit) {
-          let patchSchool: any;
-          this.schools?.forEach((element: any) => {
-            if (this.kidData?.item?.school?.id == element?.id) {
-              patchSchool= element;
-            }
-            console.log("eddddittttt ",patchSchool);
-            
-          });
-          this.kidForm?.get('school')?.setValue(patchSchool);
-        }
-      } else {
-        this.handleError(response.error);
-        return;
+  // Start Schools List Functions
+  getSchools(): void {
+    this.isLoadingSchools = true;
+    let schoolsSubscription: Subscription = this.schoolsService?.getSchoolsList()
+      .pipe(
+        tap((res: any) => {
+          this.processSchoolsListResponse(res)
+        }),
+        catchError(err => this.handleError(err)),
+        finalize(() => this.finalizeSchoolsListLoading())
+      ).subscribe();
+    this.subscriptions.push(schoolsSubscription);
+  }
+  private processSchoolsListResponse(response: any): void {
+    if (response) {
+      this.schools = response?.data?.items;
+      this.schools?.forEach((item: any) => {
+        let name: any = JSON.parse(item?.name || "{}");
+        item['schoolName'] = name[this.currentLanguage];
+      })
+      console.log("schooooll ", this.schools);
+
+      if (this.isEdit) {
+        let patchSchool: any;
+        this.schools?.forEach((element: any) => {
+          if (this.kidData?.item?.school?.id == element?.id) {
+            patchSchool = element;
+          }
+          console.log("eddddittttt ", patchSchool);
+
+        });
+        this.kidForm?.get('school')?.setValue(patchSchool);
       }
+    } else {
+      this.handleError(response.error);
+      return;
     }
-    private finalizeSchoolsListLoading(): void {
-      console.log("finalizeSchoolsListLoading");
-      
-      this.isLoadingSchools = false;
-    }
-    // End Schools List Functions
+  }
+  private finalizeSchoolsListLoading(): void {
+    console.log("finalizeSchoolsListLoading");
+
+    this.isLoadingSchools = false;
+  }
+  // End Schools List Functions
 
   // Upload File
   uploadFile(event: any): void {
@@ -337,17 +347,17 @@ export class AddEditKidComponent {
   submit(): void {
     if (this.kidForm?.valid) {
       console.log(this.kidForm.value);
-      
+
       const formData: any = this.extractFormData();
       console.log(formData.value);
-      
+
       this.addEditKid(formData);
     } else {
       this.publicService?.validateAllFormFields(this.kidForm);
     }
   }
   private extractFormData(): any {
-    let kidFormData:any=this.kidForm?.value ;
+    let kidFormData: any = this.kidForm?.value;
     let formData = new FormData();
     formData.append('name', kidFormData?.name ?? '');
     formData.append('code', kidFormData?.code ?? '');
@@ -362,16 +372,16 @@ export class AddEditKidComponent {
       let photo: any = this.kidForm?.value?.kidImage;
       photo?.name != null ? formData.append('image', this.kidImage) : '';
       formData.append('_method', 'PUT');
-    }else {
+    } else {
       formData.append('image', this.kidImage ?? '');
     }
-    formData.append('parent_id', this.currentUserInformation?.id); 
+    formData.append('parent_id', this.currentUserInformation?.id);
     formData.append('paid_status', '0');
     console.log(formData);
-    
+
     return formData;
   }
-  
+
   private addEditKid(formData: any): void {
     this.publicService?.showGlobalLoader?.next(true);
     let subscribeAddKid: Subscription = this.kidsService?.addEditKid(formData, this.kidId ? this.kidId : null).pipe(
@@ -394,9 +404,9 @@ export class AddEditKidComponent {
   cancel(): void {
     this.ref?.close({ listChanged: false });
   }
-  
-   /* --- Handle api requests messages --- */
-   private handleSuccess(msg: string | null): any {
+
+  /* --- Handle api requests messages --- */
+  private handleSuccess(msg: string | null): any {
     this.setMessage(msg || this.publicService.translateTextFromJson('general.successRequest'), 'succss');
   }
   private handleError(err: string | null): any {
