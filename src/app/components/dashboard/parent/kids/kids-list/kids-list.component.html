@@ -19,8 +19,8 @@
               [class.border-red]="formControls?.status?.invalid && (formControls?.status?.dirty || formControls?.status?.touched)">
               <p-dropdown [options]="statusesList" formControlName="status" optionLabel="name" [filter]="true"
                 [dropdownIcon]="'fas fa-caret-down'" [virtualScroll]="true" [virtualScrollItemSize]="38" filterBy="name"
-                appendTo="body" [filterPlaceholder]="'placeholders.search'|translate" [readonly]="isLoadingStatuses"
-                scrollHeight="200px" emptyMessage="{{'general.no_result_found'|translate}}" [showClear]="false"
+                appendTo="body" [filterPlaceholder]="'placeholders.search'|translate" [readonly]="isLoadingStatuses ||isLoadingKidsList"
+                scrollHeight="200px" emptyMessage="{{'general.no_result_found'|translate}}" [showClear]="true"
                 placeholder="{{'placeholders.status'|translate}}" (onChange)="onStatusSelected($event)">
               </p-dropdown>
               <ng-container *ngIf="isLoadingStatuses">

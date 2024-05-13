@@ -96,12 +96,7 @@ export class KidsListComponent {
 
 
   // Statuses Variables
-  statusesList: any = [
-    { id: "0", name: "All" },
-    { id: "1", name: "Pending" },
-    { id: "2", name: "Rejected" },
-    { id: "3", name: "Approved" }
-  ];
+  statusesList: any = [];
   isLoadingStatuses: boolean = false;
   statusValue: string | number | null;
   // Statuses Variables
@@ -143,22 +138,21 @@ export class KidsListComponent {
       {
         field: 'image_path', header: '', title: '', type: 'img'
       },
-      // { field: 'status', header: 'dashboard.tableHeader.status', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.status'), type: 'status', sort: false, showDefaultSort: false, showAscSort: false, showDesSort: false, filter: false, },
-      { field: 'code', header: 'dashboard.tableHeader.code', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.code'), type: 'text', sort: true, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: true, },
-      { field: 'schoolName', header: 'dashboard.tableHeader.schoolName', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.schoolName'), type: 'text', sort: true, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: true, },
-      { field: 'name', header: 'dashboard.tableHeader.name', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.name'), type: 'text', sort: true, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: true, },
-      { field: 'level', header: 'dashboard.tableHeader.level', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.level'), type: 'text', sort: true, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: true, },
-      { field: 'class', header: 'dashboard.tableHeader.class', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.class'), type: 'text', sort: true, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: true, },
-      { field: 'addressName', header: 'dashboard.tableHeader.address', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.address'), type: 'text', sort: true, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: true, },
-
+      { field: 'name', header: 'dashboard.tableHeader.name', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.name'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
+      { field: 'status', header: 'dashboard.tableHeader.status', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.status'), type: 'status', sort: false, showDefaultSort: false, showAscSort: false, showDesSort: false, filter: false},
+      { field: 'code', header: 'dashboard.tableHeader.code', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.code'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
+      { field: 'schoolName', header: 'dashboard.tableHeader.schoolName', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.schoolName'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
+      { field: 'level', header: 'dashboard.tableHeader.level', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.level'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
+      { field: 'class', header: 'dashboard.tableHeader.class', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.class'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
+      { field: 'addressName', header: 'dashboard.tableHeader.address', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.address'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
     ];
     this.updateMetaTagsForSEO();
     this.getAllKids();
   }
   private updateMetaTagsForSEO(): void {
     let metaData: MetaDetails = {
-      title: 'الأطفال',
-      description: 'الأطفال',
+      title: 'الأطفال | سعة',
+      description: 'الأطفال | سعة',
       image: 'https://ik.imagekit.io/2cvha6t2l9/Logo.jpeg?updatedAt=1712577283111'
     }
     this.metadataService.updateMetaTagsForSEO(metaData);
@@ -212,12 +206,11 @@ export class KidsListComponent {
       this.kidsList = response?.data?.items;
       console.log(this.kidsList);
       this.kidsList?.forEach((item: any) => {
-        item['addressName'] = `${item?.address?.city} , ${item?.address?.street} `;
+        item['addressName'] = `${item?.address?.region}, ${item?.address?.city}, ${item?.address?.street}, ${item?.address?.zip}`;
         let name: any = JSON.parse(item?.school?.name[this.currentLanguage] || '{}');
         item['schoolName'] = name[this.currentLanguage];
-        // item['school_name'] = "default school"
-      })
-
+        item['status'] = item?.approve_status?.label;
+      });
     } else {
       this.handleError(response.message);
       return;
@@ -445,6 +438,21 @@ export class KidsListComponent {
 
   // Start Status List Functions
   getStatusList(): void {
+    if (this.currentLanguage == 'ar') {
+      this.statusesList = [
+        { id: 0, name: "الكل" },
+        { id: 1, name: "قيد الانتظار" },
+        { id: 2, name: "مرفوض" },
+        { id: 3, name: "موافق عليه" }
+      ];
+    } else {
+      this.statusesList = [
+        { id: 0, name: "All" },
+        { id: 1, name: "Pending" },
+        { id: 2, name: "Rejected" },
+        { id: 3, name: "Approved" }
+      ];
+    }
     let patchStatus: any;
     patchStatus = this.statusesList[0];
     this.filterForm?.get('status').setValue(patchStatus);

@@ -1,5 +1,6 @@
 :host::ng-deep {
   #dynamic-global-data-table {
+
     // .item-badge{
     //     .status-success {
     //       background-color: green !important;
@@ -7,61 +8,112 @@
     // }
     .item-badge {
       display: inline-block;
-      width: 12px; /* Set the width and height to create a circle */
-      height: 12px;
-      border-radius: 50%; /* Make the element a circle */
     }
-    
-    /* Define different colors for different statuses */
-    .item-badge.status-pending {
-      background-color: yellow; /* Example color for pending status */
+
+    .status-bg {
+      padding: 3px 5px !important;
+      border-radius: 3px !important;
+      font-size: 14px;
     }
-    
-    .item-badge.status-success {
-      background-color: green; /* Example color for approved status */
+
+    .status-bg-completed,
+    .status-bg-Completed,
+    .status-bg-approved,
+    .status-bg-Approved,
+    .status-bg-paid,
+    .status-bg-Paid {
+      color: #32a071;
+      background-color: #32a07114;
     }
-    
-    .item-badge.status-rejected {
-      background-color: red; /* Example color for rejected status */
+
+    .status-bg-pending,
+    .status-bg-Pending {
+      color: #f9bc61;
+      background-color: #f9bc6114;
     }
+
+    .status-bg-rejected,
+    .status-bg-Rejected {
+      color: #f1416c;
+      background-color: #fff5f8;
+    }
+
+    .status-bg-cancelled,
+    .status-bg-noShow {
+      color: #8c95a3;
+      background-color: #eeeff1;
+    }
+
+    .status-bg-inReview {
+      color: #f9bc61;
+      background-color: #fef5e7;
+    }
+
+    .status-bg-confirmed,
+    .status-bg-attended {
+      color: #50cd89 !important;
+      background-color: #e8fff3 !important;
+    }
+
+    .status-bg-submitted {
+      color: #1071b8 !important;
+      background-color: #dbeaf5 !important;
+    }
+
+    .status-bg-pendingPayment {
+      color: #77a13b !important;
+      background-color: #ebf1e2 !important;
+    }
+
+
     #table-skeleton {
       .p-datatable-table {
         // border-spacing: 0 0px !important;
       }
+
       .thead {
         display: none;
       }
     }
+
     .p-datatable-table {
       font-family: "Poppins", sans-serif !important;
+
       &:dir(rtl) {
         font-family: "IBM Plex Sans Arabic", sans-serif;
       }
+
       // border-collapse: separate;
       // border-spacing: 0 15px !important;
     }
+
     .search-input {
       height: 3rem !important;
       min-width: 24rem;
       background-color: #f5f5f5;
       border: 0;
     }
+
     .clear {
       border-radius: var(--dashboard-border-radius);
     }
+
     .p-datatable {
       .p-datatable-wrapper {
         min-height: calc(100vh - 383px) !important;
+
         .p-datatable-wrapper {
           min-height: auto !important;
         }
       }
+
       .p-datatable-header {
         padding: 0.5rem 1rem 1.5rem !important;
         border: 0 !important;
         background-color: transparent !important;
       }
-      .p-datatable-thead > tr > th {
+
+      .p-datatable-thead>tr>th {
         text-transform: capitalize !important;
         background-color: #f8f9fa !important;
         color: #111;
@@ -70,7 +122,8 @@
         border-width: 1px 0 1px 0 !important;
         border-color: rgba(140, 149, 163, 0.21);
       }
-      .p-datatable-tbody > tr > td {
+
+      .p-datatable-tbody>tr>td {
         border-color: rgba(140, 149, 163, 0.21);
         border-bottom-width: 1px !important;
         padding: 1rem;
@@ -99,6 +152,7 @@
         //   }
         // }
       }
+
       .p-sortable-column .p-sortable-column-icon {
         margin: 0rem;
         width: auto;
@@ -107,25 +161,31 @@
       .edit:hover {
         color: var(--text-main-color);
       }
+
       .remove:hover {
         color: #ce2121;
       }
     }
+
     .p-paginator {
       background-color: transparent;
+
       .p-paginator-pages {
         .p-paginator-page {
           width: 1rem;
           height: 2rem;
           min-width: 2rem;
           border-radius: 50%;
+
           &.p-highlight {
             background-color: var(--bg-main-color);
             color: var(--text-white-color);
           }
         }
       }
+
       &:dir(rtl) {
+
         .p-paginator-first,
         .p-paginator-last,
         .p-paginator-prev,
@@ -133,10 +193,12 @@
           transform: scaleX(-1) !important;
         }
       }
+
       .p-link:hover {
         background-color: transparent;
       }
     }
+
     .p-dropdown {
       height: 40px !important;
       background-color: #fff;
@@ -144,6 +206,7 @@
       border-radius: 10px;
       height: 3rem !important;
       border: 1px solid #eee !important;
+
       // &,
       &:not(.p-disabled):hover {
         .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
@@ -160,6 +223,7 @@
         padding: 10px 0 10px 12px;
         border: 0 !important;
         line-height: initial !important;
+
         &:dir(rtl) {
           padding: 10px 12px 10px 0px;
         }
@@ -180,6 +244,7 @@
         }
       }
     }
+
     .child {
       background-color: var(--bg-main-color);
       border-radius: var(--dashboard-border-radius);
@@ -192,29 +257,36 @@
       text-overflow: ellipsis;
       white-space: nowrap;
     }
+
     .noItemAdded {
       background-color: #e8e8e8 !important;
       border-radius: var(--dashboard-border-radius);
       padding-left: 0.5rem;
       padding-right: 0.5rem;
     }
+
     .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider,
     .p-inputswitch .p-inputswitch-slider {
       transform: scale(0.75);
     }
+
     .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
       background: var(--text-main-color) !important;
     }
+
     .p-column-filter-menu-button {
       color: #111;
     }
   }
+
   .not-found {
     min-height: 20rem;
   }
+
   .reset-password:hover {
     color: var(--text-main-color) !important;
   }
+
   .pi-filter:before {
     content: "\f0b0" !important;
     font-family: "FontAwesome" !important;
@@ -242,6 +314,7 @@
   .sort {
     color: var(--text-dark-color);
   }
+
   .pi-filter {
     color: var(--text-dark-color);
   }
@@ -253,23 +326,29 @@
     color: var(--text-main-color) !important;
     background-color: transparent;
   }
+
   .details:hover {
     color: var(--text-main-color);
   }
+
   .dropdown-menu.filter {
     width: 18rem !important;
     z-index: 999;
+
     .p-dropdown {
       min-height: 50px !important;
+
       .p-dropdown-label {
         height: 47px !important;
       }
     }
   }
+
   .assignUserMenu {
     max-height: 50vh;
     overflow-y: scroll;
   }
+
   .assignUserMenuSearch {
     background-color: #fafafa;
   }
@@ -282,6 +361,7 @@
     .pi-chevron-down:before {
       content: "\e966" !important;
     }
+
     .p-multiselect-trigger {
       background-color: #1071b8;
       border-radius: 5px;
@@ -289,21 +369,26 @@
       width: 35px;
       height: 35px;
     }
+
     .p-multiselect-panel {
       border: 0;
       border-radius: 10px;
+
       .p-multiselect-header {
         border-radius: 13px 13px 0 0 !important;
         padding: 12px 10px !important;
         background-color: #fafafa;
+
         .p-multiselect-filter-container .p-inputtext {
           min-width: 10rem !important;
           height: 2.7rem;
         }
       }
+
       .p-multiselect-items .p-multiselect-item {
         margin: 10px !important;
         border-radius: 5px;
+
         &.p-highlight {
           background-color: #eaeaea;
           color: var(--text-dark-color);
@@ -311,6 +396,7 @@
       }
     }
   }
+
   .p-multiselect-label-container {
     display: none !important;
   }
@@ -319,12 +405,11 @@
     width: 35px !important;
     height: 35px !important;
   }
-  .p-multiselect-panel
-    .p-multiselect-header
-    .p-multiselect-filter-container
-    .p-inputtext {
+
+  .p-multiselect-panel .p-multiselect-header .p-multiselect-filter-container .p-inputtext {
     height: 2.8rem !important;
   }
+
   .dropdown-arrow {
     .pi-chevron-down:before {
       content: "\f0d7" !important;
@@ -332,18 +417,22 @@
     }
   }
 }
+
 :host::ng-deep {
   .p-column-filter-operator-dropdown {
     background-color: #fff !important;
     border: 1px solid #ccc;
   }
+
   .p-dropdown-panel {
     padding: 10px;
+
     .p-dropdown-item {
       padding: 0.7rem 0.5rem;
     }
   }
 }
+
 .badge-btn {
   border-radius: 11px;
   height: 2.6rem;
@@ -353,11 +442,13 @@
   justify-content: center;
   align-items: center;
 }
+
 .badge-edit,
 .badge-details {
   background-color: #00377e2b;
   color: var(--text-main-color);
 }
+
 .badge-delete {
   background: #e5555530;
   color: #e55555;
@@ -371,6 +462,7 @@
   border: 1px solid var(--bg-main-color);
   color: var(--text-white-color);
 }
+
 :host::ng-deep {
   p-image {
     width: 70px;
@@ -379,16 +471,19 @@
     border-radius: 8px;
     overflow: hidden;
   }
+
   .p-image-preview-indicator {
     height: 70px;
     border-radius: 8px;
   }
+
   .p-image {
     width: 70px;
     min-width: 70px;
     height: 70px;
     border-radius: 8px;
-    & > img {
+
+    &>img {
       width: 70px;
       min-width: 70px;
       height: 70px;
