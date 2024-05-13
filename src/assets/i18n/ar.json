@@ -331,7 +331,8 @@
     "formPhoto": "صورة الإستمارة",
     "description": "الوصف",
     "school":"المدرسة" ,
-    "kidImage" : "صورة الطفل"
+    "kidImage" : "صورة الطفل",
+    "region": "المنطقة"
   },
   "placeholders": {
     "title": "أدخل العنوان",
@@ -389,7 +390,8 @@
     "insuranceExpiryDate": "أدخل تاريخ إنتهاء التأمين",
     "formPhoto": "أدخل صورة الإستمارة",
     "dateFormat": "شهر / يوم / سنه",
-    "school":"أختر المدرسة"
+    "school":"أختر المدرسة",
+    "region":"أدخل المنطقة"
   },
   "validations": {
     "username": "اسم المستخدم مطلوب",

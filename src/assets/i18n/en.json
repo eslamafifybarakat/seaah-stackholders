@@ -331,7 +331,8 @@
     "description": "Description",
     "schoolName":"School Name",
     "school":"School",
-    "kidImage":"Kid Image"
+    "kidImage":"Kid Image",
+    "region":"Region"
   },
   "placeholders": {
     "title": "Enter title",
@@ -389,7 +390,8 @@
     "insuranceExpiryDate": "Enter insurance expiry date",
     "formPhoto": "Enter form photo",
     "dateFormat": "mm/dd/yy",
-    "school":"Select school"
+    "school":"Select school" ,
+    "region":"Enter region"
   },
   "validations": {
     "username": "Username is required",

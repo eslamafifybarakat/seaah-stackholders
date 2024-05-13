@@ -110,16 +110,24 @@
         </div>
         <div class="col-md-6">
           <div class="mb-3">
-            <label for="class" class="mb-2 required">
+            <label class="mb-2 required">
               {{'labels.class'|translate}}
             </label>
-            <input type="text" class="form-control" formControlName="class"
-              (input)="publicService?.clearValidationErrors(formControls?.class)" [class.border-red]=" formControls?.class?.invalid && (formControls?.class?.dirty ||
-              formControls?.class?.touched)" placeholder="{{'placeholders.class'|translate}}">
+            <span class="p-input-icon-right select-loading d-block"
+              [class.border-red]="formControls?.class?.invalid && (formControls?.class?.dirty || formControls?.class?.touched)">
+              <p-dropdown [options]="classes" formControlName="class" optionLabel="class" [filter]="true"
+                [dropdownIcon]="'fas fa-caret-down'" [virtualScroll]="true" [virtualScrollItemSize]="38"
+                filterBy="class" appendTo="body" [filterPlaceholder]="'placeholders.search'|translate"
+                [showClear]="true" placeholder="{{'placeholders.class'|translate}}">
+              </p-dropdown>
+              <!-- <ng-container *ngIf="isLoadingLevels">
+                <i class="pi pi-spin pi-spinner"></i>
+              </ng-container> -->
+            </span>
             <div class="mt-2">
               <ng-container
-                *ngIf="formControls?.class?.invalid && (formControls?.class?.dirty || formControls?.class?.touched)">
-                <ng-container *ngIf="formControls?.class?.errors?.['required']">
+                *ngIf="formControls?.level?.invalid && (formControls?.level?.dirty || formControls?.level?.touched)">
+                <ng-container *ngIf="formControls?.level?.errors?.['required']">
                   <span class="text-danger fs-8">
                     {{'validations.requiredField'|translate}}
                   </span>
@@ -130,16 +138,36 @@
         </div>
         <div class="col-md-6">
           <div class="mb-3">
-            <label for="address" class="mb-2 required">
-              {{'labels.address'|translate}}
+            <label for="city" class="mb-2 required">
+              {{'labels.city'|translate}}
             </label>
-            <input type="text" class="form-control" formControlName="address"
-              (input)="publicService?.clearValidationErrors(formControls?.address)" [class.border-red]=" formControls?.address?.invalid && (formControls?.address?.dirty ||
-              formControls?.address?.touched)" placeholder="{{'placeholders.address'|translate}}">
+            <input type="text" class="form-control" formControlName="city"
+              (input)="publicService?.clearValidationErrors(formControls?.city)" [class.border-red]=" formControls?.city?.invalid && (formControls?.city?.dirty ||
+              formControls?.city?.touched)" placeholder="{{'placeholders.city'|translate}}">
             <div class="mt-2">
               <ng-container
-                *ngIf="formControls?.address?.invalid && (formControls?.address?.dirty || formControls?.address?.touched)">
-                <ng-container *ngIf="formControls?.address?.errors?.['required']">
+                *ngIf="formControls?.city?.invalid && (formControls?.city?.dirty || formControls?.city?.touched)">
+                <ng-container *ngIf="formControls?.city?.errors?.['required']">
+                  <span class="text-danger fs-8">
+                    {{'validations.requiredField'|translate}}
+                  </span>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="region" class="mb-2 required">
+              {{'labels.region'|translate}}
+            </label>
+            <input type="text" class="form-control" formControlName="region"
+              (input)="publicService?.clearValidationErrors(formControls?.region)" [class.border-red]=" formControls?.region?.invalid && (formControls?.region?.dirty ||
+              formControls?.region?.touched)" placeholder="{{'placeholders.region'|translate}}">
+            <div class="mt-2">
+              <ng-container
+                *ngIf="formControls?.region?.invalid && (formControls?.region?.dirty || formControls?.region?.touched)">
+                <ng-container *ngIf="formControls?.region?.errors?.['required']">
                   <span class="text-danger fs-8">
                     {{'validations.requiredField'|translate}}
                   </span>

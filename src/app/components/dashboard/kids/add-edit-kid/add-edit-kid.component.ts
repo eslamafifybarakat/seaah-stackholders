@@ -45,12 +45,15 @@ export class AddEditKidComponent {
   currentLanguage: string;
 
   // Levels Variables
-  levels: any = [];
+  levels: any = [{ id: 1, level: 1 },
+    { id: 1, level: 1 },
+    { id: 1, level: 1 },
+    { id: 1, level: 1 },];
   schools: any =  [
-    { id: 1, school: 'school 1' },
-    { id: 2, school: 'school 2' },
-    { id: 3, school: 'school 3' },
-    { id: 4, school: 'school 4' },
+    { id: 1, school: 1 },
+    { id: 1, school: 1 },
+    { id: 1, school: 1 },
+    { id: 1, school: 1 },
   ];
   isLoadingLevels: boolean = false;
   isLoadingSchools: boolean = false;
