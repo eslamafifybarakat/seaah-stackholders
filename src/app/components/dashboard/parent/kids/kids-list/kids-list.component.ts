@@ -206,7 +206,7 @@ export class KidsListComponent {
       this.kidsList = response?.data?.items;
       console.log(this.kidsList);
       this.kidsList?.forEach((item: any) => {
-        item['addressName'] = `${item?.address?.region}, ${item?.address?.city}, ${item?.address?.street}, ${item?.address?.zip}`;
+        item['addressName'] = `${item?.address?.region??''}, ${item?.address?.city??''}, ${item?.address?.street??''}, ${item?.address?.zip??''}`;
         let name: any = JSON.parse(item?.school?.name[this.currentLanguage] || '{}');
         item['schoolName'] = name[this.currentLanguage];
         item['status'] = item?.approve_status?.label;

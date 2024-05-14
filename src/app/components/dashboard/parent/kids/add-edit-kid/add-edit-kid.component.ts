@@ -360,12 +360,14 @@ export class AddEditKidComponent {
     formData.append('address[zip]', '14552');
     if (this.isEdit) {
       let photo: any = this.kidForm?.value?.kidImage;
+      let paidStatusVal: any = this.kidData?.item?.paid_status == true ? 1 : 0;
       photo?.name != null ? formData.append('image', this.kidImage) : '';
       formData.append('_method', 'PUT');
-      formData.append('paid_status', this.kidData?.item?.paid_status);
+      formData.append('paid_status', paidStatusVal);
     } else {
+      let paidStatusVal: any = 0;
       formData.append('image', this.kidImage ?? '');
-      formData.append('paid_status', '0');
+      formData.append('paid_status', paidStatusVal);
     }
     formData.append('parent_id', this.currentUserInformation?.id);
     return formData;

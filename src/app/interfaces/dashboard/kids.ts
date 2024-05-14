@@ -3,6 +3,8 @@
 export interface KidListingItem {
   id: number;
   name: string;
+  addressName?:string| null;
+  status?:string| null;
   code: string;
   level: string;
   class: string;

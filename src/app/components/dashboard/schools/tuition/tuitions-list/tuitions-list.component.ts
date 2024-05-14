@@ -99,7 +99,7 @@ export class TuitionsListComponent {
   // Statuses Variables
   statusesList: any = [];
   isLoadingStatuses: boolean = false;
-  statusValue: string | number | null;
+  statusValue: string | number | null=3;
   // Statuses Variables
   filterForm = this.fb?.group(
     {

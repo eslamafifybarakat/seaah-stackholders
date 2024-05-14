@@ -1,5 +1,4 @@
-import { TuitionExpensesService } from './../../services/tuitionExpenses.service';
-import { KidsService } from '../../services/kids.service';
+import { KidsService } from './../../../services/kids.service';
 // Modules
 import { MultiSelectModule } from 'primeng/multiselect';
 import { TranslateModule } from '@ngx-translate/core';
@@ -8,19 +7,19 @@ import { CalendarModule } from 'primeng/calendar';
 import { CommonModule } from '@angular/common';
 
 // Components
-import { FileUploadComponent } from '../../../../shared/components/upload-files/file-upload/file-upload.component';
+import { FileUploadComponent } from '../../../../../shared/components/upload-files/file-upload/file-upload.component';
 
 //Services
 import { LocalizationLanguageService } from 'src/app/services/generic/localization-language.service';
-import { InstallmentWaysListingItem } from '../../../../interfaces/dashboard/installmentWays';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MetaDetails, MetadataService } from 'src/app/services/generic/metadata.service';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { AlertsService } from '../../../../services/generic/alerts.service';
-import { PublicService } from '../../../../services/generic/public.service';
+import { AlertsService } from '../../../../../services/generic/alerts.service';
+import { PublicService } from '../../../../../services/generic/public.service';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { tap, catchError, finalize } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { TuitionExpensesService } from '../../../services/tuitionExpenses.service';
 
 @Component({
   standalone: true,

@@ -1,30 +1,29 @@
-import { TuitionExpenseListingItem, TuitionExpensesListApiResponse } from './../../../../interfaces/dashboard/tuitionExpenses';
+import { TuitionExpenseListingItem, TuitionExpensesListApiResponse } from './../../../../../interfaces/dashboard/tuitionExpenses';
 // Modules
 import { TranslateModule } from '@ngx-translate/core';
 import { Paginator, PaginatorModule } from 'primeng/paginator';
 import { CommonModule } from '@angular/common';
 
 // Components
-import { DynamicTableLocalActionsComponent } from '../../../../shared/components/dynamic-table-local-actions/dynamic-table-local-actions.component';
-import { DynamicTableV2Component } from '../../../../shared/components/dynamic-table-v2/dynamic-table-v2.component';
-import { DynamicSvgComponent } from '../../../../shared/components/icons/dynamic-svg/dynamic-svg.component';
-import { DynamicTableComponent } from '../../../../shared/components/dynamic-table/dynamic-table.component';
-import { SkeletonComponent } from '../../../../shared/skeleton/skeleton/skeleton.component';
+import { DynamicTableLocalActionsComponent } from '../../../../../shared/components/dynamic-table-local-actions/dynamic-table-local-actions.component';
+import { DynamicTableV2Component } from '../../../../../shared/components/dynamic-table-v2/dynamic-table-v2.component';
+import { DynamicSvgComponent } from '../../../../../shared/components/icons/dynamic-svg/dynamic-svg.component';
+import { DynamicTableComponent } from '../../../../../shared/components/dynamic-table/dynamic-table.component';
+import { SkeletonComponent } from '../../../../../shared/skeleton/skeleton/skeleton.component';
 
 //Services
-import { LocalizationLanguageService } from '../../../../services/generic/localization-language.service';
-import { MetaDetails, MetadataService } from '../../../../services/generic/metadata.service';
-import { AlertsService } from '../../../../services/generic/alerts.service';
-import { PublicService } from '../../../../services/generic/public.service';
+import { LocalizationLanguageService } from '../../../../../services/generic/localization-language.service';
+import { MetaDetails, MetadataService } from '../../../../../services/generic/metadata.service';
+import { AlertsService } from '../../../../../services/generic/alerts.service';
+import { PublicService } from '../../../../../services/generic/public.service';
 import { catchError, debounceTime, finalize, map, tap } from 'rxjs/operators';
 import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
-import { KidsService } from '../../services/kids.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Subject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { TuitionExpenseCardComponent } from '../tuition-expense-card/tuition-expense-card.component';
 import { AddEditTuitionExpensesComponent } from '../add-edit-tuition-expense/add-edit-tuition-expense.component';
-import { TuitionExpensesService } from '../../services/tuitionExpenses.service';
+import { TuitionExpensesService } from '../../../services/tuitionExpenses.service';
 
 @Component({
   standalone: true,

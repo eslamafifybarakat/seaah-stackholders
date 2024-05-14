@@ -99,7 +99,7 @@ export class KidsListComponent {
   // Statuses Variables
   statusesList: any = [];
   isLoadingStatuses: boolean = false;
-  statusValue: string | number | null;
+  statusValue: string | number | null = 1;
   // Statuses Variables
   filterForm = this.fb?.group(
     {
@@ -213,7 +213,7 @@ export class KidsListComponent {
         item['schoolName'] = name[this.currentLanguage];
         item['status'] = item?.approve_status?.label;
         item['active'] = item?.paid_status;
-        item['parentName'] = item?.parent?.name|| '';
+        item['parentName'] = item?.parent?.name || '';
       });
     } else {
       this.handleError(response.message);
@@ -506,10 +506,10 @@ export class KidsListComponent {
   // End Status List Functions
 
   // Start Accept Or Reject Functions
-  acceptsItem(event:any):void{
+  acceptsItem(event: any): void {
     console.log(event);
   }
-  rejectItem(event:any):void{
+  rejectItem(event: any): void {
     console.log(event);
   }
   // End Accept Or Reject Functions
