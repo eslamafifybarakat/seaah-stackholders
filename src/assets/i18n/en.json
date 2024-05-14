@@ -17,6 +17,8 @@
     "dashboard": "Dashboard"
   },
   "general": {
+    "expensesPaid": "Expenses Paid",
+    "addExpenses": "Add Expenses",
     "loading": "Loading",
     "backToHome": "Back to home",
     "moreDetails": "More Details",
@@ -74,6 +76,7 @@
     "total": "Total",
     "isTotal": "There is a total",
     "sideMenu": {
+      "KidsRequests": "Kids Requests",
       "tuitionExpenses": "Tuition Expenses",
       "statistics": "Statistics",
       "users": "Users",
@@ -84,7 +87,8 @@
       "settings": "Settings"
     },
     "tableHeader": {
-      "title": "Title",
+      "kidName": "Kid Name",
+      "parentName": "parent Name",
       "details": "Details",
       "total": "Total",
       "deservedDate": "Deserved Date",
@@ -121,7 +125,7 @@
       "operatingCard": "Operating card",
       "insuranceExpiryDate": "Insurance expiry date",
       "formPhoto": "form photo",
-      "schoolName":"School Name"
+      "schoolName": "School Name"
     },
     "hello": "Hello",
     "statistics": {
@@ -329,11 +333,11 @@
     "insuranceExpiryDate": "Insurance expiry date",
     "formPhoto": "form photo",
     "description": "Description",
-    "schoolName":"School Name",
-    "school":"School",
-    "kidImage":"Kid Image",
-    "region":"Region",
-    "street":"Street"
+    "schoolName": "School Name",
+    "school": "School",
+    "kidImage": "Kid Image",
+    "region": "Region",
+    "street": "Street"
   },
   "placeholders": {
     "title": "Enter title",
@@ -391,9 +395,9 @@
     "insuranceExpiryDate": "Enter insurance expiry date",
     "formPhoto": "Enter form photo",
     "dateFormat": "mm/dd/yy",
-    "school":"Select school" ,
-    "region":"Enter region" ,
-    "street":"Enter street"
+    "school": "Select school",
+    "region": "Enter region",
+    "street": "Enter street"
   },
   "validations": {
     "username": "Username is required",

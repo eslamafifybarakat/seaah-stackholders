@@ -17,6 +17,8 @@
     "dashboard": "لوحة التحكم"
   },
   "general": {
+    "expensesPaid": "المصروفات مدفوعة",
+    "addExpenses": "إضافة المصروفات",
     "loading": "جاري التحميل",
     "backToHome": "العودة إلى الصفحة الرئيسية",
     "moreDetails": "تفاصيل أكثر",
@@ -74,6 +76,7 @@
     "total": "الاجمالي",
     "isTotal": "يوجد اجمالا",
     "sideMenu": {
+      "KidsRequests": "طلبات الأطفال",
       "tuitionExpenses": "مصاريف التعليم",
       "statistics": "الإحصائيات",
       "users": "المستخدمين",
@@ -85,6 +88,8 @@
     },
     "hello": "مرحبًا",
     "tableHeader": {
+      "kidName": "اسم الطفل",
+      "parentName": "اسم الأب",
       "title": "العنوان",
       "details": "التفاصيل",
       "total": "الإجمالي",
@@ -121,7 +126,7 @@
       "operatingCard": "كارت التشغيل",
       "insuranceExpiryDate": "تاريخ إنتهاء التأمين",
       "formPhoto": "صورة الإستمارة",
-      "schoolName":"اسم المدرسة"
+      "schoolName": "اسم المدرسة"
     },
     "users": {
       "users": "المستخدمين",
@@ -330,10 +335,10 @@
     "insuranceExpiryDate": "تاريخ إنتهاء التأمين",
     "formPhoto": "صورة الإستمارة",
     "description": "الوصف",
-    "school":"المدرسة" ,
-    "kidImage" : "صورة الطفل",
+    "school": "المدرسة",
+    "kidImage": "صورة الطفل",
     "region": "المنطقة",
-    "street":"الشارع"
+    "street": "الشارع"
   },
   "placeholders": {
     "title": "أدخل العنوان",
@@ -391,9 +396,9 @@
     "insuranceExpiryDate": "أدخل تاريخ إنتهاء التأمين",
     "formPhoto": "أدخل صورة الإستمارة",
     "dateFormat": "شهر / يوم / سنه",
-    "school":"أختر المدرسة",
-    "region":"أدخل المنطقة" ,
-    "street":"الشارع"
+    "school": "أختر المدرسة",
+    "region": "أدخل المنطقة",
+    "street": "الشارع"
   },
   "validations": {
     "username": "اسم المستخدم مطلوب",

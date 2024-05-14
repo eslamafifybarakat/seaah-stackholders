@@ -126,7 +126,7 @@ export class VerificationCodeComponent {
     return data;
   }
   private handleSuccessVerifyCode(res: any): void {
-    if (res.status==true) {
+    if (res.status==200) {
       this.ref?.close({ listChanged: true ,data:res?.data});
       this.handleSuccess(res.message);
     } else {

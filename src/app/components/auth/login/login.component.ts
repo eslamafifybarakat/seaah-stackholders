@@ -92,7 +92,7 @@ export class LoginComponent {
     }
   }
   private handleSuccessLoggedIn(res: LoginApiResponse): void {
-    if (res?.status == true) {
+    if (res?.status == 200) {
       // this.authService.saveUserLoginData(res?.data);
       // this.authService.saveToken(res?.data?.user_info?.token);
       // this.getCurrentUserInformation();
@@ -134,13 +134,13 @@ export class LoginComponent {
   // Start Current User Information Functions
   private getCurrentUserInformation(): void {
     let currentUserInformationSubscription: Subscription = this.authService?.getCurrentUserInformation()?.pipe(
-      tap((res: CurrentUserInformationApiResponse) => this.handleSuccessCuurentUserInformation(res)),
+      tap((res: CurrentUserInformationApiResponse) => this.handleSuccessCurrentUserInformation(res)),
       catchError(err => this.handleError(err)),
       finalize(() => this.finalizeCurrentUserInformation())
     ).subscribe();
     this.subscriptions.push(currentUserInformationSubscription);
   }
-  private handleSuccessCuurentUserInformation(res: CurrentUserInformationApiResponse): void {
+  private handleSuccessCurrentUserInformation(res: CurrentUserInformationApiResponse): void {
     if (res?.status == 200 && res?.data?.status == true) {
       this.authService.saveCurrentUserInformation(res?.data?.data);
       this.publicService.showGlobalLoader.next(false);

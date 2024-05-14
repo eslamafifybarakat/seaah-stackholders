@@ -1,15 +1,21 @@
+// Services
 import { PermissionGuard } from '../../services/authentication/guards/permission.guard';
-import { organizationsChildrenRoutes } from "../dashboard/organizations/organizations-children-routes";
+// Components
 import { StatisticsComponent } from "./../dashboard/statistics/statistics.component";
-import { usersChildrenRoutes } from '../dashboard/users/users-children-routes';
-import { installmentWaysChildrenRoutes } from '../dashboard/installment-ways/installment-ways-children-routes';
-import { kidsChildrenRoutes } from '../dashboard/kids/kids-children-routes';
-import { TuitionExpensesChildrenRoutes } from '../dashboard/tuition-expenses/tuition-expenses-children-routes';
-import { errorsChildrenRoutes } from '../errors/errors-children-routes';
+// TS Files
+import { SchoolsChildrenRoutes } from '../dashboard/schools/schools-child-route';
 import { ParentChildrenRoutes } from '../dashboard/parent/parent-child-route';
+
+import { installmentWaysChildrenRoutes } from '../dashboard/installment-ways/installment-ways-children-routes';
+import { TuitionExpensesChildrenRoutes } from '../dashboard/tuition-expenses/tuition-expenses-children-routes';
+import { organizationsChildrenRoutes } from "../dashboard/organizations/organizations-children-routes";
+import { usersChildrenRoutes } from '../dashboard/users/users-children-routes';
+import { kidsChildrenRoutes } from '../dashboard/kids/kids-children-routes';
+import { errorsChildrenRoutes } from '../errors/errors-children-routes';
 
 export const dashBoardChildrenV2Routes: any[] = [
   { path: '', redirectTo: 'Statistics', pathMatch: 'full' },
+  // Parents
   {
     path: 'Parent',
     // canActivate: [PermissionGuard],
@@ -36,6 +42,34 @@ export const dashBoardChildrenV2Routes: any[] = [
       ),
     children: ParentChildrenRoutes
   },
+  // Schools
+  {
+    path: 'Schools',
+    // canActivate: [PermissionGuard],
+    data: {
+      permission: 'Pages.Schools',
+      title: 'Schools'
+    },
+    loadComponent: () =>
+      import('./../dashboard/schools/schools.component').then(
+        (c) => c.SchoolsComponent
+      ),
+    children: SchoolsChildrenRoutes
+  },
+  {
+    path: ':lang/Schools',
+    // canActivate: [PermissionGuard],
+    data: {
+      permission: 'Pages.Schools',
+      title: 'Schools'
+    },
+    loadComponent: () =>
+      import('./../dashboard/schools/schools.component').then(
+        (c) => c.SchoolsComponent
+      ),
+    children: SchoolsChildrenRoutes
+  },
+
   {
     path: 'Users',
     // canActivate: [PermissionGuard],

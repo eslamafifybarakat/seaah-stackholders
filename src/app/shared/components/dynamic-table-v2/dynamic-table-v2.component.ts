@@ -85,6 +85,9 @@ export class DynamicTableV2Component {
   @Input() showResetPassword: boolean = false;
   @Input() showCopy: boolean = false;
 
+  @Input() showActionItemBtn: boolean = false;
+  @Input() actionButtonText: string = '';
+
   // Paginator variables
   @ViewChild('paginator') paginator: Paginator | undefined;
   @Input() showPaginationText: boolean = false;
@@ -129,7 +132,7 @@ export class DynamicTableV2Component {
   @Output() filterHandler: EventEmitter<any> = new EventEmitter();
   @Output() toggleStatusHandler: EventEmitter<any> = new EventEmitter();
   @Output() arrangeHandler: EventEmitter<any> = new EventEmitter();
-  @Output() itemActionHandler: EventEmitter<any> = new EventEmitter();
+  @Output() actionHandlerEmit: EventEmitter<any> = new EventEmitter();
 
   // Actions handler
   @Output() detailsHandler: EventEmitter<any> = new EventEmitter();
@@ -375,7 +378,7 @@ export class DynamicTableV2Component {
     this.arrangeHandler?.emit(item);
   }
   itemActionEmitter(item: any): void {
-    this.itemActionHandler?.emit(item);
+    this.actionHandlerEmit?.emit(item);
   }
   colEventHandlerEmit(item: any, type?: string): void {
     this.colEventHandler.emit({ item: item, type: type });

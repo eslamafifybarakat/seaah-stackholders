@@ -363,7 +363,7 @@
     <ng-container *ngIf="col?.type=='status'">
       <td>
         <!-- <h1 style="background-color: red !important;">test {{item  }}</h1> -->
-        <span [class]="'item-badge status-bg status-bg-' + item[col.field]"> 
+        <span [class]="'item-badge status-bg status-bg-' + item[col.field]">
           {{ item[col.field] }}
         </span>
       </td>
@@ -450,6 +450,23 @@
                 <!-- <span><i class="fas fa-trash-alt remove"></i></span> -->
                 {{'general.delete'|translate}}
               </a>
+            </ng-container>
+            <ng-container *ngIf="showActionItemBtn && item?.active==false">
+              <button class="btn btn-solid-main badge-btn px-3 position-relative overflow-hidden"
+                (click)="itemActionEmitter(item)">
+                <div *ngIf="item?.isLoadingActive"
+                  class="btn-overlay position-absolute d-flex justify-content-center align-items-center">
+                  <i class="pi pi-spin pi-spinner text-main-color"></i>
+                </div>
+                <span class="fw-500">
+                  {{actionButtonText|translate}}
+                </span>
+              </button>
+            </ng-container>
+            <ng-container *ngIf="showActionItemBtn && item?.active==true">
+              <span class="status-bg status-bg-completed">
+                {{'general.expensesPaid' | translate}} 
+              </span> 
             </ng-container>
           </ng-container>
         </div>
@@ -719,6 +736,23 @@
                     tooltipPosition="top">
                     <span><i class="fas fa-trash-alt remove"></i></span>
                   </a>
+                </ng-container>
+                <ng-container *ngIf="showActionItemBtn && item?.active==false">
+                  <button class="btn btn-solid-main badge-btn px-3 position-relative overflow-hidden"
+                    (click)="itemActionEmitter(item)">
+                    <div *ngIf="item?.isLoadingActive"
+                      class="btn-overlay position-absolute d-flex justify-content-center align-items-center">
+                      <i class="pi pi-spin pi-spinner text-main-color"></i>
+                    </div>
+                    <span class="fw-500">
+                      {{actionButtonText|translate}}
+                    </span>
+                  </button>
+                </ng-container>
+                <ng-container *ngIf="showActionItemBtn && item?.active==true">
+                  <span class="status-bg status-bg-completed">
+                    {{'general.expensesPaid' | translate}} 
+                  </span> 
                 </ng-container>
               </div>
             </td>

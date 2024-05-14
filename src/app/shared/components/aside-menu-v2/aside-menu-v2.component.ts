@@ -82,6 +82,9 @@ export class AsideMenuV2Component {
     if (this.currentUserInformation?.type == 'parent') {
       this.menuListItems = this.asideMenuService.getParentAsideMenuItem();
     }
+    if (this.currentUserInformation?.type == 'school') {
+      this.menuListItems = this.asideMenuService.getSchoolAsideMenuItem();
+    }
   }
 
   // Handle click event on menu item

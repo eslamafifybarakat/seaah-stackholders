@@ -106,7 +106,7 @@ export class RegistrationV1Component {
   }
   private handleSuccessRegisteration(res: any): void {
     if (res.status) {
-    this.verfiyAccountModal(this.registerationForm?.value);
+      this.verfiyAccountModal(this.registerationForm?.value);
     } else {
       this.handleError(res.error.message || 'An error occurred during registration.');
     }
@@ -115,11 +115,11 @@ export class RegistrationV1Component {
 
   // Start Verfiy Account Modal
   verfiyAccountModal(data?: any): void {
-    const ref:any = this.dialogService?.open(VerificationCodeComponent, {
+    const ref: any = this.dialogService?.open(VerificationCodeComponent, {
       data: {
         data
       },
-      header:this.publicService?.translateTextFromJson('auth.verificationOtp'),
+      header: this.publicService?.translateTextFromJson('auth.verificationOtp'),
       dismissableMask: false,
       width: '45%',
       styleClass: 'custom-modal',
@@ -131,18 +131,17 @@ export class RegistrationV1Component {
       }
     });
   }
-   // End Verfiy Account Modal
+  // End Verfiy Account Modal
 
   back(): void {
     this.location.back();
   }
-  handleInput(event: Event, max?:number | null): void {
-    const inputElement :any= event?.target as HTMLInputElement;
+  handleInput(event: Event, max?: number | null): void {
+    const inputElement: any = event?.target as HTMLInputElement;
     if (inputElement?.value?.length > max) {
-        inputElement.value = inputElement?.value?.slice(0, max);
+      inputElement.value = inputElement?.value?.slice(0, max);
     }
-}
-
+  }
 
   /* --- Handle api requests error messages --- */
   private handleError(error: any): any {
