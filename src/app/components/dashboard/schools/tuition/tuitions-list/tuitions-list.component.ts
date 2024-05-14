@@ -27,6 +27,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { Subject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { KidCardComponent } from '../../kids-requests/kid-card/kid-card.component';
+import { AddExpensesComponent } from '../add-expenses/add-expenses.component';
 
 @Component({
   standalone: true,
@@ -437,6 +438,27 @@ export class TuitionsListComponent {
   // Start Add Expenses Modal
   addExpenses(event: any): void {
     console.log(event);
+    const ref = this.dialogService?.open(AddExpensesComponent, {
+      data: {
+        event
+      },
+      header: this.publicService?.translateTextFromJson('general.addExpenses'),
+      dismissableMask: false,
+      width: '30%',
+      styleClass: 'custom-modal',
+    });
+    ref.onClose.subscribe((res: any) => {
+      if (res?.listChanged) {
+        if (this.kidsCount == 0) {
+          this.getAllKids();
+        } else {
+          this.page = 1;
+          this.publicService?.changePageSub?.next({ page: this.page });
+          this.dataStyleType == 'grid' ? this.changePageActiveNumber(1) : '';
+          this.dataStyleType == 'grid' ? this.getAllKids() : '';
+        }
+      }
+    });
   }
   // End Add Expenses Modal
 
