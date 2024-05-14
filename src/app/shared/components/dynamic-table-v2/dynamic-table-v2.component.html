@@ -465,8 +465,32 @@
             </ng-container>
             <ng-container *ngIf="showActionItemBtn && item?.active==true">
               <span class="status-bg status-bg-completed">
-                {{'general.expensesPaid' | translate}} 
-              </span> 
+                {{'general.expensesPaid' | translate}}
+              </span>
+            </ng-container>
+            <ng-container *ngIf="showAcceptAction">
+              <button class="btn btn-solid-main badge-btn px-3 position-relative overflow-hidden"
+                (click)="acceptHandlerEmit(item)">
+                <div *ngIf="item?.isLoadingActive"
+                  class="btn-overlay position-absolute d-flex justify-content-center align-items-center">
+                  <i class="pi pi-spin pi-spinner text-main-color"></i>
+                </div>
+                <span class="fw-500">
+                  {{'general.accept'|translate}}
+                </span>
+              </button>
+            </ng-container>
+            <ng-container *ngIf="showRejectAction">
+              <button class="btn btn-solid-main badge-btn px-3 position-relative overflow-hidden"
+                (click)="rejectHandlerEmit(item)">
+                <div *ngIf="item?.isLoadingActive"
+                  class="btn-overlay position-absolute d-flex justify-content-center align-items-center">
+                  <i class="pi pi-spin pi-spinner text-main-color"></i>
+                </div>
+                <span class="fw-500">
+                  {{'general.reject'|translate}}
+                </span>
+              </button>
             </ng-container>
           </ng-container>
         </div>
@@ -751,8 +775,8 @@
                 </ng-container>
                 <ng-container *ngIf="showActionItemBtn && item?.active==true">
                   <span class="status-bg status-bg-completed">
-                    {{'general.expensesPaid' | translate}} 
-                  </span> 
+                    {{'general.expensesPaid' | translate}}
+                  </span>
                 </ng-container>
               </div>
             </td>

@@ -1,11 +1,12 @@
 
 // Services
-import { TuitionExpensesChildrenRoutes } from '../tuition-expenses/tuition-expenses-children-routes';
 import { PermissionGuard } from '../../../services/authentication/guards/permission.guard';
 
 // TS Files
+import { TuitionExpensesChildrenRoutes } from '../tuition-expenses/tuition-expenses-children-routes';
 import { kidsRequestsChildrenRoutes } from './kids-requests/kids-requests-children-routes';
 import { errorsChildrenRoutes } from '../../errors/errors-children-routes';
+import { TuitionChildrenRoutes } from './tuition/tuition-children-routes';
 
 
 export const SchoolsChildrenRoutes: any[] = [
@@ -24,6 +25,20 @@ export const SchoolsChildrenRoutes: any[] = [
       ),
     children: kidsRequestsChildrenRoutes
   },
+    // Tuition
+    {
+      path: 'Tuition',
+      // canActivate: [PermissionGuard],
+      data: {
+        permission: 'Pages.Tuition.List',
+        title: 'kids'
+      },
+      loadComponent: () =>
+        import('./../../dashboard/schools/tuition/tuition.component').then(
+          (c) => c.TuitionComponent
+        ),
+      children: TuitionChildrenRoutes
+    },
   // Tuition Expenses
   {
     path: 'TuitionExpenses',

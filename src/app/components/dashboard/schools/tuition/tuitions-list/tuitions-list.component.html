@@ -3,7 +3,7 @@
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 px-4">
       <div>
         <h4 class="mb-0 text-capitalize">
-          {{'dashboard.sideMenu.KidsRequests'|translate}}
+          {{'dashboard.sideMenu.Tuition'|translate}}
         </h4>
         <p class="mt-2 text-muted-color d-flex gap-1">
           {{'dashboard.total'|translate}}
@@ -11,20 +11,6 @@
             {{kidsCount}}
           </span>
         </p>
-      </div>
-      <div class="d-flex gap-3 flex-lg-nowrap flex-wrap justify-content-sm-start justify-content-center"
-        *ngIf="kidsList.length>0">
-        <!-- Accept All -->
-        <button class="btn btn-solid-main d-flex align-items-center gap-2 text-nowrap" (click)="acceptsItem('all')">
-          <i class="pi pi-check"></i>
-          <span>{{'general.acceptAll'|translate}}</span>
-        </button>
-        <!-- Reject All -->
-        <button [class.disabled-actions]="isLoadingKidsList"
-          class="btn btn-outline-main d-flex align-items-center gap-2 text-nowrap" (click)="rejectItem('all')">
-          <i class="pi pi-times"></i>
-          <span>{{'general.rejectAll'|translate}}</span>
-        </button>
       </div>
       <!-- <div>
         <form [formGroup]="filterForm" aria-label="filter-kid-form">
@@ -116,7 +102,8 @@
           [enableConfirmDeleteDialog]="true" [keyDelete]="'name'"
           (paginateOptionsHandler)="onPaginatorOptionsChange($event)" [isSearch]="isSearch" [arrayChildKey]="'name'"
           [enableFilterDriverStatus]="true" [addBtnText]="'dashboard.kids.addKid'" (addHandler)="addEditItem()"
-          [notFoundImage]="'assets/images/not-found/no-user.svg'" [showAcceptAction]="true" (acceptHandler)="acceptsItem($event)" [showRejectAction]="true" (rejectHandler)="rejectItem($event)"></dynamic-table-v2>
+          [notFoundImage]="'assets/images/not-found/no-user.svg'" [showActionItemBtn]="true"
+          [actionButtonText]="'general.addExpenses'" (actionHandlerEmit)="addExpenses($event)"></dynamic-table-v2>
       </ng-container>
       <!-- Card -->
       <ng-container *ngIf="dataStyleType=='grid'">

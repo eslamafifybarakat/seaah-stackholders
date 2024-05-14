@@ -20,6 +20,10 @@
     "expensesPaid": "المصروفات مدفوعة",
     "addExpenses": "إضافة المصروفات",
     "loading": "جاري التحميل",
+    "acceptAll": "قبول الكل",
+    "accept": "قبول",
+    "rejectAll": "رفض الكل",
+    "reject": "رفض",
     "backToHome": "العودة إلى الصفحة الرئيسية",
     "moreDetails": "تفاصيل أكثر",
     "location": "الموقع",
@@ -76,6 +80,7 @@
     "total": "الاجمالي",
     "isTotal": "يوجد اجمالا",
     "sideMenu": {
+      "Tuition": "المصاريف",
       "KidsRequests": "طلبات الأطفال",
       "tuitionExpenses": "مصاريف التعليم",
       "statistics": "الإحصائيات",

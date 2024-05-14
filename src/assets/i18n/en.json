@@ -20,6 +20,10 @@
     "expensesPaid": "Expenses Paid",
     "addExpenses": "Add Expenses",
     "loading": "Loading",
+    "acceptAll": "Accept All",
+    "accept": "Accept",
+    "rejectAll": "Reject All",
+    "reject": "Reject",
     "backToHome": "Back to home",
     "moreDetails": "More Details",
     "location": "Location",
@@ -76,6 +80,7 @@
     "total": "Total",
     "isTotal": "There is a total",
     "sideMenu": {
+      "Tuition": "Tuitions",
       "KidsRequests": "Kids Requests",
       "tuitionExpenses": "Tuition Expenses",
       "statistics": "Statistics",

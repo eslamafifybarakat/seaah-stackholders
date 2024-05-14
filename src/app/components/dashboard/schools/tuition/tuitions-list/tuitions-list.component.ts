@@ -26,7 +26,7 @@ import { KidsService } from '../../../services/kids.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Subject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
-import { KidCardComponent } from '../kid-card/kid-card.component';
+import { KidCardComponent } from '../../kids-requests/kid-card/kid-card.component';
 
 @Component({
   standalone: true,
@@ -46,11 +46,11 @@ import { KidCardComponent } from '../kid-card/kid-card.component';
     KidCardComponent,
     SkeletonComponent
   ],
-  selector: 'app-kids-requests-list',
-  templateUrl: './kids-requests-list.component.html',
-  styleUrls: ['./kids-requests-list.component.scss']
+  selector: 'app-tuitions-list',
+  templateUrl: './tuitions-list.component.html',
+  styleUrls: ['./tuitions-list.component.scss']
 })
-export class KidsListComponent {
+export class TuitionsListComponent {
   private subscriptions: Subscription[] = [];
 
   dataStyleType: string = 'list';
@@ -134,7 +134,6 @@ export class KidsListComponent {
     ).subscribe(event => { this.searchHandler(event) });
   }
   private loadData(): void {
-    this.getStatusList();
     this.tableHeaders = [
       {
         field: 'image_path', header: '', title: '', type: 'img'
@@ -435,6 +434,12 @@ export class KidsListComponent {
   }
   // End Pagination Functions
 
+  // Start Add Expenses Modal
+  addExpenses(event: any): void {
+    console.log(event);
+  }
+  // End Add Expenses Modal
+
   // Hide dropdown to not make action when keypress on keyboard arrows
   hide(): void {
     this.dropdown?.accessibleViewChild?.nativeElement?.blur();
@@ -458,7 +463,7 @@ export class KidsListComponent {
       ];
     }
     let patchStatus: any;
-    patchStatus = this.statusesList[1];
+    patchStatus = this.statusesList[3];
     this.filterForm?.get('status').setValue(patchStatus);
     // this.isLoadingStatuses = true;
     // let statuesSubscription: Subscription = this.kidsService?.getAllStatusesList()
@@ -504,15 +509,6 @@ export class KidsListComponent {
     this.getAllKids();
   }
   // End Status List Functions
-
-  // Start Accept Or Reject Functions
-  acceptsItem(event:any):void{
-    console.log(event);
-  }
-  rejectItem(event:any):void{
-    console.log(event);
-  }
-  // End Accept Or Reject Functions
 
   /* --- Handle api requests messages --- */
   private handleSuccess(msg: string | null): any {
