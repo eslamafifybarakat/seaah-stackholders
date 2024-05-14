@@ -51,4 +51,7 @@ export class KidsService {
   getLevelsList(): Observable<any> {
     return this.http?.get(`${this.baseUrl}/${roots?.dashboard?.kids.levels}`)
   }
+  updateAproveKid(data: any): Observable<any> {
+    return this.http?.post(`${this.baseUrl}/${roots?.dashboard?.kids.kids}/update-approval`, data);
+  }
 }

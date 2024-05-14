@@ -504,15 +504,35 @@ export class KidsListComponent {
     this.getAllKids();
   }
   // End Status List Functions
+  
+  // Start Approve and Reject Function
+  acceptsRejectsItem(event: any, status :boolean): void {
+    if (event != 'all') {
+      this.updateAproveKid({approve_status: status ,kids_ids: [event?.item?.id]});
+    } else {
+      const kids_ids = this.kidsList.map(item => item.id);
+      this.updateAproveKid({approve_status: status ,kids_ids: kids_ids});
+    }
+  }
+  private updateAproveKid(data: any): void {
+    this.publicService?.showGlobalLoader?.next(true);
+    let subscribeAddKid: Subscription = this.kidsService?.updateAproveKid(data).pipe(
+      tap(res => this.handleUpdateAproveKid(res)),
+      catchError(err => this.handleError(err))
+    ).subscribe();
+    this.subscriptions.push(subscribeAddKid);
+  }
+  private handleUpdateAproveKid(response: any): void {
+    this.getAllKids();
+    this.publicService?.showGlobalLoader?.next(false);
+    if (response?.status == 200) {
+      this.handleSuccess(response?.message);
+    } else {
+      this.handleError(response?.message);
+    }
+  }
+  // End Approve and Reject Function
 
-  // Start Accept Or Reject Functions
-  acceptsItem(event: any): void {
-    console.log(event);
-  }
-  rejectItem(event: any): void {
-    console.log(event);
-  }
-  // End Accept Or Reject Functions
 
   /* --- Handle api requests messages --- */
   private handleSuccess(msg: string | null): any {
