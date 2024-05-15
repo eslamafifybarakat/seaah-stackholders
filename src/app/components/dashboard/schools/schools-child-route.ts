@@ -3,10 +3,10 @@
 import { PermissionGuard } from '../../../services/authentication/guards/permission.guard';
 
 // TS Files
-import { TuitionExpensesChildrenRoutes } from '../tuition-expenses/tuition-expenses-children-routes';
 import { kidsRequestsChildrenRoutes } from './kids-requests/kids-requests-children-routes';
 import { errorsChildrenRoutes } from '../../errors/errors-children-routes';
 import { TuitionChildrenRoutes } from './tuition/tuition-children-routes';
+import { TuitionExpensesChildrenRoutes } from './tuition-expenses/tuition-expenses-children-routes';
 
 
 export const SchoolsChildrenRoutes: any[] = [

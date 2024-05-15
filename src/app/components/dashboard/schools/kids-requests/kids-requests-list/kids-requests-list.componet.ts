@@ -435,11 +435,6 @@ export class KidsListComponent {
   }
   // End Pagination Functions
 
-  // Hide dropdown to not make action when keypress on keyboard arrows
-  hide(): void {
-    this.dropdown?.accessibleViewChild?.nativeElement?.blur();
-  }
-
   // Start Status List Functions
   getStatusList(): void {
     if (this.currentLanguage == 'ar') {
@@ -504,14 +499,14 @@ export class KidsListComponent {
     this.getAllKids();
   }
   // End Status List Functions
-  
+
   // Start Approve and Reject Function
-  acceptsRejectsItem(event: any, status :boolean): void {
+  acceptsRejectsItem(event: any, status: boolean): void {
     if (event != 'all') {
-      this.updateAproveKid({approve_status: status ,kids_ids: [event?.item?.id]});
+      this.updateAproveKid({ approve_status: status, kids_ids: [event?.item?.id] });
     } else {
       const kids_ids = this.kidsList.map(item => item.id);
-      this.updateAproveKid({approve_status: status ,kids_ids: kids_ids});
+      this.updateAproveKid({ approve_status: status, kids_ids: kids_ids });
     }
   }
   private updateAproveKid(data: any): void {
@@ -534,6 +529,10 @@ export class KidsListComponent {
   // End Approve and Reject Function
 
 
+  // Hide dropdown to not make action when keypress on keyboard arrows
+  hide(): void {
+    this.dropdown?.accessibleViewChild?.nativeElement?.blur();
+  }
   /* --- Handle api requests messages --- */
   private handleSuccess(msg: string | null): any {
     this.setMessage(msg || this.publicService.translateTextFromJson('general.successRequest'), 'succss');

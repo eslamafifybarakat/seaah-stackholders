@@ -35,7 +35,7 @@ export class TuitionExpensesService {
   }
   addEditTuitionExpense(data: any, id?: number): Observable<any> {
     if (id) {
-      return this.http?.put(`${this.baseUrl}/${roots?.dashboard?.tuitionExpenses.tuitionExpenses}/${id}`, data)
+      return this.http?.post(`${this.baseUrl}/${roots?.dashboard?.tuitionExpenses.tuitionExpenses}/${id}`, data)
     }
     return this.http?.post(`${this.baseUrl}/${roots?.dashboard?.tuitionExpenses.tuitionExpenses}`, data);
   }

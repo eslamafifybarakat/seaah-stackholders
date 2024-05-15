@@ -48,8 +48,6 @@ export class UserInfoComponent {
 
   getCurrentUserInfo(): void {
     this.currentUserInformation = this.authService.getCurrentUserInformationLocally();
-    console.log(this.currentUserInformation);
-    
   }
   logOut(): void {
     this.confirmationService?.confirm({

@@ -7,7 +7,6 @@ import { SchoolsChildrenRoutes } from '../dashboard/schools/schools-child-route'
 import { ParentChildrenRoutes } from '../dashboard/parent/parent-child-route';
 
 import { installmentWaysChildrenRoutes } from '../dashboard/installment-ways/installment-ways-children-routes';
-import { TuitionExpensesChildrenRoutes } from '../dashboard/tuition-expenses/tuition-expenses-children-routes';
 import { organizationsChildrenRoutes } from "../dashboard/organizations/organizations-children-routes";
 import { usersChildrenRoutes } from '../dashboard/users/users-children-routes';
 import { kidsChildrenRoutes } from '../dashboard/kids/kids-children-routes';
@@ -126,19 +125,6 @@ export const dashBoardChildrenV2Routes: any[] = [
         (c) => c.KidsComponent
       ),
     children: kidsChildrenRoutes
-  },
-  {
-    path: 'Tuition-Expenses',
-    // canActivate: [PermissionGuard],
-    data: {
-      permission: 'Pages.TuitionExpenses.List',
-      title: 'kids'
-    },
-    loadComponent: () =>
-      import('../dashboard/tuition-expenses/tuition-expenses.component').then(
-        (c) => c.TuitionExpensesComponent
-      ),
-    children: TuitionExpensesChildrenRoutes
   },
   // {
   //   path: 'Clients/:id',

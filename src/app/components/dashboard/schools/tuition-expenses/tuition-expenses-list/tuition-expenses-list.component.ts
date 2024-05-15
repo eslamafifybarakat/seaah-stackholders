@@ -105,7 +105,7 @@ export class TuitionExpensesListComponent {
 
   ngOnInit(): void {
     console.log('sss');
-    
+
     this.loadData();
     this.searchSubject.pipe(
       debounceTime(700) // Throttle time in milliseconds (1 seconds)
@@ -114,8 +114,8 @@ export class TuitionExpensesListComponent {
   }
   private loadData(): void {
     this.tableHeaders = [
-      { field: 'title', header: 'dashboard.tableHeader.title', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.title'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
-      { field: 'details', header: 'dashboard.tableHeader.details', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.details'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
+      { field: 'titleName', header: 'dashboard.tableHeader.title', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.title'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
+      { field: 'detailsName', header: 'dashboard.tableHeader.details', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.details'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
       { field: 'level', header: 'dashboard.tableHeader.level', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.level'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
       { field: 'total', header: 'dashboard.tableHeader.total', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.total'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
       { field: 'deserved_date', header: 'dashboard.tableHeader.deservedDate', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.deservedDate'), type: 'date', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
@@ -176,11 +176,20 @@ export class TuitionExpensesListComponent {
     if (response.status == 200) {
       this.tuitionExpensesCount = response?.data?.total;
       this.pagesCount = Math.ceil(this.tuitionExpensesCount / this.perPage);
-      // this.tuitionExpensesList = response?.data?.items;
+      this.tuitionExpensesList = response?.data?.items;
       this.tuitionExpensesList?.forEach((item: any) => {
-        item['titleName'] = item?.title[this.currentLanguage];
-        console.log(item['titleName']);
+        item['title'] = { "en": "{\"ar\":\"إسلام\",\"en\":\"Eslam\"}" };
+        let titleItem: any = JSON.parse(item?.title[this.currentLanguage] || '{}');
+        item['titleName'] = titleItem[this.currentLanguage];
+        item['titleAR'] = titleItem['ar'];
+        item['titleEN'] = titleItem['en'];
+        item['details'] = { "en": "{\"ar\":\"إسلام\",\"en\":\"Eslam\"}" };
+        let detailsItem: any = JSON.parse(item?.details[this.currentLanguage] || '{}');
+        item['detailsName'] = detailsItem[this.currentLanguage];
+        item['detailsAR'] = titleItem['ar'];
+        item['detailsEN'] = titleItem['en'];
       });
+      console.log(this.tuitionExpensesList);
     } else {
       this.handleError(response.error);
       return;
@@ -233,7 +242,7 @@ export class TuitionExpensesListComponent {
     }
     this.publicService.showGlobalLoader.next(true);
     let deleteTuitionSubscription: Subscription = this.tuitionExpensesService?.deleteTuitionExpenseById(item?.item?.id)?.pipe(
-      tap((res: TuitionExpensesListApiResponse) => this.processDeleteResponse(res)),
+      tap((res: any) => this.processDeleteResponse(res)),
       catchError(err => this.handleError(err)),
       finalize(() => {
         this.publicService.showGlobalLoader.next(false);
@@ -245,12 +254,11 @@ export class TuitionExpensesListComponent {
 
   }
   private processDeleteResponse(res: any): void {
-    const messageType = res?.status === 200 ? 'success' : 'error';
-    const message = res?.message || '';
-
-    this.alertsService.openToast(messageType, messageType, message);
-    if (messageType === 'success') {
+    if (res.status === 200) {
       this.getAllTuitionExpenses();
+      this.handleSuccess(res.message);
+    } else {
+      this.handleError(res.message);
     }
   }
   //End Delete Kid Functions
@@ -402,24 +410,25 @@ export class TuitionExpensesListComponent {
   }
   // End Pagination Functions
 
-  /* --- Handle api requests error messages --- */
-  private handleError(err: any): any {
-    this.setErrorMessage(err || this.publicService.translateTextFromJson('general.errorOccur'));
-  }
-  private setErrorMessage(message: string): void {
-    this.alertsService.openToast('error', 'error', message);
-    this.publicService.showGlobalLoader.next(false);
-    this.finalizeTuitionExpenseListLoading();
-  }
-
-  // Hide dropdown to not make action when keypress on keyboard arrows
-  hide(): void {
+   // Hide dropdown to not make action when keypress on keyboard arrows
+   hide(): void {
     this.dropdown?.accessibleViewChild?.nativeElement?.blur();
+  }
+  /* --- Handle api requests messages --- */
+  private handleSuccess(msg: string | null): any {
+    this.setMessage(msg || this.publicService.translateTextFromJson('general.successRequest'), 'succss');
+  }
+  private handleError(err: string | null): any {
+    this.setMessage(err || this.publicService.translateTextFromJson('general.errorOccur'), 'error');
+  }
+  private setMessage(message: string, type?: string | null): void {
+    this.alertsService.openToast(type, type, message);
+    this.publicService.showGlobalLoader.next(false);
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription: Subscription) => {
-      if (subscription && subscription.closed) {
+      if (subscription && !subscription.closed) {
         subscription.unsubscribe();
       }
     });

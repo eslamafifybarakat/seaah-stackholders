@@ -92,6 +92,7 @@
       "settings": "Settings"
     },
     "tableHeader": {
+      "title": "Title",
       "kidName": "Kid Name",
       "parentName": "parent Name",
       "details": "Details",
@@ -279,6 +280,11 @@
     "joinNow": "Join now"
   },
   "labels": {
+    "titleAR": "Arabic Title",
+    "titleEN": "English Title",
+    "detailsAR": "Arabic Details",
+    "detailsEN": "English Details",
+    "price": "Price",
     "title": "Title",
     "details": "Details",
     "deservedDate": "Deserved Date",
@@ -345,6 +351,7 @@
     "street": "Street"
   },
   "placeholders": {
+    "price": "Enter price",
     "title": "Enter title",
     "details": "Enter details",
     "total": "Enter total",
@@ -439,6 +446,8 @@
     "containChar": "It must contain at least one capital letter",
     "notContainInfo": "It does not contain information such as name",
     "phoneLength": "Phone Length must be 9 numbers only",
+    "englishCharactersOnly": "Only English letters must be entered",
+    "arabicCharactersOnly": "Only Arabic letters must be entered",
     "phoneNotCorrect": "Please enter a valid phone number starting with 0510 or 0511 followed by five digits.",
     "idLength": "National identity must be 10 digits",
     "numbersLength": "Input digits must be numbers only"
