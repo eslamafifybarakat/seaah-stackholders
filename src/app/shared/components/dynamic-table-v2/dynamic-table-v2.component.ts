@@ -108,6 +108,7 @@ export class DynamicTableV2Component {
   // Not found image or text default value
   @Input() notFoundImage: string = 'assets/image/not-found/no-data.svg';
   @Input() notFoundText: string = this.publicService?.translateTextFromJson("general.no_records_found");
+  @Input() enableAddBtn: boolean = true;
   @Input() addBtnText: string = '';
 
   // key of item with filterArray

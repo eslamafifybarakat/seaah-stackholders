@@ -15,13 +15,15 @@
       <div class="d-flex gap-3 flex-lg-nowrap flex-wrap justify-content-sm-start justify-content-center"
         *ngIf="kidsList.length>0">
         <!-- Accept All -->
-        <button class="btn btn-solid-main d-flex align-items-center gap-2 text-nowrap" (click)="acceptsRejectsItem('all',true)">
+        <button class="btn btn-solid-main d-flex align-items-center gap-2 text-nowrap"
+          (click)="acceptsRejectsItem('all',true)">
           <i class="pi pi-check"></i>
           <span>{{'general.acceptAll'|translate}}</span>
         </button>
         <!-- Reject All -->
         <button [class.disabled-actions]="isLoadingKidsList"
-          class="btn btn-outline-main d-flex align-items-center gap-2 text-nowrap" (click)="acceptsRejectsItem('all',false)">
+          class="btn btn-outline-main d-flex align-items-center gap-2 text-nowrap"
+          (click)="acceptsRejectsItem('all',false)">
           <i class="pi pi-times"></i>
           <span>{{'general.rejectAll'|translate}}</span>
         </button>
@@ -65,7 +67,7 @@
         </div>
       </div>
       <div class="d-flex gap-3 flex-lg-nowrap flex-wrap justify-content-sm-start justify-content-center"
-        *ngIf="kidsList.length>0">
+        *ngIf="kidsList?.length>0">
         <!-- Add Kid -->
         <!-- <button class="btn btn-solid-main d-flex align-items-center gap-2 text-nowrap" (click)="addEditItem()">
           <i class="pi pi-plus"></i>
@@ -115,8 +117,10 @@
           [pages]="pagesCount" (paginateHandler)="onPageChange($event)" [rowsPerPageOptions]="rowsOptions"
           [enableConfirmDeleteDialog]="true" [keyDelete]="'name'"
           (paginateOptionsHandler)="onPaginatorOptionsChange($event)" [isSearch]="isSearch" [arrayChildKey]="'name'"
-          [enableFilterDriverStatus]="true" [addBtnText]="'dashboard.kids.addKid'" (addHandler)="addEditItem()"
-          [notFoundImage]="'assets/images/not-found/no-user.svg'" [showAcceptAction]="true" (acceptHandler)="acceptsRejectsItem($event,true)" [showRejectAction]="true" (rejectHandler)="acceptsRejectsItem($event,false)"></dynamic-table-v2>
+          [enableFilterDriverStatus]="true" [enableAddBtn]="false" [addBtnText]="'dashboard.kids.addKid'" (addHandler)="addEditItem()"
+          [notFoundImage]="'assets/images/not-found/no-user.svg'" [showAcceptAction]="true"
+          (acceptHandler)="acceptsRejectsItem($event,true)" [showRejectAction]="true"
+          (rejectHandler)="acceptsRejectsItem($event,false)"></dynamic-table-v2>
       </ng-container>
       <!-- Card -->
       <ng-container *ngIf="dataStyleType=='grid'">
@@ -154,9 +158,13 @@
               <div>
                 <img src="assets/images/not-found/no-data.svg" alt="no-data">
               </div>
-              <p class="fw-500 mt-3">{{'general.no_records_found'|translate}}</p>
-              <button (click)="addEditItem()"
-                class="btn btn-solid-main d-flex justify-content-center align-items-center">{{'dashboard.kids.addKid'|translate}}</button>
+              <p class="fw-500 mt-3">
+                {{'general.no_records_found'|translate}}
+              </p>
+              <!-- <button (click)="addEditItem()"
+                class="btn btn-solid-main d-flex justify-content-center align-items-center">
+                {{'dashboard.kids.addKid'|translate}}
+              </button> -->
             </div>
           </ng-template>
         </div>
@@ -197,8 +205,10 @@
               <img src="assets/images/not-found/no-data.svg" alt="no-data">
             </div>
             <p class="fw-500 mt-3">{{'general.no_records_found'|translate}}</p>
-            <button (click)="addEditItem()"
-              class="btn btn-solid-main d-flex justify-content-center align-items-center">{{'dashboard.kids.addKid'|translate}}</button>
+            <!-- <button (click)="addEditItem()"
+              class="btn btn-solid-main d-flex justify-content-center align-items-center">
+              {{'dashboard.kids.addKid'|translate}}
+            </button> -->
           </div>
         </ng-template>
       </div>
@@ -207,8 +217,15 @@
     <ng-container *ngIf="kidsCount">
       <div class="dash-global-footer px-4 d-flex align-items-center py-3">
         <p class="mb-0">
-          <span>{{"dashboard.isTotal"|translate}}</span>
-          <span class="mx-1 fw-bolder fs-5">{{kidsCount}}</span><span>{{"dashboard.users.users"|translate}}</span>
+          <span>
+            {{"dashboard.isTotal"|translate}}
+          </span>
+          <span class="mx-1 fw-bolder fs-5">
+            {{kidsCount}}
+          </span>
+          <span>
+            {{"dashboard.users.users"|translate}}
+          </span>
         </p>
       </div>
     </ng-container>

@@ -828,9 +828,15 @@
                   </defs>
                 </svg>
               </div>
-              <p class="fw-500 mt-3">{{notFoundText|translate}}</p>
-              <button (click)="addHandlerEmit()"
-                class="btn btn-solid-main d-flex justify-content-center align-items-center">{{addBtnText|translate}}</button>
+              <p class="fw-500 mt-3">
+                {{notFoundText|translate}}
+              </p>
+              <ng-container *ngIf="enableAddBtn;">
+                <button (click)="addHandlerEmit()"
+                  class="btn btn-solid-main d-flex justify-content-center align-items-center">
+                  {{addBtnText|translate}}
+                </button>
+              </ng-container>
             </ng-container>
             <ng-container *ngIf="isSearch">
               <img [src]="notFoundImage" onerror="this.src='assets/images/not-found/no-data.svg'"

@@ -88,6 +88,8 @@ export class TuitionExpensesListComponent {
   // Dropdown Element
   @ViewChild('dropdown') dropdown: any;
 
+  currentLanguage: string | null;
+
   constructor(
     private localizationLanguageService: LocalizationLanguageService,
     private tuitionExpensesService: TuitionExpensesService,
@@ -100,19 +102,23 @@ export class TuitionExpensesListComponent {
   ) {
     localizationLanguageService.updatePathAccordingLang();
   }
+
   ngOnInit(): void {
+    console.log('sss');
+    
     this.loadData();
     this.searchSubject.pipe(
-      debounceTime(500) // Throttle time in milliseconds (1 seconds)
+      debounceTime(700) // Throttle time in milliseconds (1 seconds)
     ).subscribe(event => { this.searchHandler(event) });
+    this.currentLanguage = this.publicService.getCurrentLanguage();
   }
   private loadData(): void {
     this.tableHeaders = [
-      { field: 'title', header: 'dashboard.tableHeader.title', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.title'), type: 'text', sort: true, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: true, },
-      { field: 'details', header: 'dashboard.tableHeader.details', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.details'), type: 'text', sort: true, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: true, },
-      { field: 'level', header: 'dashboard.tableHeader.level', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.level'), type: 'text', sort: true, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: true, },
-      { field: 'total', header: 'dashboard.tableHeader.total', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.total'), type: 'text', sort: true, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: true, },
-      { field: 'deserved_date', header: 'dashboard.tableHeader.deservedDate', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.deservedDate'), type: 'date', sort: true, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: true, },
+      { field: 'title', header: 'dashboard.tableHeader.title', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.title'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
+      { field: 'details', header: 'dashboard.tableHeader.details', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.details'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
+      { field: 'level', header: 'dashboard.tableHeader.level', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.level'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
+      { field: 'total', header: 'dashboard.tableHeader.total', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.total'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
+      { field: 'deserved_date', header: 'dashboard.tableHeader.deservedDate', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.deservedDate'), type: 'date', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
     ];
     this.updateMetaTagsForSEO();
     this.getAllTuitionExpenses();
@@ -120,7 +126,7 @@ export class TuitionExpensesListComponent {
   private updateMetaTagsForSEO(): void {
     let metaData: MetaDetails = {
       title: 'مصاريف التعليم',
-      description: 'الوصف',
+      description: 'مصاريف التعليم',
       image: 'https://ik.imagekit.io/2cvha6t2l9/Logo.jpeg?updatedAt=1712577283111'
     }
     this.metadataService.updateMetaTagsForSEO(metaData);
@@ -159,7 +165,7 @@ export class TuitionExpensesListComponent {
     isFiltering ? this.publicService.showSearchLoader.next(true) : this.isLoadingTuitionExpensesList = true;
     let tuitionSubscription: Subscription = this.tuitionExpensesService?.getTuitionExpensesList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null)
       .pipe(
-        tap((res: TuitionExpensesListApiResponse) => this.processTuitionExpensesListResponse(res)),
+        tap((res: any) => this.processTuitionExpensesListResponse(res)),
         catchError(err => this.handleError(err)),
         finalize(() => this.finalizeTuitionExpenseListLoading())
       ).subscribe();
@@ -170,10 +176,10 @@ export class TuitionExpensesListComponent {
     if (response.status == 200) {
       this.tuitionExpensesCount = response?.data?.total;
       this.pagesCount = Math.ceil(this.tuitionExpensesCount / this.perPage);
-      this.tuitionExpensesList = response?.data?.items;
-      this.tuitionExpensesList.forEach((item: any) => {
-        var addressObj = JSON.parse(item.address);
-        item['address'] = addressObj.street + ' ' + addressObj.city;
+      // this.tuitionExpensesList = response?.data?.items;
+      this.tuitionExpensesList?.forEach((item: any) => {
+        item['titleName'] = item?.title[this.currentLanguage];
+        console.log(item['titleName']);
       });
     } else {
       this.handleError(response.error);

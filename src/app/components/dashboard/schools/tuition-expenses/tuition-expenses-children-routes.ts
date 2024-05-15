@@ -1,7 +1,6 @@
+import { TuitionExpensesListComponent } from "./tuition-expenses-list/tuition-expenses-list.component";
+import { errorsChildrenRoutes } from "src/app/components/errors/errors-children-routes";
 
-import { PermissionGuard } from '../../../services/authentication/guards/permission.guard';
-import { ErrorsComponent } from "../../errors/errors.component";
-import { TuitionExpensesListComponent } from './tuition-expenses-list/tuition-expenses-list.component';
 
 
 export const TuitionExpensesChildrenRoutes: any[] = [
@@ -17,5 +16,22 @@ export const TuitionExpensesChildrenRoutes: any[] = [
     pathMatch: 'full'
   },
 
-  { path: '**', component: ErrorsComponent }
+   // Errors
+   {
+    path: ':lang/Errors',
+    loadComponent: () =>
+      import('./../../../../components/errors/errors.component').then(
+        (c) => c.ErrorsComponent
+      ),
+    children: errorsChildrenRoutes
+  },
+  {
+    path: 'Errors',
+    loadComponent: () =>
+      import('./../../../../components/errors/errors.component').then(
+        (c) => c.ErrorsComponent
+      ),
+    children: errorsChildrenRoutes
+  },
+  { path: '**', redirectTo: '/en/Errors' } // Redirect all unknown paths to '/Errors'
 ];
