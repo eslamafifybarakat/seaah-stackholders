@@ -506,7 +506,7 @@ export class KidsListComponent {
   // End Status List Functions
 
   // Start Approve and Reject Function
-  acceptsRejectsItem(event: any, status: boolean): void {
+  acceptsRejectsItem(event: any, status: number): void {
     if (event != 'all') {
       this.updateAproveKid({ approve_status: status, kids_ids: [event?.item?.id] });
     } else {

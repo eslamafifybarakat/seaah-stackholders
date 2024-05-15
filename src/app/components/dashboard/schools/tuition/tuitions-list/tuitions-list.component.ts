@@ -130,17 +130,19 @@ export class TuitionsListComponent {
     private router: Router
   ) {
     localizationLanguageService.updatePathAccordingLang();
+    this.loadData();
   }
   ngOnInit(): void {
     this.currentLanguage = this.publicService.getCurrentLanguage();
     this.currentUserInformation = this.authService.getCurrentUserInformationLocally();
     this.schoolId = this.currentUserInformation?.
-      this.loadData();
     this.searchSubject.pipe(
       debounceTime(500) // Throttle time in milliseconds (1 seconds)
     ).subscribe(event => { this.searchHandler(event) });
   }
   private loadData(): void {
+    console.log("dddddd ddddddddddd dddddddddddd");
+    
     this.tableHeaders = [
       {
         field: 'image_path', header: '', title: '', type: 'img'

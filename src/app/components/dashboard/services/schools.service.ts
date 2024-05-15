@@ -14,7 +14,7 @@ export class SchoolsService {
     private http: HttpClient
   ) { }
 
-  getSchoolsList(page?: number, per_page?: number, search?: string, sort?: any, conditions?: any): Observable<any> {
+  getSchoolsList(page?: number | string, per_page?: number, search?: string, sort?: any, conditions?: any): Observable<any> {
     let params = new HttpParams();
     if (page) {
       params = params?.append("page_number", page);

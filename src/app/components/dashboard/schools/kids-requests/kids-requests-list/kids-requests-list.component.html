@@ -16,14 +16,14 @@
         *ngIf="kidsList.length>0">
         <!-- Accept All -->
         <button class="btn btn-solid-main d-flex align-items-center gap-2 text-nowrap"
-          (click)="acceptsRejectsItem('all',true)">
+          (click)="acceptsRejectsItem('all',3)">
           <i class="pi pi-check"></i>
           <span>{{'general.acceptAll'|translate}}</span>
         </button>
         <!-- Reject All -->
         <button [class.disabled-actions]="isLoadingKidsList"
           class="btn btn-outline-main d-flex align-items-center gap-2 text-nowrap"
-          (click)="acceptsRejectsItem('all',false)">
+          (click)="acceptsRejectsItem('all',2)">
           <i class="pi pi-times"></i>
           <span>{{'general.rejectAll'|translate}}</span>
         </button>
@@ -119,8 +119,8 @@
           (paginateOptionsHandler)="onPaginatorOptionsChange($event)" [isSearch]="isSearch" [arrayChildKey]="'name'"
           [enableFilterDriverStatus]="true" [enableAddBtn]="false" [addBtnText]="'dashboard.kids.addKid'" (addHandler)="addEditItem()"
           [notFoundImage]="'assets/images/not-found/no-user.svg'" [showAcceptAction]="true"
-          (acceptHandler)="acceptsRejectsItem($event,true)" [showRejectAction]="true"
-          (rejectHandler)="acceptsRejectsItem($event,false)"></dynamic-table-v2>
+          (acceptHandler)="acceptsRejectsItem($event,3)" [showRejectAction]="true"
+          (rejectHandler)="acceptsRejectsItem($event,2)"></dynamic-table-v2>
       </ng-container>
       <!-- Card -->
       <ng-container *ngIf="dataStyleType=='grid'">

@@ -32,7 +32,7 @@ export class KidsService {
       params = params?.append("conditions", JSON?.stringify(conditions));
     }
     if (approval_status) {
-      params = params?.append("approval_status", approval_status);
+      params = params?.append("approve_status", approval_status);
     }
     if (schoolId) {
       params = params?.append("school_id", schoolId);

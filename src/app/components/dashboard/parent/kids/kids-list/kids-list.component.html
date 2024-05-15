@@ -21,8 +21,9 @@
                 [dropdownIcon]="'fas fa-caret-down'" [virtualScroll]="true" [virtualScrollItemSize]="38" filterBy="name"
                 appendTo="body" [filterPlaceholder]="'placeholders.search'|translate" [readonly]="isLoadingStatuses ||isLoadingKidsList"
                 scrollHeight="200px" emptyMessage="{{'general.no_result_found'|translate}}" [showClear]="true"
-                placeholder="{{'placeholders.status'|translate}}" (onChange)="onStatusSelected($event)">
+                placeholder="{{'placeholders.status'|translate}}" (onChange)="onStatusSelected($event)" class="position-static">
               </p-dropdown>
+
               <ng-container *ngIf="isLoadingStatuses">
                 <i class="pi pi-spin pi-spinner"></i>
               </ng-container>

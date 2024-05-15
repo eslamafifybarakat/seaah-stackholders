@@ -294,7 +294,7 @@ export class AddEditKidComponent {
   // Start Schools List Functions
   getSchools(): void {
     this.isLoadingSchools = true;
-    let schoolsSubscription: Subscription = this.schoolsService?.getSchoolsList()
+    let schoolsSubscription: Subscription = this.schoolsService?.getSchoolsList("all")
       .pipe(
         tap((res: any) => {
           this.processSchoolsListResponse(res)
