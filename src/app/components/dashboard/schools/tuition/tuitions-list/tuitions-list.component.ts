@@ -100,7 +100,7 @@ export class TuitionsListComponent {
   // Statuses Variables
   statusesList: any = [];
   isLoadingStatuses: boolean = false;
-  statusValue: string | number | null=3;
+  statusValue: string | number | null = 3;
   // Statuses Variables
   filterForm = this.fb?.group(
     {
@@ -213,7 +213,7 @@ export class TuitionsListComponent {
         item['schoolName'] = name[this.currentLanguage];
         item['status'] = item?.approve_status?.label;
         item['active'] = item?.paid_status;
-        item['parentName'] = item?.parent?.name|| '';
+        item['parentName'] = item?.parent?.name || '';
       });
     } else {
       this.handleError(response.message);
@@ -462,11 +462,6 @@ export class TuitionsListComponent {
   }
   // End Add Expenses Modal
 
-  // Hide dropdown to not make action when keypress on keyboard arrows
-  hide(): void {
-    this.dropdown?.accessibleViewChild?.nativeElement?.blur();
-  }
-
   // Start Status List Functions
   getStatusList(): void {
     if (this.currentLanguage == 'ar') {
@@ -532,6 +527,10 @@ export class TuitionsListComponent {
   }
   // End Status List Functions
 
+  // Hide dropdown to not make action when keypress on keyboard arrows
+  hide(): void {
+    this.dropdown?.accessibleViewChild?.nativeElement?.blur();
+  }
   /* --- Handle api requests messages --- */
   private handleSuccess(msg: string | null): any {
     this.setMessage(msg || this.publicService.translateTextFromJson('general.successRequest'), 'succss');

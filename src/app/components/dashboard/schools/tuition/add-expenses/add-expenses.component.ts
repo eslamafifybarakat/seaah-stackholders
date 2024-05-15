@@ -22,6 +22,8 @@ import { SchoolsService } from '../../../services/schools.service';
 import { tap, catchError, finalize } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { TuitionExpensesService } from '../../../services/tuitionExpenses.service';
+import { KidsTuitionsService } from '../../../services/kids-tuitions.service';
 @Component({
   selector: 'app-add-expenses',
   standalone: true,
@@ -42,36 +44,38 @@ export class AddExpensesComponent {
   private subscriptions: Subscription[] = [];
   currentLanguage: string;
 
-  // Start Schools Variables
-  schools: any = [];
-  isLoadingSchools: boolean = false;
-  // End Schools Variables
+  // Start Tuition Expenses List Variables
+  isLoadingTuitionExpensesList: boolean = false;
+  tuitionExpensesList: any[] = [];
+  tuitionExpensesCount: number = 0;
+  // End Tuition Expenses List Variables
 
-  kidData: any;
 
-  kidForm = this.fb?.group(
+  tuitionExpensesData: any;
+
+  tuitionExpensesForm = this.fb?.group(
     {
-      school: [null, {
+      tuitionExpenses: [null, {
         validators: [
           Validators.required]
       }],
     }
   );
   get formControls(): any {
-    return this.kidForm?.controls;
+    return this.tuitionExpensesForm?.controls;
   }
 
   currentUserInformation: any | null;
 
   constructor(
     private localizationLanguageService: LocalizationLanguageService,
+    private tuitionExpensesService: TuitionExpensesService,
+    private kidsTuitionsService: KidsTuitionsService,
     private metadataService: MetadataService,
-    private schoolsService: SchoolsService,
     private alertsService: AlertsService,
     public publicService: PublicService,
     private config: DynamicDialogConfig,
     private authService: AuthService,
-    private kidsService: KidsService,
     private ref: DynamicDialogRef,
     private fb: FormBuilder
   ) {
@@ -80,8 +84,8 @@ export class AddExpensesComponent {
 
   ngOnInit(): void {
     this.currentLanguage = this.publicService.getCurrentLanguage();
-    this.kidData = this.config.data;
-    this.getSchools();
+    this.tuitionExpensesData = this.config.data;
+    this.getAllTuitionExpenses();
     // this.updateMetaTagsForSEO();
     this.getCurrentUserInfo();
   }
@@ -97,69 +101,75 @@ export class AddExpensesComponent {
     this.metadataService.updateMetaTagsForSEO(metaData);
   }
 
-  // Start Schools List Functions
-  getSchools(): void {
-    this.isLoadingSchools = true;
-    let schoolsSubscription: Subscription = this.schoolsService?.getSchoolsList()
+  // Start Tuition Expenses List Functions
+  getAllTuitionExpenses(isFiltering?: boolean): void {
+    isFiltering ? this.publicService.showSearchLoader.next(true) : this.isLoadingTuitionExpensesList = true;
+    let tuitionSubscription: Subscription = this.tuitionExpensesService?.getTuitionExpensesList()
       .pipe(
-        tap((res: any) => {
-          this.processSchoolsListResponse(res)
-        }),
+        tap((res: any) => this.processTuitionExpensesListResponse(res)),
         catchError(err => this.handleError(err)),
-        finalize(() => this.finalizeSchoolsListLoading())
+        finalize(() => this.finalizeTuitionExpenseListLoading())
       ).subscribe();
-    this.subscriptions.push(schoolsSubscription);
-  }
-  private processSchoolsListResponse(response: any): void {
-    if (response) {
-      this.schools = response?.data?.items;
-      this.schools?.forEach((item: any) => {
-        let name: any = JSON.parse(item?.name || "{}");
-        item['schoolName'] = name[this.currentLanguage];
-      });
+    this.subscriptions.push(tuitionSubscription);
 
-      let patchSchool: any;
-      this.schools?.forEach((element: any) => {
-        if (this.kidData?.item?.school?.id == element?.id) {
-          patchSchool = element;
-        }
+  }
+  private processTuitionExpensesListResponse(response: any): void {
+    if (response.status == 200) {
+      this.tuitionExpensesCount = response?.data?.total;
+      this.tuitionExpensesList = response?.data?.items;
+      this.tuitionExpensesList?.forEach((item: any) => {
+        item['title'] = { "en": "{\"ar\":\"إسلام\",\"en\":\"Eslam\"}" };
+        let titleItem: any = JSON.parse(item?.title[this.currentLanguage] || '{}');
+        item['titleName'] = titleItem[this.currentLanguage];
+        item['titleAR'] = titleItem['ar'];
+        item['titleEN'] = titleItem['en'];
+        item['details'] = { "en": "{\"ar\":\"إسلام\",\"en\":\"Eslam\"}" };
+        let detailsItem: any = JSON.parse(item?.details[this.currentLanguage] || '{}');
+        item['detailsName'] = detailsItem[this.currentLanguage];
+        item['detailsAR'] = titleItem['ar'];
+        item['detailsEN'] = titleItem['en'];
       });
-      this.kidForm?.get('school')?.setValue(patchSchool);
+      console.log(this.tuitionExpensesList);
     } else {
       this.handleError(response.error);
       return;
     }
   }
-  private finalizeSchoolsListLoading(): void {
-    this.schools=[{id:1,schoolName:'schoolName'},{id:2,schoolName:'schoolName'}]
-    this.isLoadingSchools = false;
+  private finalizeTuitionExpenseListLoading(): void {
+    this.isLoadingTuitionExpensesList = false;
   }
-  // End Schools List Functions
+  // End Tuition Expenses List Functions
 
-  // Start Add Edit Kid
+  // Start Add Edit Tuition Expenses
   submit(): void {
-    if (this.kidForm?.valid) {
+    if (this.tuitionExpensesForm?.valid) {
       const formData: any = this.extractFormData();
-      this.addEditKid(formData);
+      this.addEditKidTuitionsData(formData);
     } else {
-      this.publicService?.validateAllFormFields(this.kidForm);
+      this.publicService?.validateAllFormFields(this.tuitionExpensesForm);
     }
   }
   private extractFormData(): any {
-    let kidFormData: any = this.kidForm?.value;
-    console.log(kidFormData);
-    let formData = new FormData();
-    formData.append('name', kidFormData?.school ?? '');
-    formData.append('parent_id', this.currentUserInformation?.id);
-    return formData;
+    let tuitionExpensesFormData: any = this.tuitionExpensesForm?.value;
+    let selectedIds: any = [];
+    tuitionExpensesFormData?.tuitionExpenses?.forEach((element: any) => {
+      selectedIds?.push(element.id);
+    });
+    // let formData = new FormData();
+    // formData.append('expenses_ids', selectedIds);
+    let objData: any = {};
+    objData = {
+      expenses_ids: selectedIds
+    }
+    return objData;
   }
-  private addEditKid(formData: any): void {
+  private addEditKidTuitionsData(formData: any): void {
     this.publicService?.showGlobalLoader?.next(true);
-    let subscribeAddKid: Subscription = this.kidsService?.addEditKid(formData).pipe(
+    let subscribeAddKidTuition: Subscription = this.kidsTuitionsService?.addEditKidTuitions(formData, this.tuitionExpensesData?.event?.id).pipe(
       tap(res => this.handleAddKidSuccess(res)),
       catchError(err => this.handleError(err))
     ).subscribe();
-    this.subscriptions.push(subscribeAddKid);
+    this.subscriptions.push(subscribeAddKidTuition);
   }
   private handleAddKidSuccess(response: any): void {
     this.publicService?.showGlobalLoader?.next(false);
@@ -170,7 +180,7 @@ export class AddExpensesComponent {
       this.handleError(response?.message);
     }
   }
-  // End Add Edit Kid
+  // End Add Edit Tuition Expenses
 
   cancel(): void {
     this.ref?.close({ listChanged: false });

@@ -2,7 +2,7 @@ export const roots = {
   auth: {
     login: 'login',
     currentUserInformation: 'users/user-loggned',
-    registerParent:'register',
+    registerParent: 'register',
     validateCode: 'check-otp',
     logout: 'logout',
     forgetPassword: '/Account/ForgetPassword',
@@ -49,6 +49,9 @@ export const roots = {
     },
     tuitionExpenses: {
       tuitionExpenses: 'tuition_expenses'
+    },
+    kidTuitions: {
+      addEdit: 'kids/update-expenses'
     },
     records: {
       getRecords: '/getRecords',

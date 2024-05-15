@@ -234,7 +234,6 @@ export class TuitionExpensesListComponent {
       }
     });
   }
-
   //Start Delete Kid Functions
   deleteItem(item: any): void {
     if (!item?.confirmed) {

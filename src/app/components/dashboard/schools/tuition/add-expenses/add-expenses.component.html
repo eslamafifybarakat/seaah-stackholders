@@ -1,5 +1,5 @@
 <div id="modal-form">
-  <form [formGroup]="kidForm" (ngSubmit)="submit()" aria-label="add-kid-form">
+  <form [formGroup]="tuitionExpensesForm" (ngSubmit)="submit()" aria-label="add-kid-form">
     <div class="form-content">
       <div class="row m-0">
         <div class="col-md-12">
@@ -8,20 +8,20 @@
               {{'dashboard.sideMenu.tuitionExpenses'|translate}}
             </label>
             <span class="p-input-icon-right select-loading d-block">
-              <p-multiSelect appendTo="body" [options]="schools" formControlName="school"
-                display="chip" [readonly]="isLoadingSchools" [virtualScroll]="true" [showClear]="true"
+              <p-multiSelect appendTo="body" [options]="tuitionExpensesList" formControlName="tuitionExpenses"
+                display="chip" [readonly]="isLoadingTuitionExpensesList" [virtualScroll]="true" [showClear]="true"
                 [virtualScrollItemSize]="38" [dropdownIcon]="'fas fa-caret-down'" scrollHeight="200px"
-                defaultLabel="{{'placeholders.school'|translate}}"
-                [filterPlaceHolder]="'placeholders.search'|translate" [showToggleAll]="true" [optionLabel]="'schoolName'"
-                [class.ng-dirty]="formControls?.school?.invalid && (formControls?.school?.dirty || formControls?.school?.touched)"></p-multiSelect>
-              <ng-container *ngIf="isLoadingSchools">
+                defaultLabel="{{'placeholders.select'|translate}}"
+                [filterPlaceHolder]="'placeholders.search'|translate" [showToggleAll]="true" [optionLabel]="'titleName'"
+                [class.ng-dirty]="formControls?.tuitionExpenses?.invalid && (formControls?.tuitionExpenses?.dirty || formControls?.tuitionExpenses?.touched)"></p-multiSelect>
+              <ng-container *ngIf="isLoadingTuitionExpensesList">
                 <i class="pi pi-spin pi-spinner"></i>
               </ng-container>
             </span>
             <div class="mt-2">
               <ng-container
-                *ngIf="formControls?.school?.invalid && (formControls?.school?.dirty || formControls?.school?.touched)">
-                <ng-container *ngIf="formControls?.school?.errors?.['required']">
+                *ngIf="formControls?.tuitionExpenses?.invalid && (formControls?.tuitionExpenses?.dirty || formControls?.tuitionExpenses?.touched)">
+                <ng-container *ngIf="formControls?.tuitionExpenses?.errors?.['required']">
                   <span class="text-danger fs-8">
                     {{'validations.requiredField'|translate}}
                   </span>

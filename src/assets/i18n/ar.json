@@ -351,6 +351,7 @@
     "street": "الشارع"
   },
   "placeholders": {
+    "select": "اختر",
     "price": "أدخل السعر",
     "title": "أدخل العنوان",
     "details": "أدخل التفاصيل",

@@ -231,7 +231,9 @@ export class AddEditTuitionExpensesComponent {
     formData.append('level', kidFormData?.level?.id ?? '');
     formData.append('total', kidFormData?.price ?? null);
     formData.append('school_id', this.currentUserInformation?.id);
-    formData.append('_method', 'PUT');
+    if (this.isEdit) {
+      formData.append('_method', 'PUT');
+    }
     return formData;
   }
   private addEditTuition(formData: any): void {

@@ -351,6 +351,7 @@
     "street": "Street"
   },
   "placeholders": {
+    "select": "Select",
     "price": "Enter price",
     "title": "Enter title",
     "details": "Enter details",
