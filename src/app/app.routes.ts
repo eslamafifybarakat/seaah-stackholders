@@ -1,15 +1,12 @@
 import { Routes } from '@angular/router';
-
 // Components
 
 // TS Files for child routes
 import { dashBoardChildrenRoutes } from './components/dashboard/dashboard-children-routes';
+import { errorsChildrenRoutes } from './components/errors/errors-children-routes';
 import { authChildrenRoutes } from './components/auth/auth-children-routes';
-
 //Services
 import { AuthGuard } from './services/authentication/guards/auth.guard';
-import { dashBoardChildrenV2Routes } from './components/dashboard-v2/dashboard-children-routes-v2';
-import { errorsChildrenRoutes } from './components/errors/errors-children-routes';
 
 
 export const appRoutes: Routes = [
@@ -33,23 +30,25 @@ export const appRoutes: Routes = [
       ),
     children: authChildrenRoutes
   },
+
+  // Dashboard
   {
     path: 'Dashboard',
     // canActivate: [AuthGuard], // Apply the guard here
     loadComponent: () =>
-      import('./components/dashboard-v2/dashboard-v2.component').then(
-        (c) => c.DashboardV2Component
+      import('./components/dashboard/dashboard.component').then(
+        (c) => c.DashboardComponent
       ),
-    children: dashBoardChildrenV2Routes
+    children: dashBoardChildrenRoutes
   },
   {
     path: ':lang/Dashboard',
     // canActivate: [AuthGuard], // Apply the guard here
     loadComponent: () =>
-      import('./components/dashboard-v2/dashboard-v2.component').then(
-        (c) => c.DashboardV2Component
+      import('./components/dashboard/dashboard.component').then(
+        (c) => c.DashboardComponent
       ),
-    children: dashBoardChildrenV2Routes
+    children: dashBoardChildrenRoutes
   },
   // Home Page
   {
