@@ -24,6 +24,7 @@ import { Router } from '@angular/router';
 import { TuitionExpenseCardComponent } from '../tuition-expense-card/tuition-expense-card.component';
 import { AddEditTuitionExpensesComponent } from '../add-edit-tuition-expense/add-edit-tuition-expense.component';
 import { TuitionExpensesService } from '../../../services/tuitionExpenses.service';
+import { AuthService } from 'src/app/services/authentication/auth.service';
 
 @Component({
   standalone: true,
@@ -84,11 +85,12 @@ export class TuitionExpensesListComponent {
   showToggleAction: boolean = false;
   showActionFiles: boolean = false;
   // End Permissions Variables
+  schoolId: string | number | null = 1;
+  currentLanguage: string | null;
+  currentUserInformation: any | null;
 
   // Dropdown Element
   @ViewChild('dropdown') dropdown: any;
-
-  currentLanguage: string | null;
 
   constructor(
     private localizationLanguageService: LocalizationLanguageService,
@@ -97,6 +99,7 @@ export class TuitionExpensesListComponent {
     private publicService: PublicService,
     private dialogService: DialogService,
     private alertsService: AlertsService,
+    private authService: AuthService,
     private cdr: ChangeDetectorRef,
     private router: Router
   ) {
@@ -104,13 +107,13 @@ export class TuitionExpensesListComponent {
   }
 
   ngOnInit(): void {
-    console.log('sss');
-
     this.loadData();
     this.searchSubject.pipe(
       debounceTime(700) // Throttle time in milliseconds (1 seconds)
     ).subscribe(event => { this.searchHandler(event) });
     this.currentLanguage = this.publicService.getCurrentLanguage();
+    this.currentUserInformation = this.authService.getCurrentUserInformationLocally();
+    this.schoolId = this.currentUserInformation?.id;
   }
   private loadData(): void {
     this.tableHeaders = [
@@ -163,7 +166,7 @@ export class TuitionExpensesListComponent {
   // Start Tuition Expenses List Functions
   getAllTuitionExpenses(isFiltering?: boolean): void {
     isFiltering ? this.publicService.showSearchLoader.next(true) : this.isLoadingTuitionExpensesList = true;
-    let tuitionSubscription: Subscription = this.tuitionExpensesService?.getTuitionExpensesList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null)
+    let tuitionSubscription: Subscription = this.tuitionExpensesService?.getTuitionExpensesList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null, this.schoolId ?? null)
       .pipe(
         tap((res: any) => this.processTuitionExpensesListResponse(res)),
         catchError(err => this.handleError(err)),

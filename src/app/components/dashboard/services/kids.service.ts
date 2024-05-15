@@ -14,7 +14,7 @@ export class KidsService {
     private http: HttpClient
   ) { }
 
-  getKidsList(page?: number, per_page?: number, search?: string, sort?: any, conditions?: any, approval_status?: any): Observable<any> {
+  getKidsList(page?: number, per_page?: number, search?: string, sort?: any, conditions?: any, approval_status?: any,schoolId?:any): Observable<any> {
     let params = new HttpParams();
     if (page) {
       params = params?.append("page_number", page);
@@ -33,6 +33,9 @@ export class KidsService {
     }
     if (approval_status) {
       params = params?.append("approval_status", approval_status);
+    }
+    if (schoolId) {
+      params = params?.append("school_id", schoolId);
     }
     return this.http?.get(`${this.baseUrl}/${roots?.dashboard?.kids.kids}`, { params: params });
   }

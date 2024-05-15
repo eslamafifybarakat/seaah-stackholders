@@ -9,8 +9,8 @@ import { DynamicTableV2Component } from '../../../../../shared/components/dynami
 import { DynamicSvgComponent } from '../../../../../shared/components/icons/dynamic-svg/dynamic-svg.component';
 import { DynamicTableComponent } from '../../../../../shared/components/dynamic-table/dynamic-table.component';
 import { SkeletonComponent } from '../../../../../shared/skeleton/skeleton/skeleton.component';
+import { KidCardComponent } from '../kid-card/kid-card.component';
 // import { AddEditKidComponent } from '../add-edit-kid/add-edit-kid.component';
-// import { KidCardComponent } from '../kid-card/kid-card.component';
 
 //Services
 import { LocalizationLanguageService } from '../../../../../services/generic/localization-language.service';
@@ -20,13 +20,13 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { DeleteKidApiResponse } from '../../../../../interfaces/dashboard/kids';
 import { AlertsService } from '../../../../../services/generic/alerts.service';
 import { PublicService } from '../../../../../services/generic/public.service';
+import { AuthService } from 'src/app/services/authentication/auth.service';
 import { catchError, debounceTime, finalize, tap } from 'rxjs/operators';
 import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { KidsService } from '../../../services/kids.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Subject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
-import { KidCardComponent } from '../kid-card/kid-card.component';
 
 @Component({
   standalone: true,
@@ -90,7 +90,9 @@ export class KidsListComponent {
   showToggleAction: boolean = false;
   showActionFiles: boolean = false;
   // End Permissions Variables
-  currentLanguage: string;
+  schoolId: string | number | null = 1;
+  currentLanguage: string | null;
+  currentUserInformation: any | null;
 
   // Dropdown Element
   @ViewChild('dropdown') dropdown: any;
@@ -120,6 +122,7 @@ export class KidsListComponent {
     private dialogService: DialogService,
     private alertsService: AlertsService,
     private kidsService: KidsService,
+    private authService: AuthService,
     private cdr: ChangeDetectorRef,
     private fb: FormBuilder,
     private router: Router
@@ -128,6 +131,8 @@ export class KidsListComponent {
   }
   ngOnInit(): void {
     this.currentLanguage = this.publicService.getCurrentLanguage();
+    this.currentUserInformation = this.authService.getCurrentUserInformationLocally();
+    this.schoolId = this.currentUserInformation?.id;
     this.loadData();
     this.searchSubject.pipe(
       debounceTime(500) // Throttle time in milliseconds (1 seconds)
@@ -191,7 +196,7 @@ export class KidsListComponent {
   // Start Kids List Functions
   getAllKids(isFiltering?: boolean): void {
     isFiltering ? this.publicService.showSearchLoader.next(true) : this.isLoadingKidsList = true;
-    let kidsSubscription: Subscription = this.kidsService?.getKidsList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null, this.statusValue ?? null)
+    let kidsSubscription: Subscription = this.kidsService?.getKidsList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null, this.statusValue ?? null, this.schoolId ?? null)
       .pipe(
         tap((res: KidsListApiResponse) => {
           this.processKidsListResponse(res);

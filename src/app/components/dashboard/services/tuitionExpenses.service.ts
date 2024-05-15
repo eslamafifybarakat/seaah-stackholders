@@ -14,7 +14,7 @@ export class TuitionExpensesService {
     private http: HttpClient
   ) { }
 
-  getTuitionExpensesList(page?: number, per_page?: number, search?: string, sort?: any, conditions?: any): Observable<any> {
+  getTuitionExpensesList(page?: number, per_page?: number, search?: string, sort?: any, conditions?: any,schoolId?:any): Observable<any> {
     let params = new HttpParams();
     if (page) {
       params = params?.append("page_number", page);
@@ -24,6 +24,9 @@ export class TuitionExpensesService {
     }
     if (search) {
       params = params?.append("search", search);
+    }
+    if (schoolId) {
+      params = params?.append("school_id", schoolId);
     }
     if (sort && Object.keys(sort)?.length > 0) {
       params = params?.append("sort", JSON?.stringify(sort));
