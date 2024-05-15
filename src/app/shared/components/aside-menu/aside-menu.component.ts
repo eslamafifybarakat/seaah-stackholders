@@ -34,11 +34,11 @@ interface MenuItem {
     CommonModule,
     RouterModule,
   ],
-  selector: 'aside-menu-v2',
-  templateUrl: './aside-menu-v2.component.html',
-  styleUrls: ['./aside-menu-v2.component.scss']
+  selector: 'app-aside-menu',
+  templateUrl: './aside-menu.component.html',
+  styleUrls: ['./aside-menu.component.scss']
 })
-export class AsideMenuV2Component {
+export class AsideMenuComponent {
   private subscriptions: Subscription[] = [];
 
   collapsed: boolean = false;

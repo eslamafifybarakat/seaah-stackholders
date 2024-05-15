@@ -7,10 +7,9 @@ import { Component } from '@angular/core';
 
 // Components
 import { LanguageSelectorComponent } from '../language-selector/language-selector.component';
-// import { AsideMenuComponent } from '../aside-menu/aside-menu.component';
-import { UserInfoComponent } from '../user-info/user-info.component';
-import { AsideMenuV2Component } from '../aside-menu-v2/aside-menu-v2.component';
 import { AuthService } from 'src/app/services/authentication/auth.service';
+import { AsideMenuComponent } from '../aside-menu/aside-menu.component';
+import { UserInfoComponent } from '../user-info/user-info.component';
 
 @Component({
   standalone: true,
@@ -23,7 +22,7 @@ import { AuthService } from 'src/app/services/authentication/auth.service';
 
     // Components
     LanguageSelectorComponent,
-    AsideMenuV2Component,
+    AsideMenuComponent,
     UserInfoComponent
   ],
   selector: 'dashboard-navbar',

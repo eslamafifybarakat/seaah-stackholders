@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
 
 // Components
 import { DashboardNavbarComponent } from './../../shared/components/dashboard-navbar/dashboard-navbar.component';
-import { AsideMenuV2Component } from 'src/app/shared/components/aside-menu-v2/aside-menu-v2.component';
+import { AsideMenuComponent } from 'src/app/shared/components/aside-menu/aside-menu.component';
 import { FooterComponent } from './../../shared/components/footer/footer.component';
 
 @Component({
@@ -17,7 +17,7 @@ import { FooterComponent } from './../../shared/components/footer/footer.compone
 
     // Components
     DashboardNavbarComponent,
-    AsideMenuV2Component,
+    AsideMenuComponent,
     FooterComponent
   ],
   selector: 'app-dashboard',
