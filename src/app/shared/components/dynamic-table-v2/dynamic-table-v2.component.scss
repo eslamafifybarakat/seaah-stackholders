@@ -498,8 +498,5 @@
 //   overflow: hidden;
 // }
 .table-content p-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-  position: relative !important;
   z-index: -1000 !important;
 }
