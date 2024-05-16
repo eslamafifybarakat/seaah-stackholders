@@ -6,7 +6,8 @@
 #footer {
   background-repeat: no-repeat;
   background-size: cover;
-  background-color: #1B2940;
+  background-color: transparent;
+  padding-top: 4rem;
   .logo {
     width: 5.2rem;
     height: 3rem;
@@ -20,7 +21,7 @@
     content: "";
     height: 2px;
     width: 3rem;
-    background-color: #1B2940;
+    background-color: transparent;
     top: -13px;
     left: 0;
   }
@@ -28,10 +29,10 @@
     z-index: 1 !important;
   }
   .bg-footer {
-    background-color: #1B2940;
+    background-color: transparent;
   }
   .join-btn {
-    background-color: #1B2940;
+    background-color: transparent;
   }
   .app-img {
     width: 100px;

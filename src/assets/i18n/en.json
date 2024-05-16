@@ -19,6 +19,7 @@
     "dashboard": "Dashboard"
   },
   "general": {
+    "startNow":"Start Now",
     "watchVideo": "Watch Video",
     "heroBtn": "Get the card",
     "expensesPaid": "Expenses Paid",
@@ -82,6 +83,18 @@
       "description2": "We have designed and developed the payment process to suit all ages, allowing for easy and quick completion",
       "title3": "Excellent Services",
       "description3": "Our services are distinguished by their high quality, ease of use, and suitability for most age groups"
+    }
+  },
+  "paymentSteps": {
+    "titleHome": "Simplify Your Payment Processes",
+    "descriptionHome": "We will help you keep up with current technological advancements and simplify your processes for faster achievement, in addition to reducing paper transactions.",
+    "steps": {
+      "title1": "Create an Account",
+      "description1": "Create a new account by entering some basic personal information.",
+      "title2": "Choose the School or University and Apply for Yourself or Your Child",
+      "description2": "If you are a university student, you will choose the university; if you are a parent, you will select a school for your child and complete the application process easily.",
+      "title3": "Enjoy Full Access to Services",
+      "description3": "Explore our services and fully benefit from them around the clock."
     }
   },
   "userInfo": {

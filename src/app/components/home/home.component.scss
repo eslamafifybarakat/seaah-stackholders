@@ -229,6 +229,59 @@
       }
     }
   }
+
+  #payment-steps-section {
+    color: var(--text-white-color);
+
+    .title {
+      font-size: 55px;
+      font-weight: 700;
+      line-height: 80px;
+    }
+
+    .decription {
+      font-size: 19px;
+      font-weight: 400;
+      line-height: 32px;
+      color: #E4E4E4;
+    }
+
+    .payment-step-item {
+      .icon {
+        width: 65px;
+        height: 65px;
+        background: linear-gradient(180deg, #004FB3 0%, #006960 72.5%);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+
+        img {
+          object-fit: fill;
+          width: 45px;
+        height: 45px;
+        }
+      }
+
+      .content-texts {
+        .title {
+          font-size: 23px;
+          font-weight: 700;
+          line-height: 32px;
+          color: #E4E4E4;
+          text-align: initial;
+        }
+
+        .description {
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 30px;
+          color: #E4E4E4;
+        }
+      }
+    }
+  }
 }
 
 :host::ng-deep {
