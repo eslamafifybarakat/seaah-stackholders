@@ -1,14 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
 html {
   scroll-behavior: smooth;
 }
+
 body {
-  font-family: "Poppins", sans-serif;
-  &:dir(rtl) {
-    font-family: "IBM Plex Sans Arabic", sans-serif;
-  }
+  font-family: "Almarai", sans-serif;
   background-color: var(--bg-body-color);
 }
+
 *:focus,
 *:focus-visible {
   outline: none !important;
@@ -54,14 +54,17 @@ img {
   -o-user-select: none;
   user-select: none;
 }
+
 .btn:focus,
 .btn:active {
   outline: none !important;
 }
+
 .dropdown-toggle.btn.show {
   border: 0 !important;
   outline: none !important;
 }
+
 .w-content {
   width: fit-content;
 }
@@ -149,33 +152,41 @@ small {
     max-width: 97% !important;
   }
 }
+
 @media (max-width: 767px) {
   .container {
     width: 90% !important;
   }
 }
+
 .disabled {
   pointer-events: none;
   opacity: 0.5;
 }
+
 .scaleX-rtl:dir(rtl) {
   transform: scaleX(-1);
 }
+
 .p-paginator {
   background-color: transparent !important;
+
   .p-paginator-pages {
     .p-paginator-page {
       width: 1rem;
       height: 2rem;
       min-width: 2rem;
       border-radius: 50%;
+
       &.p-highlight {
         background-color: var(--bg-main-color);
         color: var(--text-white-color);
       }
     }
   }
+
   &:dir(rtl) {
+
     .p-paginator-first,
     .p-paginator-last,
     .p-paginator-prev,
@@ -183,10 +194,12 @@ small {
       transform: scaleX(-1) !important;
     }
   }
+
   .p-link:hover {
     background-color: transparent;
   }
 }
+
 // .paginator-options-dropdown {
 .p-dropdown {
   height: 40px !important;
@@ -195,6 +208,7 @@ small {
   border-radius: 10px;
   height: 3rem !important;
   border: 1px solid #eee !important;
+
   &:not(.p-disabled):hover {
     .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
       background-color: #eaeaea;
@@ -209,6 +223,7 @@ small {
     padding: 10px 0 10px 12px;
     border: 0 !important;
     line-height: initial !important;
+
     &:dir(rtl) {
       padding: 10px 12px 10px 0px;
     }
@@ -220,6 +235,7 @@ small {
     width: 8rem;
     text-align: center;
     padding-top: 0.5rem !important;
+
     .p-dropdown-items {
       padding: 0;
     }
@@ -229,4 +245,5 @@ small {
     }
   }
 }
+
 // }

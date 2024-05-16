@@ -1,36 +1,160 @@
 <div id="home-page">
   <!--========== Start Hero Section ================= -->
-  <div id="hero-section" class="pt-hero">
+  <section id="hero-section" class="pt-hero">
     <div class="container mx-auto">
       <div class="row align-items-center">
-        <div class="col-lg-6 order-lg-1 order-2 p-0">
-          <p class="sub-title mt-2 mb-0">
-            {{ 'home.hero.heroSubtitle' | translate }}
-          </p>
+        <article class="col-lg-7 order-lg-1 order-2 p-0">
           <h1 class="title w-content text-capitalize fw-bold">
             {{ 'home.hero.heroTitle' | translate }}
           </h1>
-          <p class="description mt-2 w-75">
+          <p class="description mt-3 w-75">
             {{ 'home.hero.heroDescription' | translate }}
           </p>
-          <div class="d-flex justify-content-sm-start justify-content-center gap-3 mt-2 mt-xl-4 mt-md-3 mt-sm-3">
-            <a href="https://apps.apple.com/us/app/%D8%AA%D9%84%D8%A8%D9%8A%D9%86%D8%A9-talbinah/id6464413895"
-              target="_blank" rel="noopener noreferrer">
-              <img src="assets/images/downloadsChannels/app-store.svg" width="160" height="48" class="apps-image" alt="app-store">
-            </a>
-            <a href="https://play.google.com/store/apps/details?id=com.talbinah.talbinah&pli=1"
-              target="_blank" rel="noopener noreferrer">
-              <img src="assets/images/downloadsChannels/google-play.svg" width="160" height="48" class="apps-image" alt="google-play">
-            </a>
+          <a href="/Auth/Login" class="btn btn-outline-white w-auto text-nowrap py-2 mt-3" role="button">
+            <span class="d-flex align-items-center justify-content-center gap-2">
+              {{'general.heroBtn' | translate}}
+            </span>
+          </a>
+        </article>
+        <aside class="col-lg-5 col-md-8 col-sm-9 col-11 m-lg-0 m-auto order-lg-2 order-1 mb-lg-0 mb-3 p-0">
+          <div class="main-hero-image-container">
+            <img src="assets/images/home/bg-hero.webp" width="800" height="600" alt="hero-image" class="w-100">
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+  <!--============= End Hero Section ================= -->
+
+  <!--========== Start About Section ================= -->
+  <section id="about-section" class="pt-7">
+    <div class="container mx-auto">
+      <div class="row align-items-center">
+        <article class="col-lg-7 col-md-6 col-sm-12 col-12 mb-3">
+          <div class="about-card p-xl-4 p-lg-4 p-md-3 p-sm-3 p-3">
+            <h2 class="title fw-bold text-white-color">
+              {{'about.title' | translate}}
+            </h2>
+            <p class="description text-white-color fs-5 mt-3 lh-lg">
+              {{'about.description' | translate}}
+            </p>
+            <div class="d-flex align-items-center flex-row w-100 gap-2">
+              <a href="/Auth/Login" class="btn btn-outline-white w-auto text-nowrap py-2" role="button">
+                {{'general.heroBtn' | translate}}
+              </a>
+              <a href="/Auth/Login" class="btn btn-video w-auto text-nowrap py-2" role="button">
+                <img src="assets/images/home/video-popup.svg" alt="Watch video icon">
+                {{'general.watchVideo' | translate}}
+              </a>
+            </div>
+          </div>
+        </article>
+        <aside class="col-lg-5 col-md-6 col-sm-12 col-12 mb-3">
+          <div class="about-card p-xl-4 p-lg-4 p-md-3 p-sm-3 p-3">
+            <div class="row boxes">
+              <div class="col-6 pr-3">
+                <div class="content text-white-color">
+                  <h3 class="count">
+                    38M+
+                  </h3>
+                  <p class="count-label fw-bold">
+                    شركة أنضمت إلينا بالفعل
+                  </p>
+                </div>
+              </div>
+              <div class="col-6 pl-3">
+                <div class="content text-white-color">
+                  <h4 class="count">
+                    0%
+                  </h4>
+                  <p class="count-label fw-bold">
+                    رسوم صفر بالمائة إلى أي معاملة
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="d-flex align-items-center gap-2 flex-wrap justify-content-center text-sm-start text-center mt-3">
+              <!-- For SEO, make these actual profiles linkable if applicable -->
+              <div class="d-flex">
+                <ng-container *ngFor="let item of jobOpportunities;let i=index">
+                  <div class="person-img position-relative" *ngIf="i<3">
+                    <img [src]="item.img" alt="person" class="w-100 h-100 rounded-circle" [class.blur-img]="i==2">
+                    <ng-container *ngIf="i==2">
+                      <div class="job-num position-absolute text-white-color fw-bold fs-8">
+                        +{{jobOpportunities?.length-2}}
+                      </div>
+                    </ng-container>
+                  </div>
+                </ng-container>
+              </div>
+              <div class="stars">
+                <!-- Ensure the rating widget is properly labeled for screen readers -->
+                <p-rating [(ngModel)]="rate" [readonly]="true" [stars]="5" [cancel]="false" step="0.5"
+                  aria-label="Rating"></p-rating>
+                <p class="mb-0 fst-normal text-white-color">
+                  {{'about.ratingText'|translate}}
+                </p>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+  <!--============= End About Section ================= -->
+
+  <!--========== Start Digital Power Section ================= -->
+  <section id="digital-power-section" class="pt-7">
+    <div class="container mx-auto">
+      <h4 class="section-title">
+        {{'digitalPower.titleHome' | translate}}
+      </h4>
+      <p class="section-decription mt-3">
+        {{'digitalPower.descriptionHome' | translate}}
+      </p>
+      <div class="row mt-4">
+        <div class="col-xl-4 col-md-6 col-sm-6 col-12">
+          <div class="box p-3 mb-3">
+            <div class="image-container">
+              <img src="assets/images/home/digital-power/digitalPower1.svg" alt="icon">
+            </div>
+            <h6 class="fw-bold mt-4">
+              أفضل المدارس والجامعات
+            </h6>
+            <p class="text-center fw-light">
+              لدينا شركاات مع أفضل المدارس والجامعات في المملكة لمساعدتكم في إتمام مصروفاتها بدون تكاليف إضافية
+            </p>
           </div>
         </div>
-        <div class="col-lg-6 col-md-8 col-sm-9 col-11 m-lg-0 m-auto order-lg-2 order-1 mb-lg-0 mb-3 p-0">
-          <div class="main-hero-image-container">
-            <img src="assets/images/home/hero-image.svg" width="800" height="600" alt="hero-image" class="w-100">
+        <div class="col-xl-4 col-md-6 col-sm-6 col-12">
+          <div class="box p-3 mb-3">
+            <div class="image-container">
+              <img src="assets/images/home/digital-power/digitalPower2.svg" alt="icon">
+            </div>
+            <h6 class="fw-bold mt-3">
+              أفضل المدارس والجامعات
+            </h6>
+            <p class="text-center fw-light">
+              لدينا شركاات مع أفضل المدارس والجامعات في المملكة لمساعدتكم في إتمام مصروفاتها بدون تكاليف إضافية
+            </p>
+          </div>
+        </div>
+        <div class="col-xl-4 col-md-6 col-sm-6 col-12">
+          <div class="box p-3 mb-3">
+            <div class="image-container">
+              <img src="assets/images/home/digital-power/digitalPower3.svg" alt="icon">
+            </div>
+            <h6 class="fw-bold mt-3">
+              أفضل المدارس والجامعات
+            </h6>
+            <p class="text-center fw-light">
+              لدينا شركاات مع أفضل المدارس والجامعات في المملكة لمساعدتكم في إتمام مصروفاتها بدون تكاليف إضافية
+            </p>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <!--============= End Hero Section ================= -->
+  </section>
+  <!--============= End Digital Power Section ================= -->
 </div>

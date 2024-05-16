@@ -14,9 +14,13 @@
   },
   "nav": {
     "home": "Home",
+    "aboutUs": "About Us",
+    "contact": "Contact Us",
     "dashboard": "Dashboard"
   },
   "general": {
+    "watchVideo": "Watch Video",
+    "heroBtn": "Get the card",
     "expensesPaid": "Expenses Paid",
     "addExpenses": "Add Expenses",
     "loading": "Loading",
@@ -55,10 +59,18 @@
   },
   "home": {
     "hero": {
-      "heroTitle": "Your Journey to Mental Health and Happiness.",
-      "heroSubtitle": "We Are Here to Support You in",
-      "heroDescription": "Let us help you build a bridge of hope and optimism towards a better tomorrow, where happiness and mental peace are the prevailing features in your life."
+      "heroTitle": "To facilitate the payment of tuition fees in interest-free installments",
+      "heroDescription": "Saada is a Saudi company that seeks to facilitate the educational process and improve the future of young people, as it provides an interest-free installment service for educational expenses for school and university students and families."
     }
+  },
+  "about": {
+    "title": "About Us",
+    "description": "Seaah is a Saudi company that seeks to facilitate the educational process and improve the future of young people, as it provides an interest-free installment service for educational expenses for school and university students and families.",
+    "ratingText": "Many people are grateful for this service"
+  },
+  "digitalPower": {
+    "titleHome": "Unleashing Digital Power",
+    "descriptionHome": "We have decided to embrace digital power and adopt it to help you complete your financial transactions"
   },
   "userInfo": {
     "my_profile": "My Profile",

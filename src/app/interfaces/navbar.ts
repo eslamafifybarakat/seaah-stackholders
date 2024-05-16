@@ -9,6 +9,6 @@ export interface NavItem {
 
 export const navItems = [
   { title: 'nav.home', label: 'nav.home', route: '/Home', icon: '' },
-  { title: 'nav.dashboard', label: 'nav.dashboard', route: '/Dashboard', icon: '' },
-  { title: 'nav.dashboard', label: 'nav.dashboard', route: '/Dashboard', icon: '' }
+  { title: 'nav.aboutUs', label: 'nav.aboutUs', route: '/AboutUs', icon: '' },
+  { title: 'nav.contact', label: 'nav.contact', route: '/ContactUs', icon: '' }
 ];
