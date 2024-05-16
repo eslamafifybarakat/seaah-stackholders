@@ -16,34 +16,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent {
+  emailText: string = 'email@gmail.com';
+  phone: string = '+96 15 754411184';
 
-  restaurantCategories: any = [];
-  storesCategoriesList: any = [];
-  categoriesList: any = [];
-
-  facebookLink: string = 'face';
-  instagramLink: string = 'instagram';
-  whatsappLink: string = 'whatsapp';
 
   constructor() {
-    this.restaurantCategories = [
-      { name: 'Riyadh Season' },
-      { name: ' Jeddah Events Calendar' },
-      { name: ' Diriyah Season' }
-    ];
-    this.storesCategoriesList = [
-      { name: 'Riyadh Season' },
-      { name: ' Jeddah Events Calendar' },
-      { name: ' Diriyah Season' }
-    ];
-    this.categoriesList = [
-      { name: 'Riyadh Season' },
-      { name: ' Jeddah Events Calendar' },
-      { name: ' Diriyah Season' }
-    ];
-  }
 
-  openStoresWithCategoryId(storeCat: any): void { }
-  openPlaceWithCategoryId(catId: any): void { }
-  openRestaurantWithCategoryId(restaurant: any): void { }
+  }
 }

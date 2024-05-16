@@ -270,7 +270,7 @@
     "educationalFacility": "Educational facility",
     "educationalFinance": "Educational finance student",
     "startRecruitment": "Start your recruitment journey now",
-    "joinMasdar": "Join the Al Masdar International Recruitment platform to be able to obtain the workers allocated to you",
+    "joinMasdar": "Join the Seaah International Recruitment platform to be able to obtain the workers allocated to you",
     "forgotPassword": "Forgot Password?",
     "or": "Or",
     "createAccount": "Create account",
@@ -311,7 +311,7 @@
     "next": "Next",
     "createAccountNow": "Create your account now",
     "accountCreated": "Your account has been created",
-    "welcomeToMasdar": "Welcome to the Al Masdar International Recruitment platform",
+    "welcomeToMasdar": "Welcome to the Seaah International Recruitment platform",
     "welcome": "Welcome,",
     "goToHome": "Go to Home Page",
     "joinNow": "Join now"
@@ -491,15 +491,18 @@
     "numbersLength": "Input digits must be numbers only"
   },
   "footer": {
-    "allRight": "All Rights Reserved © 2022.",
-    "contactUs": "Contact Us",
-    "subscribeNewsletter": "Subscribe Newsletter",
-    "terms": "Terms & Conditions",
-    "privacy": "Privacy Policy",
-    "websiteMap": "Website Map",
+    "allRight": "© Copyright reserved to Seaah International Recruitment Platform",
     "emailAddress": "Email Address",
-    "join": "Join",
-    "download": "Download our mobile app"
+    "subscribe": "Subscribe with us to be informed of the latest additions",
+    "communication": "Communication",
+    "platform": "Seaah International Recruitment Platform",
+    "home": "Home",
+    "recruitment": "Recruitment offices",
+    "services": "Services",
+    "contact": "Contact Us",
+    "terms": "Terms and Conditions",
+    "policies": "Privacy and Policies",
+    "importantInfo": "Important Information"
   },
   "errors": {
     "error404": {

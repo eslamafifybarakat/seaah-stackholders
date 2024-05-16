@@ -25,6 +25,13 @@
     right: 0;
   }
 }
+.scaleX-rtl {
+  transform: scaleX(-1);
+}
+
+svg {
+  transform: scaleX(-1);
+}
 @media (max-width: 992px) and (min-width: 576px) {
   .footer .border-right.second-border {
     border-left: none !important;
