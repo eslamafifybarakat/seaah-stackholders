@@ -200,6 +200,33 @@
       justify-content: center;
       align-items: center;
       flex-direction: column;
+
+      .title {
+        font-size: 24px;
+      }
+
+      .description {
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 25px;
+      }
+
+      .image-container {
+        width: 105.77px;
+        height: 105.23px;
+        background: linear-gradient(180deg, #004FB3 0%, #006960 72.5%);
+        border-radius: 14px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+
+        img {
+          object-fit: fill;
+          width: 100%;
+          height: 100%;
+        }
+      }
     }
   }
 }
