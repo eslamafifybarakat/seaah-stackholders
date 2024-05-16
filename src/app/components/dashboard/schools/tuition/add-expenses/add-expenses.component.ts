@@ -118,7 +118,7 @@ export class AddExpensesComponent {
       this.tuitionExpensesCount = response?.data?.total;
       this.tuitionExpensesList = response?.data?.items;
       this.tuitionExpensesList?.forEach((item: any) => {
-        item['title'] = { "en": "{\"ar\":\"إسلام\",\"en\":\"Eslam\"}" };
+        item['title'] = { "en": "{\"ar\":\"إسلام\",\"en\":\"Eslam term scholllll first 2024 - 50SAR\"}" };
         let titleItem: any = JSON.parse(item?.title[this.currentLanguage] || '{}');
         item['titleName'] = titleItem[this.currentLanguage];
         item['titleAR'] = titleItem['ar'];
