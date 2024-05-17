@@ -1,11 +1,146 @@
 <div id="modal-form">
-  <div class="form-content">
-    <div class="row m-0">
-      {{KidData?.expenses| json}}
+  <ng-container *ngIf="KidData?.expenses?.length>0">
+    <div class="form-content">
+      <div class="row m-0">
+        <table class="pricing-table">
+          <thead>
+            <tr class="pricing-table-header">
+              <th>
+                {{'general.title' | translate}}
+              </th>
+              <th>
+                {{'general.price' | translate}}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let item of KidData?.expenses">
+              <tr class="pricing-table-list">
+                <td>
+                  {{item?.title[currentLanguage] || ''}}
+                </td>
+                <td>
+                  {{item?.total || 0}}
+                </td>
+                <!-- <td><span class="fa fa-check"></span></td> -->
+              </tr>
+              <tr class="pricing-table-list">
+                <td>
+                  {{item?.title[currentLanguage] || ''}}
+                </td>
+                <td>
+                  {{item?.total || 0}}
+                </td>
+                <!-- <td><span class="fa fa-check"></span></td> -->
+              </tr>
+              <tr class="pricing-table-list">
+                <td>
+                  {{item?.title[currentLanguage] || ''}}
+                </td>
+                <td>
+                  {{item?.total || 0}}
+                </td>
+                <!-- <td><span class="fa fa-check"></span></td> -->
+              </tr>
+              <tr class="pricing-table-list">
+                <td>
+                  {{item?.title[currentLanguage] || ''}}
+                </td>
+                <td>
+                  {{item?.total || 0}}
+                </td>
+                <!-- <td><span class="fa fa-check"></span></td> -->
+              </tr>
+              <tr class="pricing-table-list">
+                <td>
+                  {{item?.title[currentLanguage] || ''}}
+                </td>
+                <td>
+                  {{item?.total || 0}}
+                </td>
+                <!-- <td><span class="fa fa-check"></span></td> -->
+              </tr>
+              <tr class="pricing-table-list">
+                <td>
+                  {{item?.title[currentLanguage] || ''}}
+                </td>
+                <td>
+                  {{item?.total || 0}}
+                </td>
+                <!-- <td><span class="fa fa-check"></span></td> -->
+              </tr>
+              <tr class="pricing-table-list">
+                <td>
+                  {{item?.title[currentLanguage] || ''}}
+                </td>
+                <td>
+                  {{item?.total || 0}}
+                </td>
+                <!-- <td><span class="fa fa-check"></span></td> -->
+              </tr>
+              <tr class="pricing-table-list">
+                <td>
+                  {{item?.title[currentLanguage] || ''}}
+                </td>
+                <td>
+                  {{item?.total || 0}}
+                </td>
+                <!-- <td><span class="fa fa-check"></span></td> -->
+              </tr>
+              <tr class="pricing-table-list">
+                <td>
+                  {{item?.title[currentLanguage] || ''}}
+                </td>
+                <td>
+                  {{item?.total || 0}}
+                </td>
+                <!-- <td><span class="fa fa-check"></span></td> -->
+              </tr>
+              <tr class="pricing-table-list">
+                <td>
+                  {{item?.title[currentLanguage] || ''}}
+                </td>
+                <td>
+                  {{item?.total || 0}}
+                </td>
+                <!-- <td><span class="fa fa-check"></span></td> -->
+              </tr>
+              <tr class="pricing-table-list">
+                <td>
+                  {{item?.title[currentLanguage] || ''}}
+                </td>
+                <td>
+                  {{item?.total || 0}}
+                </td>
+                <!-- <td><span class="fa fa-check"></span></td> -->
+              </tr>
+              <tr class="pricing-table-list">
+                <td>
+                  {{item?.title[currentLanguage] || ''}}
+                </td>
+                <td>
+                  {{item?.total || 0}}
+                </td>
+                <!-- <td><span class="fa fa-check"></span></td> -->
+              </tr>
+            </ng-container>
+          </tbody>
+          <tfoot>
+            <tr class="pricing-table-footer">
+              <td class="fw-bold">
+              {{'general.total' | translate}}
+              </td>
+              <td class="fw-bold">
+                {{ totalExpenses() }} <!-- Dynamically calculated total expenses -->
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
     </div>
-  </div>
+  </ng-container>
   <div class="d-flex justify-content-end gap-3 flex-wrap mt-4">
-    <button type="submit" class="btn btn-solid-main d-flex align-items-center justify-content-center gap-2">
+    <button type="button" class="btn btn-solid-main d-flex align-items-center justify-content-center gap-2" (click)="payNow(KidData?.expenses)">
       <span>
         {{'general.payNow'|translate}}
       </span>

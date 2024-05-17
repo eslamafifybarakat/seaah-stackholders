@@ -1,0 +1,81 @@
+<div id="modal-form">
+  <form [formGroup]="kidForm" (ngSubmit)="submit()" aria-label="pay-form">
+    <div class="form-content">
+      <div class="row m-0">
+        <div class="col-12">
+          <div class="mb-3">
+            <label class="mb-2 required">
+              {{'labels.bank'|translate}}
+            </label>
+            <span class="p-input-icon-right select-loading d-block"
+              [class.border-red]="formControls?.bank?.invalid && (formControls?.bank?.dirty || formControls?.bank?.touched)">
+              <p-dropdown [options]="banksList" formControlName="bank" optionLabel="bankName" [filter]="true"
+                [dropdownIcon]="'fas fa-caret-down'" [virtualScroll]="true" [virtualScrollItemSize]="38"
+                filterBy="bankName" appendTo="body" [filterPlaceholder]="'placeholders.search'|translate"
+                [readonly]="isLoadingBank" scrollHeight="200px" emptyMessage="{{'general.no_result_found'|translate}}"
+                [showClear]="true" placeholder="{{'placeholders.select'|translate}}" (onChange)="onBankChange($event)">
+              </p-dropdown>
+              <ng-container *ngIf="isLoadingBank">
+                <i class="pi pi-spin pi-spinner"></i>
+              </ng-container>
+            </span>
+            <div class="mt-2">
+              <ng-container
+                *ngIf="formControls?.bank?.invalid && (formControls?.bank?.dirty || formControls?.bank?.touched)">
+                <ng-container *ngIf="formControls?.bank?.errors?.['required']">
+                  <span class="text-danger fs-8">
+                    {{'validations.requiredField'|translate}}
+                  </span>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="mb-3">
+            <label class="mb-2 required">
+              {{'labels.installmentWay'|translate}}
+            </label>
+            <span class="p-input-icon-right select-loading d-block"
+              [class.border-red]="formControls?.installmentWay?.invalid && (formControls?.installmentWay?.dirty || formControls?.installmentWay?.touched)">
+              <p-dropdown [options]="installmentWays" formControlName="installmentWay" optionLabel="name" [filter]="true"
+                [dropdownIcon]="'fas fa-caret-down'" [virtualScroll]="true" [virtualScrollItemSize]="38"
+                filterBy="name" appendTo="body" [filterPlaceholder]="'placeholders.search'|translate"
+                [readonly]="isLoadingInstallmentWays || isLoadingBank || formControls?.bank?.value ==null" scrollHeight="200px" emptyMessage="{{'general.no_result_found'|translate}}"
+                [showClear]="true" placeholder="{{'placeholders.installmentWay'|translate}}">
+              </p-dropdown>
+              <ng-container *ngIf="isLoadingInstallmentWays">
+                <i class="pi pi-spin pi-spinner"></i>
+              </ng-container>
+            </span>
+            <div class="mt-2">
+              <ng-container
+                *ngIf="formControls?.installmentWay?.invalid && (formControls?.installmentWay?.dirty || formControls?.installmentWay?.touched)">
+                <ng-container *ngIf="formControls?.installmentWay?.errors?.['required']">
+                  <span class="text-danger fs-8">
+                    {{'validations.requiredField'|translate}}
+                  </span>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-end gap-3 flex-wrap mt-4">
+      <button type="submit" class="btn btn-solid-main d-flex align-items-center justify-content-center gap-2">
+        <span>
+          {{'general.save'|translate}}
+        </span>
+        <i class="pi pi-save"></i>
+      </button>
+      <button type="button" class="btn btn-outline-main d-flex align-items-center gap-2" (click)="cancel()">
+        <span>
+          {{'general.cancel'|translate}}
+        </span>
+        <i class="pi pi-times"></i>
+      </button>
+    </div>
+  </form>
+</div>

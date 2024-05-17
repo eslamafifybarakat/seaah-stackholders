@@ -1,4 +1,5 @@
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { PayTuitionNowModalComponent } from '../pay-tuition-now-modal/pay-tuition-now-modal.component';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { PublicService } from 'src/app/services/generic/public.service';
 import { AlertsService } from 'src/app/services/generic/alerts.service';
 import { TranslateModule } from '@ngx-translate/core';
@@ -10,9 +11,9 @@ import { Subscription } from 'rxjs';
   selector: 'app-show-expenses-modal',
   standalone: true,
   imports: [
-     // Modules
-     TranslateModule,
-     CommonModule
+    // Modules
+    TranslateModule,
+    CommonModule
   ],
   templateUrl: './show-expenses-modal.component.html',
   styleUrls: ['./show-expenses-modal.component.scss']
@@ -25,16 +26,46 @@ export class ShowExpensesModalComponent {
   currentUserInformation: any | null;
 
   constructor(
-    private alertsService:AlertsService,
-    private publicService:PublicService,
+    private alertsService: AlertsService,
+    private publicService: PublicService,
     private config: DynamicDialogConfig,
+    private dialogService: DialogService,
     private ref: DynamicDialogRef
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.KidData = this.config?.data?.event;
+    this.currentLanguage = this.publicService.getCurrentLanguage();
   }
-  
+
+  totalExpenses(): any {
+    let total: any = 0;
+    this.KidData?.expenses?.forEach(element => {
+      total = total + +element?.total;
+    });
+    return total;
+  }
+  // Start Pay Noe Modal
+  payNow(event: any): void {
+    console.log(event);
+    this.cancel();
+    const refPayNow: any = this.dialogService?.open(PayTuitionNowModalComponent, {
+      data: {
+        event
+      },
+      header: this.publicService?.translateTextFromJson('general.payNow'),
+      dismissableMask: false,
+      width: '40%',
+      styleClass: 'custom-modal',
+    });
+    refPayNow?.onClose.subscribe((res: any) => {
+      console.log(res);
+      if (res?.listChanged) {
+
+      }
+    });
+  }
+  // End Pay Noe Modal
 
   cancel(): void {
     this.ref?.close({ listChanged: false });

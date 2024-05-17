@@ -19,6 +19,9 @@
     "dashboard": "لوحة التحكم"
   },
   "general": {
+    "total":"الإجمالي",
+    "title":"العنوان",
+    "price":"السعر",
     "payNow":"ادفع الآن",
     "activateKid": "تفعيل حساب العميل",
     "suspendKid": "تعليق حساب العميل",
@@ -327,6 +330,7 @@
     "joinNow": "انضم الأن"
   },
   "labels": {
+    "bank":"البنك",
     "titleAR": "الإسم بالعربية",
     "titleEN": "الإسم بالإنجليزية",
     "detailsAR": "الوصف بالعربية",
@@ -341,6 +345,7 @@
     "paidStatus": "حالة الدفع",
     "uploadFile": "تحميل ملف",
     "installmentWays": "طرق التقسيط",
+    "installmentWay": "طريقة التقسيط",
     "startTime": "وقت البداية",
     "endTime": "وقت النهاية",
     "location": "الموقع",
@@ -408,6 +413,7 @@
     "paidStatus": "اختر حالة الدفع",
     "description": "أدخل الوصف",
     "installmentWays": "اختر طرق التقسيط",
+    "installmentWay": "اختر طريقة التقسيط",
     "formateTime": "ساعة:دقيقة",
     "location": "أدخل الموقع",
     "searchEstkdam": "ابحث عن سعة الذى تريده",

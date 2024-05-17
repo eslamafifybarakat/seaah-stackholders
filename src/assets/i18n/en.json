@@ -19,6 +19,9 @@
     "dashboard": "Dashboard"
   },
   "general": {
+    "total":"Total",
+    "title":"Title",
+    "price":"Price",
     "payNow":"Pay Now",
     "activateKid":"Activate Kid Account",
     "suspendKid":"Suspend Kid Account",
@@ -326,6 +329,7 @@
     "joinNow": "Join now"
   },
   "labels": {
+    "bank":"Bank",
     "titleAR": "Arabic Title",
     "titleEN": "English Title",
     "detailsAR": "Arabic Details",
@@ -340,6 +344,7 @@
     "paidStatus": "Paid Status",
     "uploadFile": "Upload File",
     "installmentWays": "Installment Ways",
+    "installmentWay": "Installment Way",
     "startTime": "Start Time",
     "endTime": "End Time",
     "location": "Location",
@@ -408,6 +413,7 @@
     "paidStatus": "Select paid status",
     "description": "Enter description",
     "installmentWays": "Select installment ways",
+    "installmentWay": "Select installment way",
     "formateTime": "A HH:mm",
     "location": "Enter location",
     "searchEstkdam": "Find the employment you want",
