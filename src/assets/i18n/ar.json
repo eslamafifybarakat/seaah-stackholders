@@ -19,6 +19,12 @@
     "dashboard": "لوحة التحكم"
   },
   "general": {
+    "activateKid": "تفعيل حساب العميل",
+    "suspendKid": "تعليق حساب العميل",
+    "areYouSureToActivate": "هل أنت متأكد أنك تريد تفعيل",
+    "areYouSureToSuspend": "هل أنت متأكد أنك تريد تعليق",
+    "activate": "تفعيل",
+    "suspend": "تعليق",
     "startNow":"ابدأ الآن",
     "watchVideo": "مشاهدة فيديو",
     "heroBtn": "احصل على البطاقة",

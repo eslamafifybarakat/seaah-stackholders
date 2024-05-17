@@ -45,7 +45,8 @@ export const roots = {
     },
     kids: {
       kids: 'kids',
-      levels: "kids/levels"
+      levels: "kids/levels",
+      toggleActivation: "kids/toggleActivation",
     },
     tuitionExpenses: {
       tuitionExpenses: 'tuition_expenses'

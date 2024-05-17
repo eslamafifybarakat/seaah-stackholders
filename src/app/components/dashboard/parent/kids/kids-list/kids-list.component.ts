@@ -26,6 +26,7 @@ import { KidsService } from '../../../services/kids.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Subject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   standalone: true,
@@ -114,6 +115,7 @@ export class KidsListComponent {
 
   constructor(
     private localizationLanguageService: LocalizationLanguageService,
+    private confirmationService: ConfirmationService,
     private metadataService: MetadataService,
     private publicService: PublicService,
     private dialogService: DialogService,
@@ -139,10 +141,10 @@ export class KidsListComponent {
         field: 'image_path', header: '', title: '', type: 'img'
       },
       { field: 'name', header: 'dashboard.tableHeader.name', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.name'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
-      { field: 'status', header: 'dashboard.tableHeader.status', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.status'), type: 'status', sort: false, showDefaultSort: false, showAscSort: false, showDesSort: false, filter: false},
+      { field: 'status', header: 'dashboard.tableHeader.status', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.status'), type: 'status', sort: false, showDefaultSort: false, showAscSort: false, showDesSort: false, filter: false },
       { field: 'code', header: 'dashboard.tableHeader.code', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.code'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
       { field: 'schoolName', header: 'dashboard.tableHeader.schoolName', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.schoolName'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
-      { field: 'level', header: 'dashboard.tableHeader.level', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.level'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
+      { field: 'level',  header: 'dashboard.tableHeader.level', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.level'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
       { field: 'class', header: 'dashboard.tableHeader.class', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.class'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
       { field: 'addressName', header: 'dashboard.tableHeader.address', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.address'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
     ];
@@ -206,7 +208,7 @@ export class KidsListComponent {
       this.kidsList = response?.data?.items;
       console.log(this.kidsList);
       this.kidsList?.forEach((item: any) => {
-        item['addressName'] = `${item?.address?.region??''}, ${item?.address?.city??''}, ${item?.address?.street??''}, ${item?.address?.zip??''}`;
+        item['addressName'] = `${item?.address?.region ?? ''}, ${item?.address?.city ?? ''}, ${item?.address?.street ?? ''}, ${item?.address?.zip ?? ''}`;
         let name: any = JSON.parse(item?.school?.name[this.currentLanguage] || '{}');
         item['schoolName'] = name[this.currentLanguage];
         item['status'] = item?.approve_status?.label;
@@ -227,8 +229,59 @@ export class KidsListComponent {
   }
   // End Kids List Functions
 
+  // Start Activate Or Suspend Kid Functions
+  suspendKidAccount(item: any): void {
+    console.log(item);
+
+    this.confirmationService.confirm({
+      message: this.publicService.translateTextFromJson('general.areYouSureToSuspend') + ' ' + item?.name,
+      header: this.publicService.translateTextFromJson('general.suspendKid'),
+      icon: 'pi pi-exclamation-triangle',
+
+      accept: () => {
+        this.toggleActivationKidAccount(item, item?.id);
+      }
+    });
+  }
+  activateKidAccount(item: any): void {
+    console.log(item);
+    this.confirmationService.confirm({
+      message: this.publicService.translateTextFromJson('general.areYouSureToActivate') + ' ' + item.name,
+      header: this.publicService.translateTextFromJson('general.activateKid'),
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.toggleActivationKidAccount(item, item?.id);
+      }
+    });
+  }
+  // End Activate Or Suspend Kid Functions
+  // Start Toggle Activate Kid Functions
+  toggleActivationKidAccount(item: any, kidId: number | string): void {
+    item.isLoadingActive = true;
+    this.publicService.showGlobalLoader.next(true);
+    let toggleActivationKidAccountSubscription: Subscription = this.kidsService?.toggleActivateKid(kidId)?.pipe(
+      tap((res: any) => this.processToggleActivateResponse(res)),
+      catchError(err => this.handleError(err)),
+      finalize(() => {
+        item.isLoadingActive = false;
+        this.publicService.showGlobalLoader.next(false);
+        this.cdr.detectChanges();
+      })
+    ).subscribe();
+    this.subscriptions.push(toggleActivationKidAccountSubscription);
+  }
+  private processToggleActivateResponse(res: any): void {
+    if (res?.code == 200) {
+      this.handleSuccess(res?.message);
+      this.getAllKids();
+    } else {
+      this.handleError(res?.message);
+    }
+  }
+  // End Toggle Activate Kid Functions
+
   itemDetails(item?: any): void {
-    this.router.navigate(['Dashboard/Clients/Details/' + item.id]);
+    this.router.navigate(['Dashboard/Kids/Details/' + item.id]);
   }
   // Add Edit Kid
   addEditItem(item?: any, type?: any): void {
@@ -308,7 +361,7 @@ export class KidsListComponent {
 
   // Filter Users Modal Function
   filterItemModal(): void {
-    // const ref = this.dialogService?.open(FilterClientsComponent, {
+    // const ref = this.dialogService?.open(FilterKidsComponent, {
     //   header: this.publicService?.translateTextFromJson('general.filter'),
     //   dismissableMask: false,
     //   width: '45%',

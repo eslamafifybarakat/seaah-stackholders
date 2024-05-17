@@ -85,6 +85,10 @@ export class DynamicTableV2Component {
   @Input() showResetPassword: boolean = false;
   @Input() showCopy: boolean = false;
 
+  @Input() showSuspend: boolean = false;
+  @Input() showActivate: boolean = false;
+
+
   @Input() showActionItemBtn: boolean = false;
   @Input() actionButtonText: string = '';
   @Input() showAcceptAction: boolean = false;
@@ -146,6 +150,9 @@ export class DynamicTableV2Component {
   @Output() copyHandler: EventEmitter<any> = new EventEmitter();
   @Output() acceptHandler: EventEmitter<any> = new EventEmitter();
   @Output() rejectHandler: EventEmitter<any> = new EventEmitter();
+
+  @Output() suspendHandler: EventEmitter<any> = new EventEmitter();
+  @Output() activateHandler: EventEmitter<any> = new EventEmitter();
 
   // pagination handler
   @Output() paginateHandler: EventEmitter<any> = new EventEmitter();
@@ -384,6 +391,12 @@ export class DynamicTableV2Component {
     } else {
       this.deleteHandler?.emit({ item: item, confirmed: true });
     }
+  }
+  activateHandlerEmit(item: any): void {
+    this.activateHandler?.emit(item);
+  }
+  suspendHandlerEmit(item: any): void {
+    this.suspendHandler?.emit(item);
   }
   arrangeItems(item: any): void {
     this.arrangeHandler?.emit(item);

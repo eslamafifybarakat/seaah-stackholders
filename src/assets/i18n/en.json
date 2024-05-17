@@ -19,6 +19,12 @@
     "dashboard": "Dashboard"
   },
   "general": {
+    "activateKid":"Activate Kid Account",
+    "suspendKid":"Suspend Kid Account",
+    "areYouSureToActivate":"Are you sure you want to activate",
+    "areYouSureToSuspend":"Are you sure you want to suspend",
+    "activate":"Activate",
+    "suspend":"Suspend",
     "startNow":"Start Now",
     "watchVideo": "Watch Video",
     "heroBtn": "Get the card",

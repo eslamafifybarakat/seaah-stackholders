@@ -57,4 +57,12 @@ export class KidsService {
   updateAproveKid(data: any): Observable<any> {
     return this.http?.post(`${this.baseUrl}/${roots?.dashboard?.kids.kids}/update-approval`, data);
   }
+
+  toggleActivateKid(kidId: number| string): Observable<any> {
+    let params = new HttpParams();
+    if (kidId) {
+      params = params.append("kid_id", kidId);
+    }
+    return this.http?.get(`${this.baseUrl}/${roots?.dashboard?.kids.toggleActivation}`, {params:params})
+  }
 }

@@ -67,10 +67,6 @@
 
 
     #table-skeleton {
-      .p-datatable-table {
-        // border-spacing: 0 0px !important;
-      }
-
       .thead {
         display: none;
       }
@@ -305,7 +301,7 @@
   }
 
   .truncate-text {
-    width: 12rem;
+    max-width: 10rem;
     display: block;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -497,6 +493,16 @@
 //   text-overflow: ellipsis;
 //   overflow: hidden;
 // }
-.table-content p-table {
-  z-index: -1000 !important;
+// .table-content p-table {
+//   z-index: -1000 !important;
+// }
+
+.btn-outline-main,
+.btn-outline-main:focus {
+  height: 2.6rem;
+  // padding: 1rem;
+  border-radius: 10px;
+  background-color: transparent;
+  border: 1px solid var(--bg-main-color);
+  color: var(--text-main-color);
 }
