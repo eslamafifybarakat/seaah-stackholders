@@ -27,6 +27,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { Subject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
+import { ShowExpensesModalComponent } from '../show-expenses-modal/show-expenses-modal.component';
 
 @Component({
   standalone: true,
@@ -144,7 +145,7 @@ export class KidsListComponent {
       { field: 'status', header: 'dashboard.tableHeader.status', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.status'), type: 'status', sort: false, showDefaultSort: false, showAscSort: false, showDesSort: false, filter: false },
       { field: 'code', header: 'dashboard.tableHeader.code', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.code'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
       { field: 'schoolName', header: 'dashboard.tableHeader.schoolName', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.schoolName'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
-      { field: 'level',  header: 'dashboard.tableHeader.level', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.level'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
+      { field: 'level', header: 'dashboard.tableHeader.level', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.level'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
       { field: 'class', header: 'dashboard.tableHeader.class', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.class'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
       { field: 'addressName', header: 'dashboard.tableHeader.address', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.address'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
     ];
@@ -212,6 +213,9 @@ export class KidsListComponent {
         let name: any = JSON.parse(item?.school?.name[this.currentLanguage] || '{}');
         item['schoolName'] = name[this.currentLanguage];
         item['status'] = item?.approve_status?.label;
+        if (item['status'] == 'Approved') {
+          item['active'] = false;
+        }
       });
     } else {
       this.handleError(response.message);
@@ -279,6 +283,27 @@ export class KidsListComponent {
     }
   }
   // End Toggle Activate Kid Functions
+
+  // Start Show Expenses Modal
+  showExpenses(event: any): void {
+    console.log(event);
+    const ref: any = this.dialogService?.open(ShowExpensesModalComponent, {
+      data: {
+        event
+      },
+      header: this.publicService?.translateTextFromJson('general.expenses'),
+      dismissableMask: false,
+      width: '50%',
+      styleClass: 'custom-modal',
+    });
+    ref?.onClose.subscribe((res: any) => {
+      console.log(res);
+      if (res?.listChanged) {
+
+      }
+    });
+  }
+  // End Show Expenses Modal
 
   itemDetails(item?: any): void {
     this.router.navigate(['Dashboard/Kids/Details/' + item.id]);

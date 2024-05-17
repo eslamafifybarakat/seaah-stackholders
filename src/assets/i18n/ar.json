@@ -19,6 +19,7 @@
     "dashboard": "لوحة التحكم"
   },
   "general": {
+    "payNow":"ادفع الآن",
     "activateKid": "تفعيل حساب العميل",
     "suspendKid": "تعليق حساب العميل",
     "areYouSureToActivate": "هل أنت متأكد أنك تريد تفعيل",
@@ -30,6 +31,7 @@
     "heroBtn": "احصل على البطاقة",
     "expensesPaid": "المصروفات مدفوعة",
     "addExpenses": "إضافة المصروفات",
+    "expenses": "المصروفات",
     "loading": "جاري التحميل",
     "acceptAll": "قبول الكل",
     "accept": "قبول",
@@ -123,6 +125,7 @@
     "total": "الاجمالي",
     "isTotal": "يوجد اجمالا",
     "sideMenu": {
+      "myExpenses":"مصاريفي",
       "Tuition": "المصاريف",
       "KidsRequests": "طلبات الأطفال",
       "tuitionExpenses": "مصاريف التعليم",

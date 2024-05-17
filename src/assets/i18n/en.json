@@ -19,6 +19,7 @@
     "dashboard": "Dashboard"
   },
   "general": {
+    "payNow":"Pay Now",
     "activateKid":"Activate Kid Account",
     "suspendKid":"Suspend Kid Account",
     "areYouSureToActivate":"Are you sure you want to activate",
@@ -30,6 +31,7 @@
     "heroBtn": "Get the card",
     "expensesPaid": "Expenses Paid",
     "addExpenses": "Add Expenses",
+    "expenses": "Expenses",
     "loading": "Loading",
     "acceptAll": "Accept All",
     "accept": "Accept",
@@ -123,6 +125,7 @@
     "total": "Total",
     "isTotal": "There is a total",
     "sideMenu": {
+      "myExpenses":"My Expenses",
       "Tuition": "Tuitions",
       "KidsRequests": "Kids Requests",
       "tuitionExpenses": "Tuition Expenses",

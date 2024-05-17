@@ -1,12 +1,13 @@
 
 import { PermissionGuard } from '../../../services/authentication/guards/permission.guard';
+import { MyExpensesChildrenRoutes } from './my-expenses/kids-children-routes';
 import { errorsChildrenRoutes } from '../../errors/errors-children-routes';
-import { ErrorsComponent } from "../../errors/errors.component";
 import { kidsChildrenRoutes } from './kids/kids-children-routes';
 
 
 export const ParentChildrenRoutes: any[] = [
   { path: '', redirectTo: 'Kids', pathMatch: 'full' },
+  // Kids
   {
     path: 'Kids',
     // canActivate: [PermissionGuard],
@@ -20,6 +21,21 @@ export const ParentChildrenRoutes: any[] = [
       ),
     children: kidsChildrenRoutes
   },
+   // My Expenses
+   {
+    path: 'myExpenses',
+    // canActivate: [PermissionGuard],
+    data: {
+      permission: 'Pages.myExpenses',
+      title: 'myExpenses'
+    },
+    loadComponent: () =>
+      import('./my-expenses/my-expenses.component').then(
+        (c) => c.MyExpensesComponent
+      ),
+    children: MyExpensesChildrenRoutes
+  },
+
 
    // Errors
    {

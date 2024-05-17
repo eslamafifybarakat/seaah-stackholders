@@ -105,7 +105,8 @@
           [enableFilterDriverStatus]="true" [addBtnText]="'dashboard.kids.addKid'" (addHandler)="addEditItem()"
           [notFoundImage]="'assets/images/not-found/no-user.svg'" [showSuspend]="true"
           (suspendHandler)="suspendKidAccount($event)" [showActivate]="true"
-          (activateHandler)="activateKidAccount($event)"></dynamic-table-v2>
+          (activateHandler)="activateKidAccount($event)" [showActionItemBtn]="true"
+          [actionButtonText]="'general.expenses'" (actionHandlerEmit)="showExpenses($event)"></dynamic-table-v2>
       </ng-container>
       <!-- Card -->
       <ng-container *ngIf="dataStyleType=='grid'">

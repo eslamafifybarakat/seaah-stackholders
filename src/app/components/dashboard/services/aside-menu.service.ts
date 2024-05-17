@@ -211,6 +211,21 @@ export class AsideMenuService {
         state: false, //Opened Or Closed
         permission: true,
         // permission: this.checkPermissionService.hasPermission('Pages.Messages.List'),
+      },
+      {
+        id: 'myExpenses',
+        text: 'dashboard.sideMenu.myExpenses',
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-currency-dollar" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+        <path d="M12 3a4 4 0 0 0 -4 4v3a4 4 0 0 0 4 4h8" />
+        <path d="M16 17a4 4 0 0 0 4 -4v-3a4 4 0 0 0 -4 -4h-8" />
+        <path d="M8 11h8" />
+        <path d="M8 13h8" />
+      </svg>`,
+        routerLink: '/Dashboard/Parent/myExpenses',
+        state: false, //Opened Or Closed
+        permission: true,
+        // permission: this.checkPermissionService.hasPermission('Pages.Messages.List'),
       }
     ];
     return menuListItems;
