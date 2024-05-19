@@ -10,6 +10,7 @@ import { catchError, finalize, tap } from 'rxjs/operators';
 import { SchoolsService } from '../../../services/schools.service';
 import { DropdownModule } from 'primeng/dropdown';
 import { BanksService } from '../../../services/banks.service';
+import { InstallmentRequestsService } from '../../../services/installment_requests.service';
 
 @Component({
   selector: 'app-pay-tuition-now-modal',
@@ -66,11 +67,14 @@ export class PayTuitionNowModalComponent {
     private config: DynamicDialogConfig,
     private banksService: BanksService,
     private ref: DynamicDialogRef,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private installmentRequestsService: InstallmentRequestsService
   ) { }
 
   ngOnInit(): void {
     this.KidData = this.config?.data?.event;
+    console.log("comming data ",this.KidData);
+    
     this.currentLanguage = this.publicService.getCurrentLanguage();
     this.getBanks();
   }
@@ -117,26 +121,34 @@ export class PayTuitionNowModalComponent {
   submit(): void {
     if (this.kidForm?.valid) {
       const formData: any = this.extractFormData();
-      this.addEditKid(formData);
+      console.log("submit ",formData);
+      this.addinstallmentRequests(formData);
     } else {
       this.publicService?.validateAllFormFields(this.kidForm);
     }
   }
   private extractFormData(): any {
     let kidFormData: any = this.kidForm?.value;
-    let formData = new FormData();
-    // formData.append('name', kidFormData?.name ?? '');
-    // formData.append('code', kidFormData?.code ?? '');
+    let finalData :any={
+      kids_id: [this.KidData?.kids_id],
+      parent_id: this.KidData?.parent_id,
+      bank_id: [kidFormData?.bank?.id],
+      installment_ways_id: [kidFormData?.installmentWay?.id],
+      tuition_expense_ids: this.KidData?.tuition_expense_ids,
+      organization_id: [this.KidData[0]?.school_id],
+      total_amount: [this.KidData[0]?.total]
+    }
+    return finalData ;
   }
-  private addEditKid(formData: any): void {
+  private addinstallmentRequests(formData: any): void {
     this.publicService?.showGlobalLoader?.next(true);
-    // let subscribeAddKid: Subscription = this.kidsService?.addEditKid(formData, this.kidId ? this.kidId : null).pipe(
-    //   tap(res => this.handleAddKidSuccess(res)),
-    //   catchError(err => this.handleError(err))
-    // ).subscribe();
-    // this.subscriptions.push(subscribeAddKid);
+    let subscribeAddKid: Subscription = this.installmentRequestsService?.addEditInstallmentRequest(formData,null).pipe(
+      tap(res => this.handleAddinstallmentRequests(res)),
+      catchError(err => this.handleError(err))
+    ).subscribe();
+    this.subscriptions.push(subscribeAddKid);
   }
-  private handleAddKidSuccess(response: any): void {
+  private handleAddinstallmentRequests(response: any): void {
     this.publicService?.showGlobalLoader?.next(false);
     if (response?.status == 200) {
       this.ref.close({ listChanged: true, item: response?.data });

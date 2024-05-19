@@ -67,6 +67,9 @@ export const roots = {
     vehicles: {
       getVehicles: '/getVehicles',
       addEditVehicle: '/addEditVehicle'
+    },
+    installment_requests: {
+      addEdit: 'installment_requests'
     }
   }
 }

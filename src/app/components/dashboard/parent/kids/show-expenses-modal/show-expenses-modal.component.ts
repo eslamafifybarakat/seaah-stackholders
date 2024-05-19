@@ -33,8 +33,10 @@ export class ShowExpensesModalComponent {
     private ref: DynamicDialogRef
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
     this.KidData = this.config?.data?.event;
+    console.log("data come to list ex ",this.KidData);
+    
     this.currentLanguage = this.publicService.getCurrentLanguage();
   }
 
@@ -47,11 +49,11 @@ export class ShowExpensesModalComponent {
   }
   // Start Pay Noe Modal
   payNow(event: any): void {
-    console.log(event);
+    console.log("data = ",event);
     this.cancel();
     const refPayNow: any = this.dialogService?.open(PayTuitionNowModalComponent, {
       data: {
-        event
+        event:{...event,parent_id:this.KidData.parent_id,kids_id:this.KidData?.id,tuition_expense_ids:this.KidData?.expenses?.map(item => item.id)}
       },
       header: this.publicService?.translateTextFromJson('general.payNow'),
       dismissableMask: false,
