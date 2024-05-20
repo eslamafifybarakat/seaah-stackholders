@@ -1,0 +1,241 @@
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { PublicService } from 'src/app/services/generic/public.service';
+import { AlertsService } from 'src/app/services/generic/alerts.service';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { catchError, finalize, tap } from 'rxjs/operators';
+import { SchoolsService } from '../../../services/schools.service';
+import { DropdownModule } from 'primeng/dropdown';
+import { BanksService } from '../../../services/banks.service';
+import { InstallmentRequestsService } from '../../../services/installment_requests.service';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { KidsService } from '../../../services/kids.service';
+import { KidsListApiResponse } from 'src/app/interfaces/dashboard/kids';
+
+@Component({
+  selector: 'app-pay-multi-tuition-now-modal',
+  standalone: true,
+  imports: [
+    // Modules
+    ReactiveFormsModule,
+    TranslateModule,
+    DropdownModule,
+    CommonModule,
+    FormsModule,
+    MultiSelectModule
+  ],
+  templateUrl: './pay-multi-tuition-now-modal.component.html',
+  styleUrls: ['./pay-multi-tuition-now-modal.component.scss']
+})
+export class PayMultiTuitionNowModalComponent {
+  private subscriptions: Subscription[] = [];
+  currentLanguage: string;
+
+  KidData: any;
+  currentUserInformation: any | null;
+
+  // Start Banks Variables
+  banksList: any = [];
+  isLoadingBank: boolean = false;
+  // End Banks Variables
+  // Start Kids List Variables
+  isLoadingKidsList: boolean = false;
+  kidsList :any[]=[]
+
+  // Start Installment Ways Variables
+  installmentWays: any = [];
+  isLoadingInstallmentWays: boolean = false;
+  // End Installment Ways Variables
+
+  kidForm = this.fb?.group(
+    {
+      kids: [null, {
+        validators: [
+          Validators.required]
+      }],
+      bank: [null, {
+        validators: [
+          Validators.required]
+      }],
+      me: [false, {
+        validators: [
+          Validators.required]
+      }],
+      installmentWay: [null, {
+        validators: [
+          Validators.required], updateOn: "blur"
+      }]
+    }
+  );
+  get formControls(): any {
+    return this.kidForm?.controls;
+  }
+
+
+  constructor(
+    private schoolsService: SchoolsService,
+    private alertsService: AlertsService,
+    private publicService: PublicService,
+    private dialogService: DialogService,
+    private config: DynamicDialogConfig,
+    private banksService: BanksService,
+    private ref: DynamicDialogRef,
+    private fb: FormBuilder,
+    private installmentRequestsService: InstallmentRequestsService,
+    private kidsService: KidsService,
+  ) { }
+
+  ngOnInit(): void {
+    this.KidData = this.config?.data?.event;
+    console.log("comming data ",this.KidData);
+    this.getAllKids();
+    this.currentLanguage = this.publicService.getCurrentLanguage();
+    this.getBanks();
+  }
+
+   // Start Kids List Functions
+   getAllKids(isFiltering?: boolean): void {
+    isFiltering ? this.publicService.showSearchLoader.next(true) : this.isLoadingKidsList = true;
+    let kidsSubscription: Subscription = this.kidsService?.getKidsList(1, 10000, null, null, null,3)
+      .pipe(
+        tap((res: KidsListApiResponse) => {
+          this.processKidsListResponse(res);
+        }),
+        catchError(err => this.handleError(err)),
+        finalize(() => this.finalizeKidListLoading())
+      ).subscribe();
+    this.subscriptions.push(kidsSubscription);
+  }
+  private processKidsListResponse(response: KidsListApiResponse): void {
+    if (response.status == 200) {
+      this.kidsList = response?.data?.items;
+      console.log(this.kidsList);
+      // this.kidsList?.forEach((item: any) => {
+      //   item['addressName'] = `${item?.address?.region ?? ''}, ${item?.address?.city ?? ''}, ${item?.address?.street ?? ''}, ${item?.address?.zip ?? ''}`;
+      //   let name: any = JSON.parse(item?.school?.name[this.currentLanguage] || '{}');
+      //   item['schoolName'] = name[this.currentLanguage];
+      //   item['status'] = item?.approve_status?.label;
+      //   if (item['status'] == 'Approved') {
+      //     item['active'] = false;
+      //   }
+      // });
+    } else {
+      this.handleError(response.message);
+      return;
+    }
+  }
+  private finalizeKidListLoading(): void {
+    this.isLoadingKidsList = false;
+   
+    this.publicService.showSearchLoader.next(false);
+    setTimeout(() => {
+    }, 200);
+  }
+  // End Kids List Functions
+
+  // Start Banks List Functions
+  getBanks(): void {
+    this.isLoadingBank = true;
+    let banksSubscription: Subscription = this.banksService?.getBanksList()
+      .pipe(
+        tap((res: any) => {
+          this.processBanksListResponse(res)
+        }),
+        catchError(err => this.handleError(err)),
+        finalize(() => this.finalizeSchoolsListLoading())
+      ).subscribe();
+    this.subscriptions.push(banksSubscription);
+  }
+  private processBanksListResponse(response: any): void {
+    if (response) {
+      this.banksList = response?.data?.items?.data;
+      this.banksList?.forEach((item: any) => {
+        let name: any = JSON.parse(item?.name[this.currentLanguage] || "{}");
+        item['bankName'] = name[this.currentLanguage];
+      });
+    } else {
+      this.handleError(response.error);
+      return;
+    }
+  }
+  private finalizeSchoolsListLoading(): void {
+    this.isLoadingBank = false;
+  }
+  onBankChange(event: any): void {
+    console.log(event?.value);
+    // this.installmentWays = event?.value?.installment_ways;
+    this.installmentWays = [
+      {id:1,name:'Eslam'}
+    ];
+  }
+  // End Banks List Functions
+
+
+  submit(): void {
+    if (this.kidForm?.valid) {
+      const formData: any = this.extractFormData();
+      console.log("submit ",formData);
+      this.addinstallmentRequests(formData);
+    } else {
+      this.publicService?.validateAllFormFields(this.kidForm);
+    }
+  }
+  private extractFormData(): any {
+    let kidFormData: any = this.kidForm?.value;
+    let finalData :any={
+      kids_id: [this.KidData?.kids_id],
+      parent_id: this.KidData?.parent_id,
+      bank_id: [kidFormData?.bank?.id],
+      installment_ways_id: [kidFormData?.installmentWay?.id],
+      tuition_expense_ids: this.KidData?.tuition_expense_ids,
+      organization_id: [this.KidData[0]?.school_id],
+      total_amount: [this.KidData[0]?.total]
+    }
+    return finalData ;
+  }
+  private addinstallmentRequests(formData: any): void {
+    this.publicService?.showGlobalLoader?.next(true);
+    let subscribeAddKid: Subscription = this.installmentRequestsService?.addEditInstallmentRequest(formData,null).pipe(
+      tap(res => this.handleAddinstallmentRequests(res)),
+      catchError(err => this.handleError(err))
+    ).subscribe();
+    this.subscriptions.push(subscribeAddKid);
+  }
+  private handleAddinstallmentRequests(response: any): void {
+    this.publicService?.showGlobalLoader?.next(false);
+    if (response?.status == 200) {
+      this.ref.close({ listChanged: true, item: response?.data });
+      this.handleSuccess(response?.message);
+    } else {
+      this.handleError(response?.message);
+    }
+  }
+  // End Add Edit Kid
+
+  cancel(): void {
+    this.ref?.close({ listChanged: false });
+  }
+
+  /* --- Handle api requests messages --- */
+  private handleSuccess(msg: string | null): any {
+    this.setMessage(msg || this.publicService.translateTextFromJson('general.successRequest'), 'succss');
+  }
+  private handleError(err: string | null): any {
+    this.setMessage(err || this.publicService.translateTextFromJson('general.errorOccur'), 'error');
+  }
+  private setMessage(message: string, type?: string | null): void {
+    this.alertsService.openToast(type, type, message);
+    this.publicService.showGlobalLoader.next(false);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription: Subscription) => {
+      if (subscription && !subscription.closed) {
+        subscription.unsubscribe();
+      }
+    });
+  }
+}

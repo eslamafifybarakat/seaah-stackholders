@@ -26,6 +26,9 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { Subject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
+import { ShowExpensesModalComponent } from '../../kids/show-expenses-modal/show-expenses-modal.component';
+import { AddEditKidComponent } from '../../kids/add-edit-kid/add-edit-kid.component';
+import { PayMultiTuitionNowModalComponent } from '../pay-multi-tuition-now-modal/pay-multi-tuition-now-modal.component';
 
 
 @Component({
@@ -136,13 +139,9 @@ export class MyExpensesListComponent {
       {
         field: 'image_path', header: '', title: '', type: 'img'
       },
-      { field: 'name', header: 'dashboard.tableHeader.name', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.name'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
-      { field: 'status', header: 'dashboard.tableHeader.status', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.status'), type: 'status', sort: false, showDefaultSort: false, showAscSort: false, showDesSort: false, filter: false },
-      { field: 'code', header: 'dashboard.tableHeader.code', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.code'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
+      { field: 'name', header: 'dashboard.tableHeader.nameStudent', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.nameStudent'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
       { field: 'schoolName', header: 'dashboard.tableHeader.schoolName', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.schoolName'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
-      { field: 'level', header: 'dashboard.tableHeader.level', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.level'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
-      { field: 'class', header: 'dashboard.tableHeader.class', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.class'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
-      { field: 'addressName', header: 'dashboard.tableHeader.address', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.address'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
+      { field: 'status', header: 'dashboard.tableHeader.status', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.status'), type: 'status', sort: false, showDefaultSort: false, showAscSort: false, showDesSort: false, filter: false }
     ];
     this.updateMetaTagsForSEO();
     this.getAllKids();
@@ -282,21 +281,21 @@ export class MyExpensesListComponent {
   // Start Show Expenses Modal
   showExpenses(event: any): void {
     console.log(event);
-    // const ref: any = this.dialogService?.open(ShowExpensesModalComponent, {
-    //   data: {
-    //     event
-    //   },
-    //   header: this.publicService?.translateTextFromJson('general.expenses'),
-    //   dismissableMask: false,
-    //   width: '50%',
-    //   styleClass: 'custom-modal',
-    // });
-    // ref?.onClose.subscribe((res: any) => {
-    //   console.log(res);
-    //   if (res?.listChanged) {
+    const ref: any = this.dialogService?.open(ShowExpensesModalComponent, {
+      data: {
+        event
+      },
+      header: this.publicService?.translateTextFromJson('general.expenses'),
+      dismissableMask: false,
+      width: '50%',
+      styleClass: 'custom-modal',
+    });
+    ref?.onClose.subscribe((res: any) => {
+      console.log(res);
+      if (res?.listChanged) {
 
-    //   }
-    // });
+      }
+    });
   }
   // End Show Expenses Modal
 
@@ -307,28 +306,28 @@ export class MyExpensesListComponent {
   addEditItem(item?: any, type?: any): void {
     console.log("item = ", item);
 
-    // const ref = this.dialogService?.open(AddEditKidComponent, {
-    //   data: {
-    //     item,
-    //     type: type == 'edit' ? 'edit' : 'add'
-    //   },
-    //   header: type == 'edit' ? this.publicService?.translateTextFromJson('dashboard.kids.editKid') : this.publicService?.translateTextFromJson('dashboard.kids.addKid'),
-    //   dismissableMask: false,
-    //   width: '60%',
-    //   styleClass: 'custom-modal',
-    // });
-    // ref.onClose.subscribe((res: any) => {
-    //   if (res?.listChanged) {
-    //     if (this.kidsCount == 0) {
-    //       this.getAllKids();
-    //     } else {
-    //       this.page = 1;
-    //       this.publicService?.changePageSub?.next({ page: this.page });
-    //       this.dataStyleType == 'grid' ? this.changePageActiveNumber(1) : '';
-    //       this.dataStyleType == 'grid' ? this.getAllKids() : '';
-    //     }
-    //   }
-    // });
+    const ref = this.dialogService?.open(PayMultiTuitionNowModalComponent, {
+      data: {
+        item,
+        type: type == 'edit' ? 'edit' : 'add'
+      },
+      header: type == 'edit' ? this.publicService?.translateTextFromJson('dashboard.kids.editKid') : this.publicService?.translateTextFromJson('dashboard.kids.addKid'),
+      dismissableMask: false,
+      width: '60%',
+      styleClass: 'custom-modal',
+    });
+    ref.onClose.subscribe((res: any) => {
+      if (res?.listChanged) {
+        if (this.kidsCount == 0) {
+          this.getAllKids();
+        } else {
+          this.page = 1;
+          this.publicService?.changePageSub?.next({ page: this.page });
+          this.dataStyleType == 'grid' ? this.changePageActiveNumber(1) : '';
+          this.dataStyleType == 'grid' ? this.getAllKids() : '';
+        }
+      }
+    });
   }
 
   //Start Delete Kid Functions
@@ -381,7 +380,21 @@ export class MyExpensesListComponent {
 
   // Filter Users Modal Function
   filterItemModal(): void {
-   
+    // const ref = this.dialogService?.open(FilterKidsComponent, {
+    //   header: this.publicService?.translateTextFromJson('general.filter'),
+    //   dismissableMask: false,
+    //   width: '45%',
+    //   data: this.filterCards,
+    //   styleClass: 'custom-modal',
+    // });
+    // ref.onClose.subscribe((res: any) => {
+    //   if (res) {
+    //     this.page = 1;
+    //     this.filtersArray = res.conditions;
+    //     this.filterCards = res.conditions;
+    //     this.getAllKids(true);
+    //   }
+    // });
   }
   // filter Table Functions
   filterItemsTable(event: any): void {

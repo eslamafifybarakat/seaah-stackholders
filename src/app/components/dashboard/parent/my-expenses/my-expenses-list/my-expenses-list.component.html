@@ -3,7 +3,7 @@
       <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 px-4">
         <div>
           <h4 class="mb-0 text-capitalize">
-            {{'dashboard.kids.kids'|translate}}
+            {{'dashboard.kids.expenses'|translate}}
           </h4>
           <p class="mt-2 text-muted-color d-flex gap-1">
             {{'dashboard.total'|translate}}
@@ -53,6 +53,11 @@
         </div>
         <div class="d-flex gap-3 flex-lg-nowrap flex-wrap justify-content-sm-start justify-content-center"
           *ngIf="kidsList.length>0">
+          <!-- Add Kid -->
+          <button class="btn btn-solid-main d-flex align-items-center gap-2 text-nowrap" (click)="addEditItem()">
+            <i class="pi pi-plus"></i>
+            <span>{{'dashboard.tuitionExpenses.addMyExpense'|translate}}</span>
+          </button>
           <!-- Filter Button -->
           <div [class.d-none]="dataStyleType=='list'">
             <button [class.disabled-actions]="isLoadingKidsList" *ngIf="kidsList?.length>0&& !ifFilteration"
@@ -87,10 +92,11 @@
         <ng-container *ngIf="dataStyleType=='list'">
           <!-- Table List -->
           <dynamic-table-v2 [isLoading]="isLoadingKidsList" [showHeader]="false" [showClear]="false" [showSearch]="false"
-            [isLoadingSearch]="isLoadingSearch" [showActionsButtons]="false"
+            [isLoadingSearch]="isLoadingSearch" [showActionsButtons]="true"
             (clearHandler)="enableSortFilter?clearTable():''" [tableHeaders]="tableHeaders" [tableData]="kidsList"
-            [enableDateFormate]="true" [dateFormateString]="'d MMMM y'" [showActions]="false" [showEdit]="false"
-            [showDelete]="false" (deleteHandler)="deleteItem($event)" [showDetails]="false"
+            [enableDateFormate]="true" [dateFormateString]="'d MMMM y'" [showActions]="true" [showEdit]="true"
+            [showDelete]="true" (deleteHandler)="deleteItem($event)" [showDetails]="false"
+            (detailsHandler)="itemDetails($event)" (editHandler)="addEditItem($event,'edit')"
             (customSortHandler)="enableSortFilter?sortItems($event):''"
             (filterHandler)="enableSortFilter?filterItemsTable($event):''" [results]="kidsCount" [paginatorRows]="perPage"
             [pages]="pagesCount" (paginateHandler)="onPageChange($event)" [rowsPerPageOptions]="rowsOptions"
@@ -99,7 +105,7 @@
             [enableFilterDriverStatus]="true" [addBtnText]="'dashboard.kids.addKid'" (addHandler)="addEditItem()"
             [notFoundImage]="'assets/images/not-found/no-user.svg'" [showSuspend]="true"
             (suspendHandler)="suspendKidAccount($event)" [showActivate]="true"
-            (activateHandler)="activateKidAccount($event)" [showActionItemBtn]="false"
+            (activateHandler)="activateKidAccount($event)" [showActionItemBtn]="true"
             [actionButtonText]="'general.expenses'" (actionHandlerEmit)="showExpenses($event)"></dynamic-table-v2>
         </ng-container>
         <!-- Card -->
@@ -116,7 +122,7 @@
                 <ng-container *ngIf="kidsList.length>0; else noUsers">
                   <ng-container *ngFor="let card of kidsList; let i=index">
                     <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-                      No Data
+                      <!-- <kid-card [item]="card" (editItemHandler)="addEditItem($event,'edit')"></kid-card> -->
                     </div>
                   </ng-container>
                 </ng-container>
@@ -159,7 +165,7 @@
               <ng-container *ngIf="kidsList.length>0; else noUsers2">
                 <ng-container *ngFor="let card of kidsList; let i=index">
                   <div class="col-xl-3 col-lg-4 col-sm-6 mb-4">
-                    no data
+                    <!-- <kid-card (editItemHandler)="addEditItem($event,'edit')" [item]="card"></kid-card> -->
                   </div>
                 </ng-container>
               </ng-container>

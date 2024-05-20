@@ -180,7 +180,9 @@
       "operatingCard": "Operating card",
       "insuranceExpiryDate": "Insurance expiry date",
       "formPhoto": "form photo",
-      "schoolName": "School Name"
+      "schoolName": "School Name",
+      "nameStudent":"Student Name",
+      "bankName":"Bank Name"
     },
     "hello": "Hello",
     "statistics": {
@@ -233,11 +235,13 @@
       "kids": "Kids",
       "addKid": "Add Kid",
       "editKid": "Edit Kid",
-      "kidsDetails": "Kid Details"
+      "kidsDetails": "Kid Details",
+      "expenses":"Expenses"
     },
     "tuitionExpenses": {
       "tuitionExpenses": "Tuition Expenses",
       "addExpense": "Add Tuition Expense",
+      "addMyExpense": "Pay Expenses",
       "editExpense": "Edit Tuition Expense",
       "expensesDetails": "Expense Tuition Details"
     },

@@ -180,7 +180,9 @@
       "operatingCard": "كارت التشغيل",
       "insuranceExpiryDate": "تاريخ إنتهاء التأمين",
       "formPhoto": "صورة الإستمارة",
-      "schoolName": "اسم المدرسة"
+      "schoolName": "اسم المدرسة",
+      "nameStudent": "اسم الطالب",
+      "bankName": "اسم البنك"
     },
     "users": {
       "users": "المستخدمين",
@@ -221,11 +223,13 @@
       "kids": "الأطفال",
       "addKid": "إضافة طفل",
       "editKid": "تعديل الطفل",
-      "kidsDetails": "تفاصيل الطفل"
+      "kidsDetails": "تفاصيل الطفل",
+      "expenses":"المصاريف"
     },
     "tuitionExpenses": {
       "tuitionExpenses": "مصاريف التعليم",
       "addExpense": "إضافة مصاؤيف التعليم",
+      "addMyExpense": "دفع المصاريف",
       "editExpense": "تعديل مصاريف التعليم",
       "expensesDetails": "تفاصيل مصاريف التعليم"
     },
