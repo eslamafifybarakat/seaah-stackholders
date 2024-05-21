@@ -85,6 +85,9 @@ export class AsideMenuComponent {
     if (this.currentUserInformation?.type == 'school') {
       this.menuListItems = this.asideMenuService.getSchoolAsideMenuItem();
     }
+    if (this.currentUserInformation?.type == 'bank') {
+      this.menuListItems = this.asideMenuService.getBankAsideMenuItem();
+    }
   }
 
   // Handle click event on menu item

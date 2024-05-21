@@ -8,6 +8,7 @@ import { ParentChildrenRoutes } from '../dashboard/parent/parent-child-route';
 
 import { installmentWaysChildrenRoutes } from '../dashboard/installment-ways/installment-ways-children-routes';
 import { errorsChildrenRoutes } from '../errors/errors-children-routes';
+import { BankChildrenRoutes } from './banks/banks-child-route';
 
 export const dashBoardChildrenRoutes: any[] = [
   { path: '', redirectTo: 'Statistics', pathMatch: 'full' },
@@ -30,6 +31,20 @@ export const dashBoardChildrenRoutes: any[] = [
         (c) => c.ParentComponent
       ),
     children: ParentChildrenRoutes
+  },
+  // Banks
+  {
+    path: 'Bank',
+    // canActivate: [PermissionGuard],
+    data: {
+      permission: 'Pages.Bank.Requests',
+      title: 'Appointments'
+    },
+    loadComponent: () =>
+      import('./../dashboard/banks/banks.component').then(
+        (c) => c.BanksComponent
+      ),
+    children: BankChildrenRoutes
   },
   {
     path: ':lang/Parent',

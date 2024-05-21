@@ -139,7 +139,8 @@
       "clients": "Clients",
       "installmentWays": "Installment Ways",
       "kids": "Kids",
-      "settings": "Settings"
+      "settings": "Settings",
+      "requests": "Requests"
     },
     "tableHeader": {
       "title": "Title",
