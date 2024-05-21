@@ -42,7 +42,7 @@ export class PayTuitionNowModalComponent {
   isLoadingInstallmentWays: boolean = false;
   // End Installment Ways Variables
 
-  kidForm = this.fb?.group(
+  expenseForm = this.fb?.group(
     {
       bank: [null, {
         validators: [
@@ -55,7 +55,7 @@ export class PayTuitionNowModalComponent {
     }
   );
   get formControls(): any {
-    return this.kidForm?.controls;
+    return this.expenseForm?.controls;
   }
 
 
@@ -71,8 +71,7 @@ export class PayTuitionNowModalComponent {
 
   ngOnInit(): void {
     this.KidData = this.config?.data;
-    console.log("comming data ",this.KidData);
-    
+
     this.currentLanguage = this.publicService.getCurrentLanguage();
     this.getBanks();
   }
@@ -91,11 +90,17 @@ export class PayTuitionNowModalComponent {
     this.subscriptions.push(banksSubscription);
   }
   private processBanksListResponse(response: any): void {
-    if (response?.status ==200 || response?.status ==201) {
+    if (response?.status == 200 || response?.status == 201) {
       this.banksList = response?.data?.data;
       this.banksList?.forEach((item: any) => {
-        let name: any = JSON.parse(item?.name|| "{}");
+        let name: any = JSON.parse(item?.name || "{}");
         item['bankName'] = name[this.currentLanguage];
+        if (this.KidData?.banks && (this.KidData?.banks?.id == item?.id)) {
+          this.expenseForm.patchValue({
+            bank: item
+          });
+          this.onBankChange({value:item});
+        }
       });
     } else {
       this.handleError(response.error);
@@ -107,42 +112,49 @@ export class PayTuitionNowModalComponent {
   }
   onBankChange(event: any): void {
     this.installmentWays = event?.value?.installment_ways;
+    this.installmentWays?.forEach((item: any) => {
+      if (this.KidData?.installmentways && (this.KidData?.installmentways?.id == item?.id)) {
+        this.expenseForm.patchValue({
+          installmentWay: item
+        });
+      }
+    });
   }
   // End Banks List Functions
 
   // Start Add Expenses Functions
   submit(): void {
-    if (this.kidForm?.valid) {
+    if (this.expenseForm?.valid) {
       const formData: any = this.extractFormData();
       this.addEditExpensesRequests(formData);
     } else {
-      this.publicService?.validateAllFormFields(this.kidForm);
+      this.publicService?.validateAllFormFields(this.expenseForm);
     }
   }
   private extractFormData(): any {
-    let kidFormData: any = this.kidForm?.value;
-    let expensesIds:any=[];
-    let expensesTotal:any=[];
-    this.KidData?.expenses?.forEach((element:any) => {
+    let kidFormData: any = this.expenseForm?.value;
+    let expensesIds: any = [];
+    let expensesTotal: any = [];
+    this.KidData?.expenses?.forEach((element: any) => {
       expensesIds?.push(element?.id);
       expensesTotal?.push(element?.total);
     });
-    let finalData :any={
+    let finalData: any = {
       kids_id: [this.KidData?.id],
       parent_id: this.KidData?.parent_id,
       organization_id: [this.KidData?.school_id],
-     
-      tuition_expense_ids:expensesIds,
+
+      tuition_expense_ids: expensesIds,
       total_amount: expensesTotal,
 
       bank_id: [kidFormData?.bank?.id],
       installment_ways_id: [kidFormData?.installmentWay?.id],
     }
-    return finalData ;
+    return finalData;
   }
   private addEditExpensesRequests(formData: any): void {
     this.publicService?.showGlobalLoader?.next(true);
-    let subscribeAddEditExpense: Subscription = this.installmentRequestsService?.addEditInstallmentRequest(formData,null).pipe(
+    let subscribeAddEditExpense: Subscription = this.installmentRequestsService?.addEditInstallmentRequest(formData, null).pipe(
       tap(res => this.handleAddEditExpensesRequests(res)),
       catchError(err => this.handleError(err))
     ).subscribe();
@@ -157,7 +169,7 @@ export class PayTuitionNowModalComponent {
       this.handleError(response?.message);
     }
   }
- // End Add Expenses Functions
+  // End Add Expenses Functions
 
   cancel(): void {
     this.ref?.close({ listChanged: false });

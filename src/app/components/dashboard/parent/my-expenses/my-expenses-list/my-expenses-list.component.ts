@@ -29,6 +29,7 @@ import { ShowExpensesModalComponent } from '../../kids/show-expenses-modal/show-
 import { AddEditKidComponent } from '../../kids/add-edit-kid/add-edit-kid.component';
 import { PayMultiTuitionNowModalComponent } from '../pay-multi-tuition-now-modal/pay-multi-tuition-now-modal.component';
 import { InstallmentRequestsService } from '../../../services/installment_requests.service';
+import { PayTuitionNowModalComponent } from '../../kids/pay-tuition-now-modal/pay-tuition-now-modal.component';
 
 
 @Component({
@@ -250,61 +251,10 @@ export class MyExpensesListComponent {
   }
   // End My Expenses List Functions
 
-  // Start Activate Or Suspend Kid Functions
-  suspendKidAccount(item: any): void {
-    console.log(item);
-
-    this.confirmationService.confirm({
-      message: this.publicService.translateTextFromJson('general.areYouSureToSuspend') + ' ' + item?.name,
-      header: this.publicService.translateTextFromJson('general.suspendKid'),
-      icon: 'pi pi-exclamation-triangle',
-
-      accept: () => {
-        this.toggleActivationKidAccount(item, item?.id);
-      }
-    });
-  }
-  activateKidAccount(item: any): void {
-    console.log(item);
-    this.confirmationService.confirm({
-      message: this.publicService.translateTextFromJson('general.areYouSureToActivate') + ' ' + item.name,
-      header: this.publicService.translateTextFromJson('general.activateKid'),
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.toggleActivationKidAccount(item, item?.id);
-      }
-    });
-  }
-  // End Activate Or Suspend Kid Functions
-  // Start Toggle Activate Kid Functions
-  toggleActivationKidAccount(item: any, kidId: number | string): void {
-    item.isLoadingActive = true;
-    this.publicService.showGlobalLoader.next(true);
-    let toggleActivationKidAccountSubscription: Subscription = this.kidsService?.toggleActivateKid(kidId)?.pipe(
-      tap((res: any) => this.processToggleActivateResponse(res)),
-      catchError(err => this.handleError(err)),
-      finalize(() => {
-        item.isLoadingActive = false;
-        this.publicService.showGlobalLoader.next(false);
-        this.cdr.detectChanges();
-      })
-    ).subscribe();
-    this.subscriptions.push(toggleActivationKidAccountSubscription);
-  }
-  private processToggleActivateResponse(res: any): void {
-    if (res?.code == 200) {
-      this.handleSuccess(res?.message);
-      this.getAllMyExpenseList();
-    } else {
-      this.handleError(res?.message);
-    }
-  }
-  // End Toggle Activate Kid Functions
-
   // Start Show Details Modal
   showExpensesDetails(event: any): void {
     console.log(event);
-    const ref: any = this.dialogService?.open(ShowExpensesModalComponent, {
+    const ref: any = this.dialogService?.open(PayTuitionNowModalComponent, {
       data: {
         event
       },
@@ -314,9 +264,8 @@ export class MyExpensesListComponent {
       styleClass: 'custom-modal',
     });
     ref?.onClose.subscribe((res: any) => {
-      console.log(res);
       if (res?.listChanged) {
-
+        this.getAllMyExpenseList();
       }
     });
   }
@@ -328,13 +277,11 @@ export class MyExpensesListComponent {
   // Add Edit Kid
   addEditItem(item?: any, type?: any): void {
     console.log("item = ", item);
-
-    const ref = this.dialogService?.open(PayMultiTuitionNowModalComponent, {
-      data: {
-        item,
-        type: type == 'edit' ? 'edit' : 'add'
-      },
-      header: type == 'edit' ? this.publicService?.translateTextFromJson('dashboard.tuitionExpenses.editExpense') : this.publicService?.translateTextFromJson('dashboard.tuitionExpenses.addExpense'),
+    item['kids']['installmentways'] = item?.installmentways;
+    item['kids']['banks'] = item?.banks;
+    const ref = this.dialogService?.open(PayTuitionNowModalComponent, {
+      data: item?.kids,
+      header: this.publicService?.translateTextFromJson('dashboard.tuitionExpenses.editExpense'),
       dismissableMask: false,
       width: '60%',
       styleClass: 'custom-modal',
