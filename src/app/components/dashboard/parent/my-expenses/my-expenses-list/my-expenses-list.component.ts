@@ -13,7 +13,6 @@ import { SkeletonComponent } from '../../../../../shared/skeleton/skeleton/skele
 
 //Services
 import { LocalizationLanguageService } from '../../../../../services/generic/localization-language.service';
-import { KidListingItem, KidsListApiResponse } from './../../../../../interfaces/dashboard/kids';
 import { MetaDetails, MetadataService } from '../../../../../services/generic/metadata.service';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DeleteKidApiResponse } from '../../../../../interfaces/dashboard/kids';
@@ -29,6 +28,7 @@ import { ConfirmationService } from 'primeng/api';
 import { ShowExpensesModalComponent } from '../../kids/show-expenses-modal/show-expenses-modal.component';
 import { AddEditKidComponent } from '../../kids/add-edit-kid/add-edit-kid.component';
 import { PayMultiTuitionNowModalComponent } from '../pay-multi-tuition-now-modal/pay-multi-tuition-now-modal.component';
+import { InstallmentRequestsService } from '../../../services/installment_requests.service';
 
 
 @Component({
@@ -36,16 +36,16 @@ import { PayMultiTuitionNowModalComponent } from '../pay-multi-tuition-now-modal
   standalone: true,
   imports: [
     // Modules
-  ReactiveFormsModule,
-  TranslateModule,
-  PaginatorModule,
-  CommonModule,
-  FormsModule,
-  DynamicTableLocalActionsComponent,
-  DynamicTableV2Component,
-  DynamicTableComponent,
-  DynamicSvgComponent,
-  SkeletonComponent],
+    ReactiveFormsModule,
+    TranslateModule,
+    PaginatorModule,
+    CommonModule,
+    FormsModule,
+    DynamicTableLocalActionsComponent,
+    DynamicTableV2Component,
+    DynamicTableComponent,
+    DynamicSvgComponent,
+    SkeletonComponent],
   templateUrl: './my-expenses-list.component.html',
   styleUrls: ['./my-expenses-list.component.scss']
 })
@@ -57,13 +57,13 @@ export class MyExpensesListComponent {
   isLoadingSearch: boolean = false;
   isSearch: boolean = false;
 
-  // Start Kids List Variables
-  isLoadingKidsList: boolean = false;
-  // kidsList: KidListingItem[] = [];
-  kidsList: any[] = [];
-  kidsCount: number = 0;
+  // Start My Expenses List Variables
+  isLoadingMyExpenseList: boolean = false;
+  // MyExpenseList: KidListingItem[] = [];
+  MyExpenseList: any[] = [];
+  myExpensesCount: number = 0;
   tableHeaders: any = [];
-  // End Kids List Variables
+  // End My Expenses List Variables
 
   // Start Pagination Variables
   page: number = 1;
@@ -114,6 +114,7 @@ export class MyExpensesListComponent {
 
   constructor(
     private localizationLanguageService: LocalizationLanguageService,
+    private installmentRequestsService: InstallmentRequestsService,
     private confirmationService: ConfirmationService,
     private metadataService: MetadataService,
     private publicService: PublicService,
@@ -137,14 +138,15 @@ export class MyExpensesListComponent {
     this.getStatusList();
     this.tableHeaders = [
       {
-        field: 'image_path', header: '', title: '', type: 'img'
+        field: 'kidImage', header: '', title: '', type: 'img'
       },
-      { field: 'name', header: 'dashboard.tableHeader.nameStudent', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.nameStudent'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
+      { field: 'kidName', header: 'dashboard.tableHeader.nameStudent', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.nameStudent'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
       { field: 'schoolName', header: 'dashboard.tableHeader.schoolName', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.schoolName'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
-      { field: 'status', header: 'dashboard.tableHeader.status', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.status'), type: 'status', sort: false, showDefaultSort: false, showAscSort: false, showDesSort: false, filter: false }
+      { field: 'bankName', header: 'dashboard.tableHeader.bankName', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.bankName'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
+      { field: 'status', header: 'dashboard.tableHeader.paidStatus', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.paidStatus'), type: 'status', sort: false, showDefaultSort: false, showAscSort: false, showDesSort: false, filter: false }
     ];
     this.updateMetaTagsForSEO();
-    this.getAllKids();
+    this.getAllMyExpenseList();
   }
   private updateMetaTagsForSEO(): void {
     let metaData: MetaDetails = {
@@ -183,31 +185,52 @@ export class MyExpensesListComponent {
     this.dataStyleType = type;
   }
 
-  // Start Kids List Functions
-  getAllKids(isFiltering?: boolean): void {
-    isFiltering ? this.publicService.showSearchLoader.next(true) : this.isLoadingKidsList = true;
-    let kidsSubscription: Subscription = this.kidsService?.getKidsList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null, this.statusValue ?? null)
+  // Start My Expenses List Functions
+  getAllMyExpenseList(isFiltering?: boolean): void {
+    isFiltering ? this.publicService.showSearchLoader.next(true) : this.isLoadingMyExpenseList = true;
+    let myExpensesSubscription: Subscription = this.installmentRequestsService?.getMyExpenseList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null, this.statusValue ?? null)
       .pipe(
-        tap((res: KidsListApiResponse) => {
-          this.processKidsListResponse(res);
+        tap((res: any) => {
+          this.processMyExpenseListResponse(res);
         }),
         catchError(err => this.handleError(err)),
         finalize(() => this.finalizeKidListLoading())
       ).subscribe();
-    this.subscriptions.push(kidsSubscription);
+    this.subscriptions.push(myExpensesSubscription);
   }
-  private processKidsListResponse(response: KidsListApiResponse): void {
+  private processMyExpenseListResponse(response: any): void {
     if (response.status == 200) {
-      this.kidsCount = response?.data?.total;
-      this.pagesCount = Math.ceil(this.kidsCount / this.perPage);
-      this.kidsList = response?.data?.items;
-      console.log(this.kidsList);
-      this.kidsList?.forEach((item: any) => {
-        item['addressName'] = `${item?.address?.region ?? ''}, ${item?.address?.city ?? ''}, ${item?.address?.street ?? ''}, ${item?.address?.zip ?? ''}`;
-        let name: any = JSON.parse(item?.school?.name[this.currentLanguage] || '{}');
-        item['schoolName'] = name[this.currentLanguage];
-        item['status'] = item?.approve_status?.label;
+      this.myExpensesCount = response?.data?.total;
+      this.pagesCount = Math.ceil(this.myExpensesCount / this.perPage);
+      this.MyExpenseList = response?.data?.items?.data;
+      this.MyExpenseList?.forEach((item: any) => {
+        item['kidImage'] = item?.kids?.image_path;
+        if (item?.person_pay_type == 'mykids') {
+          item['kidName'] = item?.kids?.name;
+        } else {
+          item['kidName'] = this.currentLanguage == 'en' ? 'Me' : 'أنا';
+        }
+
+        item['parentId'] = item?.parents?.id;
+        item['parentName'] = item?.kids?.name;
+
+        item['schoolId'] = item?.kids?.schools?.id;
+        let schoolNameObj: any = JSON.parse(item?.kids?.schools?.name[this.currentLanguage] || '{}');
+        item['schoolName'] = schoolNameObj[this.currentLanguage];
+        let kidAddressObj: any = JSON.parse(item?.kids?.address || '{}');
+        item['kidAddress'] = `${kidAddressObj?.region ?? ''}, ${kidAddressObj?.city ?? ''}, ${kidAddressObj?.street ?? ''}, ${kidAddressObj?.zip ?? ''}`;
+
+        item['bankId'] = item?.banks?.id;
+        let bankNameObj: any = JSON.parse(item?.banks?.name[this.currentLanguage] || '{}');
+        item['bankName'] = bankNameObj[this.currentLanguage];
+
+        // item['status'] = item?.status;
+        item['status'] = 'Previewed';
         if (item['status'] == 'Approved') {
+          item['active'] = false;
+        }
+        if (item?.id == 3) {
+          item['status'] = 'Approved';
           item['active'] = false;
         }
       });
@@ -217,7 +240,7 @@ export class MyExpensesListComponent {
     }
   }
   private finalizeKidListLoading(): void {
-    this.isLoadingKidsList = false;
+    this.isLoadingMyExpenseList = false;
     this.isLoadingSearch = false;
     this.enableSortFilter = false;
     this.publicService.showSearchLoader.next(false);
@@ -225,7 +248,7 @@ export class MyExpensesListComponent {
       this.enableSortFilter = true;
     }, 200);
   }
-  // End Kids List Functions
+  // End My Expenses List Functions
 
   // Start Activate Or Suspend Kid Functions
   suspendKidAccount(item: any): void {
@@ -271,15 +294,15 @@ export class MyExpensesListComponent {
   private processToggleActivateResponse(res: any): void {
     if (res?.code == 200) {
       this.handleSuccess(res?.message);
-      this.getAllKids();
+      this.getAllMyExpenseList();
     } else {
       this.handleError(res?.message);
     }
   }
   // End Toggle Activate Kid Functions
 
-  // Start Show Expenses Modal
-  showExpenses(event: any): void {
+  // Start Show Details Modal
+  showExpensesDetails(event: any): void {
     console.log(event);
     const ref: any = this.dialogService?.open(ShowExpensesModalComponent, {
       data: {
@@ -297,7 +320,7 @@ export class MyExpensesListComponent {
       }
     });
   }
-  // End Show Expenses Modal
+  // End Show Details Modal
 
   itemDetails(item?: any): void {
     this.router.navigate(['Dashboard/Kids/Details/' + item.id]);
@@ -318,13 +341,13 @@ export class MyExpensesListComponent {
     });
     ref.onClose.subscribe((res: any) => {
       if (res?.listChanged) {
-        if (this.kidsCount == 0) {
-          this.getAllKids();
+        if (this.myExpensesCount == 0) {
+          this.getAllMyExpenseList();
         } else {
           this.page = 1;
           this.publicService?.changePageSub?.next({ page: this.page });
           this.dataStyleType == 'grid' ? this.changePageActiveNumber(1) : '';
-          this.dataStyleType == 'grid' ? this.getAllKids() : '';
+          this.dataStyleType == 'grid' ? this.getAllMyExpenseList() : '';
         }
       }
     });
@@ -348,7 +371,7 @@ export class MyExpensesListComponent {
   }
   private processDeleteResponse(res: DeleteKidApiResponse): void {
     if (res.status === 200) {
-      this.getAllKids();
+      this.getAllMyExpenseList();
       this.handleSuccess(res.message);
     } else {
       this.handleError(res.message);
@@ -364,8 +387,8 @@ export class MyExpensesListComponent {
     this.page = 1;
     this.perPage = 10;
     this.searchKeyword = keyWord;
-    this.isLoadingKidsList = true;
-    this.getAllKids(true);
+    this.isLoadingMyExpenseList = true;
+    this.getAllMyExpenseList(true);
     if (keyWord?.length > 0) {
       this.isLoadingSearch = true;
     }
@@ -374,7 +397,7 @@ export class MyExpensesListComponent {
   clearSearch(search: any): void {
     search.value = null;
     this.searchKeyword = null;
-    this.getAllKids(true);
+    this.getAllMyExpenseList(true);
   }
   // End Search Functions
 
@@ -392,7 +415,7 @@ export class MyExpensesListComponent {
     //     this.page = 1;
     //     this.filtersArray = res.conditions;
     //     this.filterCards = res.conditions;
-    //     this.getAllKids(true);
+    //     this.getAllMyExpenseList(true);
     //   }
     // });
   }
@@ -457,7 +480,7 @@ export class MyExpensesListComponent {
     });
     this.page = 1;
     // this.publicService?.changePageSub?.next({ page: this.page });
-    this.getAllKids();
+    this.getAllMyExpenseList();
   }
   // Clear table Function
   clearTable(): void {
@@ -467,7 +490,7 @@ export class MyExpensesListComponent {
     this.page = 1;
     this.publicService.resetTable.next(true);
     // this.publicService?.changePageSub?.next({ page: this.page });
-    this.getAllKids();
+    this.getAllMyExpenseList();
   }
   // Sort table Functions
   sortItems(event: any): void {
@@ -476,27 +499,27 @@ export class MyExpensesListComponent {
         column: event?.field,
         order: 'asc'
       }
-      this.getAllKids();
+      this.getAllMyExpenseList();
     } else if (event?.order == -1) {
       this.sortObj = {
         column: event?.field,
         order: 'desc'
       }
-      this.getAllKids();
+      this.getAllMyExpenseList();
     }
   }
 
   // Start Pagination Functions
   onPageChange(e: any): void {
     this.page = e?.page + 1;
-    this.getAllKids();
+    this.getAllMyExpenseList();
   }
   onPaginatorOptionsChange(e: any): void {
     this.perPage = e?.value;
-    this.pagesCount = Math?.ceil(this.kidsCount / this.perPage);
+    this.pagesCount = Math?.ceil(this.myExpensesCount / this.perPage);
     this.page = 1;
     this.publicService?.changePageSub?.next({ page: this.page });
-    this.dataStyleType == 'grid' ? this.getAllKids() : '';
+    this.dataStyleType == 'grid' ? this.getAllMyExpenseList() : '';
   }
   changePageActiveNumber(number: number): void {
     this.paginator?.changePage(number - 1);
@@ -569,7 +592,7 @@ export class MyExpensesListComponent {
       let patchStatus: any = this.statusesList[0];
       this.filterForm?.get('status').setValue(patchStatus);
     }
-    this.getAllKids();
+    this.getAllMyExpenseList();
   }
   // End Status List Functions
 

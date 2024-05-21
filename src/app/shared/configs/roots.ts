@@ -68,7 +68,8 @@ export const roots = {
       getVehicles: '/getVehicles',
       addEditVehicle: '/addEditVehicle'
     },
-    installment_requests: {
+    myExpenses: {
+      getAll:'installment_requests',
       addEdit: 'installment_requests'
     }
   }

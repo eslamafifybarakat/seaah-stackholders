@@ -265,7 +265,7 @@ export class KidsListComponent {
     item.isLoadingActive = true;
     this.publicService.showGlobalLoader.next(true);
     let data: any = {
-      activation_status: 4, // 2 Rejected - 3 Approved - 1 Pending
+      activation_status: 1, // 1 Deactivate -  0 Activate
       approve_status: item?.approve_status?.id, // 2 Rejected - 3 Approved - 1 Pending
       kids_ids: [kidId]
     }

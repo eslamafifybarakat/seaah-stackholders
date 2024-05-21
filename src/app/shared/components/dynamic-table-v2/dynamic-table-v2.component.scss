@@ -16,6 +16,12 @@
       font-size: 14px;
     }
 
+    .status-bg-previewed,
+    .status-bg-Previewed {
+      background-color: #00377e2b;
+      color: var(--text-main-color);
+    }
+
     .status-bg-completed,
     .status-bg-Completed,
     .status-bg-approved,
@@ -444,6 +450,7 @@
   background-color: #00377e2b;
   color: var(--text-main-color);
 }
+
 
 .badge-delete {
   background: #e5555530;

@@ -8,7 +8,7 @@
           <p class="mt-2 text-muted-color d-flex gap-1">
             {{'dashboard.total'|translate}}
             <span>
-              {{kidsCount}}
+              {{myExpensesCount}}
             </span>
           </p>
         </div>
@@ -20,7 +20,7 @@
                 <p-dropdown [options]="statusesList" formControlName="status" optionLabel="name" [filter]="true"
                   [dropdownIcon]="'fas fa-caret-down'" [virtualScroll]="true" [virtualScrollItemSize]="38" filterBy="name"
                   appendTo="body" [filterPlaceholder]="'placeholders.search'|translate"
-                  [readonly]="isLoadingStatuses ||isLoadingKidsList" scrollHeight="200px"
+                  [readonly]="isLoadingStatuses ||isLoadingMyExpenseList" scrollHeight="200px"
                   emptyMessage="{{'general.no_result_found'|translate}}" [showClear]="true"
                   placeholder="{{'placeholders.status'|translate}}" (onChange)="onStatusSelected($event)">
                 </p-dropdown>
@@ -36,7 +36,7 @@
       <div
         class="d-flex justify-content-sm-between justify-content-center align-items-center flex-wrap gap-3 px-4 mt-4 table-caption py-3">
         <!-- Search Handler -->
-        <div [class.disabled-actions]="isLoadingKidsList" class="search" role="search">
+        <div [class.disabled-actions]="isLoadingMyExpenseList" class="search" role="search">
           <div class="input-group bg-white-color d-flex flex-nowrap">
             <span class="input-group-text border-0" id="basic-addon1">
               <i class="pi pi-search text-muted-color"></i>
@@ -52,7 +52,7 @@
           </div>
         </div>
         <div class="d-flex gap-3 flex-lg-nowrap flex-wrap justify-content-sm-start justify-content-center"
-          *ngIf="kidsList.length>0">
+          *ngIf="MyExpenseList.length>0">
           <!-- Add Kid -->
           <button class="btn btn-solid-main d-flex align-items-center gap-2 text-nowrap" (click)="addEditItem()">
             <i class="pi pi-plus"></i>
@@ -60,17 +60,17 @@
           </button>
           <!-- Filter Button -->
           <div [class.d-none]="dataStyleType=='list'">
-            <button [class.disabled-actions]="isLoadingKidsList" *ngIf="kidsList?.length>0&& !ifFilteration"
+            <button [class.disabled-actions]="isLoadingMyExpenseList" *ngIf="MyExpenseList?.length>0&& !ifFilteration"
               class="btn btn-solid-main d-md-flex d-none align-items-center gap-2" (click)="filterItemModal()">
               <i class="pi pi-filter"></i>
             </button>
           </div>
-          <button [class.disabled-actions]="isLoadingKidsList" *ngIf="kidsList?.length>0 && !ifFilteration"
+          <button [class.disabled-actions]="isLoadingMyExpenseList" *ngIf="MyExpenseList?.length>0 && !ifFilteration"
             class="btn btn-solid-main d-md-none d-flex align-items-center gap-2" (click)="filterItemModal()">
             <i class="pi pi-filter"></i>
           </button>
           <!-- Data style list 0or grid (table or card) -->
-          <div [class.disabled-actions]="isLoadingKidsList"
+          <div [class.disabled-actions]="isLoadingMyExpenseList"
             class="data-style d-md-flex d-none align-items-center gap-2 p-2">
             <a class="scaleX-rtl" [class.active]="dataStyleType=='list'" (click)="changeDateStyle('list')">
               <app-dynamic-svg [name]="'list'"></app-dynamic-svg>
@@ -80,7 +80,7 @@
             </a>
           </div>
           <!-- Clear -->
-          <button [class.disabled-actions]="isLoadingKidsList"
+          <button [class.disabled-actions]="isLoadingMyExpenseList"
             class="btn btn-outline-main d-flex align-items-center gap-2 text-nowrap" (click)="clearTable()">
             <i class="pi pi-refresh"></i>
             <span>{{'general.reset'|translate}}</span>
@@ -91,45 +91,42 @@
         <!-- Table -->
         <ng-container *ngIf="dataStyleType=='list'">
           <!-- Table List -->
-          <dynamic-table-v2 [isLoading]="isLoadingKidsList" [showHeader]="false" [showClear]="false" [showSearch]="false"
+          <dynamic-table-v2 [isLoading]="isLoadingMyExpenseList" [showHeader]="false" [showClear]="false" [showSearch]="false"
             [isLoadingSearch]="isLoadingSearch" [showActionsButtons]="true"
-            (clearHandler)="enableSortFilter?clearTable():''" [tableHeaders]="tableHeaders" [tableData]="kidsList"
+            (clearHandler)="enableSortFilter?clearTable():''" [tableHeaders]="tableHeaders" [tableData]="MyExpenseList"
             [enableDateFormate]="true" [dateFormateString]="'d MMMM y'" [showActions]="true" [showEdit]="true"
             [showDelete]="true" (deleteHandler)="deleteItem($event)" [showDetails]="false"
             (detailsHandler)="itemDetails($event)" (editHandler)="addEditItem($event,'edit')"
             (customSortHandler)="enableSortFilter?sortItems($event):''"
-            (filterHandler)="enableSortFilter?filterItemsTable($event):''" [results]="kidsCount" [paginatorRows]="perPage"
+            (filterHandler)="enableSortFilter?filterItemsTable($event):''" [results]="myExpensesCount" [paginatorRows]="perPage"
             [pages]="pagesCount" (paginateHandler)="onPageChange($event)" [rowsPerPageOptions]="rowsOptions"
             [enableConfirmDeleteDialog]="true" [keyDelete]="'name'"
-            (paginateOptionsHandler)="onPaginatorOptionsChange($event)" [isSearch]="isSearch" [arrayChildKey]="'name'"
-            [enableFilterDriverStatus]="true" [addBtnText]="'dashboard.kids.addKid'" (addHandler)="addEditItem()"
-            [notFoundImage]="'assets/images/not-found/no-user.svg'" [showSuspend]="true"
-            (suspendHandler)="suspendKidAccount($event)" [showActivate]="true"
-            (activateHandler)="activateKidAccount($event)" [showActionItemBtn]="true"
-            [actionButtonText]="'general.expenses'" (actionHandlerEmit)="showExpenses($event)"></dynamic-table-v2>
+            (paginateOptionsHandler)="onPaginatorOptionsChange($event)" [isSearch]="isSearch" [arrayChildKey]="'name'" [addBtnText]="'dashboard.kids.addKid'" (addHandler)="addEditItem()"
+            [notFoundImage]="'assets/images/not-found/no-user.svg'" [showActionItemBtn]="true"
+            [actionButtonText]="'general.details'" (actionHandlerEmit)="showExpensesDetails($event)"></dynamic-table-v2>
         </ng-container>
         <!-- Card -->
         <ng-container *ngIf="dataStyleType=='grid'">
           <div class="container-fluid">
             <div class="row pt-4">
               <!-- Loading Cards -->
-              <ng-container *ngIf="isLoadingKidsList; else noLoadingCards">
+              <ng-container *ngIf="isLoadingMyExpenseList; else noLoadingCards">
                 <skeleton type="usersList"></skeleton>
               </ng-container>
   
               <!-- Cards List -->
               <ng-template #noLoadingCards>
-                <ng-container *ngIf="kidsList.length>0; else noUsers">
-                  <ng-container *ngFor="let card of kidsList; let i=index">
+                <ng-container *ngIf="MyExpenseList.length>0; else noUsers">
+                  <ng-container *ngFor="let card of MyExpenseList; let i=index">
                     <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
                       <!-- <kid-card [item]="card" (editItemHandler)="addEditItem($event,'edit')"></kid-card> -->
                     </div>
                   </ng-container>
                 </ng-container>
               </ng-template>
-              <ng-container *ngIf="kidsList?.length>0">
-                <div class="d-flex justify-content-center my-3" [class.disabled]="isLoadingKidsList">
-                  <p-paginator #paginator [rows]="perPage" [totalRecords]="kidsCount" [showPageLinks]="true"
+              <ng-container *ngIf="MyExpenseList?.length>0">
+                <div class="d-flex justify-content-center my-3" [class.disabled]="isLoadingMyExpenseList">
+                  <p-paginator #paginator [rows]="perPage" [totalRecords]="myExpensesCount" [showPageLinks]="true"
                     [pageLinkSize]="3" (onPageChange)="onPageChange($event)"></p-paginator>
                   <div class="d-flex align-items-center gap-3">
                     <p-dropdown [styleClass]="'paginator-options-dropdown'" [dropdownIcon]="'fas fa-caret-down'" #dropdown
@@ -157,22 +154,22 @@
         <div class="container-fluid">
           <div class="row pt-4">
             <!-- Loading Cards -->
-            <ng-container *ngIf="isLoadingKidsList; else noLoadingCards">
+            <ng-container *ngIf="isLoadingMyExpenseList; else noLoadingCards">
               <skeleton type="usersList"></skeleton>
             </ng-container>
             <!-- Cards List -->
             <ng-template #noLoadingCards>
-              <ng-container *ngIf="kidsList.length>0; else noUsers2">
-                <ng-container *ngFor="let card of kidsList; let i=index">
+              <ng-container *ngIf="MyExpenseList.length>0; else noUsers2">
+                <ng-container *ngFor="let card of MyExpenseList; let i=index">
                   <div class="col-xl-3 col-lg-4 col-sm-6 mb-4">
                     <!-- <kid-card (editItemHandler)="addEditItem($event,'edit')" [item]="card"></kid-card> -->
                   </div>
                 </ng-container>
               </ng-container>
             </ng-template>
-            <ng-container *ngIf="kidsList?.length>0">
-              <div class="d-flex justify-content-center my-3" [class.disabled]="isLoadingKidsList">
-                <p-paginator #paginator [rows]="perPage" [totalRecords]="kidsCount" [showPageLinks]="true"
+            <ng-container *ngIf="MyExpenseList?.length>0">
+              <div class="d-flex justify-content-center my-3" [class.disabled]="isLoadingMyExpenseList">
+                <p-paginator #paginator [rows]="perPage" [totalRecords]="myExpensesCount" [showPageLinks]="true"
                   [pageLinkSize]="3" (onPageChange)="onPageChange($event)"></p-paginator>
                 <div class="d-flex align-items-center gap-3">
                   <p-dropdown [styleClass]="'paginator-options-dropdown'" [dropdownIcon]="'fas fa-caret-down'" #dropdown
@@ -194,11 +191,11 @@
         </div>
       </div>
   
-      <ng-container *ngIf="kidsCount">
+      <ng-container *ngIf="myExpensesCount">
         <div class="dash-global-footer px-4 d-flex align-items-center py-3">
           <p class="mb-0">
             <span>{{"dashboard.isTotal"|translate}}</span>
-            <span class="mx-1 fw-bolder fs-5">{{kidsCount}}</span><span>{{"dashboard.users.users"|translate}}</span>
+            <span class="mx-1 fw-bolder fs-5">{{myExpensesCount}}</span><span>{{"dashboard.users.users"|translate}}</span>
           </p>
         </div>
       </ng-container>

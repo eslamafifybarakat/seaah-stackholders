@@ -36,13 +36,12 @@ export class ShowExpensesModalComponent {
   ngOnInit(): void { 
     this.KidData = this.config?.data?.event;
     console.log("data come to list ex ",this.KidData);
-    
     this.currentLanguage = this.publicService.getCurrentLanguage();
   }
 
   totalExpenses(): any {
     let total: any = 0;
-    this.KidData?.expenses?.forEach(element => {
+    this.KidData?.expenses?.forEach((element:any) => {
       total = total + +element?.total;
     });
     return total;
@@ -52,9 +51,7 @@ export class ShowExpensesModalComponent {
     console.log("data = ",event);
     this.cancel();
     const refPayNow: any = this.dialogService?.open(PayTuitionNowModalComponent, {
-      data: {
-        event:{...event,parent_id:this.KidData.parent_id,kids_id:this.KidData?.id,tuition_expense_ids:this.KidData?.expenses?.map(item => item.id)}
-      },
+      data: this.KidData,
       header: this.publicService?.translateTextFromJson('general.payNow'),
       dismissableMask: false,
       width: '40%',

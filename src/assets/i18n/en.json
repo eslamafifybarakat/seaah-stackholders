@@ -19,6 +19,7 @@
     "dashboard": "Dashboard"
   },
   "general": {
+    "no_result_found":"No Result Founded",
     "total":"Total",
     "title":"Title",
     "price":"Price",

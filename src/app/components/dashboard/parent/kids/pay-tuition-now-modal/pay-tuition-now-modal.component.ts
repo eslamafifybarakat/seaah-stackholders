@@ -60,10 +60,8 @@ export class PayTuitionNowModalComponent {
 
 
   constructor(
-    private schoolsService: SchoolsService,
     private alertsService: AlertsService,
     private publicService: PublicService,
-    private dialogService: DialogService,
     private config: DynamicDialogConfig,
     private banksService: BanksService,
     private ref: DynamicDialogRef,
@@ -72,13 +70,12 @@ export class PayTuitionNowModalComponent {
   ) { }
 
   ngOnInit(): void {
-    this.KidData = this.config?.data?.event;
+    this.KidData = this.config?.data;
     console.log("comming data ",this.KidData);
     
     this.currentLanguage = this.publicService.getCurrentLanguage();
     this.getBanks();
   }
-
 
   // Start Banks List Functions
   getBanks(): void {
@@ -89,15 +86,15 @@ export class PayTuitionNowModalComponent {
           this.processBanksListResponse(res)
         }),
         catchError(err => this.handleError(err)),
-        finalize(() => this.finalizeSchoolsListLoading())
+        finalize(() => this.finalizeBanksList())
       ).subscribe();
     this.subscriptions.push(banksSubscription);
   }
   private processBanksListResponse(response: any): void {
-    if (response) {
-      this.banksList = response?.data?.items?.data;
+    if (response?.status ==200 || response?.status ==201) {
+      this.banksList = response?.data?.data;
       this.banksList?.forEach((item: any) => {
-        let name: any = JSON.parse(item?.name[this.currentLanguage] || "{}");
+        let name: any = JSON.parse(item?.name|| "{}");
         item['bankName'] = name[this.currentLanguage];
       });
     } else {
@@ -105,23 +102,18 @@ export class PayTuitionNowModalComponent {
       return;
     }
   }
-  private finalizeSchoolsListLoading(): void {
+  private finalizeBanksList(): void {
     this.isLoadingBank = false;
   }
   onBankChange(event: any): void {
-    console.log(event?.value);
-    // this.installmentWays = event?.value?.installment_ways;
-    this.installmentWays = [
-      {id:1,name:'Eslam'}
-    ];
+    this.installmentWays = event?.value?.installment_ways;
   }
   // End Banks List Functions
 
-
+  // Start Add Expenses Functions
   submit(): void {
     if (this.kidForm?.valid) {
       const formData: any = this.extractFormData();
-      console.log("submit ",formData);
       this.addEditExpensesRequests(formData);
     } else {
       this.publicService?.validateAllFormFields(this.kidForm);
@@ -129,24 +121,32 @@ export class PayTuitionNowModalComponent {
   }
   private extractFormData(): any {
     let kidFormData: any = this.kidForm?.value;
+    let expensesIds:any=[];
+    let expensesTotal:any=[];
+    this.KidData?.expenses?.forEach((element:any) => {
+      expensesIds?.push(element?.id);
+      expensesTotal?.push(element?.total);
+    });
     let finalData :any={
-      kids_id: [this.KidData?.kids_id],
+      kids_id: [this.KidData?.id],
       parent_id: this.KidData?.parent_id,
+      organization_id: [this.KidData?.school_id],
+     
+      tuition_expense_ids:expensesIds,
+      total_amount: expensesTotal,
+
       bank_id: [kidFormData?.bank?.id],
       installment_ways_id: [kidFormData?.installmentWay?.id],
-      tuition_expense_ids: this.KidData?.tuition_expense_ids,
-      organization_id: [this.KidData[0]?.school_id],
-      total_amount: [this.KidData[0]?.total]
     }
     return finalData ;
   }
   private addEditExpensesRequests(formData: any): void {
     this.publicService?.showGlobalLoader?.next(true);
-    let subscribeAddKid: Subscription = this.installmentRequestsService?.addEditInstallmentRequest(formData,null).pipe(
+    let subscribeAddEditExpense: Subscription = this.installmentRequestsService?.addEditInstallmentRequest(formData,null).pipe(
       tap(res => this.handleAddEditExpensesRequests(res)),
       catchError(err => this.handleError(err))
     ).subscribe();
-    this.subscriptions.push(subscribeAddKid);
+    this.subscriptions.push(subscribeAddEditExpense);
   }
   private handleAddEditExpensesRequests(response: any): void {
     this.publicService?.showGlobalLoader?.next(false);
@@ -157,7 +157,7 @@ export class PayTuitionNowModalComponent {
       this.handleError(response?.message);
     }
   }
-  // End Add Edit Kid
+ // End Add Expenses Functions
 
   cancel(): void {
     this.ref?.close({ listChanged: false });

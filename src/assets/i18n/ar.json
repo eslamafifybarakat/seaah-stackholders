@@ -19,6 +19,7 @@
     "dashboard": "لوحة التحكم"
   },
   "general": {
+    "no_result_found":"لا يوجد بيانات",
     "total":"الإجمالي",
     "title":"العنوان",
     "price":"السعر",
