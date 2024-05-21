@@ -14,6 +14,7 @@ import { InstallmentRequestsService } from '../../../services/installment_reques
 import { MultiSelectModule } from 'primeng/multiselect';
 import { KidsService } from '../../../services/kids.service';
 import { KidsListApiResponse } from 'src/app/interfaces/dashboard/kids';
+import { AuthService } from 'src/app/services/authentication/auth.service';
 
 @Component({
   selector: 'app-pay-multi-tuition-now-modal',
@@ -43,14 +44,14 @@ export class PayMultiTuitionNowModalComponent {
   // End Banks Variables
   // Start Kids List Variables
   isLoadingKidsList: boolean = false;
-  kidsList :any[]=[]
+  kidsList: any[] = []
 
   // Start Installment Ways Variables
   installmentWays: any = [];
   isLoadingInstallmentWays: boolean = false;
   // End Installment Ways Variables
 
-  kidForm = this.fb?.group(
+  expensesForm = this.fb?.group(
     {
       kids: [null, {
         validators: [
@@ -71,35 +72,36 @@ export class PayMultiTuitionNowModalComponent {
     }
   );
   get formControls(): any {
-    return this.kidForm?.controls;
+    return this.expensesForm?.controls;
   }
 
-
   constructor(
+    private installmentRequestsService: InstallmentRequestsService,
     private schoolsService: SchoolsService,
     private alertsService: AlertsService,
     private publicService: PublicService,
     private dialogService: DialogService,
     private config: DynamicDialogConfig,
     private banksService: BanksService,
-    private ref: DynamicDialogRef,
-    private fb: FormBuilder,
-    private installmentRequestsService: InstallmentRequestsService,
     private kidsService: KidsService,
+    private authService:AuthService,
+    private ref: DynamicDialogRef,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
     this.KidData = this.config?.data?.event;
-    console.log("comming data ",this.KidData);
+    console.log("comming data ", this.KidData);
     this.getAllKids();
     this.currentLanguage = this.publicService.getCurrentLanguage();
+    this.currentUserInformation = this.authService.getCurrentUserInformationLocally();
     this.getBanks();
   }
 
-   // Start Kids List Functions
-   getAllKids(isFiltering?: boolean): void {
+  // Start Kids List Functions
+  getAllKids(isFiltering?: boolean): void {
     isFiltering ? this.publicService.showSearchLoader.next(true) : this.isLoadingKidsList = true;
-    let kidsSubscription: Subscription = this.kidsService?.getKidsList(1, 10000, null, null, null,3)
+    let kidsSubscription: Subscription = this.kidsService?.getKidsList(null, null, null, null, null, 3)
       .pipe(
         tap((res: KidsListApiResponse) => {
           this.processKidsListResponse(res);
@@ -112,16 +114,16 @@ export class PayMultiTuitionNowModalComponent {
   private processKidsListResponse(response: KidsListApiResponse): void {
     if (response.status == 200) {
       this.kidsList = response?.data?.items;
+      this.kidsList?.forEach((item: any) => {
+        item['addressName'] = `${item?.address?.region ?? ''}, ${item?.address?.city ?? ''}, ${item?.address?.street ?? ''}, ${item?.address?.zip ?? ''}`;
+        let name: any = JSON.parse(item?.school?.name[this.currentLanguage] || '{}');
+        item['schoolName'] = name[this.currentLanguage];
+        item['status'] = item?.approve_status?.label;
+        if (item['status'] == 'Approved') {
+          item['active'] = false;
+        }
+      });
       console.log(this.kidsList);
-      // this.kidsList?.forEach((item: any) => {
-      //   item['addressName'] = `${item?.address?.region ?? ''}, ${item?.address?.city ?? ''}, ${item?.address?.street ?? ''}, ${item?.address?.zip ?? ''}`;
-      //   let name: any = JSON.parse(item?.school?.name[this.currentLanguage] || '{}');
-      //   item['schoolName'] = name[this.currentLanguage];
-      //   item['status'] = item?.approve_status?.label;
-      //   if (item['status'] == 'Approved') {
-      //     item['active'] = false;
-      //   }
-      // });
     } else {
       this.handleError(response.message);
       return;
@@ -129,10 +131,7 @@ export class PayMultiTuitionNowModalComponent {
   }
   private finalizeKidListLoading(): void {
     this.isLoadingKidsList = false;
-   
     this.publicService.showSearchLoader.next(false);
-    setTimeout(() => {
-    }, 200);
   }
   // End Kids List Functions
 
@@ -168,43 +167,73 @@ export class PayMultiTuitionNowModalComponent {
     console.log(event?.value);
     // this.installmentWays = event?.value?.installment_ways;
     this.installmentWays = [
-      {id:1,name:'Eslam'}
+      { id: 1, name: 'Eslam' }
     ];
   }
   // End Banks List Functions
 
 
+  // Start Add Edit Expenses
   submit(): void {
-    if (this.kidForm?.valid) {
+    if (this.expensesForm?.valid) {
       const formData: any = this.extractFormData();
-      console.log("submit ",formData);
-      this.addinstallmentRequests(formData);
+      console.log("formData is: ", formData);
+      this.addEditExpense(formData);
     } else {
-      this.publicService?.validateAllFormFields(this.kidForm);
+      this.publicService?.validateAllFormFields(this.expensesForm);
     }
   }
   private extractFormData(): any {
-    let kidFormData: any = this.kidForm?.value;
-    let finalData :any={
-      kids_id: [this.KidData?.kids_id],
-      parent_id: this.KidData?.parent_id,
-      bank_id: [kidFormData?.bank?.id],
-      installment_ways_id: [kidFormData?.installmentWay?.id],
-      tuition_expense_ids: this.KidData?.tuition_expense_ids,
-      organization_id: [this.KidData[0]?.school_id],
-      total_amount: [this.KidData[0]?.total]
+    let expenseFormData: any = this.expensesForm?.value;
+    console.log('expenseFormData', expenseFormData);
+    console.log('KidData', this.KidData);
+    console.log('currentUserInformation', this.currentUserInformation);
+
+    // Prepear Kids Array
+    let kidsIds: any = [];
+    let tuitionExpenseIds: any = [];
+    let organizationsIds: any = [];
+    expenseFormData?.kids?.forEach((kid: any) => {
+      kidsIds?.push(kid?.id);
+      organizationsIds?.push(kid?.school?.id);
+      kid?.expenses?.forEach((expense: any) => {
+        tuitionExpenseIds?.push(expense?.id);
+      });
+    });
+    if (this.expensesForm?.value?.me) {
+      kidsIds?.push(this.currentUserInformation?.id);
+      organizationsIds?.push(this.currentUserInformation?.school?.id);
+      this.currentUserInformation?.expenses?.forEach((expense: any) => {
+        tuitionExpenseIds?.push(expense?.id);
+      });
     }
-    return finalData ;
+    // Prepear Banks Array
+    let BanksIds: any = [];
+    BanksIds?.push(expenseFormData?.bank?.id);
+    // Prepear Installment Ways Array
+    let installmentWaysIds: any = [];
+    installmentWaysIds?.push(expenseFormData?.installmentWay?.id);
+
+    let finalData: any = {
+      kids_id: kidsIds,
+      parent_id: this.KidData?.parent_id,
+      bank_id: BanksIds,
+      installment_ways_id: installmentWaysIds,
+      tuition_expense_ids: tuitionExpenseIds,
+      organization_id: organizationsIds,
+      total_amount: [100]
+    }
+    return finalData;
   }
-  private addinstallmentRequests(formData: any): void {
+  private addEditExpense(formData: any): void {
     this.publicService?.showGlobalLoader?.next(true);
-    let subscribeAddKid: Subscription = this.installmentRequestsService?.addEditInstallmentRequest(formData,null).pipe(
-      tap(res => this.handleAddinstallmentRequests(res)),
+    let subscribeAddEditExpense: Subscription = this.installmentRequestsService?.addEditInstallmentRequest(formData, null).pipe(
+      tap(res => this.handleAddInstallmentRequests(res)),
       catchError(err => this.handleError(err))
     ).subscribe();
-    this.subscriptions.push(subscribeAddKid);
+    this.subscriptions.push(subscribeAddEditExpense);
   }
-  private handleAddinstallmentRequests(response: any): void {
+  private handleAddInstallmentRequests(response: any): void {
     this.publicService?.showGlobalLoader?.next(false);
     if (response?.status == 200) {
       this.ref.close({ listChanged: true, item: response?.data });
@@ -213,7 +242,7 @@ export class PayMultiTuitionNowModalComponent {
       this.handleError(response?.message);
     }
   }
-  // End Add Edit Kid
+  // End Add Edit Expenses
 
   cancel(): void {
     this.ref?.close({ listChanged: false });

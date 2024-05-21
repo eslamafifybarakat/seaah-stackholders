@@ -1,18 +1,28 @@
 <div id="modal-form">
-  <form [formGroup]="kidForm" (ngSubmit)="submit()" aria-label="pay-form">
+  <form [formGroup]="expensesForm" (ngSubmit)="submit()" aria-label="pay-form">
     <div class="form-content">
       <div class="row m-0">
+        <!-- Add the checkbox here with Bootstrap classes (Me) -->
+        <div class="col-12">
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" formControlName="me" id="meCheckbox">
+            <label class="form-check-label fw-bold" for="meCheckbox">
+              Me
+            </label>
+          </div>
+        </div>
+        <!-- Multi Kids Selection -->
         <div class="col-md-12">
           <div class="mb-3">
             <label class="mb-2 required">
               {{'dashboard.sideMenu.kids'|translate}}
             </label>
             <span class="p-input-icon-right select-loading d-block">
-              <p-multiSelect appendTo="body" [options]="kidsList" formControlName="kids"
-                display="chip" [readonly]="isLoadingKidsList" [virtualScroll]="true" [showClear]="true"
-                [virtualScrollItemSize]="38" [dropdownIcon]="'fas fa-caret-down'" scrollHeight="200px"
-                defaultLabel="{{'placeholders.select'|translate}}"
-                [filterPlaceHolder]="'placeholders.search'|translate" [showToggleAll]="true" [optionLabel]="'name'"
+              <p-multiSelect appendTo="body" [options]="kidsList" formControlName="kids" display="chip"
+                [readonly]="isLoadingKidsList" [virtualScroll]="true" [showClear]="true" [virtualScrollItemSize]="38"
+                [dropdownIcon]="'fas fa-caret-down'" scrollHeight="200px"
+                defaultLabel="{{'placeholders.select'|translate}}" [filterPlaceHolder]="'placeholders.search'|translate"
+                [showToggleAll]="true" [optionLabel]="'name'"
                 [class.ng-dirty]="formControls?.kids?.invalid && (formControls?.kids?.dirty || formControls?.kids?.touched)"></p-multiSelect>
               <ng-container *ngIf="isLoadingKidsList">
                 <i class="pi pi-spin pi-spinner"></i>
@@ -30,17 +40,7 @@
             </div>
           </div>
         </div>
-
-        <!-- Add the checkbox here with Bootstrap classes -->
-        <div class="col-12">
-          <div class="form-check mb-3">
-            <input class="form-check-input" type="checkbox" formControlName="me" id="meCheckbox">
-            <label class="form-check-label" for="meCheckbox">
-              Me
-            </label>
-          </div>
-        </div>
-
+        <!-- Bank Selection -->
         <div class="col-12">
           <div class="mb-3">
             <label class="mb-2 required">
@@ -70,7 +70,7 @@
             </div>
           </div>
         </div>
-
+        <!-- Installment For Selected Bank -->
         <div class="col-12">
           <div class="mb-3">
             <label class="mb-2 required">
@@ -78,11 +78,12 @@
             </label>
             <span class="p-input-icon-right select-loading d-block"
               [class.border-red]="formControls?.installmentWay?.invalid && (formControls?.installmentWay?.dirty || formControls?.installmentWay?.touched)">
-              <p-dropdown [options]="installmentWays" formControlName="installmentWay" optionLabel="name" [filter]="true"
-                [dropdownIcon]="'fas fa-caret-down'" [virtualScroll]="true" [virtualScrollItemSize]="38"
+              <p-dropdown [options]="installmentWays" formControlName="installmentWay" optionLabel="name"
+                [filter]="true" [dropdownIcon]="'fas fa-caret-down'" [virtualScroll]="true" [virtualScrollItemSize]="38"
                 filterBy="name" appendTo="body" [filterPlaceholder]="'placeholders.search'|translate"
-                [readonly]="isLoadingInstallmentWays || isLoadingBank || formControls?.bank?.value ==null" scrollHeight="200px" emptyMessage="{{'general.no_result_found'|translate}}"
-                [showClear]="true" placeholder="{{'placeholders.installmentWay'|translate}}">
+                [readonly]="isLoadingInstallmentWays || isLoadingBank || formControls?.bank?.value ==null"
+                scrollHeight="200px" emptyMessage="{{'general.no_result_found'|translate}}" [showClear]="true"
+                placeholder="{{'placeholders.installmentWay'|translate}}">
               </p-dropdown>
               <ng-container *ngIf="isLoadingInstallmentWays">
                 <i class="pi pi-spin pi-spinner"></i>

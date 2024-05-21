@@ -261,9 +261,15 @@ export class KidsListComponent {
   // End Activate Or Suspend Kid Functions
   // Start Toggle Activate Kid Functions
   toggleActivationKidAccount(item: any, kidId: number | string): void {
+    console.log(item);
     item.isLoadingActive = true;
     this.publicService.showGlobalLoader.next(true);
-    let toggleActivationKidAccountSubscription: Subscription = this.kidsService?.toggleActivateKid(kidId)?.pipe(
+    let data: any = {
+      activation_status: 4, // 2 Rejected - 3 Approved - 1 Pending
+      approve_status: item?.approve_status?.id, // 2 Rejected - 3 Approved - 1 Pending
+      kids_ids: [kidId]
+    }
+    let toggleActivationKidAccountSubscription: Subscription = this.kidsService?.toggleActivateKid(data)?.pipe(
       tap((res: any) => this.processToggleActivateResponse(res)),
       catchError(err => this.handleError(err)),
       finalize(() => {
@@ -275,7 +281,7 @@ export class KidsListComponent {
     this.subscriptions.push(toggleActivationKidAccountSubscription);
   }
   private processToggleActivateResponse(res: any): void {
-    if (res?.code == 200) {
+    if (res?.status == 200) {
       this.handleSuccess(res?.message);
       this.getAllKids();
     } else {

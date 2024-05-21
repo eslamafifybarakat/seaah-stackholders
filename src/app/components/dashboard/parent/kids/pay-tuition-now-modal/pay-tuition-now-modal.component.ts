@@ -122,7 +122,7 @@ export class PayTuitionNowModalComponent {
     if (this.kidForm?.valid) {
       const formData: any = this.extractFormData();
       console.log("submit ",formData);
-      this.addinstallmentRequests(formData);
+      this.addEditExpensesRequests(formData);
     } else {
       this.publicService?.validateAllFormFields(this.kidForm);
     }
@@ -140,15 +140,15 @@ export class PayTuitionNowModalComponent {
     }
     return finalData ;
   }
-  private addinstallmentRequests(formData: any): void {
+  private addEditExpensesRequests(formData: any): void {
     this.publicService?.showGlobalLoader?.next(true);
     let subscribeAddKid: Subscription = this.installmentRequestsService?.addEditInstallmentRequest(formData,null).pipe(
-      tap(res => this.handleAddinstallmentRequests(res)),
+      tap(res => this.handleAddEditExpensesRequests(res)),
       catchError(err => this.handleError(err))
     ).subscribe();
     this.subscriptions.push(subscribeAddKid);
   }
-  private handleAddinstallmentRequests(response: any): void {
+  private handleAddEditExpensesRequests(response: any): void {
     this.publicService?.showGlobalLoader?.next(false);
     if (response?.status == 200) {
       this.ref.close({ listChanged: true, item: response?.data });

@@ -148,8 +148,8 @@ export class MyExpensesListComponent {
   }
   private updateMetaTagsForSEO(): void {
     let metaData: MetaDetails = {
-      title: 'الأطفال | سعة',
-      description: 'الأطفال | سعة',
+      title: 'مصاريفي | سعة',
+      description: 'مصاريفي | سعة',
       image: 'https://ik.imagekit.io/2cvha6t2l9/Logo.jpeg?updatedAt=1712577283111'
     }
     this.metadataService.updateMetaTagsForSEO(metaData);
@@ -311,7 +311,7 @@ export class MyExpensesListComponent {
         item,
         type: type == 'edit' ? 'edit' : 'add'
       },
-      header: type == 'edit' ? this.publicService?.translateTextFromJson('dashboard.kids.editKid') : this.publicService?.translateTextFromJson('dashboard.kids.addKid'),
+      header: type == 'edit' ? this.publicService?.translateTextFromJson('dashboard.tuitionExpenses.editExpense') : this.publicService?.translateTextFromJson('dashboard.tuitionExpenses.addExpense'),
       dismissableMask: false,
       width: '60%',
       styleClass: 'custom-modal',
