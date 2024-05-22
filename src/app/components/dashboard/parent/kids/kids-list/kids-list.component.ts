@@ -191,7 +191,7 @@ export class KidsListComponent {
 
   // Start Kids List Functions
   getAllKids(isFiltering?: boolean): void {
-    isFiltering ? this.publicService.showSearchLoader.next(true) : this.isLoadingKidsList = true;
+    this.isSearch ? this.publicService.showGlobalLoader.next(true) : this.isLoadingKidsList = true;
     let kidsSubscription: Subscription = this.kidsService?.getKidsList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null, this.statusValue ?? null)
       .pipe(
         tap((res: KidsListApiResponse) => {
@@ -226,7 +226,7 @@ export class KidsListComponent {
     this.isLoadingKidsList = false;
     this.isLoadingSearch = false;
     this.enableSortFilter = false;
-    this.publicService.showSearchLoader.next(false);
+    this.publicService.showGlobalLoader.next(false);
     setTimeout(() => {
       this.enableSortFilter = true;
     }, 200);
@@ -312,7 +312,7 @@ export class KidsListComponent {
   // End Show Expenses Modal
 
   itemDetails(item?: any): void {
-    this.router.navigate(['Dashboard/Kids/Details/' + item.id]);
+    // this.router.navigate(['Dashboard/Kids/Details/' + item.id]);
   }
   // Add Edit Kid
   addEditItem(item?: any, type?: any): void {
@@ -376,8 +376,10 @@ export class KidsListComponent {
     this.page = 1;
     this.perPage = 10;
     this.searchKeyword = keyWord;
+    this.isSearch = true;
     this.isLoadingKidsList = true;
-    this.getAllKids(true);
+    this.publicService?.changePageSub?.next({ page: this.page });
+    // this.getAllKids(true);
     if (keyWord?.length > 0) {
       this.isLoadingSearch = true;
     }
@@ -386,7 +388,9 @@ export class KidsListComponent {
   clearSearch(search: any): void {
     search.value = null;
     this.searchKeyword = null;
-    this.getAllKids(true);
+    // this.getAllKids(true);
+    this.publicService?.changePageSub?.next({ page: this.page });
+
   }
   // End Search Functions
 
@@ -477,6 +481,7 @@ export class KidsListComponent {
     this.sortObj = {};
     this.filtersArray = [];
     this.page = 1;
+    this.isSearch = false;
     this.publicService.resetTable.next(true);
     // this.publicService?.changePageSub?.next({ page: this.page });
     this.getAllKids();

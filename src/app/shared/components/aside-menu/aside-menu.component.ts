@@ -74,7 +74,7 @@ export class AsideMenuComponent {
   getCurrentUserInfo(): void {
     this.currentUserInformation = this.authService.getCurrentUserInformationLocally();
     console.log(this.currentUserInformation);
-    
+
   }
 
   // Get menu items list
@@ -96,6 +96,8 @@ export class AsideMenuComponent {
       ele.state = false;
     });
     item.state = !item?.state;
+    this.collapsed = true;
+    this.onToggleSideNav.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });
   }
   // Toggle sidebar collapse
   toggleCollapse(): void {
@@ -145,14 +147,14 @@ export class AsideMenuComponent {
     }
   }
 
-   /* --- Handle api requests messages --- */
-   private handleSuccess(msg: string | null): any {
-    this.setMessage(msg || this.publicService.translateTextFromJson('general.successRequest'),'success');
+  /* --- Handle api requests messages --- */
+  private handleSuccess(msg: string | null): any {
+    this.setMessage(msg || this.publicService.translateTextFromJson('general.successRequest'), 'success');
   }
   private handleError(err: string | null): any {
-    this.setMessage(err || this.publicService.translateTextFromJson('general.errorOccur'),'error');
+    this.setMessage(err || this.publicService.translateTextFromJson('general.errorOccur'), 'error');
   }
-  private setMessage(message: string,type?:string): void {
+  private setMessage(message: string, type?: string): void {
     this.alertsService.openToast(type, type, message);
     this.publicService.showGlobalLoader.next(false);
   }

@@ -186,13 +186,12 @@ small {
   }
 
   &:dir(rtl) {
-
-    .p-paginator-first,
-    .p-paginator-last,
-    .p-paginator-prev,
-    .p-paginator-next {
-      transform: scaleX(-1) !important;
-    }
+    // .p-paginator-first,
+    // .p-paginator-last,
+    // .p-paginator-prev,
+    // .p-paginator-next {
+    //   transform: scaleX(-1) !important;
+    // }
   }
 
   .p-link:hover {

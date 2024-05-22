@@ -47,12 +47,13 @@
               (click)="clearSearch(search)"></i>
             <input type="text" class="form-control border-0 bg-transparent px-1" #search
               (keyup)="handleSearch(search.value)" placeholder="{{'placeholders.search' | translate}}"
-              [readOnly]="isLoadingSearch" aria-label="search" aria-describedby="basic-addon1">
+              [(ngModel)]="searchKeyword" [readOnly]="isLoadingSearch" aria-label="search"
+              aria-describedby="basic-addon1">
           </span>
         </div>
       </div>
       <div class="d-flex gap-3 flex-lg-nowrap flex-wrap justify-content-sm-start justify-content-center"
-        *ngIf="kidsList.length>0">
+        *ngIf="kidsList.length>0|| ifFilteration()">
         <!-- Add Kid -->
         <button class="btn btn-solid-main d-flex align-items-center gap-2 text-nowrap" (click)="addEditItem()">
           <i class="pi pi-plus"></i>
@@ -60,12 +61,12 @@
         </button>
         <!-- Filter Button -->
         <div [class.d-none]="dataStyleType=='list'">
-          <button [class.disabled-actions]="isLoadingKidsList" *ngIf="kidsList?.length>0&& !ifFilteration"
+          <button [class.disabled-actions]="isLoadingKidsList" *ngIf="kidsList?.length>0|| ifFilteration()"
             class="btn btn-solid-main d-md-flex d-none align-items-center gap-2" (click)="filterItemModal()">
             <i class="pi pi-filter"></i>
           </button>
         </div>
-        <button [class.disabled-actions]="isLoadingKidsList" *ngIf="kidsList?.length>0 && !ifFilteration"
+        <button [class.disabled-actions]="isLoadingKidsList" *ngIf="kidsList?.length>0 || ifFilteration()"
           class="btn btn-solid-main d-md-none d-flex align-items-center gap-2" (click)="filterItemModal()">
           <i class="pi pi-filter"></i>
         </button>
@@ -95,7 +96,7 @@
           [isLoadingSearch]="isLoadingSearch" [showActionsButtons]="true"
           (clearHandler)="enableSortFilter?clearTable():''" [tableHeaders]="tableHeaders" [tableData]="kidsList"
           [enableDateFormate]="true" [dateFormateString]="'d MMMM y'" [showActions]="true" [showEdit]="true"
-          [showDelete]="true" (deleteHandler)="deleteItem($event)" [showDetails]="false"
+          [showDelete]="true" (deleteHandler)="deleteItem($event)" [showDetails]="true"
           (detailsHandler)="itemDetails($event)" (editHandler)="addEditItem($event,'edit')"
           (customSortHandler)="enableSortFilter?sortItems($event):''"
           (filterHandler)="enableSortFilter?filterItemsTable($event):''" [results]="kidsCount" [paginatorRows]="perPage"
@@ -103,7 +104,7 @@
           [enableConfirmDeleteDialog]="true" [keyDelete]="'name'"
           (paginateOptionsHandler)="onPaginatorOptionsChange($event)" [isSearch]="isSearch" [arrayChildKey]="'name'"
           [enableFilterDriverStatus]="true" [addBtnText]="'dashboard.kids.addKid'" (addHandler)="addEditItem()"
-          [notFoundImage]="'assets/images/not-found/no-user.svg'" [showSuspend]="true"
+          (resetHandler)="clearTable()" [notFoundImage]="'assets/images/not-found/no-user.svg'" [showSuspend]="true"
           (suspendHandler)="suspendKidAccount($event)" [showActivate]="true"
           (activateHandler)="activateKidAccount($event)" [showActionItemBtn]="true"
           [actionButtonText]="'general.expenses'" (actionHandlerEmit)="showExpenses($event)"></dynamic-table-v2>
@@ -121,8 +122,11 @@
             <ng-template #noLoadingCards>
               <ng-container *ngIf="kidsList.length>0; else noUsers">
                 <ng-container *ngFor="let card of kidsList; let i=index">
-                  <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-                    <kid-card [item]="card" (editItemHandler)="addEditItem($event,'edit')"></kid-card>
+                  <div class="col-lg-4 col-md-6 mb-4">
+                    <kid-card [item]="card" (editItemHandler)="addEditItem($event,'edit')"
+                      (itemDetailsHandler)="itemDetails($event)" (deleteItemHandler)="deleteItem($event)"
+                      (itemActionHandler)="showExpenses($event)" (suspendHandler)="suspendKidAccount($event)"
+                      (activateHandler)="activateKidAccount($event)"></kid-card>
                   </div>
                 </ng-container>
               </ng-container>
@@ -164,8 +168,11 @@
           <ng-template #noLoadingCards>
             <ng-container *ngIf="kidsList.length>0; else noUsers2">
               <ng-container *ngFor="let card of kidsList; let i=index">
-                <div class="col-xl-3 col-lg-4 col-sm-6 mb-4">
-                  <kid-card (editItemHandler)="addEditItem($event,'edit')" [item]="card"></kid-card>
+                <div class="col-lg-4 col-sm-6 mb-4">
+                  <kid-card (editItemHandler)="addEditItem($event,'edit')" (itemDetailsHandler)="itemDetails($event)"
+                    (deleteItemHandler)="deleteItem($event)" (itemActionHandler)="showExpenses($event)"
+                    (suspendHandler)="suspendKidAccount($event)" (activateHandler)="activateKidAccount($event)"
+                    [item]="card"></kid-card>
                 </div>
               </ng-container>
             </ng-container>

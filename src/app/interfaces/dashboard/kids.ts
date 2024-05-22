@@ -3,8 +3,8 @@
 export interface KidListingItem {
   id: number;
   name: string;
-  addressName?:string| null;
-  status?:string| null;
+  addressName?: string | null;
+  status?: string | null;
   code: string;
   level: string;
   class: string;
@@ -13,6 +13,8 @@ export interface KidListingItem {
   school_id: string;
   parent_id: string;
   image_path: string;
+  isLoadingActive?: boolean,
+  active?: boolean
 }
 // Interface for pagination link information
 interface PaginationLink {

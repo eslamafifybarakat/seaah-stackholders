@@ -20,6 +20,9 @@ export class KidCardComponent {
   @Output() itemDetailsHandler: EventEmitter<any> = new EventEmitter();
   @Output() editItemHandler: EventEmitter<any> = new EventEmitter();
   @Output() deleteItemHandler: EventEmitter<any> = new EventEmitter();
+  @Output() itemActionHandler: EventEmitter<any> = new EventEmitter();
+  @Output() suspendHandler: EventEmitter<any> = new EventEmitter();
+  @Output() activateHandler: EventEmitter<any> = new EventEmitter();
   @Output() enableConfirmedByShowInput: boolean = false;
   @Output() enableConfirmDeleteDialog: boolean = true;
   constructor(
@@ -58,5 +61,15 @@ export class KidCardComponent {
     } else {
       this.deleteItemHandler?.emit({ item: item, confirmed: true });
     }
+  }
+
+  itemActionEmitter(item: any): void {
+    this.itemActionHandler.emit(item);
+  }
+  suspendHandlerEmit(item: any): void {
+    this.suspendHandler.emit(item);
+  }
+  activateHandlerEmit(item: any): void {
+    this.activateHandler.emit(item);
   }
 }

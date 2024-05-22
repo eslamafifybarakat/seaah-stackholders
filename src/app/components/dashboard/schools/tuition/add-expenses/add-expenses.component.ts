@@ -102,7 +102,7 @@ export class AddExpensesComponent {
 
   // Start Tuition Expenses List Functions
   getAllTuitionExpenses(isFiltering?: boolean): void {
-    isFiltering ? this.publicService.showSearchLoader.next(true) : this.isLoadingTuitionExpensesList = true;
+    isFiltering ? this.publicService.showGlobalLoader.next(true) : this.isLoadingTuitionExpensesList = true;
     let tuitionSubscription: Subscription = this.tuitionExpensesService?.getTuitionExpensesList()
       .pipe(
         tap((res: any) => this.processTuitionExpensesListResponse(res)),

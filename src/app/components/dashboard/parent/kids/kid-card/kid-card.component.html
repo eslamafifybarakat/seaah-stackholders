@@ -1,6 +1,6 @@
-<div class="global-card p-3 h-100 d-flex flex-column justify-content-between" id="client-card">
+<div class="global-card p-3 h-100 d-flex flex-column justify-content-between" id="kid-card">
   <div class="overflow-hidden">
-    <div class="d-flex gap-3 flex-xl-nowrap flex-wrap">
+    <div class="d-flex gap-3 flex-nowrap">
       <div class="kid-image">
         <img class="w-100 h-100" [src]="item?.image_path" alt="organization">
       </div>
@@ -17,7 +17,7 @@
           <p class="text-muted-color mb-0 fs-5-2">
             {{'labels.name'|translate}}
           </p>
-          <p class="mb-0 fs-5-2">
+          <p class="mb-0 fs-5-2 name">
             {{item?.name||'--'}}
           </p>
         </div>
@@ -61,13 +61,54 @@
   <div>
     <hr>
     <div class="d-flex justify-content-end gap-3 flex-wrap">
-      <!-- <button class="badge-btn d-flex align-items-center justify-content-center">
+      <button (click)="itemDetails(item)" class="badge-btn d-flex align-items-center justify-content-center">
         {{'general.details'|translate}}
-      </button> -->
-      <button (click)="editItem(item)" class="badge-btn d-flex align-items-center justify-content-center">
+      </button>
+      <ng-container *ngIf="item?.status=='Approved'">
+        <button
+          class="btn btn-outline-main badge-btn px-3 position-relative overflow-hidden d-flex align-items-center justify-content-center"
+          (click)="suspendHandlerEmit(item)">
+          <div *ngIf="item?.isLoadingActive"
+            class="btn-overlay position-absolute d-flex justify-content-center align-items-center">
+            <i class="pi pi-spin pi-spinner text-main-color"></i>
+          </div>
+          <span class="fw-500">{{'general.suspend'|translate}}</span>
+        </button>
+      </ng-container>
+      <ng-container *ngIf="item?.status=='suspend'">
+        <button
+          class="btn btn-solid-main badge-btn px-3 position-relative overflow-hidden d-flex align-items-center justify-content-center"
+          (click)="activateHandlerEmit(item)">
+          <div *ngIf="item?.isLoadingActive"
+            class="btn-overlay position-absolute d-flex justify-content-center align-items-center">
+            <i class="pi pi-spin pi-spinner text-main-color"></i>
+          </div>
+          <span class="fw-500">{{'general.activate'|translate}}</span>
+        </button>
+      </ng-container>
+      <ng-container *ngIf="item?.active==false">
+        <button
+          class="btn btn-solid-main badge-btn px-3 position-relative overflow-hidden d-flex align-items-center justify-content-center"
+          (click)="itemActionEmitter(item)">
+          <div *ngIf="item?.isLoadingActive"
+            class="btn-overlay position-absolute d-flex justify-content-center align-items-center">
+            <i class="pi pi-spin pi-spinner text-main-color"></i>
+          </div>
+          <span class="fw-500">
+            {{'general.expenses'|translate}}
+          </span>
+        </button>
+      </ng-container>
+      <ng-container *ngIf="item?.active==true">
+        <span class="status-bg status-bg-completed d-flex align-items-center justify-content-center">
+          {{'general.expensesPaid' | translate}}
+        </span>
+      </ng-container>
+      <button *ngIf="item?.status!=='Approved'" (click)="editItem(item)"
+        class="badge-btn d-flex align-items-center justify-content-center">
         {{'general.edit'|translate}}
       </button>
-      <button (click)="deleteItem(item)"
+      <button *ngIf="item?.status!=='Approved'" (click)="deleteItem(item)"
         class="badge-btn badge-danger d-flex align-items-center justify-content-center">
         {{'general.delete'|translate}}
       </button>
