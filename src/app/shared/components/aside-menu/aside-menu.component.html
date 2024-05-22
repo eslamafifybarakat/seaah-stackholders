@@ -50,9 +50,9 @@
           <li *ngIf="item.id!='logout'" class="aside-nav-item position-relative w-100 my-2"
             [routerLink]="[item.routerLink]" [routerLinkActive]="['active']" [class.active]="url.includes(item.id)">
             <a class="aside-nav-link position-relative d-flex align-items-center gap-3" [id]="item?.id"
-              [class.justify-content-center]="!collapsed" (click)="item?.id=='logout'?logout():handelClick(item)">
-              <div *ngIf="!collapsed" [pTooltip]="item.text|translate" tooltipPosition="left"
-                [innerHTML]="sanitizer.bypassSecurityTrustHtml(item.icon)"></div>
+              [class.justify-content-center]="!collapsed" (click)="handelClick(item)">
+              <!-- [pTooltip]="item.text|translate" tooltipPosition="left" -->
+              <div *ngIf="!collapsed" [innerHTML]="sanitizer.bypassSecurityTrustHtml(item.icon)"></div>
               <div *ngIf="collapsed" [innerHTML]="sanitizer.bypassSecurityTrustHtml(item.icon)"></div>
               <ng-container *ngIf="collapsed">
                 <span class="aside-nav-link-text text-truncate">{{item?.text|translate}}</span>

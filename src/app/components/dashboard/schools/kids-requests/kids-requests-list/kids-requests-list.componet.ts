@@ -195,7 +195,7 @@ export class KidsListComponent {
 
   // Start Kids List Functions
   getAllKids(isFiltering?: boolean): void {
-    isFiltering ? this.publicService.showSearchLoader.next(true) : this.isLoadingKidsList = true;
+    isFiltering ? this.publicService.showGlobalLoader.next(true) : this.isLoadingKidsList = true;
     let kidsSubscription: Subscription = this.kidsService?.getKidsList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null, this.statusValue ?? null, this.schoolId ?? null)
       .pipe(
         tap((res: KidsListApiResponse) => {
@@ -229,7 +229,7 @@ export class KidsListComponent {
     this.isLoadingKidsList = false;
     this.isLoadingSearch = false;
     this.enableSortFilter = false;
-    this.publicService.showSearchLoader.next(false);
+    this.publicService.showGlobalLoader.next(false);
     setTimeout(() => {
       this.enableSortFilter = true;
     }, 200);

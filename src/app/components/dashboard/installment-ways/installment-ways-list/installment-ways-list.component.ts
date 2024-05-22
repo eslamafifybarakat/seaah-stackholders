@@ -158,7 +158,7 @@ export class InstallmentWaysListComponent {
 
   // Start Installment Ways List Functions
   getAllInstallmentWays(isFiltering?: boolean): void {
-    isFiltering ? this.publicService.showSearchLoader.next(true) : this.isLoadingInstallmentWaysList = true;
+    isFiltering ? this.publicService.showGlobalLoader.next(true) : this.isLoadingInstallmentWaysList = true;
     let insallmentWaysSubscription: Subscription = this.installmentWaysService?.getInstallmentWaysList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null)
       .pipe(
         tap((res: InstallmentWaysListApiResponse) => this.processInstallmentWaysListResponse(res)),
@@ -181,7 +181,7 @@ export class InstallmentWaysListComponent {
     this.isLoadingInstallmentWaysList = false;
     this.isLoadingSearch = false;
     this.enableSortFilter = false;
-    this.publicService.showSearchLoader.next(false);
+    this.publicService.showGlobalLoader.next(false);
     setTimeout(() => {
       this.enableSortFilter = true;
     }, 200);

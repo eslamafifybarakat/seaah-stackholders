@@ -144,6 +144,7 @@ export class DynamicTableV2Component {
   // Actions handler
   @Output() detailsHandler: EventEmitter<any> = new EventEmitter();
   @Output() addHandler: EventEmitter<any> = new EventEmitter();
+  @Output() resetHandler: EventEmitter<any> = new EventEmitter();
   @Output() editHandler: EventEmitter<any> = new EventEmitter();
   @Output() copyActionHandler: EventEmitter<any> = new EventEmitter();
   @Output() deleteHandler: EventEmitter<any> = new EventEmitter();
@@ -364,6 +365,9 @@ export class DynamicTableV2Component {
   }
   addHandlerEmit(): void {
     this.addHandler.emit();
+  }
+  resetHandlerEmit(): void {
+    this.resetHandler.emit();
   }
   copyActionHandlerEmit(item: any): void {
     this.copyActionHandler.emit(item);

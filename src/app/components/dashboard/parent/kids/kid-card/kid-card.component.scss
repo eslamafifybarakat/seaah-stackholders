@@ -1,6 +1,13 @@
-#client-card {
+#kid-card {
   hr {
     border-color: #8c95a32e;
+  }
+  .name {
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
   }
   .badge-btn {
     border-radius: 11px;
@@ -23,4 +30,15 @@
       border-radius: 10px;
     }
   }
+}
+.btn-solid-main {
+  background-color: var(--bg-main-color) !important;
+  border: 1px solid var(--bg-main-color) !important;
+  color: var(--text-white-color) !important;
+}
+
+.btn-outline-main {
+  background-color: transparent !important;
+  border: 1px solid var(--bg-main-color) !important;
+  color: var(--text-main-color) !important;
 }

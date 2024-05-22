@@ -84,7 +84,7 @@ export class PayMultiTuitionNowModalComponent {
     private config: DynamicDialogConfig,
     private banksService: BanksService,
     private kidsService: KidsService,
-    private authService:AuthService,
+    private authService: AuthService,
     private ref: DynamicDialogRef,
     private fb: FormBuilder
   ) { }
@@ -100,7 +100,7 @@ export class PayMultiTuitionNowModalComponent {
 
   // Start Kids List Functions
   getAllKids(isFiltering?: boolean): void {
-    isFiltering ? this.publicService.showSearchLoader.next(true) : this.isLoadingKidsList = true;
+    isFiltering ? this.publicService.showGlobalLoader.next(true) : this.isLoadingKidsList = true;
     let kidsSubscription: Subscription = this.kidsService?.getKidsList(null, null, null, null, null, 3)
       .pipe(
         tap((res: KidsListApiResponse) => {
@@ -131,7 +131,7 @@ export class PayMultiTuitionNowModalComponent {
   }
   private finalizeKidListLoading(): void {
     this.isLoadingKidsList = false;
-    this.publicService.showSearchLoader.next(false);
+    this.publicService.showGlobalLoader.next(false);
   }
   // End Kids List Functions
 

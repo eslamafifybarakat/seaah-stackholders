@@ -25,7 +25,7 @@ export class SearchOverlayLoadingComponent {
       this.currentLanguage = window?.localStorage?.getItem(keys?.language);
     }
 
-    this.publicService.showSearchLoader.subscribe((res: any) => {
+    this.publicService.showGlobalLoader.subscribe((res: any) => {
       if (res == true) {
         this.show_overlay = true;
       } else {

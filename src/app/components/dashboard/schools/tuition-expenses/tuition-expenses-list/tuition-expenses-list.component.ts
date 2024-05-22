@@ -165,7 +165,7 @@ export class TuitionExpensesListComponent {
 
   // Start Tuition Expenses List Functions
   getAllTuitionExpenses(isFiltering?: boolean): void {
-    isFiltering ? this.publicService.showSearchLoader.next(true) : this.isLoadingTuitionExpensesList = true;
+    isFiltering ? this.publicService.showGlobalLoader.next(true) : this.isLoadingTuitionExpensesList = true;
     let tuitionSubscription: Subscription = this.tuitionExpensesService?.getTuitionExpensesList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null, this.schoolId ?? null)
       .pipe(
         tap((res: any) => this.processTuitionExpensesListResponse(res)),
@@ -202,7 +202,7 @@ export class TuitionExpensesListComponent {
     this.isLoadingTuitionExpensesList = false;
     this.isLoadingSearch = false;
     this.enableSortFilter = false;
-    this.publicService.showSearchLoader.next(false);
+    this.publicService.showGlobalLoader.next(false);
     setTimeout(() => {
       this.enableSortFilter = true;
     }, 200);
@@ -412,8 +412,8 @@ export class TuitionExpensesListComponent {
   }
   // End Pagination Functions
 
-   // Hide dropdown to not make action when keypress on keyboard arrows
-   hide(): void {
+  // Hide dropdown to not make action when keypress on keyboard arrows
+  hide(): void {
     this.dropdown?.accessibleViewChild?.nativeElement?.blur();
   }
   /* --- Handle api requests messages --- */

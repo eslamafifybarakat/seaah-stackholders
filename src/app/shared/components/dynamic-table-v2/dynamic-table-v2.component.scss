@@ -1,6 +1,5 @@
 :host::ng-deep {
   #dynamic-global-data-table {
-
     // .item-badge{
     //     .status-success {
     //       background-color: green !important;
@@ -71,7 +70,6 @@
       background-color: #ebf1e2 !important;
     }
 
-
     #table-skeleton {
       .thead {
         display: none;
@@ -82,7 +80,7 @@
       font-family: "Poppins", sans-serif !important;
 
       &:dir(rtl) {
-        font-family: "Almarai", sans-serif;
+        font-family: "Almarai", sans-serif !important;
       }
 
       // border-collapse: separate;
@@ -115,7 +113,7 @@
         background-color: transparent !important;
       }
 
-      .p-datatable-thead>tr>th {
+      .p-datatable-thead > tr > th {
         text-transform: capitalize !important;
         background-color: #f8f9fa !important;
         color: #111;
@@ -125,7 +123,7 @@
         border-color: rgba(140, 149, 163, 0.21);
       }
 
-      .p-datatable-tbody>tr>td {
+      .p-datatable-tbody > tr > td {
         border-color: rgba(140, 149, 163, 0.21);
         border-bottom-width: 1px !important;
         padding: 1rem;
@@ -186,21 +184,10 @@
         }
       }
 
-      &:dir(rtl) {
-
-        .p-paginator-first,
-        .p-paginator-last,
-        .p-paginator-prev,
-        .p-paginator-next {
-          transform: scaleX(-1) !important;
-        }
-      }
-
       .p-link:hover {
         background-color: transparent;
       }
     }
-
     .p-dropdown {
       height: 40px !important;
       background-color: #fff;
@@ -408,7 +395,10 @@
     height: 35px !important;
   }
 
-  .p-multiselect-panel .p-multiselect-header .p-multiselect-filter-container .p-inputtext {
+  .p-multiselect-panel
+    .p-multiselect-header
+    .p-multiselect-filter-container
+    .p-inputtext {
     height: 2.8rem !important;
   }
 
@@ -451,7 +441,6 @@
   color: var(--text-main-color);
 }
 
-
 .badge-delete {
   background: #e5555530;
   color: #e55555;
@@ -486,7 +475,7 @@
     height: 70px;
     border-radius: 8px;
 
-    &>img {
+    & > img {
       width: 70px;
       min-width: 70px;
       height: 70px;
@@ -512,4 +501,14 @@
   background-color: transparent;
   border: 1px solid var(--bg-main-color);
   color: var(--text-main-color);
+}
+:host::ng-deep {
+  .ar-table {
+    .p-paginator-first,
+    .p-paginator-last,
+    .p-paginator-prev,
+    .p-paginator-next {
+      // transform: scaleX(-1) !important;
+    }
+  }
 }

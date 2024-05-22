@@ -20,6 +20,7 @@
   },
   "general": {
     "no_result_found":"لا يوجد بيانات",
+    "noSearchResult":"لا يوجد نتائج للبحث",
     "total":"الإجمالي",
     "title":"العنوان",
     "price":"السعر",

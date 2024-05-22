@@ -181,7 +181,7 @@ export class RequestsListComponent {
 
   // Start My Expenses List Functions
   getAllMyExpenseList(isFiltering?: boolean): void {
-    isFiltering ? this.publicService.showSearchLoader.next(true) : this.isLoadingMyExpenseList = true;
+    isFiltering ? this.publicService.showGlobalLoader.next(true) : this.isLoadingMyExpenseList = true;
     let myExpensesSubscription: Subscription = this.installmentRequestsService?.getMyExpenseList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null, this.statusValue ?? null)
       .pipe(
         tap((res: any) => {
@@ -200,7 +200,7 @@ export class RequestsListComponent {
       this.MyExpenseList?.forEach((item: any) => {
         item['kidImage'] = item?.kids?.image_path;
         if (item?.person_pay_type == 'mykids') {
-          
+
           item['kidName'] = item?.kids?.name;
         } else {
           item['kidName'] = this.currentLanguage == 'en' ? 'Me' : 'أنا';
@@ -238,7 +238,7 @@ export class RequestsListComponent {
     this.isLoadingMyExpenseList = false;
     this.isLoadingSearch = false;
     this.enableSortFilter = false;
-    this.publicService.showSearchLoader.next(false);
+    this.publicService.showGlobalLoader.next(false);
     setTimeout(() => {
       this.enableSortFilter = true;
     }, 200);
