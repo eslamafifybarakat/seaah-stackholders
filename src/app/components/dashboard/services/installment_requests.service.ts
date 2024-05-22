@@ -45,6 +45,10 @@ export class InstallmentRequestsService {
     }
     return this.http?.get(`${this.baseUrl}/${roots?.dashboard?.myExpenses.getAll}`, { params: params });
   }
+
+  getSingleExpense(installmentId?: any): Observable<any> {
+    return this.http?.get(`${this.baseUrl}/${roots?.dashboard?.myExpenses.getAll}/${installmentId}`);
+  }
   
   
 }
