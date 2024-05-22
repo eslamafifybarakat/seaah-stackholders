@@ -18,7 +18,7 @@
       <div class="row mt-4">
         <div class="col-lg-6">
           <div class="global-card p-4">
-            <h5>
+            <h5 class="fw-bold fs-5-1">
               Kids Info
             </h5>
             <div>
@@ -72,7 +72,7 @@
             </div>
           </div>
           <div class="global-card p-4 mt-4">
-            <h5>
+            <h5 class="fw-bold fs-5-1">
               Parents Info
             </h5>
             <div class="body mt-4">
@@ -102,41 +102,117 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-lg-6">
-          <div class="global-card p-4 mt-lg-0 mt-4">
+          <div class="global-card p-4 mt-4">
             <h5 class="fw-bold fs-5-1">
-              Installment Ways Status
+              Bank Info
             </h5>
-            <div class="all-status pe-3">
-              <ng-container *ngFor="let action of expenseDetails.installment_status_details">
-                <div class="item d-flex gap-3 mt-4">
-                  <div
-                    class="position-relative status-icon rounded-circle status-{{action.paid_status}} d-flex justify-content-center align-items-center ">
-                    <i class="pi pi-info-circle"></i>
-                  </div>
-                  <div class="w-100">
-                    <div class="d-flex align-items-center justify-content-between w-100 flex-wrap">
-                      <h3 class="fs-6 fw-bold text-dark-color mb-0">
-                        {{action.month}}
-                      </h3>
-                      <ng-container *ngIf="true">
-                        <span class="text-muted-color fw-500 fs-8">
-                          <!-- {{action?.creationDate | timeZone : 'D MMM YYYY h:mm A'}} -->
-                          17 May 2024 7:57 PM </span>
-                      </ng-container>
-                    </div>
-                    <p class="mb-0 text-main-color fs-8 fw-normal mt-0">
-                      {{action.paid_status}}
-                    </p>
-                    <p class="text-dark-color mt-2 mb-0 fw-normal fs-8">
-                      <!-- {{action?.notes}} -->
-                      <!-- notes -->
-                      17 May 2024 7:57 PM
+            <div>
+              <div class="d-flex gap-3 mt-4">
+                <img [src]="expenseDetails.banks.image_path" class="rounded-circle" width="50" height="50"
+                  alt="Provider-img">
+                <div class="">
+                  <h3 class="fs-8 fw-normal text-muted-color mb-1">Bank</h3>
+                  <div class="d-flex gap-xl-3 gap-lg-2 gap-md-3 gap-2 flex-wrap">
+                    <p class="mb-0 text-dark-color small fw-500 fs-6">
+                      {{expenseDetails.banks?.bankName||'----'}}
                     </p>
                   </div>
                 </div>
-              </ng-container>
+              </div>
+              <div class="d-flex gap-3 mt-4">
+                <div class="second-icon d-flex justify-content-center align-items-center rounded-circle">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-pin-filled" width="23"
+                    height="23" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path
+                      d="M18.364 4.636a9 9 0 0 1 .203 12.519l-.203 .21l-4.243 4.242a3 3 0 0 1 -4.097 .135l-.144 -.135l-4.244 -4.243a9 9 0 0 1 12.728 -12.728zm-6.364 3.364a3 3 0 1 0 0 6a3 3 0 0 0 0 -6z"
+                      stroke-width="0" fill="currentColor" />
+                  </svg>
+                </div>
+                <div class="">
+                  <h3 class="fs-8 fw-normal text-muted-color mb-1">Location</h3>
+                  <p class="mb-0 text-dark-color small fw-500 fs-6">
+                    {{expenseDetails.banks?.bankLocation||'---'}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="global-card py-4 mt-lg-0 mt-4">
+            <h5 class="fw-bold fs-5-1 px-4">
+              Installment Ways Status
+            </h5>
+            <div class="px-3">
+              <div class="all-status px-2">
+                <ng-container *ngFor="let action of expenseDetails.installment_status_details">
+                  <div class="item d-flex gap-3 mt-4">
+                    <div
+                      class="position-relative status-icon rounded-circle status-{{action.paid_status}} d-flex justify-content-center align-items-center ">
+                      <i class="pi pi-info-circle"></i>
+                    </div>
+                    <div class="w-100">
+                      <div class="d-flex align-items-center justify-content-between w-100 flex-wrap">
+                        <h3 class="fs-6 fw-bold text-dark-color mb-0">
+                          {{action.month}}
+                        </h3>
+                        <ng-container *ngIf="true">
+                          <span class="text-muted-color fw-500 fs-8">
+                            <!-- {{action?.creationDate | timeZone : 'D MMM YYYY h:mm A'}} -->
+                            17 May 2024 7:57 PM </span>
+                        </ng-container>
+                      </div>
+                      <p class="mb-0 text-main-color fs-8 fw-normal mt-0">
+                        {{action.paid_status}}
+                      </p>
+                      <p class="text-dark-color mt-2 mb-0 fw-normal fs-8">
+                        <!-- {{action?.notes}} -->
+                        <!-- notes -->
+                        17 May 2024 7:57 PM
+                      </p>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+          <div class="global-card p-4 mt-4">
+            <h5 class="fw-bold fs-5-1">
+              Organization Info
+            </h5>
+            <div>
+              <div class="d-flex gap-3 mt-4">
+                <img [src]="expenseDetails.organizations.image_path" class="rounded-circle" width="50" height="50"
+                  alt="Provider-img">
+                <div class="">
+                  <h3 class="fs-8 fw-normal text-muted-color mb-1">Bank</h3>
+                  <div class="d-flex gap-xl-3 gap-lg-2 gap-md-3 gap-2 flex-wrap">
+                    <p class="mb-0 text-dark-color small fw-500 fs-6">
+                      {{expenseDetails.organizations?.name||'----'}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex gap-3 mt-4">
+                <div class="second-icon d-flex justify-content-center align-items-center rounded-circle">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-pin-filled" width="23"
+                    height="23" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path
+                      d="M18.364 4.636a9 9 0 0 1 .203 12.519l-.203 .21l-4.243 4.242a3 3 0 0 1 -4.097 .135l-.144 -.135l-4.244 -4.243a9 9 0 0 1 12.728 -12.728zm-6.364 3.364a3 3 0 1 0 0 6a3 3 0 0 0 0 -6z"
+                      stroke-width="0" fill="currentColor" />
+                  </svg>
+                </div>
+                <div class="">
+                  <h3 class="fs-8 fw-normal text-muted-color mb-1">Location</h3>
+                  <p class="mb-0 text-dark-color small fw-500 fs-6">
+                    {{expenseDetails.organizations?.location||'---'}}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

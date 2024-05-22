@@ -1,6 +1,7 @@
+import { keys } from './../../../../../shared/configs/localstorage-key';
 import { SkeletonComponent } from 'src/app/shared/skeleton/skeleton/skeleton.component';
-import { ChangeDetectorRef, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef, Component, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Subscription, tap } from 'rxjs';
 import { LocalizationLanguageService } from 'src/app/services/generic/localization-language.service';
 import { MetaDetails, MetadataService } from 'src/app/services/generic/metadata.service';
@@ -18,6 +19,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class ExpenseDetailsComponent {
   private subscriptions: Subscription[] = [];
+  currentLanguage: string;
 
   expenseId: number | string;
   clientId: number | string;
@@ -27,6 +29,7 @@ export class ExpenseDetailsComponent {
   constructor(
     private localizationLanguageService: LocalizationLanguageService,
     private installmentRequestsService: InstallmentRequestsService,
+    @Inject(PLATFORM_ID) private platformId: Object,
     private metadataService: MetadataService,
     private activatedRoute: ActivatedRoute,
     public publicService: PublicService,
@@ -37,6 +40,9 @@ export class ExpenseDetailsComponent {
   }
 
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.currentLanguage = window?.localStorage?.getItem(keys?.language);
+    }
     this.loadPageData();
   }
   loadPageData(): void {
@@ -72,6 +78,18 @@ export class ExpenseDetailsComponent {
       this.expenseDetails = response.data;
       let kidAddressObj: any = JSON.parse(this.expenseDetails.kids?.address || '{}');
       this.expenseDetails.kids['address'] = `${kidAddressObj?.region ?? ''}, ${kidAddressObj?.city ?? ''}, ${kidAddressObj?.street ?? ''}, ${kidAddressObj?.zip ?? ''}`;
+      let bankNameObj: any = JSON.parse(this.expenseDetails.banks?.name?.en || '{}');
+      this.expenseDetails.banks['bankName'] = bankNameObj[this.currentLanguage];
+
+      let bankLocationObj: any = JSON.parse(this.expenseDetails.banks?.location?.en || '{}');
+      this.expenseDetails.banks['bankLocation'] = bankLocationObj[this.currentLanguage];
+
+      let organizationNameObj: any = JSON.parse(this.expenseDetails.organizations?.name?.en || '{}');
+      this.expenseDetails.organizations['name'] = organizationNameObj[this.currentLanguage];
+
+      let organizationLocationObj: any = JSON.parse(this.expenseDetails.banks?.location?.en || '{}');
+      this.expenseDetails.organizations['location'] = organizationLocationObj[this.currentLanguage];
+
       this.isLoadingExpenseDetails = false;
     } else {
       this.handleError(response?.message);
