@@ -305,8 +305,8 @@ export class AddEditKidComponent {
     this.subscriptions.push(schoolsSubscription);
   }
   private processSchoolsListResponse(response: any): void {
-    if (response) {
-      this.schools = response?.data?.items;
+    if (response.status == 200 || response.status == 201) {
+      this.schools = response?.data?.data;
       this.schools?.forEach((item: any) => {
         let name: any = JSON.parse(item?.name || "{}");
         item['schoolName'] = name[this.currentLanguage];
