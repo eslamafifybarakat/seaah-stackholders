@@ -1,0 +1,56 @@
+.global-card {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+.all-status {
+  max-height: 60vh;
+  overflow: auto;
+  &::-webkit-scrollbar-thumb {
+    background: #eee;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+}
+.all-status .item .position-relative::after {
+  content: "";
+  position: absolute;
+  height: calc(100% + 14px);
+  width: 1.5px;
+  border-radius: 2px;
+  background-color: #8c95a336;
+  top: 40px;
+  z-index: -1;
+  left: calc(50% - 1px);
+}
+.all-status .item:last-child .position-relative::after {
+  display: none;
+}
+.status-icon {
+  width: 2.5rem;
+  min-width: 2.5rem;
+  height: 2.5rem;
+  z-index: 1;
+}
+.status-Pending {
+  color: #f9bc61;
+  background-color: #f9bc6114;
+}
+.status-Missed {
+  color: #f1416c;
+  background-color: #fff5f8;
+}
+.status-Paid {
+  color: #1071b8 !important;
+  background-color: #dbeaf5 !important;
+}
+.small {
+  font-size: 0.875em;
+}
+.second-icon {
+  width: 50px;
+  min-width: 50px;
+  height: 50px;
+  background-color: #1072b838;
+  color: var(--text-main-color);
+}
