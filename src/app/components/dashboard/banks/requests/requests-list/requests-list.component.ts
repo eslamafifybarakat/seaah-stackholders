@@ -220,7 +220,7 @@ export class RequestsListComponent {
         item['bankName'] = bankNameObj[this.currentLanguage];
 
         item['status'] = item?.status;
-        // item['status'] = 'Previewed';
+        // item['status'] = 'Preview';
         if (item['status'] == 'Approved') {
           item['active'] = false;
         }
