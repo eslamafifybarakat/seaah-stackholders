@@ -96,7 +96,7 @@
           [isLoadingSearch]="isLoadingSearch" [showActionsButtons]="true"
           (clearHandler)="enableSortFilter?clearTable():''" [tableHeaders]="tableHeaders" [tableData]="kidsList"
           [enableDateFormate]="true" [dateFormateString]="'d MMMM y'" [showActions]="true" [showEdit]="true"
-          [showDelete]="true" (deleteHandler)="deleteItem($event)" [showDetails]="true"
+          [showDelete]="true" (deleteHandler)="deleteItem($event)" [showDetails]="false"
           (detailsHandler)="itemDetails($event)" (editHandler)="addEditItem($event,'edit')"
           (customSortHandler)="enableSortFilter?sortItems($event):''"
           (filterHandler)="enableSortFilter?filterItemsTable($event):''" [results]="kidsCount" [paginatorRows]="perPage"
@@ -122,7 +122,7 @@
             <ng-template #noLoadingCards>
               <ng-container *ngIf="kidsList.length>0; else noUsers">
                 <ng-container *ngFor="let card of kidsList; let i=index">
-                  <div class="col-lg-4 col-md-6 mb-4">
+                  <div class="col-xl-4 col-lg-6 col-md-6 mb-4">
                     <kid-card [item]="card" (editItemHandler)="addEditItem($event,'edit')"
                       (itemDetailsHandler)="itemDetails($event)" (deleteItemHandler)="deleteItem($event)"
                       (itemActionHandler)="showExpenses($event)" (suspendHandler)="suspendKidAccount($event)"
@@ -168,7 +168,7 @@
           <ng-template #noLoadingCards>
             <ng-container *ngIf="kidsList.length>0; else noUsers2">
               <ng-container *ngFor="let card of kidsList; let i=index">
-                <div class="col-lg-4 col-sm-6 mb-4">
+                <div class="col-xl-4 col-lg-6 col-sm-6 mb-4">
                   <kid-card (editItemHandler)="addEditItem($event,'edit')" (itemDetailsHandler)="itemDetails($event)"
                     (deleteItemHandler)="deleteItem($event)" (itemActionHandler)="showExpenses($event)"
                     (suspendHandler)="suspendKidAccount($event)" (activateHandler)="activateKidAccount($event)"

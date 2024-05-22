@@ -1,5 +1,5 @@
 <div id="modal-form">
-  <ng-container *ngIf="KidData?.expenses?.length>0">
+  <ng-container *ngIf="KidData?.expenses?.length>0;else noExpenses">
     <div class="form-content">
       <div class="row m-0">
         <table class="pricing-table">
@@ -29,7 +29,7 @@
           <tfoot>
             <tr class="pricing-table-footer">
               <td class="fw-bold">
-              {{'general.total' | translate}}
+                {{'general.total' | translate}}
               </td>
               <td class="fw-bold">
                 {{ totalExpenses() }} <!-- Dynamically calculated total expenses -->
@@ -40,8 +40,18 @@
       </div>
     </div>
   </ng-container>
+  <ng-template #noExpenses>
+    <div class="d-flex flex-column justify-content-center align-items-center">
+      <app-dynamic-svg [name]="'noExpenses'"></app-dynamic-svg>
+      <p class="text-center mt-3">
+        {{'general.noExpensesAdded'|translate}}
+      </p>
+    </div>
+  </ng-template>
+
   <div class="d-flex justify-content-end gap-3 flex-wrap mt-4">
-    <button type="button" class="btn btn-solid-main d-flex align-items-center justify-content-center gap-2" (click)="payNow(KidData?.expenses)">
+    <button type="button" class="btn btn-solid-main d-flex align-items-center justify-content-center gap-2"
+      *ngIf="KidData?.expenses?.length>0" (click)="payNow(KidData?.expenses)">
       <span>
         {{'general.payNow'|translate}}
       </span>
