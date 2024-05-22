@@ -165,10 +165,7 @@ export class PayMultiTuitionNowModalComponent {
   }
   onBankChange(event: any): void {
     console.log(event?.value);
-    // this.installmentWays = event?.value?.installment_ways;
-    this.installmentWays = [
-      { id: 1, name: 'Eslam' }
-    ];
+    this.installmentWays = event?.value?.installment_ways;
   }
   // End Banks List Functions
 

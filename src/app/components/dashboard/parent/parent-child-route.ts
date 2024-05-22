@@ -1,6 +1,6 @@
 
 import { PermissionGuard } from '../../../services/authentication/guards/permission.guard';
-import { MyExpensesChildrenRoutes } from './my-expenses/kids-children-routes';
+import { MyExpensesChildrenRoutes } from './my-expenses/myExpenses-children-routes';
 import { errorsChildrenRoutes } from '../../errors/errors-children-routes';
 import { kidsChildrenRoutes } from './kids/kids-children-routes';
 
@@ -21,8 +21,8 @@ export const ParentChildrenRoutes: any[] = [
       ),
     children: kidsChildrenRoutes
   },
-   // My Expenses
-   {
+  // My Expenses
+  {
     path: 'myExpenses',
     // canActivate: [PermissionGuard],
     data: {
@@ -36,9 +36,8 @@ export const ParentChildrenRoutes: any[] = [
     children: MyExpensesChildrenRoutes
   },
 
-
-   // Errors
-   {
+  // Errors
+  {
     path: ':lang/Errors',
     loadComponent: () =>
       import('./../../../components/errors/errors.component').then(
