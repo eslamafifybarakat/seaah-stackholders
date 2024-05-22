@@ -2,8 +2,6 @@
   <dashboard-navbar class="position-fixed w-100"></dashboard-navbar>
   <app-aside-menu (onToggleSideNav)="onToggleSideNav($event)"></app-aside-menu>
   <div class="main" [class.dash]="!toggleSideMenu" [ngClass]="getDashClass()">
-    <div>
       <router-outlet></router-outlet>
-    </div>
   </div>
 </div>

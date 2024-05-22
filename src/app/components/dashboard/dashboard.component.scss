@@ -1,34 +1,40 @@
 #dashboard-v2 {
-  .main {
-    padding-top: 6rem;
-    min-height: calc(100vh - 120px) !important;
-    transition: all 0.5s ease !important;
+  dashboard-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1050;  // High z-index to ensure it is above other content
+    width: 100%;
   }
-  .dash {
-    width: calc(100% - 6.2rem);
-    margin-left: 6.2rem;
+}
+
+#dashboard-v2 {
+  .main {
+    padding-top: 6rem; // Ensure this is at least as tall as the navbar
+    min-height: calc(100vh - 120px);
     transition: all 0.5s ease;
   }
+
+  .dash {
+    width: calc(100% - 6rem);
+    margin-left: 6rem;
+  }
+
   .dash-trimmed {
     width: calc(100% - 16.5rem);
     margin-left: 16.5rem;
   }
+
   .dash-md-screen {
-    width: calc(100% - 6.2rem);
-    margin-left: 6.2rem;
+    width: calc(100% - 6rem);
+    margin-left: 6rem;
   }
+
   &:dir(rtl) {
-    .dash {
-      margin-right: 6.2rem;
-      margin-left: inherit;
-    }
-    .dash-trimmed {
-      margin-right: 16.5rem;
-      margin-left: inherit;
-    }
-    .dash-md-screen {
-      margin-right: 6.2rem;
-      margin-left: inherit;
+    .dash, .dash-trimmed, .dash-md-screen {
+      margin-right: 6rem; // Adjust for right-to-left languages
+      margin-left: 0;
     }
   }
 }
