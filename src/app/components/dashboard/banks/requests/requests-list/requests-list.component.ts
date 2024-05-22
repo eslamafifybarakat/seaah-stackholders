@@ -21,6 +21,7 @@ import { PayTuitionNowModalComponent } from '../../../parent/kids/pay-tuition-no
 import { Router } from '@angular/router';
 import { DeleteKidApiResponse } from 'src/app/interfaces/dashboard/kids';
 import { EditRequestComponent } from '../edit-request/edit-request.component';
+import { ChangeRequestStatusForExpenseComponent } from '../change-request-status-for-expense/change-request-status-for-expense.component';
 
 @Component({
   selector: 'app-requests-list',
@@ -195,38 +196,29 @@ export class RequestsListComponent {
     if (response.status == 200 || response.status == 201) {
       this.myRequestsCount = response?.data?.total;
       this.pagesCount = Math.ceil(this.myRequestsCount / this.perPage);
-      this.MyRequestsList = response?.data?.items?.data;
+      this.MyRequestsList = response?.data?.data;
       this.MyRequestsList?.forEach((item: any) => {
-        item['kidImage'] = item?.kids?.image_path;
-        if (item?.person_pay_type == 'mykids') {
+        item['kidImage'] = item?.kids?.image_path ?? null;
+        item['kidName'] = item?.kids?.name ?? '--';
 
-          item['kidName'] = item?.kids?.name;
-        } else {
-          item['kidName'] = this.currentLanguage == 'en' ? 'Me' : 'أنا';
-        }
+        item['parentId'] = item?.parents?.id ?? null;
+        item['parentName'] = item?.kids?.name ?? '--';
 
-        item['parentId'] = item?.parents?.id;
-        item['parentName'] = item?.kids?.name;
-
-        item['schoolId'] = item?.kids?.schools?.id;
+        item['schoolId'] = item?.kids?.schools?.id ?? null;
         let schoolNameObj: any = JSON.parse(item?.kids?.schools?.name[this.currentLanguage] || '{}');
-        item['schoolName'] = schoolNameObj[this.currentLanguage];
+        item['schoolName'] = schoolNameObj[this.currentLanguage] ?? '--';
         let kidAddressObj: any = JSON.parse(item?.kids?.address || '{}');
         item['kidAddress'] = `${kidAddressObj?.region ?? ''}, ${kidAddressObj?.city ?? ''}, ${kidAddressObj?.street ?? ''}, ${kidAddressObj?.zip ?? ''}`;
 
-        item['bankId'] = item?.banks?.id;
+        item['bankId'] = item?.banks?.id ?? null;
         let bankNameObj: any = JSON.parse(item?.banks?.name[this.currentLanguage] || '{}');
-        item['bankName'] = bankNameObj[this.currentLanguage];
+        item['bankName'] = bankNameObj[this.currentLanguage] ?? '--';
 
         item['status'] = item?.status;
-        // item['status'] = 'Preview';
-        if (item['status'] == 'Approved') {
+        // item['active'] = false;
+        if (item['status'] !== 'Approved') {
           item['active'] = false;
         }
-        // if (item?.id == 3) {
-        //   item['status'] = 'Approved';
-        //   item['active'] = false;
-        // }
       });
     } else {
       this.handleError(response.message);
@@ -245,13 +237,13 @@ export class RequestsListComponent {
   // End My Requests List Functions
 
   // Start Show Details Modal
-  showExpensesDetails(event: any): void {
-    console.log(event);
-    const ref: any = this.dialogService?.open(PayTuitionNowModalComponent, {
+  changeStatus(item: any): void {
+    const ref: any = this.dialogService?.open(ChangeRequestStatusForExpenseComponent, {
       data: {
-        event
+        status: this.returnStatusActions(item?.status),
+        item: item
       },
-      header: this.publicService?.translateTextFromJson('general.expenses'),
+      header: this.publicService?.translateTextFromJson('general.changeStatus'),
       dismissableMask: false,
       width: '50%',
       styleClass: 'custom-modal',
@@ -468,8 +460,43 @@ export class RequestsListComponent {
     this.dropdown?.accessibleViewChild?.nativeElement?.blur();
   }
 
+  // Return Status List
+  returnStatusActions(type?: any): any {
+    if (type == 'Pending') {
+      if (this.currentLanguage == 'ar') {
+        this.statusesList = [
+          { id: 1, value: 'Preview', name: "مراجعة" },
+          { id: 2, value: 'Approved', name: "موافقة" },
+          { id: 3, value: 'Rejected', name: "رفض" }
+        ];
+      } else {
+        this.statusesList = [
+          { id: 1, value: 'Preview', name: "Preview" },
+          { id: 2, value: 'Approved', name: "Accept" },
+          { id: 3, value: 'Rejected', name: "Reject" }
+        ];
+      }
+    }
+    if (type == 'Preview') {
+      if (this.currentLanguage == 'ar') {
+        this.statusesList = [
+          { id: 1, value: 'Preview', name: "مراجعة" },
+          { id: 2, value: 'Approved', name: "موافقة" },
+          { id: 3, value: 'Rejected', name: "رفض" }
+        ];
+      } else {
+        this.statusesList = [
+          { id: 1, value: 'Preview', name: "Preview" },
+          { id: 2, value: 'Approved', name: "Accept" },
+          { id: 3, value: 'Rejected', name: "Reject" }
+        ];
+      }
+    }
+    return this.statusesList;
+  }
+
   // Start Status List Functions
-  getStatusList(): void {
+  getStatusList(type?: any): void {
     if (this.currentLanguage == 'ar') {
       this.statusesList = [
         { id: 0, name: "الكل" },

@@ -73,7 +73,8 @@ export const roots = {
       addEdit: 'installment_requests'
     },
     rqeuests:{
-      getAll:'bank/requests'
+      getAll:'bank/requests',
+      changeRequestStatus:'bank'
     }
   }
 }

@@ -19,6 +19,7 @@
     "dashboard": "لوحة التحكم"
   },
   "general": {
+    "changeStatus":"تغيير الحالة",
     "no_result_found":"لا يوجد بيانات",
     "noSearchResult":"لا يوجد نتائج للبحث",
     "noExpensesAdded":"لم يتم اضافة مصاريف حتي الان",
@@ -338,6 +339,7 @@
     "joinNow": "انضم الأن"
   },
   "labels": {
+    "status":"الحالة",
     "bank":"البنك",
     "titleAR": "الإسم بالعربية",
     "titleEN": "الإسم بالإنجليزية",
