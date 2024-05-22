@@ -242,7 +242,25 @@
       "addKid": "Add Kid",
       "editKid": "Edit Kid",
       "kidsDetails": "Kid Details",
-      "expenses":"Expenses"
+      "expenses":"Expenses",
+      "details":{
+        "allExpenses":"All Expenses",
+        "expensesDetails":"Expenses Details",
+        "KidsInfo":"Kids Info",
+        "parentsInfo":"Parent Info",
+        "banksInfo":"Bank Info",
+        "installmentWay":"Installment Ways Status",
+        "organizationInfo":"Organization Info",
+        "kid":"Kid",
+        "class":"Class",
+        "address":"Address",
+        "parent":"Parent",
+        "email":"Email",
+        "phone":"Phone",
+        "bank":"Bank",
+        "location":"Location",
+        "school":"School"
+      }
     },
     "tuitionExpenses": {
       "tuitionExpenses": "Tuition Expenses",

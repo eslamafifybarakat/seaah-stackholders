@@ -230,7 +230,25 @@
       "addKid": "إضافة طفل",
       "editKid": "تعديل الطفل",
       "kidsDetails": "تفاصيل الطفل",
-      "expenses":"المصاريف"
+      "expenses":"المصاريف",
+      "details":{
+        "allExpenses": "كل المصاريف",
+        "expensesDetails": "تفاصيل المصاريف",
+        "KidsInfo": "معلومات الأطفال",
+        "parentsInfo": "معلومات الاب",
+        "banksInfo": "معلومات البنك",
+        "installmentWay": "حالة طرق التقسيط",
+        "organizationInfo": "معلومات المنظمة",
+        "kid": "طفل",
+        "class": "الصف",
+        "address": "العنوان",
+        "parent": "الوالد",
+        "email": "البريد الإلكتروني",
+        "phone": "الهاتف",
+        "bank": "البنك",
+        "location": "الموقع",
+        "school": "المدرسة"
+    }
     },
     "tuitionExpenses": {
       "tuitionExpenses": "مصاريف التعليم",

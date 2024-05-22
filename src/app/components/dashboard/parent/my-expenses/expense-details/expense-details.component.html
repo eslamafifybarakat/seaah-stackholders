@@ -3,11 +3,13 @@
   <div class="container-fluid">
     <div>
       <a class="d-flex gap-3 align-items-center text-main-color fw-500">
-        <i class="pi pi-arrow-left"></i>
-        <span>All Expenses</span>
+        <i class="pi pi-arrow-left scaleX-rtl"></i>
+        <span>
+          {{'dashboard.kids.details.allExpenses'|translate}}
+        </span>
       </a>
       <h3 class="mt-2 fw-bold">
-        Expenses
+        {{'dashboard.kids.details.expensesDetails'|translate}}
       </h3>
     </div>
     <ng-container *ngIf="isLoadingExpenseDetails; else noLoading">
@@ -19,14 +21,16 @@
         <div class="col-lg-6">
           <div class="global-card p-4">
             <h5 class="fw-bold fs-5-1">
-              Kids Info
+              {{'dashboard.kids.details.KidsInfo'|translate}}
             </h5>
             <div>
               <div class="d-flex gap-3 mt-4">
                 <img [src]="expenseDetails.kids.image_path" class="rounded-circle" width="50" height="50"
                   alt="Provider-img">
                 <div class="">
-                  <h3 class="fs-8 fw-normal text-muted-color mb-1">Kid</h3>
+                  <h3 class="fs-8 fw-normal text-muted-color mb-1">
+                    {{'dashboard.kids.details.kid'|translate}}
+                  </h3>
                   <div class="d-flex gap-xl-3 gap-lg-2 gap-md-3 gap-2 flex-wrap">
                     <p class="mb-0 text-dark-color small fw-500 fs-6">
                       {{expenseDetails.kids?.name}}
@@ -45,7 +49,9 @@
                   </svg>
                 </div>
                 <div class="">
-                  <h3 class="fs-8 fw-normal text-muted-color mb-1">Class</h3>
+                  <h3 class="fs-8 fw-normal text-muted-color mb-1">
+                    {{'dashboard.kids.details.class'|translate}}
+                  </h3>
                   <p class="mb-0 text-dark-color small fw-500 fs-6">
                     {{expenseDetails?.kids?.class}}
                   </p>
@@ -63,7 +69,9 @@
                   </svg>
                 </div>
                 <div class="">
-                  <h3 class="fs-8 fw-normal text-muted-color mb-1">Address</h3>
+                  <h3 class="fs-8 fw-normal text-muted-color mb-1">
+                    {{'dashboard.kids.details.address'|translate}}
+                  </h3>
                   <p class="mb-0 text-dark-color small fw-500 fs-6">
                     {{expenseDetails.kids?.address}}
                   </p>
@@ -73,12 +81,14 @@
           </div>
           <div class="global-card p-4 mt-4">
             <h5 class="fw-bold fs-5-1">
-              Parents Info
+              {{'dashboard.kids.details.parentsInfo'|translate}}
             </h5>
             <div class="body mt-4">
               <div class="d-flex align-items-center gap-3">
                 <div class="">
-                  <p class="mb-1 text-muted-color small text-capitalize">parent</p>
+                  <p class="mb-1 text-muted-color small text-capitalize">
+                    {{'dashboard.kids.details.parent'|translate}}
+                  </p>
                   <h2 class="fs-6 text-dark-color fw-bold mb-0">
                     {{expenseDetails?.parents?.name||'---'}}
                   </h2>
@@ -87,16 +97,18 @@
               <div class="mt-4">
                 <div class="content-body d-flex align-items-center gap-5">
                   <div class="">
-                    <p class="text-muted-color mb-1 small text-capitalize">email</p>
+                    <p class="text-muted-color mb-1 small text-capitalize">
+                      {{'dashboard.kids.details.email'|translate}}
+                    </p>
                     <span class="fw-500 small">{{expenseDetails?.parents?.email}}</span>
                   </div>
                   <div class="">
-                    <p class="text-muted-color mb-1 small text-capitalize">phone</p>
-
+                    <p class="text-muted-color mb-1 small text-capitalize">
+                      {{'dashboard.kids.details.phone'|translate}}
+                    </p>
                     <span class="fw-500 small">
                       {{expenseDetails?.parents?.phone}}
                     </span>
-
                   </div>
                 </div>
               </div>
@@ -104,14 +116,16 @@
           </div>
           <div class="global-card p-4 mt-4">
             <h5 class="fw-bold fs-5-1">
-              Bank Info
+              {{'dashboard.kids.details.banksInfo'|translate}}
             </h5>
             <div>
               <div class="d-flex gap-3 mt-4">
                 <img [src]="expenseDetails.banks.image_path" class="rounded-circle" width="50" height="50"
                   alt="Provider-img">
                 <div class="">
-                  <h3 class="fs-8 fw-normal text-muted-color mb-1">Bank</h3>
+                  <h3 class="fs-8 fw-normal text-muted-color mb-1">
+                    {{'dashboard.kids.details.bank'|translate}}
+                  </h3>
                   <div class="d-flex gap-xl-3 gap-lg-2 gap-md-3 gap-2 flex-wrap">
                     <p class="mb-0 text-dark-color small fw-500 fs-6">
                       {{expenseDetails.banks?.bankName||'----'}}
@@ -131,7 +145,9 @@
                   </svg>
                 </div>
                 <div class="">
-                  <h3 class="fs-8 fw-normal text-muted-color mb-1">Location</h3>
+                  <h3 class="fs-8 fw-normal text-muted-color mb-1">
+                    {{'dashboard.kids.details.location'|translate}}
+                  </h3>
                   <p class="mb-0 text-dark-color small fw-500 fs-6">
                     {{expenseDetails.banks?.bankLocation||'---'}}
                   </p>
@@ -143,7 +159,7 @@
         <div class="col-lg-6">
           <div class="global-card py-4 mt-lg-0 mt-4">
             <h5 class="fw-bold fs-5-1 px-4">
-              Installment Ways Status
+              {{'dashboard.kids.details.installmentWay'|translate}}
             </h5>
             <div class="px-3">
               <div class="all-status px-2">
@@ -180,14 +196,16 @@
           </div>
           <div class="global-card p-4 mt-4">
             <h5 class="fw-bold fs-5-1">
-              Organization Info
+              {{'dashboard.kids.details.organizationInfo'|translate}}
             </h5>
             <div>
               <div class="d-flex gap-3 mt-4">
                 <img [src]="expenseDetails.organizations.image_path" class="rounded-circle" width="50" height="50"
                   alt="Provider-img">
                 <div class="">
-                  <h3 class="fs-8 fw-normal text-muted-color mb-1">Bank</h3>
+                  <h3 class="fs-8 fw-normal text-muted-color mb-1">
+                    {{'dashboard.kids.details.bank'|translate}}
+                  </h3>
                   <div class="d-flex gap-xl-3 gap-lg-2 gap-md-3 gap-2 flex-wrap">
                     <p class="mb-0 text-dark-color small fw-500 fs-6">
                       {{expenseDetails.organizations?.name||'----'}}
@@ -207,7 +225,9 @@
                   </svg>
                 </div>
                 <div class="">
-                  <h3 class="fs-8 fw-normal text-muted-color mb-1">Location</h3>
+                  <h3 class="fs-8 fw-normal text-muted-color mb-1">
+                    {{'dashboard.kids.details.location'|translate}}
+                  </h3>
                   <p class="mb-0 text-dark-color small fw-500 fs-6">
                     {{expenseDetails.organizations?.location||'---'}}
                   </p>

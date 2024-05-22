@@ -9,11 +9,12 @@ import { InstallmentRequestsService } from '../../../services/installment_reques
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { PublicService } from 'src/app/services/generic/public.service';
 import { catchError } from 'rxjs/operators';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-expense-details',
   standalone: true,
-  imports: [CommonModule, RouterModule, SkeletonComponent],
+  imports: [CommonModule, RouterModule, SkeletonComponent, TranslateModule],
   templateUrl: './expense-details.component.html',
   styleUrls: ['./expense-details.component.scss']
 })
