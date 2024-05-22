@@ -252,22 +252,8 @@ export class MyExpensesListComponent {
   // End My Expenses List Functions
 
   // Start Show Details Modal
-  showExpensesDetails(event: any): void {
-    console.log(event);
-    const ref: any = this.dialogService?.open(PayTuitionNowModalComponent, {
-      data: {
-        event
-      },
-      header: this.publicService?.translateTextFromJson('general.expenses'),
-      dismissableMask: false,
-      width: '50%',
-      styleClass: 'custom-modal',
-    });
-    ref?.onClose.subscribe((res: any) => {
-      if (res?.listChanged) {
-        this.getAllMyExpenseList();
-      }
-    });
+  showExpensesDetails(item: any): void {
+    this.router.navigate(['Dashboard/Parent/myExpenses/Details/' + item.id]);
   }
   // End Show Details Modal
 
