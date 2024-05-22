@@ -472,7 +472,7 @@
               </button>
             </ng-container>
             <ng-container *ngIf="showActionItemBtn && item?.active==false">
-              <button class="btn btn-solid-main badge-btn px-3 position-relative overflow-hidden"
+              <button class="btn btn-solid-main badge-btn px-3 position-relative overflow-hidden mx-1"
                 (click)="itemActionEmitter(item)">
                 <div *ngIf="item?.isLoadingActive"
                   class="btn-overlay position-absolute d-flex justify-content-center align-items-center">
@@ -804,7 +804,7 @@
                 </ng-container>
 
                 <ng-container *ngIf="showActionItemBtn && item?.active==false">
-                  <button class="btn btn-solid-main badge-btn px-3 position-relative overflow-hidden"
+                  <button class="btn btn-solid-main badge-btn px-3 position-relative overflow-hidden mx-1"
                     (click)="itemActionEmitter(item)">
                     <div *ngIf="item?.isLoadingActive"
                       class="btn-overlay position-absolute d-flex justify-content-center align-items-center">

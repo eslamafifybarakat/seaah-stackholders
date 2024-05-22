@@ -19,6 +19,7 @@
     "dashboard": "Dashboard"
   },
   "general": {
+    "changeStatus":"Change Status",
     "no_result_found":"No Result Founded",
     "noSearchResult":"No Search Result",
     "noExpensesAdded":"No expenses have been added yet",
@@ -337,6 +338,7 @@
     "joinNow": "Join now"
   },
   "labels": {
+    "status":"Status",
     "bank":"Bank",
     "titleAR": "Arabic Title",
     "titleEN": "English Title",

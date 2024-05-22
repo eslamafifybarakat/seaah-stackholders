@@ -94,8 +94,8 @@
           <dynamic-table-v2 [isLoading]="isLoadingMyRequestsList" [showHeader]="false" [showClear]="false" [showSearch]="false"
             [isLoadingSearch]="isLoadingSearch" [showActionsButtons]="true"
             (clearHandler)="enableSortFilter?clearTable():''" [tableHeaders]="tableHeaders" [tableData]="MyRequestsList"
-            [enableDateFormate]="true" [dateFormateString]="'d MMMM y'" [showActions]="true" [showEdit]="true"
-            [showDelete]="true" (deleteHandler)="deleteItem($event)" [showDetails]="false"
+            [enableDateFormate]="true" [dateFormateString]="'d MMMM y'" [showActions]="true" [showEdit]="false"
+            [showDelete]="false" (deleteHandler)="deleteItem($event)" [showDetails]="true"
             (detailsHandler)="itemDetails($event)" (editHandler)="addEditItem($event,'edit')"
             (customSortHandler)="enableSortFilter?sortItems($event):''"
             (filterHandler)="enableSortFilter?filterItemsTable($event):''" [results]="myRequestsCount" [paginatorRows]="perPage"
@@ -103,7 +103,7 @@
             [enableConfirmDeleteDialog]="true" [keyDelete]="'name'"
             (paginateOptionsHandler)="onPaginatorOptionsChange($event)" [isSearch]="isSearch" [arrayChildKey]="'name'" [enableAddBtn]="false" [addBtnText]="'dashboard.kids.addKid'" (addHandler)="addEditItem()"
             [notFoundImage]="'assets/images/not-found/no-user.svg'" [showActionItemBtn]="true"
-            [actionButtonText]="'general.details'" (actionHandlerEmit)="showExpensesDetails($event)"></dynamic-table-v2>
+            [actionButtonText]="'general.changeStatus'" (actionHandlerEmit)="changeStatus($event)"></dynamic-table-v2>
         </ng-container>
         <!-- Card -->
         <ng-container *ngIf="dataStyleType=='grid'">

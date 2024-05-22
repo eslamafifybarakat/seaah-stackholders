@@ -74,4 +74,10 @@ export class InstallmentRequestsService {
     }
     return this.http?.get(`${this.baseUrl}/${roots?.dashboard?.rqeuests?.getAll}`, { params: params });
   }
+  changeRequestStatus(data: any, id?: number): Observable<any> {
+    if (id) {
+      return this.http?.post(`${this.baseUrl}/${roots?.dashboard?.rqeuests?.changeRequestStatus}/${id}`, data)
+    }
+    return this.http?.post(`${this.baseUrl}/${roots?.dashboard?.rqeuests?.changeRequestStatus}`, data);
+  }
 }
