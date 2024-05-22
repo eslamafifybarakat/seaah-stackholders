@@ -1,3 +1,4 @@
+import { SkeletonComponent } from 'src/app/shared/skeleton/skeleton/skeleton.component';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subscription, tap } from 'rxjs';
@@ -11,7 +12,7 @@ import { catchError } from 'rxjs/operators';
 @Component({
   selector: 'app-expense-details',
   standalone: true,
-  imports: [CommonModule,RouterModule],
+  imports: [CommonModule, RouterModule, SkeletonComponent],
   templateUrl: './expense-details.component.html',
   styleUrls: ['./expense-details.component.scss']
 })
@@ -69,6 +70,8 @@ export class ExpenseDetailsComponent {
   private handleGetExpenseSuccess(response: any): void {
     if (response?.status == 200 || response?.status == 201) {
       this.expenseDetails = response.data;
+      let kidAddressObj: any = JSON.parse(this.expenseDetails.kids?.address || '{}');
+      this.expenseDetails.kids['address'] = `${kidAddressObj?.region ?? ''}, ${kidAddressObj?.city ?? ''}, ${kidAddressObj?.street ?? ''}, ${kidAddressObj?.zip ?? ''}`;
       this.isLoadingExpenseDetails = false;
     } else {
       this.handleError(response?.message);
