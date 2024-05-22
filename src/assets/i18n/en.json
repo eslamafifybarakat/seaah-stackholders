@@ -132,6 +132,7 @@
     "total": "Total",
     "isTotal": "There is a total",
     "sideMenu": {
+      "expenses":"Expenses",
       "myExpenses":"My Expenses",
       "Tuition": "Tuitions",
       "KidsRequests": "Kids Requests",

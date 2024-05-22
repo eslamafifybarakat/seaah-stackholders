@@ -7,6 +7,7 @@ import { kidsRequestsChildrenRoutes } from './kids-requests/kids-requests-childr
 import { errorsChildrenRoutes } from '../../errors/errors-children-routes';
 import { TuitionChildrenRoutes } from './tuition/tuition-children-routes';
 import { TuitionExpensesChildrenRoutes } from './tuition-expenses/tuition-expenses-children-routes';
+import { ExpensesChildrenRoutes } from './expenses/expenses-child-route';
 
 
 export const SchoolsChildrenRoutes: any[] = [
@@ -52,6 +53,20 @@ export const SchoolsChildrenRoutes: any[] = [
         (c) => c.TuitionExpensesComponent
       ),
     children: TuitionExpensesChildrenRoutes
+  },
+  // Expenses
+  {
+    path: 'Expenses',
+    // canActivate: [PermissionGuard],
+    data: {
+      permission: 'Pages.Expenses.List',
+      title: 'Expenses'
+    },
+    loadComponent: () =>
+      import('./../../dashboard/schools/expenses/expenses.component').then(
+        (c) => c.ExpensesComponent
+      ),
+    children: ExpensesChildrenRoutes
   },
 
    // Errors

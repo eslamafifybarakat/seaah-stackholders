@@ -132,6 +132,7 @@
     "total": "الاجمالي",
     "isTotal": "يوجد اجمالا",
     "sideMenu": {
+      "expenses":"المصاريف",
       "myExpenses":"مصاريفي",
       "Tuition": "المصاريف",
       "KidsRequests": "طلبات الأطفال",

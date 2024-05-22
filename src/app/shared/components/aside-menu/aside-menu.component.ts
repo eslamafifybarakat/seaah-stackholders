@@ -73,8 +73,6 @@ export class AsideMenuComponent {
   }
   getCurrentUserInfo(): void {
     this.currentUserInformation = this.authService.getCurrentUserInformationLocally();
-    console.log(this.currentUserInformation);
-
   }
 
   // Get menu items list
