@@ -226,14 +226,14 @@ export class MyExpensesListComponent {
         item['bankName'] = bankNameObj[this.currentLanguage];
 
         item['status'] = item?.status;
-        // item['status'] = 'Previewed';
+        item['status'] = 'Previewed';
         if (item['status'] == 'Approved') {
           item['active'] = false;
         }
-        // if (item?.id == 3) {
-        //   item['status'] = 'Approved';
-        //   item['active'] = false;
-        // }
+        if (item?.id == 3) {
+          item['status'] = 'Approved';
+          item['active'] = false;
+        }
       });
     } else {
       this.handleError(response.message);
@@ -282,6 +282,28 @@ export class MyExpensesListComponent {
     const ref = this.dialogService?.open(PayTuitionNowModalComponent, {
       data: item?.kids,
       header: this.publicService?.translateTextFromJson('dashboard.tuitionExpenses.editExpense'),
+      dismissableMask: false,
+      width: '60%',
+      styleClass: 'custom-modal',
+    });
+    ref.onClose.subscribe((res: any) => {
+      if (res?.listChanged) {
+        if (this.myExpensesCount == 0) {
+          this.getAllMyExpenseList();
+        } else {
+          this.page = 1;
+          this.publicService?.changePageSub?.next({ page: this.page });
+          this.dataStyleType == 'grid' ? this.changePageActiveNumber(1) : '';
+          this.dataStyleType == 'grid' ? this.getAllMyExpenseList() : '';
+        }
+      }
+    });
+  }
+  // Add My Expense
+  addMyExpense(item?: any, type?: any): void {
+    const ref = this.dialogService?.open(PayMultiTuitionNowModalComponent, {
+      data: item?.kids,
+      header: this.publicService?.translateTextFromJson('dashboard.tuitionExpenses.addExpense'),
       dismissableMask: false,
       width: '60%',
       styleClass: 'custom-modal',
