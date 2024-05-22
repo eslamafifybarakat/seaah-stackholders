@@ -1,3 +1,4 @@
+import { DynamicSvgComponent } from 'src/app/shared/components/icons/dynamic-svg/dynamic-svg.component';
 import { PayTuitionNowModalComponent } from '../pay-tuition-now-modal/pay-tuition-now-modal.component';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { PublicService } from 'src/app/services/generic/public.service';
@@ -13,7 +14,9 @@ import { Subscription } from 'rxjs';
   imports: [
     // Modules
     TranslateModule,
-    CommonModule
+    CommonModule,
+
+    DynamicSvgComponent,
   ],
   templateUrl: './show-expenses-modal.component.html',
   styleUrls: ['./show-expenses-modal.component.scss']
@@ -33,22 +36,22 @@ export class ShowExpensesModalComponent {
     private ref: DynamicDialogRef
   ) { }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.KidData = this.config?.data?.event;
-    console.log("data come to list ex ",this.KidData);
+    console.log("data come to list ex ", this.KidData);
     this.currentLanguage = this.publicService.getCurrentLanguage();
   }
 
   totalExpenses(): any {
     let total: any = 0;
-    this.KidData?.expenses?.forEach((element:any) => {
+    this.KidData?.expenses?.forEach((element: any) => {
       total = total + +element?.total;
     });
     return total;
   }
   // Start Pay Noe Modal
   payNow(event: any): void {
-    console.log("data = ",event);
+    console.log("data = ", event);
     this.cancel();
     const refPayNow: any = this.dialogService?.open(PayTuitionNowModalComponent, {
       data: this.KidData,

@@ -21,6 +21,7 @@
   "general": {
     "no_result_found":"لا يوجد بيانات",
     "noSearchResult":"لا يوجد نتائج للبحث",
+    "noExpensesAdded":"لم يتم اضافة مصاريف حتي الان",
     "total":"الإجمالي",
     "title":"العنوان",
     "price":"السعر",
