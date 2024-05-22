@@ -96,8 +96,6 @@ export class AsideMenuComponent {
       ele.state = false;
     });
     item.state = !item?.state;
-    this.collapsed = true;
-    this.onToggleSideNav.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });
   }
   // Toggle sidebar collapse
   toggleCollapse(): void {
