@@ -49,13 +49,12 @@ export class RequestsListComponent {
   isLoadingSearch: boolean = false;
   isSearch: boolean = false;
 
-  // Start My Expenses List Variables
-  isLoadingMyExpenseList: boolean = false;
-  // MyExpenseList: KidListingItem[] = [];
-  MyExpenseList: any[] = [];
-  myExpensesCount: number = 0;
+  // Start My Requests List Variables
+  isLoadingMyRequestsList: boolean = false;
+  MyRequestsList: any[] = [];
+  myRequestsCount: number = 0;
   tableHeaders: any = [];
-  // End My Expenses List Variables
+  // End My Requests List Variables
 
   // Start Pagination Variables
   page: number = 1;
@@ -140,12 +139,12 @@ export class RequestsListComponent {
       { field: 'status', header: 'dashboard.tableHeader.paidStatus', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.paidStatus'), type: 'status', sort: false, showDefaultSort: false, showAscSort: false, showDesSort: false, filter: false }
     ];
     this.updateMetaTagsForSEO();
-    this.getAllMyExpenseList();
+    this.getAllMyRequestsList();
   }
   private updateMetaTagsForSEO(): void {
     let metaData: MetaDetails = {
-      title: 'مصاريفي | سعة',
-      description: 'مصاريفي | سعة',
+      title: 'الطلبات | سعة',
+      description: 'الطلبات | سعة',
       image: 'https://ik.imagekit.io/2cvha6t2l9/Logo.jpeg?updatedAt=1712577283111'
     }
     this.metadataService.updateMetaTagsForSEO(metaData);
@@ -179,25 +178,25 @@ export class RequestsListComponent {
     this.dataStyleType = type;
   }
 
-  // Start My Expenses List Functions
-  getAllMyExpenseList(isFiltering?: boolean): void {
-    isFiltering ? this.publicService.showGlobalLoader.next(true) : this.isLoadingMyExpenseList = true;
-    let myExpensesSubscription: Subscription = this.installmentRequestsService?.getMyExpenseList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null, this.statusValue ?? null)
+  // Start My Requests List Functions
+  getAllMyRequestsList(isFiltering?: boolean): void {
+    isFiltering ? this.publicService.showGlobalLoader.next(true) : this.isLoadingMyRequestsList = true;
+    let myRequestsSubscription: Subscription = this.installmentRequestsService?.getBankExpenseRequestsList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null, this.statusValue ?? null)
       .pipe(
         tap((res: any) => {
-          this.processMyExpenseListResponse(res);
+          this.processMyRequestsListResponse(res);
         }),
         catchError(err => this.handleError(err)),
-        finalize(() => this.finalizeKidListLoading())
+        finalize(() => this.finalizeRequestsList())
       ).subscribe();
-    this.subscriptions.push(myExpensesSubscription);
+    this.subscriptions.push(myRequestsSubscription);
   }
-  private processMyExpenseListResponse(response: any): void {
-    if (response.status == 200) {
-      this.myExpensesCount = response?.data?.total;
-      this.pagesCount = Math.ceil(this.myExpensesCount / this.perPage);
-      this.MyExpenseList = response?.data?.items?.data;
-      this.MyExpenseList?.forEach((item: any) => {
+  private processMyRequestsListResponse(response: any): void {
+    if (response.status == 200 || response.status == 201) {
+      this.myRequestsCount = response?.data?.total;
+      this.pagesCount = Math.ceil(this.myRequestsCount / this.perPage);
+      this.MyRequestsList = response?.data?.items?.data;
+      this.MyRequestsList?.forEach((item: any) => {
         item['kidImage'] = item?.kids?.image_path;
         if (item?.person_pay_type == 'mykids') {
 
@@ -234,8 +233,8 @@ export class RequestsListComponent {
       return;
     }
   }
-  private finalizeKidListLoading(): void {
-    this.isLoadingMyExpenseList = false;
+  private finalizeRequestsList(): void {
+    this.isLoadingMyRequestsList = false;
     this.isLoadingSearch = false;
     this.enableSortFilter = false;
     this.publicService.showGlobalLoader.next(false);
@@ -243,7 +242,7 @@ export class RequestsListComponent {
       this.enableSortFilter = true;
     }, 200);
   }
-  // End My Expenses List Functions
+  // End My Requests List Functions
 
   // Start Show Details Modal
   showExpensesDetails(event: any): void {
@@ -259,7 +258,7 @@ export class RequestsListComponent {
     });
     ref?.onClose.subscribe((res: any) => {
       if (res?.listChanged) {
-        this.getAllMyExpenseList();
+        this.getAllMyRequestsList();
       }
     });
   }
@@ -279,13 +278,13 @@ export class RequestsListComponent {
     });
     ref.onClose.subscribe((res: any) => {
       if (res?.listChanged) {
-        if (this.myExpensesCount == 0) {
-          this.getAllMyExpenseList();
+        if (this.myRequestsCount == 0) {
+          this.getAllMyRequestsList();
         } else {
           this.page = 1;
           this.publicService?.changePageSub?.next({ page: this.page });
           this.dataStyleType == 'grid' ? this.changePageActiveNumber(1) : '';
-          this.dataStyleType == 'grid' ? this.getAllMyExpenseList() : '';
+          this.dataStyleType == 'grid' ? this.getAllMyRequestsList() : '';
         }
       }
     });
@@ -309,7 +308,7 @@ export class RequestsListComponent {
   }
   private processDeleteResponse(res: DeleteKidApiResponse): void {
     if (res.status === 200) {
-      this.getAllMyExpenseList();
+      this.getAllMyRequestsList();
       this.handleSuccess(res.message);
     } else {
       this.handleError(res.message);
@@ -325,8 +324,8 @@ export class RequestsListComponent {
     this.page = 1;
     this.perPage = 10;
     this.searchKeyword = keyWord;
-    this.isLoadingMyExpenseList = true;
-    this.getAllMyExpenseList(true);
+    this.isLoadingMyRequestsList = true;
+    this.getAllMyRequestsList(true);
     if (keyWord?.length > 0) {
       this.isLoadingSearch = true;
     }
@@ -335,7 +334,7 @@ export class RequestsListComponent {
   clearSearch(search: any): void {
     search.value = null;
     this.searchKeyword = null;
-    this.getAllMyExpenseList(true);
+    this.getAllMyRequestsList(true);
   }
   // End Search Functions
 
@@ -353,7 +352,7 @@ export class RequestsListComponent {
     //     this.page = 1;
     //     this.filtersArray = res.conditions;
     //     this.filterCards = res.conditions;
-    //     this.getAllMyExpenseList(true);
+    //     this.getAllMyRequestsList(true);
     //   }
     // });
   }
@@ -418,7 +417,7 @@ export class RequestsListComponent {
     });
     this.page = 1;
     // this.publicService?.changePageSub?.next({ page: this.page });
-    this.getAllMyExpenseList();
+    this.getAllMyRequestsList();
   }
   // Clear table Function
   clearTable(): void {
@@ -428,7 +427,7 @@ export class RequestsListComponent {
     this.page = 1;
     this.publicService.resetTable.next(true);
     // this.publicService?.changePageSub?.next({ page: this.page });
-    this.getAllMyExpenseList();
+    this.getAllMyRequestsList();
   }
   // Sort table Functions
   sortItems(event: any): void {
@@ -437,27 +436,27 @@ export class RequestsListComponent {
         column: event?.field,
         order: 'asc'
       }
-      this.getAllMyExpenseList();
+      this.getAllMyRequestsList();
     } else if (event?.order == -1) {
       this.sortObj = {
         column: event?.field,
         order: 'desc'
       }
-      this.getAllMyExpenseList();
+      this.getAllMyRequestsList();
     }
   }
 
   // Start Pagination Functions
   onPageChange(e: any): void {
     this.page = e?.page + 1;
-    this.getAllMyExpenseList();
+    this.getAllMyRequestsList();
   }
   onPaginatorOptionsChange(e: any): void {
     this.perPage = e?.value;
-    this.pagesCount = Math?.ceil(this.myExpensesCount / this.perPage);
+    this.pagesCount = Math?.ceil(this.myRequestsCount / this.perPage);
     this.page = 1;
     this.publicService?.changePageSub?.next({ page: this.page });
-    this.dataStyleType == 'grid' ? this.getAllMyExpenseList() : '';
+    this.dataStyleType == 'grid' ? this.getAllMyRequestsList() : '';
   }
   changePageActiveNumber(number: number): void {
     this.paginator?.changePage(number - 1);
@@ -530,7 +529,7 @@ export class RequestsListComponent {
       let patchStatus: any = this.statusesList[0];
       this.filterForm?.get('status').setValue(patchStatus);
     }
-    this.getAllMyExpenseList();
+    this.getAllMyRequestsList();
   }
   // End Status List Functions
 
