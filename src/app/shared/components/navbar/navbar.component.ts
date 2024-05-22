@@ -7,6 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 // Components
 import { LanguageSelectorComponent } from '../language-selector/language-selector.component';
+import { AuthService } from '../../../services/authentication/auth.service';
 
 
 
@@ -70,13 +71,15 @@ export class NavbarComponent {
     this.collapse = false;
   }
   constructor(
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private authService: AuthService
   ) {
     this.page = 'Home';
     this.navItems = navItems;
   }
 
   ngOnInit(): void {
+    this.authService?.getToken() ? this.isUserLoggedIn = true : this.isUserLoggedIn = false;
   }
 
   login(): void {

@@ -41,11 +41,20 @@
       <div class="d-flex align-items-center gap-4 py-lg-0 py-3">
         <ng-container *ngIf="isUserLoggedIn; else elseNotLoggedIn">
           <!-- <app-user-info></app-user-info> -->
+          <button class="btn btn-solid-main w-auto text-nowrap py-2" (click)="collapse = false;"
+                [routerLink]="['/Dashboard/']">
+                <span class="d-flex align-items-center justify-content-center gap-2">
+                  <i class="pi pi-chart-bar"></i>
+                  <span>
+                    {{'nav.dashboard' |translate}}
+                  </span>
+                </span>
+              </button>
         </ng-container>
         <ng-template #elseNotLoggedIn>
           <div class="d-flex flex-row align-items-center gap-2 justify-content-center-small">
             <span class="nav-item">
-              <button class="btn btn-solid-main w-auto text-nowrap py-2" (click)="collapse = false;login()"
+              <button class="btn btn-solid-main w-auto text-nowrap py-2" (click)="collapse = false;"
                 [routerLink]="['/Auth/Login']">
                 <span class="d-flex align-items-center justify-content-center gap-2">
                   <i class="pi pi-sign-in"></i>

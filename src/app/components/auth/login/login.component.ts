@@ -115,7 +115,7 @@ export class LoginComponent {
       },
       header: this.publicService?.translateTextFromJson('auth.verificationOtp'),
       dismissableMask: false,
-      width: '45%',
+      width: '35%',
       styleClass: 'custom-modal',
     });
     ref?.onClose?.subscribe((res: any) => {
