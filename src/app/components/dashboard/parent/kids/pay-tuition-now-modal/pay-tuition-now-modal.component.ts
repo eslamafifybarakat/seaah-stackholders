@@ -91,7 +91,7 @@ export class PayTuitionNowModalComponent {
   }
   private processBanksListResponse(response: any): void {
     if (response?.status == 200 || response?.status == 201) {
-      this.banksList = response?.data?.data;
+      this.banksList = response?.data?.items;
       this.banksList?.forEach((item: any) => {
         let name: any = JSON.parse(item?.name || "{}");
         item['bankName'] = name[this.currentLanguage];
@@ -99,7 +99,7 @@ export class PayTuitionNowModalComponent {
           this.expenseForm.patchValue({
             bank: item
           });
-          this.onBankChange({value:item});
+          this.onBankChange({ value: item });
         }
       });
     } else {
@@ -139,6 +139,12 @@ export class PayTuitionNowModalComponent {
       expensesIds?.push(element?.id);
       expensesTotal?.push(element?.total);
     });
+    if (expensesIds?.length <= 0) {
+      expensesIds = [0];
+    }
+    if (expensesTotal?.length <= 0) {
+      expensesTotal = [0];
+    }
     let finalData: any = {
       kids_id: [this.KidData?.id],
       parent_id: this.KidData?.parent_id,
@@ -162,7 +168,7 @@ export class PayTuitionNowModalComponent {
   }
   private handleAddEditExpensesRequests(response: any): void {
     this.publicService?.showGlobalLoader?.next(false);
-    if (response?.status == 200) {
+    if (response?.status == 200 || response?.status == 201) {
       this.ref.close({ listChanged: true, item: response?.data });
       this.handleSuccess(response?.message);
     } else {
