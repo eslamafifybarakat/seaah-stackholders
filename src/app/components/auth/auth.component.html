@@ -7,7 +7,7 @@
           <div class="py-4 bg-transparent">
             <!-- <div class="d-flex">
               <a [routerLink]="['/']" class="form-logo d-flex">
-                <img src="assets/images/logo/logo.svg" alt="logo" class="w-100 h-100">
+                <img src="assets/images/logo/logo.webp" alt="logo" class="w-100 h-100">
               </a>
             </div> -->
             <router-outlet></router-outlet>
@@ -17,18 +17,16 @@
     </div>
     <ng-container *ngIf="showSlider">
       <div class="col-lg-5 d-lg-block d-none p-0 position-fixed slider">
-        <div class="bg-form" [class.round-banner]="isRoundBanner">
-          <div class="p-5 d-flex align-items-center min-h">
-            <div class="text-center w-100">
-              <ng-container *ngIf="sliderType=='banner'">
-                <div class="banner d-flex justify-content-center">
-                  <img src="assets/images/logo/logo.svg" alt="logo">
-                </div>
-              </ng-container>
-              <ng-container *ngIf="sliderType=='slider'">
-                <auth-carousel></auth-carousel>
-                <!-- <auth-carousel-v2></auth-carousel-v2> -->
-              </ng-container>
+        <div class="bg-form m-3 round-banner h-100">
+          <div class="p-5 d-flex align-items-center">
+            <!-- <div class="p-5 d-flex justify-content-between flex-column min-h"> -->
+            <!-- <div class="d-flex justify-content-end">
+              <a class="text-white-color d-flex align-items-center gap-2 home" [routerLink]="['/']"> <i
+                  class="pi pi-arrow-left scaleX-rtl"></i>
+                <span>{{'general.backToHome'|translate}}</span></a>
+            </div> -->
+            <div class="text-center">
+              <auth-carousel></auth-carousel>
             </div>
             <div>
             </div>

@@ -1,6 +1,11 @@
 #auth-form {
+  min-height: 100vh;
+  .form-content {
+    min-height: 95.5vh;
+  }
   .slider {
     right: 0;
+    height: 95.5vh;
   }
   &:dir(rtl) {
     .slider {
@@ -14,17 +19,9 @@
     background-repeat: no-repeat;
     background-position: top right;
     background-size: 60%;
-    min-height: 100vh;
-    .min-h {
-      min-height: 100vh;
-    }
     &.round-banner {
       border-radius: 15px;
       margin: 1rem;
-      min-height: calc(100vh - 2rem);
-      .min-h {
-        min-height: calc(100vh - 2rem);
-      }
     }
     & > div {
       // background-image: url(../../../assets/images/auth/auth-bg-bottom.svg);

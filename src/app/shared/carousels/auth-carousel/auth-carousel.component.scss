@@ -1,5 +1,5 @@
 #auth-slider {
-  // background-image: url(../../../assets/images/auth/slider-bg.svg);
+  background-image: url(./../../../../assets/images/auth/slider-bg.svg);
   background-position: 22% 70%;
   background-repeat: no-repeat;
   .slide-img {
@@ -35,9 +35,6 @@
           position: absolute;
           bottom: -4px;
           color: var(--text-white-color);
-          &:hover {
-            background-color: transparent;
-          }
         }
         .p-carousel-prev {
           left: 31%;
@@ -48,21 +45,6 @@
         .p-icon {
           width: 10px;
         }
-      }
-    }
-    &:dir(rtl) {
-      .p-carousel {
-        direction: ltr;
-        // .p-carousel-content {
-        //   .p-carousel-prev {
-        //     right: 31%;
-        //     left: inherit;
-        //   }
-        //   .p-carousel-next {
-        //     left: 31%;
-        //     right: inherit;
-        //   }
-        // }
       }
     }
   }
