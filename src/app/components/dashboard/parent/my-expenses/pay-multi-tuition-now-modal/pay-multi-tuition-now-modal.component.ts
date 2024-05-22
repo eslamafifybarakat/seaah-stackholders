@@ -144,28 +144,40 @@ export class PayMultiTuitionNowModalComponent {
           this.processBanksListResponse(res)
         }),
         catchError(err => this.handleError(err)),
-        finalize(() => this.finalizeSchoolsListLoading())
+        finalize(() => this.finalizeBanksList())
       ).subscribe();
     this.subscriptions.push(banksSubscription);
   }
   private processBanksListResponse(response: any): void {
-    if (response) {
-      this.banksList = response?.data?.items?.data;
+    if (response?.status == 200 || response?.status == 201) {
+      this.banksList = response?.data?.items;
       this.banksList?.forEach((item: any) => {
-        let name: any = JSON.parse(item?.name[this.currentLanguage] || "{}");
+        let name: any = JSON.parse(item?.name || "{}");
         item['bankName'] = name[this.currentLanguage];
+        if (this.KidData?.banks && (this.KidData?.banks?.id == item?.id)) {
+          this.expensesForm.patchValue({
+            bank: item
+          });
+          this.onBankChange({ value: item });
+        }
       });
     } else {
       this.handleError(response.error);
       return;
     }
   }
-  private finalizeSchoolsListLoading(): void {
+  private finalizeBanksList(): void {
     this.isLoadingBank = false;
   }
   onBankChange(event: any): void {
-    console.log(event?.value);
     this.installmentWays = event?.value?.installment_ways;
+    this.installmentWays?.forEach((item: any) => {
+      if (this.KidData?.installmentways && (this.KidData?.installmentways?.id == item?.id)) {
+        this.expensesForm.patchValue({
+          installmentWay: item
+        });
+      }
+    });
   }
   // End Banks List Functions
 
