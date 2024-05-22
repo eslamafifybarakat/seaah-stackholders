@@ -379,7 +379,7 @@ export class KidsListComponent {
     this.isSearch = true;
     this.isLoadingKidsList = true;
     this.publicService?.changePageSub?.next({ page: this.page });
-    // this.getAllKids(true);
+    this.kidsList?.length <= 0 ? this.getAllKids(true) : '';
     if (keyWord?.length > 0) {
       this.isLoadingSearch = true;
     }
@@ -388,7 +388,7 @@ export class KidsListComponent {
   clearSearch(search: any): void {
     search.value = null;
     this.searchKeyword = null;
-    // this.getAllKids(true);
+    this.kidsList?.length <= 0 ? this.getAllKids(true) : '';
     this.publicService?.changePageSub?.next({ page: this.page });
 
   }

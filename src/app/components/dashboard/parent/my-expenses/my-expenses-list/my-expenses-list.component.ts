@@ -188,7 +188,7 @@ export class MyExpensesListComponent {
 
   // Start My Expenses List Functions
   getAllMyExpenseList(isFiltering?: boolean): void {
-    isFiltering ? this.publicService.showGlobalLoader.next(true) : this.isLoadingMyExpenseList = true;
+    this.isSearch ? this.publicService.showGlobalLoader.next(true) : this.isLoadingMyExpenseList = true;
     let myExpensesSubscription: Subscription = this.installmentRequestsService?.getMyExpenseList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null, this.statusValue ?? null)
       .pipe(
         tap((res: any) => {
@@ -342,8 +342,11 @@ export class MyExpensesListComponent {
     this.page = 1;
     this.perPage = 10;
     this.searchKeyword = keyWord;
+    this.isSearch = true;
     this.isLoadingMyExpenseList = true;
-    this.getAllMyExpenseList(true);
+    this.MyExpenseList?.length <= 0 ? this.getAllMyExpenseList(true) : '';
+    this.publicService?.changePageSub?.next({ page: this.page });
+    // this.getAllMyExpenseList(true);
     if (keyWord?.length > 0) {
       this.isLoadingSearch = true;
     }
@@ -352,7 +355,9 @@ export class MyExpensesListComponent {
   clearSearch(search: any): void {
     search.value = null;
     this.searchKeyword = null;
-    this.getAllMyExpenseList(true);
+    this.publicService?.changePageSub?.next({ page: this.page });
+    this.MyExpenseList?.length <= 0 ? this.getAllMyExpenseList(true) : '';
+    // this.getAllMyExpenseList(true);
   }
   // End Search Functions
 
@@ -443,6 +448,7 @@ export class MyExpensesListComponent {
     this.sortObj = {};
     this.filtersArray = [];
     this.page = 1;
+    this.isSearch = false;
     this.publicService.resetTable.next(true);
     // this.publicService?.changePageSub?.next({ page: this.page });
     this.getAllMyExpenseList();

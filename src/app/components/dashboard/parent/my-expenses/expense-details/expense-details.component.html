@@ -19,14 +19,14 @@
     <ng-template #noLoading>
       <div class="row mt-4">
         <div class="col-lg-6">
-          <div class="global-card p-4">
+          <div class="global-card p-4" *ngIf="expenseDetails.kids">
             <h5 class="fw-bold fs-5-1">
               {{'dashboard.kids.details.KidsInfo'|translate}}
             </h5>
             <div>
               <div class="d-flex gap-3 mt-4">
                 <img [src]="expenseDetails.kids.image_path" class="rounded-circle" width="50" height="50"
-                  alt="Provider-img">
+                  alt="Provider-img" onerror="src='assets/images/not-found/no-img.webp'">
                 <div class="">
                   <h3 class="fs-8 fw-normal text-muted-color mb-1">
                     {{'dashboard.kids.details.kid'|translate}}
@@ -79,7 +79,7 @@
               </div>
             </div>
           </div>
-          <div class="global-card p-4 mt-4">
+          <div class="global-card p-4 mt-4" *ngIf="expenseDetails.parents">
             <h5 class="fw-bold fs-5-1">
               {{'dashboard.kids.details.parentsInfo'|translate}}
             </h5>
@@ -114,14 +114,14 @@
               </div>
             </div>
           </div>
-          <div class="global-card p-4 mt-4">
+          <div class="global-card p-4 mt-4" *ngIf="expenseDetails.banks">
             <h5 class="fw-bold fs-5-1">
               {{'dashboard.kids.details.banksInfo'|translate}}
             </h5>
             <div>
               <div class="d-flex gap-3 mt-4">
                 <img [src]="expenseDetails.banks.image_path" class="rounded-circle" width="50" height="50"
-                  alt="Provider-img">
+                  alt="Provider-img" onerror="src='assets/images/not-found/no-img.webp'">
                 <div class="">
                   <h3 class="fs-8 fw-normal text-muted-color mb-1">
                     {{'dashboard.kids.details.bank'|translate}}
@@ -157,7 +157,7 @@
           </div>
         </div>
         <div class="col-lg-6">
-          <div class="global-card py-4 mt-lg-0 mt-4">
+          <div class="global-card py-4 mt-lg-0 mt-4" *ngIf="expenseDetails.installment_status_details.length>0">
             <h5 class="fw-bold fs-5-1 px-4">
               {{'dashboard.kids.details.installmentWay'|translate}}
             </h5>
@@ -194,17 +194,19 @@
               </div>
             </div>
           </div>
-          <div class="global-card p-4 mt-4">
+          <div class="global-card p-4" [class.mt-4]="expenseDetails.installment_status_details.length>0"
+            *ngIf="expenseDetails.organizations">
             <h5 class="fw-bold fs-5-1">
               {{'dashboard.kids.details.organizationInfo'|translate}}
             </h5>
             <div>
               <div class="d-flex gap-3 mt-4">
-                <img [src]="expenseDetails.organizations.image_path" class="rounded-circle" width="50" height="50"
-                  alt="Provider-img">
+                <img *ngIf="expenseDetails.organizations.image_path" [src]="expenseDetails.organizations.image_path"
+                  class="rounded-circle" width="50" height="50" alt="Provider-img"
+                  onerror="src='assets/images/not-found/no-img.webp'">
                 <div class="">
                   <h3 class="fs-8 fw-normal text-muted-color mb-1">
-                    {{'dashboard.kids.details.bank'|translate}}
+                    {{'dashboard.kids.details.school'|translate}}
                   </h3>
                   <div class="d-flex gap-xl-3 gap-lg-2 gap-md-3 gap-2 flex-wrap">
                     <p class="mb-0 text-dark-color small fw-500 fs-6">

@@ -49,12 +49,12 @@
         </p>
       </div>
       <div>
-        <p class="text-muted-color mb-0 fs-5-2">
+        <p class="text-muted-color  fs-5-2 mb-1">
           {{'labels.paidStatus'|translate}}
         </p>
-        <p class="mb-0 fs-5-2">
+        <span class="mb-0 fs-5-2 status-bg status-bg-{{item.status}}">
           {{item?.status||'--'}}
-        </p>
+        </span>
       </div>
     </div>
   </div>
