@@ -71,6 +71,9 @@ export const roots = {
     myExpenses: {
       getAll:'installment_requests',
       addEdit: 'installment_requests'
+    },
+    rqeuests:{
+      getAll:'bank/requests'
     }
   }
 }
