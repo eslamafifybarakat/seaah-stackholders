@@ -9,11 +9,11 @@
       {{email || ''}}
     </span>
   </p>
-  <form class="py-4">
+  <div class="py-4">
     <div class="mb-3 otp-code">
-      <code-input class="justify-content-center gap-2" [initialFocusField]="0" [code]="codeLength"
+      <code-input class="justify-content-center gap-2" [code]="codeLength"
         [isCodeHidden]="false" [isCodeHidden]="false" [codeLength]="5" (codeChanged)="onCodeChanged($event)"
-        (codeCompleted)="onCodeCompleted($event)">
+        (codeCompleted)="onCodeCompleted($event)" [initialFocusField]="0">
       </code-input>
     </div>
 
@@ -40,5 +40,5 @@
         </ng-container>
       </p>
     </div>
-  </form>
+  </div>
 </div>

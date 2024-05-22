@@ -65,8 +65,8 @@ export class RegistrationV1Component {
   }
   private updateMetaTagsForSEO(): void {
     let metaData: MetaDetails = {
-      title: 'تسجيل الدخول',
-      description: 'تسجيل الدخول',
+      title: 'إنشاء حساب  | سعة',
+      description: 'إنشاء حساب  | سعة',
       image: './assets/images/logo/logo-favicon.svg'
     }
     this.metadataService.updateMetaTagsForSEO(metaData);

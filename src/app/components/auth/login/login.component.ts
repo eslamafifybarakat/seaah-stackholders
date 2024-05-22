@@ -67,8 +67,8 @@ export class LoginComponent {
   }
   private updateMetaTagsForSEO(): void {
     let metaData: MetaDetails = {
-      title: 'تسجيل الدخول',
-      description: 'تسجيل الدخول',
+      title: 'تسجيل الدخول | سعة',
+      description: 'تسجيل الدخول | سعة',
       image: './assets/images/logo/logo-favicon.svg'
     }
     this.metadataService.updateMetaTagsForSEO(metaData);

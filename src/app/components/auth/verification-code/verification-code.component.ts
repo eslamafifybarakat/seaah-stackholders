@@ -47,7 +47,6 @@ export class VerificationCodeComponent {
   ngOnInit(): void {
     this.minute = this.time;
     let data = this.config.data;
-    console.log(data);
   }
 
   back(): void {
