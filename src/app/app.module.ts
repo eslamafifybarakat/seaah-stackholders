@@ -41,7 +41,7 @@ registerLocaleData(localeAr);
     FooterComponent,
     LoaderComponent,
 
-    BrowserModule.withServerTransition({ appId: 'my-app', }),
+    // BrowserModule.withServerTransition({ appId: 'my-app', }),
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
@@ -58,13 +58,13 @@ registerLocaleData(localeAr);
   ],
   providers: [
     DatePipe,
-     AsyncPipe,
-      DialogService,
-       MessageService,
-        ConfirmationService, 
-        AuthGuard,
-        interceptorProviders
-      ],
+    AsyncPipe,
+    DialogService,
+    MessageService,
+    ConfirmationService,
+    AuthGuard,
+    interceptorProviders
+  ],
   // providers: [DatePipe, AsyncPipe, DialogService, MessageService, ConfirmationService],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

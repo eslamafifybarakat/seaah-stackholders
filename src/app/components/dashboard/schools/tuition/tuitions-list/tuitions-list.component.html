@@ -19,7 +19,7 @@
               [class.border-red]="formControls?.status?.invalid && (formControls?.status?.dirty || formControls?.status?.touched)">
               <p-dropdown [options]="statusesList" formControlName="status" optionLabel="name" [filter]="true"
                 [dropdownIcon]="'fas fa-caret-down'" [virtualScroll]="true" [virtualScrollItemSize]="38" filterBy="name"
-                appendTo="body" [filterPlaceholder]="'placeholders.search'|translate" 
+                appendTo="body" [filterPlaceholder]="'placeholders.search'|translate"
                 [readonly]="isLoadingStatuses ||isLoadingKidsList"
                 scrollHeight="200px" emptyMessage="{{'general.no_result_found'|translate}}" [showClear]="false"
                 placeholder="{{'placeholders.status'|translate}}" (onChange)="onStatusSelected($event)">
@@ -44,14 +44,14 @@
             <i *ngIf="isLoadingSearch" class="pi pi-spin pi-spinner"></i>
             <i *ngIf="!isLoadingSearch&&search.value" class="pi pi-times text-danger pointer"
               (click)="clearSearch(search)"></i>
-            <input type="text" class="form-control border-0 bg-transparent px-1" #search
+            <input type="text" class="form-control border-0 bg-transparent px-1" #search [(ngModel)]="searchKeyword"
               (keyup)="handleSearch(search.value)" placeholder="{{'placeholders.search' | translate}}"
               [readOnly]="isLoadingSearch" aria-label="search" aria-describedby="basic-addon1">
           </span>
         </div>
       </div>
       <div class="d-flex gap-3 flex-lg-nowrap flex-wrap justify-content-sm-start justify-content-center"
-        *ngIf="kidsList.length>0">
+        *ngIf="kidsList.length>0||ifFilteration()">
         <!-- Add Kid -->
         <!-- <button class="btn btn-solid-main d-flex align-items-center gap-2 text-nowrap" (click)="addEditItem()">
           <i class="pi pi-plus"></i>
@@ -59,12 +59,12 @@
         </button> -->
         <!-- Filter Button -->
         <div [class.d-none]="dataStyleType=='list'">
-          <button [class.disabled-actions]="isLoadingKidsList" *ngIf="kidsList?.length>0&& !ifFilteration"
+          <button [class.disabled-actions]="isLoadingKidsList" *ngIf="kidsList?.length>0||ifFilteration()"
             class="btn btn-solid-main d-md-flex d-none align-items-center gap-2" (click)="filterItemModal()">
             <i class="pi pi-filter"></i>
           </button>
         </div>
-        <button [class.disabled-actions]="isLoadingKidsList" *ngIf="kidsList?.length>0 && !ifFilteration"
+        <button [class.disabled-actions]="isLoadingKidsList" *ngIf="kidsList?.length>0 ||ifFilteration()"
           class="btn btn-solid-main d-md-none d-flex align-items-center gap-2" (click)="filterItemModal()">
           <i class="pi pi-filter"></i>
         </button>
@@ -116,10 +116,11 @@
 
             <!-- Cards List -->
             <ng-template #noLoadingCards>
-              <ng-container *ngIf="kidsList.length>0; else noUsers">
+              <ng-container *ngIf="kidsList.length>0; else noTuition">
                 <ng-container *ngFor="let card of kidsList; let i=index">
                   <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-                    <kid-card [item]="card" (editItemHandler)="addEditItem($event,'edit')"></kid-card>
+                    <tuition-card [item]="card" (editItemHandler)="addEditItem($event,'edit')"
+                      (itemActionHandler)="addExpenses($event)"></tuition-card>
                   </div>
                 </ng-container>
               </ng-container>
@@ -130,20 +131,27 @@
                   [pageLinkSize]="3" (onPageChange)="onPageChange($event)"></p-paginator>
                 <div class="d-flex align-items-center gap-3">
                   <p-dropdown [styleClass]="'paginator-options-dropdown'" [dropdownIcon]="'fas fa-caret-down'" #dropdown
-                    [options]="rowsOptions" (onChange)="onPaginatorOptionsChange($event)"
+                    [options]="rowsOptions" (onChange)="onPaginatorOptionsChange($event)" [(ngModel)]="perPage"
                     (onHide)="hide()"></p-dropdown>
                 </div>
               </div>
             </ng-container>
           </div>
-          <ng-template #noUsers>
+          <ng-template #noTuition>
             <div class="d-flex flex-column justify-content-center align-items-center">
               <div>
                 <img src="assets/images/not-found/no-data.svg" alt="no-data">
               </div>
-              <p class="fw-500 mt-3">{{'general.no_records_found'|translate}}</p>
-              <!-- <button (click)="addEditItem()"
-                class="btn btn-solid-main d-flex justify-content-center align-items-center">{{'dashboard.kids.addKid'|translate}}</button> -->
+              <ng-container *ngIf="isSearch; else noSearchData">
+                <p class="fw-500">{{"general.noSearchResult"|translate}}</p>
+                <button (click)="clearTable()"
+                  class="btn btn-outline-main d-flex justify-content-center align-items-center">{{'general.reset'|translate}}</button>
+              </ng-container>
+              <ng-template #noSearchData>
+                <p class="fw-500 mt-3">{{'general.no_records_found'|translate}}</p>
+                <!-- <button (click)="addEditItem()"
+                    class="btn btn-solid-main d-flex justify-content-center align-items-center">{{'dashboard.kids.addKid'|translate}}</button> -->
+              </ng-template>
             </div>
           </ng-template>
         </div>
@@ -159,10 +167,11 @@
           </ng-container>
           <!-- Cards List -->
           <ng-template #noLoadingCards>
-            <ng-container *ngIf="kidsList.length>0; else noUsers2">
+            <ng-container *ngIf="kidsList.length>0; else noTuition2">
               <ng-container *ngFor="let card of kidsList; let i=index">
                 <div class="col-xl-3 col-lg-4 col-sm-6 mb-4">
-                  <kid-card (editItemHandler)="addEditItem($event,'edit')" [item]="card"></kid-card>
+                  <tuition-card (editItemHandler)="addEditItem($event,'edit')" [item]="card"
+                    (itemActionHandler)="addExpenses($event)"></tuition-card>
                 </div>
               </ng-container>
             </ng-container>
@@ -173,19 +182,27 @@
                 [pageLinkSize]="3" (onPageChange)="onPageChange($event)"></p-paginator>
               <div class="d-flex align-items-center gap-3">
                 <p-dropdown [styleClass]="'paginator-options-dropdown'" [dropdownIcon]="'fas fa-caret-down'" #dropdown
-                  [options]="rowsOptions" (onChange)="onPaginatorOptionsChange($event)" (onHide)="hide()"></p-dropdown>
+                  [(ngModel)]="perPage" [options]="rowsOptions" (onChange)="onPaginatorOptionsChange($event)"
+                  (onHide)="hide()"></p-dropdown>
               </div>
             </div>
           </ng-container>
         </div>
-        <ng-template #noUsers2>
+        <ng-template #noTuition2>
           <div class="d-flex flex-column justify-content-center align-items-center">
             <div>
               <img src="assets/images/not-found/no-data.svg" alt="no-data">
             </div>
-            <p class="fw-500 mt-3">{{'general.no_records_found'|translate}}</p>
-            <!-- <button (click)="addEditItem()"
-              class="btn btn-solid-main d-flex justify-content-center align-items-center">{{'dashboard.kids.addKid'|translate}}</button> -->
+            <ng-container *ngIf="isSearch; else noSearchData1">
+              <p class="fw-500">{{"general.noSearchResult"|translate}}</p>
+              <button (click)="clearTable()"
+                class="btn btn-outline-main d-flex justify-content-center align-items-center">{{'general.reset'|translate}}</button>
+            </ng-container>
+            <ng-template #noSearchData1>
+              <p class="fw-500 mt-3">{{'general.no_records_found'|translate}}</p>
+              <!-- <button (click)="addEditItem()"
+                  class="btn btn-solid-main d-flex justify-content-center align-items-center">{{'dashboard.kids.addKid'|translate}}</button> -->
+            </ng-template>
           </div>
         </ng-template>
       </div>

@@ -60,6 +60,11 @@
 }
 .p-dialog.p-confirm-dialog {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+  &:dir(rtl) {
+    svg {
+      transform: scaleX(-1);
+    }
+  }
   .p-dialog-content {
     padding: 1rem !important;
     overflow: visible !important;

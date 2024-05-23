@@ -29,6 +29,7 @@ import { KidsService } from '../../../services/kids.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Subject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { TuitionCardComponent } from '../tuition-card/tuition-card.component';
 
 @Component({
   standalone: true,
@@ -44,8 +45,8 @@ import { Router } from '@angular/router';
     DynamicTableLocalActionsComponent,
     DynamicTableV2Component,
     DynamicTableComponent,
+    TuitionCardComponent,
     DynamicSvgComponent,
-    KidCardComponent,
     SkeletonComponent
   ],
   selector: 'app-tuitions-list',
@@ -157,7 +158,7 @@ export class TuitionsListComponent {
       { field: 'status', header: 'dashboard.tableHeader.status', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.status'), type: 'status', sort: false, showDefaultSort: false, showAscSort: false, showDesSort: false, filter: false },
     ];
     this.updateMetaTagsForSEO();
-    this.getAllKids();
+    this.getAllTuitions();
   }
   private updateMetaTagsForSEO(): void {
     let metaData: MetaDetails = {
@@ -197,8 +198,8 @@ export class TuitionsListComponent {
   }
 
   // Start Kids List Functions
-  getAllKids(isFiltering?: boolean): void {
-    isFiltering ? this.publicService.showGlobalLoader.next(true) : this.isLoadingKidsList = true;
+  getAllTuitions(isFiltering?: boolean): void {
+    this.isSearch ? this.publicService.showGlobalLoader.next(true) : this.isLoadingKidsList = true;
     let kidsSubscription: Subscription = this.kidsService?.getKidsList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null, this.statusValue ?? null, this.schoolId ?? null)
       .pipe(
         tap((res: KidsListApiResponse) => {
@@ -259,12 +260,12 @@ export class TuitionsListComponent {
     // ref.onClose.subscribe((res: any) => {
     //   if (res?.listChanged) {
     //     if (this.kidsCount == 0) {
-    //       this.getAllKids();
+    //       this.getAllTuitions();
     //     } else {
     //       this.page = 1;
     //       this.publicService?.changePageSub?.next({ page: this.page });
     //       this.dataStyleType == 'grid' ? this.changePageActiveNumber(1) : '';
-    //       this.dataStyleType == 'grid' ? this.getAllKids() : '';
+    //       this.dataStyleType == 'grid' ? this.getAllTuitions() : '';
     //     }
     //   }
     // });
@@ -288,7 +289,7 @@ export class TuitionsListComponent {
   }
   private processDeleteResponse(res: DeleteKidApiResponse): void {
     if (res.status === 200) {
-      this.getAllKids();
+      this.getAllTuitions();
       this.handleSuccess(res.message);
     } else {
       this.handleError(res.message);
@@ -305,7 +306,10 @@ export class TuitionsListComponent {
     this.perPage = 10;
     this.searchKeyword = keyWord;
     this.isLoadingKidsList = true;
-    this.getAllKids(true);
+    this.isSearch = true;
+    this.publicService?.changePageSub?.next({ page: this.page });
+    this.kidsList?.length <= 0 && this.dataStyleType == 'list' ? this.getAllTuitions(true) : '';
+    this.dataStyleType == 'grid' ? this.getAllTuitions() : '';
     if (keyWord?.length > 0) {
       this.isLoadingSearch = true;
     }
@@ -314,7 +318,9 @@ export class TuitionsListComponent {
   clearSearch(search: any): void {
     search.value = null;
     this.searchKeyword = null;
-    this.getAllKids(true);
+    this.publicService?.changePageSub?.next({ page: this.page });
+    this.kidsList?.length <= 0 && this.dataStyleType == 'list' ? this.getAllTuitions(true) : '';
+    this.dataStyleType == 'grid' ? this.getAllTuitions(true) : '';
   }
   // End Search Functions
 
@@ -332,7 +338,7 @@ export class TuitionsListComponent {
     //     this.page = 1;
     //     this.filtersArray = res.conditions;
     //     this.filterCards = res.conditions;
-    //     this.getAllKids(true);
+    //     this.getAllTuitions(true);
     //   }
     // });
   }
@@ -397,7 +403,7 @@ export class TuitionsListComponent {
     });
     this.page = 1;
     // this.publicService?.changePageSub?.next({ page: this.page });
-    this.getAllKids();
+    this.getAllTuitions();
   }
   // Clear table Function
   clearTable(): void {
@@ -406,8 +412,10 @@ export class TuitionsListComponent {
     this.filtersArray = [];
     this.page = 1;
     this.publicService.resetTable.next(true);
+    this.isSearch = false;
+    this.getAllTuitions();
+
     // this.publicService?.changePageSub?.next({ page: this.page });
-    this.getAllKids();
   }
   // Sort table Functions
   sortItems(event: any): void {
@@ -416,27 +424,27 @@ export class TuitionsListComponent {
         column: event?.field,
         order: 'asc'
       }
-      this.getAllKids();
+      this.getAllTuitions();
     } else if (event?.order == -1) {
       this.sortObj = {
         column: event?.field,
         order: 'desc'
       }
-      this.getAllKids();
+      this.getAllTuitions();
     }
   }
 
   // Start Pagination Functions
   onPageChange(e: any): void {
     this.page = e?.page + 1;
-    this.getAllKids();
+    this.getAllTuitions();
   }
   onPaginatorOptionsChange(e: any): void {
     this.perPage = e?.value;
     this.pagesCount = Math?.ceil(this.kidsCount / this.perPage);
     this.page = 1;
     this.publicService?.changePageSub?.next({ page: this.page });
-    this.dataStyleType == 'grid' ? this.getAllKids() : '';
+    this.dataStyleType == 'grid' ? this.getAllTuitions() : '';
   }
   changePageActiveNumber(number: number): void {
     this.paginator?.changePage(number - 1);
@@ -458,12 +466,12 @@ export class TuitionsListComponent {
     ref.onClose.subscribe((res: any) => {
       if (res?.listChanged) {
         if (this.kidsCount == 0) {
-          this.getAllKids();
+          this.getAllTuitions();
         } else {
           this.page = 1;
           this.publicService?.changePageSub?.next({ page: this.page });
           this.dataStyleType == 'grid' ? this.changePageActiveNumber(1) : '';
-          this.dataStyleType == 'grid' ? this.getAllKids() : '';
+          this.dataStyleType == 'grid' ? this.getAllTuitions() : '';
         }
       }
     });
@@ -531,7 +539,7 @@ export class TuitionsListComponent {
       let patchStatus: any = this.statusesList[0];
       this.filterForm?.get('status').setValue(patchStatus);
     }
-    this.getAllKids();
+    this.getAllTuitions();
   }
   // End Status List Functions
 
