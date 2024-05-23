@@ -16,6 +16,7 @@ import { Router, RouterModule } from '@angular/router';
 import { DialogService } from 'primeng/dynamicdialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { Component } from '@angular/core';
+import { MaxDigitsDirective } from '../../dashboard/directives/max-digits.directive';
 @Component({
   standalone: true,
   imports: [
@@ -27,7 +28,10 @@ import { Component } from '@angular/core';
     TranslateModule,
     CommonModule,
     RouterModule,
-    FormsModule
+    FormsModule,
+
+    // Directives
+    MaxDigitsDirective
   ],
   selector: 'registration-v1',
   templateUrl: './registration-v1.component.html',
@@ -137,10 +141,10 @@ export class RegistrationV1Component {
     this.location.back();
   }
   handleInput(event: Event, max?: number | null): void {
-    const inputElement: any = event?.target as HTMLInputElement;
-    if (inputElement?.value?.length > max) {
-      inputElement.value = inputElement?.value?.slice(0, max);
-    }
+    // const inputElement: any = event?.target as HTMLInputElement;
+    // if (inputElement?.value?.length > max) {
+    //   inputElement.value = inputElement?.value?.slice(0, max);
+    // }
   }
 
   /* --- Handle api requests error messages --- */

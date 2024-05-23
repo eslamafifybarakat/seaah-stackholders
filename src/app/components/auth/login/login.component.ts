@@ -17,6 +17,7 @@ import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { Component } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
+import { MaxDigitsDirective } from '../../dashboard/directives/max-digits.directive';
 @Component({
   standalone: true,
   imports: [
@@ -28,7 +29,10 @@ import { DialogService } from 'primeng/dynamicdialog';
     TranslateModule,
     CommonModule,
     RouterModule,
-    FormsModule
+    FormsModule,
+
+    // Directives
+    MaxDigitsDirective
   ],
   selector: 'login',
   templateUrl: './login.component.html',
@@ -40,7 +44,7 @@ export class LoginComponent {
   loginForm = this.fb.group({
     phone: ['', [
       Validators.required,
-      Validators.pattern(patterns.phone)
+      // Validators.pattern(patterns.phone)
     ]
     ]
   });
@@ -84,7 +88,7 @@ export class LoginComponent {
       let loginSubscription: Subscription = this.authService?.login(formData)?.pipe(
         tap((res: LoginApiResponse) => this.handleSuccessLoggedIn(res)),
         catchError(err => this.handleError(err)),
-        finalize(() => this.finalizeLogin())
+        finalize(() => this.publicService.showGlobalLoader.next(false))
       ).subscribe();
       this.subscriptions.push(loginSubscription);
     } else {
@@ -97,18 +101,15 @@ export class LoginComponent {
       // this.authService.saveToken(res?.data?.user_info?.token);
       // this.getCurrentUserInformation();
       this.handleSuccess(res?.message);
-      this.verfiyAccountModal(this.loginForm?.value);
+      this.verifyAccountModal(this.loginForm?.value);
     } else {
       this.handleError(res?.message);
     }
   }
-  private finalizeLogin(): void {
-
-  }
   // End Login Functions
 
-  // Start Verfiy Account Modal
-  verfiyAccountModal(data?: any): void {
+  // Start Verify Account Modal
+  verifyAccountModal(data?: any): void {
     const ref: any = this.dialogService?.open(VerificationCodeComponent, {
       data: {
         data
@@ -160,12 +161,12 @@ export class LoginComponent {
 
   /* --- Handle api requests messages --- */
   private handleSuccess(msg: string | null): any {
-    this.setMessage(msg || this.publicService.translateTextFromJson('general.successRequest'),'success');
+    this.setMessage(msg || this.publicService.translateTextFromJson('general.successRequest'), 'success');
   }
   private handleError(err: string | null): any {
-    this.setMessage(err || this.publicService.translateTextFromJson('general.errorOccur'),'error');
+    this.setMessage(err || this.publicService.translateTextFromJson('general.errorOccur'), 'error');
   }
-  private setMessage(message: string,type?:string): void {
+  private setMessage(message: string, type?: string): void {
     this.alertsService.openToast(type, type, message);
     this.publicService.showGlobalLoader.next(false);
   }

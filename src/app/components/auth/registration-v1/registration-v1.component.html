@@ -55,6 +55,7 @@
           <input id="nationalIdentify" type="number" class="form-control" formControlName="nationalIdentify"
             placeholder="{{'placeholders.nationalIdentify'|translate}}"
             [class.border-red]="(formControls?.nationalIdentify?.touched||formControls?.nationalIdentify?.dirty)&&formControls?.nationalIdentify?.invalid"
+            MaxDigits [maxNumber]="10"
             (input)="handleInput($event,10); publicService?.clearValidationErrors(formControls?.nationalIdentify)"
             maxlength="10">
           <ng-container
@@ -86,13 +87,13 @@
           <label class="fw-500" for="phone">
             {{'labels.phone'|translate}}
           </label>
-          <div class="input-number input-group bg-white-color d-flex flex-nowrap w-100"
+          <div class="input-number input-group bg-white-color d-flex flex-nowrap w-100 overflow-hidden"
             [class.border-red]="formControls?.phone?.invalid && (formControls?.phone?.dirty || formControls?.phone?.touched)">
             <span class="input-group-text border-0 fs-6-1" id="basic-addon1">
               +966
             </span>
             <input id="phone" type="number" class="form-control border-0" formControlName="phone"
-              placeholder="{{'placeholders.phone'|translate}}"
+              placeholder="{{'placeholders.phone'|translate}}" MaxDigits [maxNumber]="9"
               (input)="handleInput($event,9); publicService?.clearValidationErrors(formControls?.phone)" maxlength="9">
           </div>
           <ng-container

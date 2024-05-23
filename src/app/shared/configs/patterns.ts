@@ -4,7 +4,7 @@ export const patterns = {
   userName: /[A-Za-z]/,
   vatNumber: /^[0-9]{11,20}/,
   nationalIdentity: /^\d{10}$/,
-  phone: /^\d{9}$/,
+  phone: '5[0-9]{8}',
   // phone: /^\+966\d{9}$/,
   // phone: '051[01]\d{5}'
 };

@@ -14,7 +14,7 @@
     <div class="mb-3">
       <label for="phone">{{ 'labels.phone' | translate }}</label>
       <input id="phone" class="form-control" type="text" placeholder="{{ 'placeholders.phone' | translate }}"
-        formControlName="phone"
+        formControlName="phone" MaxDigits [maxNumber]="9"
         [class.border-red]="(formControls.phone.touched || formControls.phone.dirty) && formControls.phone.invalid" />
       <ng-container *ngIf="formControls.phone.invalid && (formControls.phone.dirty || formControls.phone.touched)">
         <div class="mt-1">
