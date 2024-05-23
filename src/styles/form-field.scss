@@ -226,6 +226,7 @@ input::-webkit-inner-spin-button {
     }
   }
 }
+
 .p-dropdown .p-dropdown-clear-icon {
   &:dir(rtl) {
     left: 3rem !important;
@@ -450,4 +451,8 @@ body:dir(rtl) {
   .form-control {
     border: 0 !important;
   }
+}
+
+timesicon {
+  width: 2rem !important;
 }

@@ -1,7 +1,8 @@
+import { keys } from './../../../../../shared/configs/localstorage-key';
 // Modules
 import { Paginator, PaginatorModule } from 'primeng/paginator';
 import { TranslateModule } from '@ngx-translate/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 
 // Components
 import { DynamicTableLocalActionsComponent } from '../../../../../shared/components/dynamic-table-local-actions/dynamic-table-local-actions.component';
@@ -19,7 +20,7 @@ import { DeleteKidApiResponse } from '../../../../../interfaces/dashboard/kids';
 import { AlertsService } from '../../../../../services/generic/alerts.service';
 import { PublicService } from '../../../../../services/generic/public.service';
 import { catchError, debounceTime, finalize, tap } from 'rxjs/operators';
-import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, PLATFORM_ID, ViewChild } from '@angular/core';
 import { KidsService } from '../../../services/kids.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Subject, Subscription } from 'rxjs';
@@ -30,6 +31,7 @@ import { AddEditKidComponent } from '../../kids/add-edit-kid/add-edit-kid.compon
 import { PayMultiTuitionNowModalComponent } from '../pay-multi-tuition-now-modal/pay-multi-tuition-now-modal.component';
 import { InstallmentRequestsService } from '../../../services/installment_requests.service';
 import { PayTuitionNowModalComponent } from '../../kids/pay-tuition-now-modal/pay-tuition-now-modal.component';
+import { ExpenseCardComponent } from '../expense-card/expense-card.component';
 
 
 @Component({
@@ -42,11 +44,15 @@ import { PayTuitionNowModalComponent } from '../../kids/pay-tuition-now-modal/pa
     PaginatorModule,
     CommonModule,
     FormsModule,
+
+    // Components
     DynamicTableLocalActionsComponent,
     DynamicTableV2Component,
     DynamicTableComponent,
+    ExpenseCardComponent,
     DynamicSvgComponent,
-    SkeletonComponent],
+    SkeletonComponent,
+  ],
   templateUrl: './my-expenses-list.component.html',
   styleUrls: ['./my-expenses-list.component.scss']
 })
@@ -117,6 +123,7 @@ export class MyExpensesListComponent {
     private localizationLanguageService: LocalizationLanguageService,
     private installmentRequestsService: InstallmentRequestsService,
     private confirmationService: ConfirmationService,
+    @Inject(PLATFORM_ID) private platformId: Object,
     private metadataService: MetadataService,
     private publicService: PublicService,
     private dialogService: DialogService,
@@ -129,7 +136,9 @@ export class MyExpensesListComponent {
     localizationLanguageService.updatePathAccordingLang();
   }
   ngOnInit(): void {
-    this.currentLanguage = this.publicService.getCurrentLanguage();
+    if (isPlatformBrowser(this.platformId)) {
+      this.currentLanguage = window?.localStorage?.getItem(keys?.language);
+    }
     this.loadData();
     this.searchSubject.pipe(
       debounceTime(500) // Throttle time in milliseconds (1 seconds)
@@ -216,13 +225,13 @@ export class MyExpensesListComponent {
         item['parentName'] = item?.kids?.name;
 
         item['schoolId'] = item?.kids?.schools?.id;
-        let schoolNameObj: any = JSON.parse(item?.kids?.schools?.name[this.currentLanguage] || '{}');
+        let schoolNameObj: any = JSON.parse(item?.kids?.schools?.name.en || '{}');
         item['schoolName'] = schoolNameObj[this.currentLanguage];
         let kidAddressObj: any = JSON.parse(item?.kids?.address || '{}');
         item['kidAddress'] = `${kidAddressObj?.region ?? ''}, ${kidAddressObj?.city ?? ''}, ${kidAddressObj?.street ?? ''}, ${kidAddressObj?.zip ?? ''}`;
 
         item['bankId'] = item?.banks?.id;
-        let bankNameObj: any = JSON.parse(item?.banks?.name[this.currentLanguage] || '{}');
+        let bankNameObj: any = JSON.parse(item?.banks?.name.en || '{}');
         item['bankName'] = bankNameObj[this.currentLanguage];
 
         item['status'] = item?.status;
@@ -344,7 +353,8 @@ export class MyExpensesListComponent {
     this.searchKeyword = keyWord;
     this.isSearch = true;
     this.isLoadingMyExpenseList = true;
-    this.MyExpenseList?.length <= 0 ? this.getAllMyExpenseList(true) : '';
+    this.MyExpenseList?.length <= 0 && this.dataStyleType == 'list' ? this.getAllMyExpenseList(true) : '';
+    this.dataStyleType == 'grid' ? this.getAllMyExpenseList() : '';
     this.publicService?.changePageSub?.next({ page: this.page });
     // this.getAllMyExpenseList(true);
     if (keyWord?.length > 0) {
@@ -356,7 +366,8 @@ export class MyExpensesListComponent {
     search.value = null;
     this.searchKeyword = null;
     this.publicService?.changePageSub?.next({ page: this.page });
-    this.MyExpenseList?.length <= 0 ? this.getAllMyExpenseList(true) : '';
+    this.MyExpenseList?.length <= 0 && this.dataStyleType == 'list' ? this.getAllMyExpenseList(true) : '';
+    this.dataStyleType == 'grid' ? this.getAllMyExpenseList() : '';
     // this.getAllMyExpenseList(true);
   }
   // End Search Functions

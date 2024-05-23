@@ -120,7 +120,7 @@
 
             <!-- Cards List -->
             <ng-template #noLoadingCards>
-              <ng-container *ngIf="kidsList.length>0; else noUsers">
+              <ng-container *ngIf="kidsList.length>0; else noKids">
                 <ng-container *ngFor="let card of kidsList; let i=index">
                   <div class="col-xl-4 col-lg-6 col-md-6 mb-4">
                     <kid-card [item]="card" (editItemHandler)="addEditItem($event,'edit')"
@@ -143,14 +143,21 @@
               </div>
             </ng-container>
           </div>
-          <ng-template #noUsers>
-            <div class="d-flex flex-column justify-content-center align-items-center">
+          <ng-template #noKids>
+            <div class="d-flex flex-column justify-content-center align-items-center pt-5">
               <div>
                 <img src="assets/images/not-found/no-data.svg" alt="no-data">
               </div>
-              <p class="fw-500 mt-3">{{'general.no_records_found'|translate}}</p>
-              <button (click)="addEditItem()"
-                class="btn btn-solid-main d-flex justify-content-center align-items-center">{{'dashboard.kids.addKid'|translate}}</button>
+              <ng-container *ngIf="isSearch; else noSearchData1">
+                <p class="fw-500">{{"general.noSearchResult"|translate}}</p>
+                <button (click)="clearTable()"
+                  class="btn btn-outline-main d-flex justify-content-center align-items-center">{{'general.reset'|translate}}</button>
+              </ng-container>
+              <ng-template #noSearchData1>
+                <p class="fw-500 mt-3">{{'general.no_records_found'|translate}}</p>
+                <button (click)="addEditItem()"
+                  class="btn btn-solid-main d-flex justify-content-center align-items-center">{{'dashboard.kids.addKid'|translate}}</button>
+              </ng-template>
             </div>
           </ng-template>
         </div>
@@ -161,12 +168,12 @@
       <div class="container-fluid">
         <div class="row pt-4">
           <!-- Loading Cards -->
-          <ng-container *ngIf="isLoadingKidsList; else noLoadingCards">
+          <ng-container *ngIf="isLoadingKidsList; else noLoadingCards2">
             <skeleton type="usersList"></skeleton>
           </ng-container>
           <!-- Cards List -->
-          <ng-template #noLoadingCards>
-            <ng-container *ngIf="kidsList.length>0; else noUsers2">
+          <ng-template #noLoadingCards2>
+            <ng-container *ngIf="kidsList.length>0; else noKids2">
               <ng-container *ngFor="let card of kidsList; let i=index">
                 <div class="col-xl-4 col-lg-6 col-sm-6 mb-4">
                   <kid-card (editItemHandler)="addEditItem($event,'edit')" (itemDetailsHandler)="itemDetails($event)"
@@ -189,14 +196,21 @@
             </div>
           </ng-container>
         </div>
-        <ng-template #noUsers2>
+        <ng-template #noKids2>
           <div class="d-flex flex-column justify-content-center align-items-center">
             <div>
               <img src="assets/images/not-found/no-data.svg" alt="no-data">
             </div>
-            <p class="fw-500 mt-3">{{'general.no_records_found'|translate}}</p>
-            <button (click)="addEditItem()"
-              class="btn btn-solid-main d-flex justify-content-center align-items-center">{{'dashboard.kids.addKid'|translate}}</button>
+            <ng-container *ngIf="isSearch; else noSearchData">
+              <p class="fw-500">{{"general.noSearchResult"|translate}}</p>
+              <button (click)="clearTable()"
+                class="btn btn-outline-main d-flex justify-content-center align-items-center">{{'general.reset'|translate}}</button>
+            </ng-container>
+            <ng-template #noSearchData>
+              <p class="fw-500 mt-3">{{'general.no_records_found'|translate}}</p>
+              <button (click)="addEditItem()"
+                class="btn btn-solid-main d-flex justify-content-center align-items-center">{{'dashboard.kids.addKid'|translate}}</button>
+            </ng-template>
           </div>
         </ng-template>
       </div>

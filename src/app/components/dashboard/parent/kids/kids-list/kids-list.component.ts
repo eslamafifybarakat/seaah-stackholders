@@ -379,7 +379,8 @@ export class KidsListComponent {
     this.isSearch = true;
     this.isLoadingKidsList = true;
     this.publicService?.changePageSub?.next({ page: this.page });
-    this.kidsList?.length <= 0 ? this.getAllKids(true) : '';
+    this.kidsList?.length <= 0 && this.dataStyleType == 'list' ? this.getAllKids(true) : '';
+    this.dataStyleType == 'grid' ? this.getAllKids() : '';
     if (keyWord?.length > 0) {
       this.isLoadingSearch = true;
     }
@@ -388,7 +389,8 @@ export class KidsListComponent {
   clearSearch(search: any): void {
     search.value = null;
     this.searchKeyword = null;
-    this.kidsList?.length <= 0 ? this.getAllKids(true) : '';
+    this.kidsList?.length <= 0 && this.dataStyleType == 'list' ? this.getAllKids(true) : '';
+    this.dataStyleType == 'grid' ? this.getAllKids() : '';
     this.publicService?.changePageSub?.next({ page: this.page });
 
   }

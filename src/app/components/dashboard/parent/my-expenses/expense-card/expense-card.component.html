@@ -1,0 +1,79 @@
+<div class="global-card p-3 h-100 d-flex flex-column justify-content-between" id="kid-card">
+  <div class="overflow-hidden">
+    <div class="d-flex gap-3 flex-nowrap">
+      <div class="kid-image">
+        <img class="w-100 h-100" [src]="item?.kidImage" alt="organization">
+      </div>
+      <div>
+        <div>
+          <p class="text-muted-color mb-0 fs-5-2">
+            {{'dashboard.tableHeader.nameStudent'|translate}}
+          </p>
+          <p class="mb-0 fs-5-2">
+            {{item?.kidName||'--'}}
+          </p>
+        </div>
+        <div class="mt-2">
+          <p class="text-muted-color mb-0 fs-5-2">
+            {{'dashboard.tableHeader.schoolName'|translate}}
+          </p>
+          <p class="mb-0 fs-5-2 name">
+            {{item?.schoolName||'--'}}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="mt-3">
+      <p class="text-muted-color mb-0 fs-5-2">
+        {{'dashboard.tableHeader.bankName'|translate}}
+      </p>
+      <p class="mb-0 fs-5-2">
+        {{item?.bankName||'--'}}
+      </p>
+    </div>
+    <div class="d-flex gap-lg-4 gap-3  flex-wrap mt-3">
+      <div>
+        <p class="text-muted-color  fs-5-2 mb-1">
+          {{'labels.paidStatus'|translate}}
+        </p>
+        <span class="mb-0 fs-5-2 status-bg status-bg-{{item.status}}">
+          {{item?.status||'--'}}
+        </span>
+      </div>
+    </div>
+  </div>
+  <div>
+    <hr>
+    <div class="d-flex justify-content-end gap-3 flex-wrap">
+      <!-- <button (click)="itemDetails(item)" class="badge-btn d-flex align-items-center justify-content-center">
+        {{'general.details'|translate}}
+      </button> -->
+      <ng-container *ngIf="item?.active==false">
+        <button
+          class="btn btn-solid-main badge-btn px-3 position-relative overflow-hidden d-flex align-items-center justify-content-center"
+          (click)="itemActionEmitter(item)">
+          <div *ngIf="item?.isLoadingActive"
+            class="btn-overlay position-absolute d-flex justify-content-center align-items-center">
+            <i class="pi pi-spin pi-spinner text-main-color"></i>
+          </div>
+          <span class="fw-500">
+            {{'general.details'|translate}}
+          </span>
+        </button>
+      </ng-container>
+      <ng-container *ngIf="item?.active==true">
+        <span class="status-bg status-bg-completed d-flex align-items-center justify-content-center">
+          {{'general.expensesPaid' | translate}}
+        </span>
+      </ng-container>
+      <button *ngIf="item?.status!=='Approved'" (click)="editItem(item)"
+        class="badge-btn d-flex align-items-center justify-content-center">
+        {{'general.edit'|translate}}
+      </button>
+      <button *ngIf="item?.status!=='Approved'" (click)="deleteItem(item)"
+        class="badge-btn badge-danger d-flex align-items-center justify-content-center">
+        {{'general.delete'|translate}}
+      </button>
+    </div>
+  </div>
+</div>
