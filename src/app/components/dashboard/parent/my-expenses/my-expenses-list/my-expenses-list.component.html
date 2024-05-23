@@ -131,7 +131,7 @@
                   [pageLinkSize]="3" (onPageChange)="onPageChange($event)"></p-paginator>
                 <div class="d-flex align-items-center gap-3">
                   <p-dropdown [styleClass]="'paginator-options-dropdown'" [dropdownIcon]="'fas fa-caret-down'" #dropdown
-                    [options]="rowsOptions" (onChange)="onPaginatorOptionsChange($event)"
+                    [options]="rowsOptions" (onChange)="onPaginatorOptionsChange($event)" [(ngModel)]="perPage"
                     (onHide)="hide()"></p-dropdown>
                 </div>
               </div>
@@ -174,7 +174,8 @@
                 [pageLinkSize]="3" (onPageChange)="onPageChange($event)"></p-paginator>
               <div class="d-flex align-items-center gap-3">
                 <p-dropdown [styleClass]="'paginator-options-dropdown'" [dropdownIcon]="'fas fa-caret-down'" #dropdown
-                  [options]="rowsOptions" (onChange)="onPaginatorOptionsChange($event)" (onHide)="hide()"></p-dropdown>
+                  [options]="rowsOptions" [(ngModel)]="perPage" (onChange)="onPaginatorOptionsChange($event)"
+                  (onHide)="hide()"></p-dropdown>
               </div>
             </div>
           </ng-container>

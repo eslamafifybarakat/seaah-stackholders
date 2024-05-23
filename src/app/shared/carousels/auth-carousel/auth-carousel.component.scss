@@ -3,7 +3,7 @@
   background-position: 22% 70%;
   background-repeat: no-repeat;
   .slide-img {
-    height: 24rem;
+    height: 20rem;
     img {
       object-fit: fill;
     }
@@ -12,6 +12,7 @@
 :host::ng-deep {
   #auth-slider {
     .p-carousel {
+      direction: ltr;
       .p-carousel-indicators {
         padding-bottom: 0;
         .p-carousel-indicator {
@@ -19,11 +20,14 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            opacity: 30%;
+            background-color: var(--bg-white-color);
           }
           &.p-highlight button {
-            background-color: var(--bg-white-color);
+            background-color: var(--bg-main-color);
             opacity: 1;
+            width: 17px;
+            height: 7px;
+            border-radius: 10px;
           }
         }
       }

@@ -1,11 +1,11 @@
 #auth-form {
   min-height: 100vh;
   .form-content {
-    min-height: 95.5vh;
+    min-height: 100vh;
   }
   .slider {
     right: 0;
-    height: 95.5vh;
+    height: 100vh;
   }
   &:dir(rtl) {
     .slider {
@@ -14,15 +14,15 @@
     }
   }
   .bg-form {
-    background-color: var(--bg-main-color);
+    background-color: #0064bd;
     // background-image: url(../../../assets/images/auth/auth-bg-top.svg);
     background-repeat: no-repeat;
     background-position: top right;
     background-size: 60%;
-    &.round-banner {
-      border-radius: 15px;
-      margin: 1rem;
-    }
+    // &.round-banner {
+    //   border-radius: 15px;
+    //   margin: 1rem;
+    // }
     & > div {
       // background-image: url(../../../assets/images/auth/auth-bg-bottom.svg);
       background-repeat: no-repeat;
