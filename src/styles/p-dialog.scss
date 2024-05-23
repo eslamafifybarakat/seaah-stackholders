@@ -1,4 +1,9 @@
 .p-dialog {
+  // font-family: "Poppins", sans-serif !important;
+  // &:dir(rtl) {
+  //   font-family: "IBM Plex Sans Arabic", sans-serif;
+  // }
+  font-family: "Almarai", sans-serif;
   .p-dialog-header {
     border-radius: var(--border-radius-dialog) var(--border-radius-dialog) 0 0;
   }
@@ -7,10 +12,6 @@
   }
   .p-dialog-header-icon {
     border-radius: 50%;
-  }
-  font-family: "Poppins", sans-serif !important;
-  &:dir(rtl) {
-    font-family: "Almarai", sans-serif;
   }
 }
 @media (max-width: 767px) {
@@ -62,7 +63,7 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
   &:dir(rtl) {
     svg {
-      transform: scaleX(-1);
+      transform: scaleX(1);
     }
   }
   .p-dialog-content {

@@ -4,7 +4,7 @@
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1050;  // High z-index to ensure it is above other content
+    z-index: 1050; // High z-index to ensure it is above other content
     width: 100%;
   }
 }
@@ -32,9 +32,15 @@
   }
 
   &:dir(rtl) {
-    .dash, .dash-trimmed, .dash-md-screen {
+    .dash,
+    .dash-trimmed,
+    .dash-md-screen {
       margin-right: 6rem; // Adjust for right-to-left languages
       margin-left: 0;
+    }
+    .dash-trimmed {
+      margin-right: 16.5rem !important;
+      margin-left: 0 !important;
     }
   }
 }
