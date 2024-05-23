@@ -23,7 +23,7 @@
             <i *ngIf="isLoadingSearch" class="pi pi-spin pi-spinner"></i>
             <i *ngIf="!isLoadingSearch&&search.value" class="pi pi-times text-danger pointer"
               (click)="clearSearch(search)"></i>
-            <input type="text" class="form-control border-0 bg-transparent px-1" #search
+            <input type="text" class="form-control border-0 bg-transparent px-1" #search [(ngModel)]="searchKeyword"
               (keyup)="handleSearch(search.value)" placeholder="{{'placeholders.search' | translate}}"
               [readOnly]="isLoadingSearch" aria-label="search" aria-describedby="basic-addon1">
           </span>
@@ -31,7 +31,7 @@
       </div>
 
       <div class="d-flex gap-3 flex-lg-nowrap flex-wrap justify-content-sm-start justify-content-center"
-        *ngIf="tuitionExpensesList.length>0">
+        *ngIf="tuitionExpensesList.length>0||ifFilteration()">
         <!-- Add Kid -->
         <button class="btn btn-solid-main d-flex align-items-center gap-2 text-nowrap" (click)="addEditItem()">
           <i class="pi pi-plus"></i>
@@ -40,14 +40,14 @@
         <!-- Filter Button -->
         <div [class.d-none]="dataStyleType=='list'">
           <button [class.disabled-actions]="isLoadingTuitionExpensesList"
-            *ngIf="tuitionExpensesList?.length>0&& !ifFilteration"
+            *ngIf="tuitionExpensesList?.length>0||ifFilteration()"
             class="btn btn-solid-main d-md-flex d-none align-items-center gap-2" (click)="filterItemModal()">
             <i class="pi pi-filter"></i>
           </button>
         </div>
 
         <button [class.disabled-actions]="isLoadingTuitionExpensesList"
-          *ngIf="tuitionExpensesList?.length>0 && !ifFilteration"
+          *ngIf="tuitionExpensesList?.length>0 ||ifFilteration()"
           class="btn btn-solid-main d-md-none d-flex align-items-center gap-2" (click)="filterItemModal()">
           <i class="pi pi-filter"></i>
         </button>
@@ -113,7 +113,7 @@
                   [pageLinkSize]="3" (onPageChange)="onPageChange($event)"></p-paginator>
                 <div class="d-flex align-items-center gap-3">
                   <p-dropdown [styleClass]="'paginator-options-dropdown'" [dropdownIcon]="'fas fa-caret-down'" #dropdown
-                    [options]="rowsOptions" (onChange)="onPaginatorOptionsChange($event)"
+                    [options]="rowsOptions" (onChange)="onPaginatorOptionsChange($event)" [(ngModel)]="perPage"
                     (onHide)="hide()"></p-dropdown>
                 </div>
               </div>
@@ -157,7 +157,8 @@
                 [pageLinkSize]="3" (onPageChange)="onPageChange($event)"></p-paginator>
               <div class="d-flex align-items-center gap-3">
                 <p-dropdown [styleClass]="'paginator-options-dropdown'" [dropdownIcon]="'fas fa-caret-down'" #dropdown
-                  [options]="rowsOptions" (onChange)="onPaginatorOptionsChange($event)" (onHide)="hide()"></p-dropdown>
+                  [(ngModel)]="perPage" [options]="rowsOptions" (onChange)="onPaginatorOptionsChange($event)"
+                  (onHide)="hide()"></p-dropdown>
               </div>
             </div>
           </ng-container>

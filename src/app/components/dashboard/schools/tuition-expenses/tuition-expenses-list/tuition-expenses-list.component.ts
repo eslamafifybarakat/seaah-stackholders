@@ -117,8 +117,8 @@ export class TuitionExpensesListComponent {
   }
   private loadData(): void {
     this.tableHeaders = [
-      { field: 'titleName', header: 'dashboard.tableHeader.title', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.title'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
-      { field: 'detailsName', header: 'dashboard.tableHeader.details', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.details'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
+      { field: 'title', header: 'dashboard.tableHeader.title', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.title'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
+      { field: 'details', header: 'dashboard.tableHeader.details', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.details'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
       { field: 'level', header: 'dashboard.tableHeader.level', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.level'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
       { field: 'total', header: 'dashboard.tableHeader.total', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.total'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
       { field: 'deserved_date', header: 'dashboard.tableHeader.deservedDate', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.deservedDate'), type: 'date', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
@@ -165,7 +165,7 @@ export class TuitionExpensesListComponent {
 
   // Start Tuition Expenses List Functions
   getAllTuitionExpenses(isFiltering?: boolean): void {
-    isFiltering ? this.publicService.showGlobalLoader.next(true) : this.isLoadingTuitionExpensesList = true;
+    this.isSearch ? this.publicService.showGlobalLoader.next(true) : this.isLoadingTuitionExpensesList = true;
     let tuitionSubscription: Subscription = this.tuitionExpensesService?.getTuitionExpensesList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null, this.schoolId ?? null)
       .pipe(
         tap((res: any) => this.processTuitionExpensesListResponse(res)),
@@ -181,12 +181,12 @@ export class TuitionExpensesListComponent {
       this.pagesCount = Math.ceil(this.tuitionExpensesCount / this.perPage);
       this.tuitionExpensesList = response?.data?.items;
       this.tuitionExpensesList?.forEach((item: any) => {
-        item['title'] = { "en": "{\"ar\":\"إسلام\",\"en\":\"Eslam\"}" };
+        // item['title'] = { "en": "{\"ar\":\"إسلام\",\"en\":\"Eslam\"}" };
         let titleItem: any = JSON.parse(item?.title[this.currentLanguage] || '{}');
         item['titleName'] = titleItem[this.currentLanguage];
         item['titleAR'] = titleItem['ar'];
         item['titleEN'] = titleItem['en'];
-        item['details'] = { "en": "{\"ar\":\"إسلام\",\"en\":\"Eslam\"}" };
+        // item['details'] = { "en": "{\"ar\":\"إسلام\",\"en\":\"Eslam\"}" };
         let detailsItem: any = JSON.parse(item?.details[this.currentLanguage] || '{}');
         item['detailsName'] = detailsItem[this.currentLanguage];
         item['detailsAR'] = titleItem['ar'];
@@ -274,7 +274,10 @@ export class TuitionExpensesListComponent {
     this.perPage = 20;
     this.searchKeyword = keyWord;
     this.isLoadingTuitionExpensesList = true;
-    this.getAllTuitionExpenses(true);
+    this.isSearch = true;
+    this.publicService?.changePageSub?.next({ page: this.page });
+    this.tuitionExpensesList?.length <= 0 && this.dataStyleType == 'list' ? this.getAllTuitionExpenses(true) : '';
+    this.dataStyleType == 'grid' ? this.getAllTuitionExpenses(true) : '';
     if (keyWord?.length > 0) {
       this.isLoadingSearch = true;
     }
@@ -283,7 +286,9 @@ export class TuitionExpensesListComponent {
   clearSearch(search: any): void {
     search.value = null;
     this.searchKeyword = null;
-    this.getAllTuitionExpenses(true);
+    this.publicService?.changePageSub?.next({ page: this.page });
+    this.tuitionExpensesList?.length <= 0 && this.dataStyleType == 'list' ? this.getAllTuitionExpenses(true) : '';
+    this.dataStyleType == 'grid' ? this.getAllTuitionExpenses(true) : '';
   }
   // End Search Functions
 
@@ -374,6 +379,7 @@ export class TuitionExpensesListComponent {
     this.sortObj = {};
     this.filtersArray = [];
     this.page = 1;
+    this.isSearch = false;
     this.publicService.resetTable.next(true);
     // this.publicService?.changePageSub?.next({ page: this.page });
     this.getAllTuitionExpenses();
