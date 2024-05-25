@@ -19,7 +19,7 @@
       <ng-container *ngIf="formControls.phone.invalid && (formControls.phone.dirty || formControls.phone.touched)">
         <div class="mt-1">
           <span *ngIf="formControls.phone.errors.required" class="text-danger fs-8">
-            {{ 'validations.required' | translate }}
+            {{ 'validations.requiredField' | translate }}
           </span>
           <span *ngIf="formControls.phone.errors.pattern" class="text-danger fs-8">
             {{ 'validations.phoneNotCorrect' | translate }}

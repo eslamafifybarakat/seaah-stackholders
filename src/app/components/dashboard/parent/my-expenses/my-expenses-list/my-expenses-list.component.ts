@@ -136,6 +136,7 @@ export class MyExpensesListComponent {
     localizationLanguageService.updatePathAccordingLang();
   }
   ngOnInit(): void {
+    this.addMyExpense();
     if (isPlatformBrowser(this.platformId)) {
       this.currentLanguage = window?.localStorage?.getItem(keys?.language);
     }
