@@ -32,6 +32,7 @@ import { PayMultiTuitionNowModalComponent } from '../pay-multi-tuition-now-modal
 import { InstallmentRequestsService } from '../../../services/installment_requests.service';
 import { PayTuitionNowModalComponent } from '../../kids/pay-tuition-now-modal/pay-tuition-now-modal.component';
 import { ExpenseCardComponent } from '../expense-card/expense-card.component';
+import { AuthService } from 'src/app/services/authentication/auth.service';
 
 
 @Component({
@@ -118,6 +119,7 @@ export class MyExpensesListComponent {
   get formControls(): any {
     return this.filterForm?.controls;
   }
+  currentUserInformation:any| null;
 
   constructor(
     private localizationLanguageService: LocalizationLanguageService,
@@ -129,6 +131,7 @@ export class MyExpensesListComponent {
     private dialogService: DialogService,
     private alertsService: AlertsService,
     private kidsService: KidsService,
+    private authService: AuthService,
     private cdr: ChangeDetectorRef,
     private fb: FormBuilder,
     private router: Router
@@ -136,6 +139,7 @@ export class MyExpensesListComponent {
     localizationLanguageService.updatePathAccordingLang();
   }
   ngOnInit(): void {
+    this.currentUserInformation = this.authService.getCurrentUserInformationLocally();
     if (isPlatformBrowser(this.platformId)) {
       this.currentLanguage = window?.localStorage?.getItem(keys?.language);
     }
@@ -198,7 +202,7 @@ export class MyExpensesListComponent {
   // Start My Expenses List Functions
   getAllMyExpenseList(isFiltering?: boolean): void {
     this.isSearch ? this.publicService.showGlobalLoader.next(true) : this.isLoadingMyExpenseList = true;
-    let myExpensesSubscription: Subscription = this.installmentRequestsService?.getMyExpenseList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null, this.statusValue ?? null)
+    let myExpensesSubscription: Subscription = this.installmentRequestsService?.getMyExpenseList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null, this.statusValue ?? null,null,this.currentUserInformation?.id)
       .pipe(
         tap((res: any) => {
           this.processMyExpenseListResponse(res);

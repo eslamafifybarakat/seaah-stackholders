@@ -20,7 +20,7 @@ export class InstallmentRequestsService {
     }
     return this.http?.post(`${this.baseUrl}/${roots?.dashboard?.myExpenses.addEdit}`, data);
   }
-  getMyExpenseList(page?: number, per_page?: number, search?: string, sort?: any, conditions?: any, approval_status?: any,schoolId?:any): Observable<any> {
+  getMyExpenseList(page?: number, per_page?: number, search?: string, sort?: any, conditions?: any, approval_status?: any,schoolId?:any,parentId?:any): Observable<any> {
     let params = new HttpParams();
     if (page) {
       params = params?.append("page_number", page);
@@ -42,6 +42,9 @@ export class InstallmentRequestsService {
     }
     if (schoolId) {
       params = params?.append("school_id", schoolId);
+    }
+    if (parentId) {
+      params = params?.append("parent_id", parentId);
     }
     return this.http?.get(`${this.baseUrl}/${roots?.dashboard?.myExpenses.getAll}`, { params: params });
   }
