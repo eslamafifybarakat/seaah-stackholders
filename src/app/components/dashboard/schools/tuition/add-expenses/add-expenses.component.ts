@@ -124,7 +124,19 @@ export class AddExpensesComponent {
         item['detailsAR'] = item?.details['ar'];
         item['detailsEN'] = item?.details['en'];
       });
-      console.log(this.tuitionExpensesList);
+      if (this.tuitionExpensesData?.event?.expenses&& this.tuitionExpensesData?.event?.expenses?.length>0) {
+       let expensesPatch:any=[];
+        this.tuitionExpensesData?.event?.expenses?.forEach((expense:any) => {
+          this.tuitionExpensesList?.forEach((item: any) => {
+            if (expense?.id == item?.id) {
+              expensesPatch?.push(item);
+            }
+          });
+       }); 
+       this.tuitionExpensesForm.patchValue({
+        tuitionExpenses:expensesPatch
+       });
+      }
     } else {
       this.handleError(response.error);
       return;
