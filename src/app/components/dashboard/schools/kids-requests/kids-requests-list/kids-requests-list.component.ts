@@ -132,7 +132,7 @@ export class KidsListComponent {
   ngOnInit(): void {
     this.currentLanguage = this.publicService.getCurrentLanguage();
     this.currentUserInformation = this.authService.getCurrentUserInformationLocally();
-    this.schoolId = this.currentUserInformation?.id;
+    this.schoolId = this.currentUserInformation?.organization?.id;
     this.loadData();
     this.searchSubject.pipe(
       debounceTime(500) // Throttle time in milliseconds (1 seconds)

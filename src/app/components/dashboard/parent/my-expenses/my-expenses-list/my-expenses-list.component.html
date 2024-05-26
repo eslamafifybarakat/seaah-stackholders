@@ -102,7 +102,7 @@
           [paginatorRows]="perPage" [pages]="pagesCount" (paginateHandler)="onPageChange($event)"
           [rowsPerPageOptions]="rowsOptions" [enableConfirmDeleteDialog]="true" [keyDelete]="'name'"
           (paginateOptionsHandler)="onPaginatorOptionsChange($event)" [isSearch]="isSearch" [arrayChildKey]="'name'"
-          [addBtnText]="'dashboard.kids.addKid'" (addHandler)="addEditItem()"
+           [enableAddBtn]="false" [addBtnText]="'dashboard.kids.addKid'" (addHandler)="addEditItem()"
           [notFoundImage]="'assets/images/not-found/no-user.svg'" [showActionItemBtn]="true"
           [actionButtonText]="'general.details'" (actionHandlerEmit)="showExpensesDetails($event)"></dynamic-table-v2>
       </ng-container>

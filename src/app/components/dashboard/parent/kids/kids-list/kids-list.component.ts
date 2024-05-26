@@ -28,6 +28,7 @@ import { Subject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { ShowExpensesModalComponent } from '../show-expenses-modal/show-expenses-modal.component';
+import { AuthService } from 'src/app/services/authentication/auth.service';
 
 @Component({
   standalone: true,
@@ -91,7 +92,8 @@ export class KidsListComponent {
   showToggleAction: boolean = false;
   showActionFiles: boolean = false;
   // End Permissions Variables
-  currentLanguage: string;
+  currentLanguage: string | null;
+  currentUserInformation: any | null;
 
   // Dropdown Element
   @ViewChild('dropdown') dropdown: any;
@@ -123,6 +125,7 @@ export class KidsListComponent {
     private alertsService: AlertsService,
     private kidsService: KidsService,
     private cdr: ChangeDetectorRef,
+    private authService:AuthService,
     private fb: FormBuilder,
     private router: Router
   ) {
@@ -130,6 +133,7 @@ export class KidsListComponent {
   }
   ngOnInit(): void {
     this.currentLanguage = this.publicService.getCurrentLanguage();
+    this.currentUserInformation = this.authService.getCurrentUserInformationLocally();
     this.loadData();
     this.searchSubject.pipe(
       debounceTime(500) // Throttle time in milliseconds (1 seconds)
@@ -192,7 +196,7 @@ export class KidsListComponent {
   // Start Kids List Functions
   getAllKids(isFiltering?: boolean): void {
     this.isSearch ? this.publicService.showGlobalLoader.next(true) : this.isLoadingKidsList = true;
-    let kidsSubscription: Subscription = this.kidsService?.getKidsList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null, this.statusValue ?? null)
+    let kidsSubscription: Subscription = this.kidsService?.getKidsList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null, this.statusValue ?? null,null,this.currentUserInformation?.id)
       .pipe(
         tap((res: KidsListApiResponse) => {
           this.processKidsListResponse(res);

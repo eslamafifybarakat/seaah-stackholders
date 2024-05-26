@@ -12,7 +12,7 @@
           </span>
         </p>
       </div>
-      <div>
+      <div *ngIf="kidsList.length>0">
         <form [formGroup]="filterForm" aria-label="filter-kid-form">
           <div class="form-content">
             <span class="p-input-icon-right select-loading d-block"

@@ -117,16 +117,12 @@ export class AddExpensesComponent {
       this.tuitionExpensesCount = response?.data?.total;
       this.tuitionExpensesList = response?.data?.items;
       this.tuitionExpensesList?.forEach((item: any) => {
-        item['title'] = { "en": "{\"ar\":\"إسلام\",\"en\":\"Eslam term scholllll first 2024 - 50SAR\"}" };
-        let titleItem: any = JSON.parse(item?.title[this.currentLanguage] || '{}');
-        item['titleName'] = titleItem[this.currentLanguage];
-        item['titleAR'] = titleItem['ar'];
-        item['titleEN'] = titleItem['en'];
-        item['details'] = { "en": "{\"ar\":\"إسلام\",\"en\":\"Eslam\"}" };
-        let detailsItem: any = JSON.parse(item?.details[this.currentLanguage] || '{}');
-        item['detailsName'] = detailsItem[this.currentLanguage];
-        item['detailsAR'] = titleItem['ar'];
-        item['detailsEN'] = titleItem['en'];
+        item['titleName'] = item?.title[this.currentLanguage];
+        item['titleAR'] = item?.title['ar'];
+        item['titleEN'] = item?.title['en'];
+        item['detailsName'] = item?.details[this.currentLanguage];
+        item['detailsAR'] = item?.details['ar'];
+        item['detailsEN'] = item?.details['en'];
       });
       console.log(this.tuitionExpensesList);
     } else {

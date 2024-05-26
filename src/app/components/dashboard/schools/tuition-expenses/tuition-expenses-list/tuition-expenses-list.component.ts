@@ -117,8 +117,8 @@ export class TuitionExpensesListComponent {
   }
   private loadData(): void {
     this.tableHeaders = [
-      { field: 'title', header: 'dashboard.tableHeader.title', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.title'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
-      { field: 'details', header: 'dashboard.tableHeader.details', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.details'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
+      { field: 'titleName', header: 'dashboard.tableHeader.title', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.title'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
+      { field: 'detailsName', header: 'dashboard.tableHeader.details', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.details'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
       { field: 'level', header: 'dashboard.tableHeader.level', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.level'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
       { field: 'total', header: 'dashboard.tableHeader.total', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.total'), type: 'text', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
       { field: 'deserved_date', header: 'dashboard.tableHeader.deservedDate', title: this.publicService?.translateTextFromJson('dashboard.tableHeader.deservedDate'), type: 'date', sort: false, showDefaultSort: true, showAscSort: false, showDesSort: false, filter: false },
@@ -181,16 +181,12 @@ export class TuitionExpensesListComponent {
       this.pagesCount = Math.ceil(this.tuitionExpensesCount / this.perPage);
       this.tuitionExpensesList = response?.data?.items;
       this.tuitionExpensesList?.forEach((item: any) => {
-        // item['title'] = { "en": "{\"ar\":\"إسلام\",\"en\":\"Eslam\"}" };
-        let titleItem: any = JSON.parse(item?.title[this.currentLanguage] || '{}');
-        item['titleName'] = titleItem[this.currentLanguage];
-        item['titleAR'] = titleItem['ar'];
-        item['titleEN'] = titleItem['en'];
-        // item['details'] = { "en": "{\"ar\":\"إسلام\",\"en\":\"Eslam\"}" };
-        let detailsItem: any = JSON.parse(item?.details[this.currentLanguage] || '{}');
-        item['detailsName'] = detailsItem[this.currentLanguage];
-        item['detailsAR'] = titleItem['ar'];
-        item['detailsEN'] = titleItem['en'];
+        item['titleName'] = item?.title[this.currentLanguage];
+        item['titleAR'] = item?.title['ar'];
+        item['titleEN'] = item?.title['en'];
+        item['detailsName'] = item?.details[this.currentLanguage];
+        item['detailsAR'] = item?.details['ar'];
+        item['detailsEN'] = item?.details['en'];
       });
       console.log(this.tuitionExpensesList);
     } else {

@@ -1,6 +1,6 @@
 
 import { errorsChildrenRoutes } from 'src/app/components/errors/errors-children-routes';
-import { KidsListComponent } from './kids-requests-list/kids-requests-list.componet';
+import { KidsListComponent } from './kids-requests-list/kids-requests-list.component';
 
 
 export const kidsRequestsChildrenRoutes: any[] = [

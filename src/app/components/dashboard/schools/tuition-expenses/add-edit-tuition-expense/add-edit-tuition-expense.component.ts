@@ -148,6 +148,7 @@ export class AddEditTuitionExpensesComponent {
   }
   patchValue(): void {
     let patchedDate: any = new Date(this.tuitionData?.item?.deserved_date);
+    console.log(this.tuitionData?.item);
     this.tuitionForm.patchValue({
       titleAr: this.tuitionData?.item?.titleAR,
       titleEn: this.tuitionData?.item?.titleEN,
@@ -230,7 +231,7 @@ export class AddEditTuitionExpensesComponent {
     formData.append('deserved_date', formattedDate);
     formData.append('level', kidFormData?.level?.id ?? '');
     formData.append('total', kidFormData?.price ?? null);
-    formData.append('school_id', this.currentUserInformation?.id);
+    formData.append('school_id', this.currentUserInformation?.organization?.id);
     if (this.isEdit) {
       formData.append('_method', 'PUT');
     }

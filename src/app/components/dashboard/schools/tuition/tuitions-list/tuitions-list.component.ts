@@ -133,15 +133,15 @@ export class TuitionsListComponent {
     localizationLanguageService.updatePathAccordingLang();
   }
   ngOnInit(): void {
-    this.schoolId = this.currentUserInformation?.id;
-    this.loadData();
     this.currentLanguage = this.publicService.getCurrentLanguage();
     this.currentUserInformation = this.authService.getCurrentUserInformationLocally();
+    this.schoolId = this.currentUserInformation?.organization?.id;
     console.log(this.schoolId);
-
+    
     this.searchSubject.pipe(
       debounceTime(500) // Throttle time in milliseconds (1 seconds)
     ).subscribe(event => { this.searchHandler(event) });
+    this.loadData();
   }
   private loadData(): void {
     this.tableHeaders = [

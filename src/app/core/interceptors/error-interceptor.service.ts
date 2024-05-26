@@ -4,13 +4,14 @@ import { Observable, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/authentication/auth.service';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
 
 
   constructor(
-    // private authService: AuthService,
+    private authService: AuthService,
     private router: Router
   ) { }
 
@@ -41,7 +42,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           }
           if (error?.status == 401) {
             //Remove all items in local storage, beacuse this request was expired from another device
-            // this.authService?.signOut();
+            this.authService?.signOut();
           }
           // console.error(errorMsg);
           return throwError(errorMsg);
