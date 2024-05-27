@@ -16,6 +16,8 @@ import { Subject, Subscription } from 'rxjs';
 // Components
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { EventCardComponent } from './event-card/event-card.component';
+import { eventsAr, eventsEn, questionsAr, questionsEn, reviewsAr, reviewsEn } from './home';
 
 @Component({
   standalone: true,
@@ -30,6 +32,7 @@ import { FormsModule } from '@angular/forms';
 
     // Components
     ReviewsCarouselComponent,
+    EventCardComponent,
   ],
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -49,45 +52,12 @@ export class HomeComponent {
   ];
   rate: any = 4.5;
 
-  questions: any = [
-    {
-      id: 1,
-      title: "What services does TanahAir Offer?",
-      description: "TanahAir offers a service for creating a website design, illustration, icon set, website development, animation and digital marketing."
-    },
-    {
-      id: 2,
-      title: "Why should i choose a Design studio like TanahAir over full-service agency?",
-      description: "Because TanahAir provides the best service to customers and provides flexibility to solve problems with our experts so that customers get satisfaction. And we provide service very quickly according to the price we offer"
-    },
-    {
-      id: 3,
-      title: "How does TanahAir create website content without knowing our Business plan?",
-      description: "TanahAir offers a service for creating a website design, illustration, icon set, website development, animation and digital marketing."
-    },
-    {
-      id: 4,
-      title: "What will be delivered? And When?",
-      description: "TanahAir offers a service for creating a website design, illustration, icon set, website development, animation and digital marketing."
-    },
-    {
-      id: 5,
-      title: "What often will results be reported?",
-      description: "TanahAir offers a service for creating a website design, illustration, icon set, website development, animation and digital marketing."
-    },
-    {
-      id: 6,
-      title: "How Quickly will i start seeing result after working with TanahAir?",
-      description: "TanahAir offers a service for creating a website design, illustration, icon set, website development, animation and digital marketing."
-    }
-  ];
+  questions: any = [];
 
-  reviews: any = [
-    { id: 1, name: 'محمد طارق', position: 'طالب جامعي', description: 'خدمة سعة وفرت عليَ كثيراً ، فقد تمكنت من تقسيط  رسوم جامعتي بدون أي فوائد أو رسوم إضافية لذلك أشكركم كثيراً' },
-    { id: 1, name: 'محمد طارق', position: 'طالب جامعي', description: 'خدمة سعة وفرت عليَ كثيراً ، فقد تمكنت من تقسيط  رسوم جامعتي بدون أي فوائد أو رسوم إضافية لذلك أشكركم كثيراً' },
-    { id: 1, name: 'محمد طارق', position: 'طالب جامعي', description: 'خدمة سعة وفرت عليَ كثيراً ، فقد تمكنت من تقسيط  رسوم جامعتي بدون أي فوائد أو رسوم إضافية لذلك أشكركم كثيراً' },
-    { id: 1, name: 'محمد طارق', position: 'طالب جامعي', description: 'خدمة سعة وفرت عليَ كثيراً ، فقد تمكنت من تقسيط  رسوم جامعتي بدون أي فوائد أو رسوم إضافية لذلك أشكركم كثيراً' }
-  ];
+  reviews: any = [];
+
+  events: any = [];
+
   constructor(
     private localizationLanguageService: LocalizationLanguageService,
     private metadataService: MetadataService,
@@ -98,6 +68,9 @@ export class HomeComponent {
 
   ngOnInit(): void {
     this.currentLanguage = this.publicService.getCurrentLanguage();
+    this.questions = this.currentLanguage == 'ar' ? questionsAr : questionsEn;
+    this.reviews = this.currentLanguage == 'ar' ? reviewsAr : reviewsEn;
+    this.events = this.currentLanguage == 'ar' ? eventsAr : eventsEn;
     this.loadData();
   }
   private loadData(): void {

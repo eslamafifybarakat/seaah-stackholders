@@ -19,6 +19,7 @@
     "dashboard": "لوحة التحكم"
   },
   "general": {
+    "readMore":"اقرأ المزيد",
     "changeStatus":"تغيير الحالة",
     "no_result_found":"لا يوجد بيانات",
     "noSearchResult":"لا يوجد نتائج للبحث",
@@ -118,6 +119,10 @@
   },
   "testimonial":{
     "title":"أراء بعض العملاء عن تجربتهم معنا"
+  },
+  "events":{
+    "title":"آخر الأخبار والأحداث لدينا",
+    "description":"ابق مطلعاً على آخر الأخبارنا وتحديثاتنا لخدمتك"
   },
   "userInfo": {
     "my_profile": "الملف الشخصي",

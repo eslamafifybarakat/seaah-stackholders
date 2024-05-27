@@ -1,0 +1,45 @@
+.event-card {
+  .event-img {
+    height: 350px;
+    img {
+      border-radius: 15px;
+      object-fit: cover;
+    }
+  }
+  .date-comment {
+    color: #00eeda;
+    font-weight: 300;
+  }
+  .description {
+    color: #e4e4e4;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 3;
+    font-size: 1rem;
+    height: 4.3rem;
+  }
+  .readMore {
+    padding: 2px;
+    background: linear-gradient(90deg, #007d73 51.13%, #2457da 100%);
+    button {
+      border: 0;
+      height: 2.9rem;
+      background: #031521;
+    }
+  }
+  @media (max-width: 776px) {
+    .event-img {
+      height: 300px;
+    }
+  }
+  @media (max-width: 567px) {
+    .event-img {
+      height: 250px;
+    }
+    .fs-5 {
+      font-size: 1.1rem !important;
+    }
+  }
+}

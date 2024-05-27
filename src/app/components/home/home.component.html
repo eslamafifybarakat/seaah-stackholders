@@ -271,4 +271,26 @@
   </section>
   <!--========== End Testimonial Section ================= -->
 
+  <!--========== Start Events Section ================= -->
+  <section id="events" class="my-5">
+    <div class="container">
+      <h4 class="title text-center text-white-color mb-0">
+        {{'events.title' | translate}}
+      </h4>
+      <p class="text-center description">
+        {{'events.description' | translate}}
+      </p>
+      <div class="mt-4">
+        <div class="row pt-2 gy-4">
+          <ng-container *ngFor="let item of events">
+            <div class="col-lg-4 col-md-6">
+              <app-event-card [item]="item"></app-event-card>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--========== End Events Section ================= -->
+
 </div>

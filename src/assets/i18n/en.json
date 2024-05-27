@@ -19,6 +19,7 @@
     "dashboard": "Dashboard"
   },
   "general": {
+    "readMore":"read more",
     "changeStatus":"Change Status",
     "no_result_found":"No Result Founded",
     "noSearchResult":"No Search Result",
@@ -118,6 +119,10 @@
   },
   "testimonial":{
     "title":"Opinions of some customers about their experience with us"
+  },
+  "events":{
+    "title":"Our latest news and events",
+    "description":"Stay up to date with our latest news and updates to serve you"
   },
   "userInfo": {
     "my_profile": "My Profile",
