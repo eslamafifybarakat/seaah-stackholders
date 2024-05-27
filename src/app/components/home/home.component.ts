@@ -1,5 +1,7 @@
+import { PublicService } from 'src/app/services/generic/public.service';
 // Modules
 import { TranslateModule } from '@ngx-translate/core';
+import { AccordionModule } from 'primeng/accordion';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { RatingModule } from 'primeng/rating';
@@ -19,6 +21,7 @@ import { FormsModule } from '@angular/forms';
   imports: [
     // Modules
     TranslateModule,
+    AccordionModule,
     RouterModule,
     RatingModule,
     CommonModule,
@@ -32,6 +35,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class HomeComponent {
   private subscriptions: Subscription[] = [];
+  currentLanguage: string = '';
 
   translatedText: any = {};
 
@@ -43,14 +47,49 @@ export class HomeComponent {
   ];
   rate: any = 4.5;
 
+  questions: any = [
+    {
+      id: 1,
+      title: "What services does TanahAir Offer?",
+      description: "TanahAir offers a service for creating a website design, illustration, icon set, website development, animation and digital marketing."
+    },
+    {
+      id: 2,
+      title: "Why should i choose a Design studio like TanahAir over full-service agency?",
+      description: "Because TanahAir provides the best service to customers and provides flexibility to solve problems with our experts so that customers get satisfaction. And we provide service very quickly according to the price we offer"
+    },
+    {
+      id: 3,
+      title: "How does TanahAir create website content without knowing our Business plan?",
+      description: "TanahAir offers a service for creating a website design, illustration, icon set, website development, animation and digital marketing."
+    },
+    {
+      id: 4,
+      title: "What will be delivered? And When?",
+      description: "TanahAir offers a service for creating a website design, illustration, icon set, website development, animation and digital marketing."
+    },
+    {
+      id: 5,
+      title: "What often will results be reported?",
+      description: "TanahAir offers a service for creating a website design, illustration, icon set, website development, animation and digital marketing."
+    },
+    {
+      id: 6,
+      title: "How Quickly will i start seeing result after working with TanahAir?",
+      description: "TanahAir offers a service for creating a website design, illustration, icon set, website development, animation and digital marketing."
+    }
+  ]
+
   constructor(
     private localizationLanguageService: LocalizationLanguageService,
-    private metadataService: MetadataService
+    private metadataService: MetadataService,
+    private publicService: PublicService,
   ) {
     localizationLanguageService.updatePathAccordingLang();
   }
 
   ngOnInit(): void {
+    this.currentLanguage = this.publicService.getCurrentLanguage();
     this.loadData();
   }
   private loadData(): void {

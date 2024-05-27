@@ -1,4 +1,4 @@
-<div id="home-page">
+<div id="home-page" [class.rtl-home]="currentLanguage=='ar'">
   <!--========== Start Hero Section ================= -->
   <section id="hero-section" class="pt-hero">
     <div class="container mx-auto">
@@ -229,4 +229,33 @@
     </div>
   </section>
   <!--============= End Payment Steps Section ================= -->
+
+  <!--========== Start Questions Section ================= -->
+  <section id="questions" class="mt-5">
+    <div class="container">
+      <h4 class="title text-center text-white-color mb-0">
+        {{'questions.title' | translate}}
+      </h4>
+      <p class="text-center decription">
+        {{'questions.description' | translate}}
+      </p>
+      <div class="mt-4">
+        <p-accordion [collapseIcon]="'pi pi-times'" [expandIcon]="'pi pi-plus'">
+          <div class="row pt-2">
+            <ng-container *ngFor="let item of questions;let i=index">
+              <div class="col-lg-6">
+                <p-accordionTab [header]="item?.title" [selected]="i==0">
+                  <p class="mb-0">
+                    {{item?.description}}
+                  </p>
+                </p-accordionTab>
+              </div>
+            </ng-container>
+          </div>
+        </p-accordion>
+      </div>
+    </div>
+  </section>
+  <!--========== End Questions Section ================= -->
+
 </div>

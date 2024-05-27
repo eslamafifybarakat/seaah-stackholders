@@ -112,6 +112,10 @@
       "description3": "Explore our services and fully benefit from them around the clock."
     }
   },
+  "questions":{
+    "title":"Frequently asked questions",
+    "description":"See our FAQs for better understanding; It is possible to find answers to queries"
+  },
   "userInfo": {
     "my_profile": "My Profile",
     "my_performance": "My Performance",

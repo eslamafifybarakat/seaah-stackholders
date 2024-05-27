@@ -58,7 +58,6 @@
   }
 
   .btn {
-
     &-solid-main,
     &-outline-white,
     &-video {
@@ -84,7 +83,7 @@
     }
 
     &-outline-white {
-      border: 2px solid #8ED3FF;
+      border: 2px solid #8ed3ff;
       background-color: transparent;
       color: var(--text-white-color);
     }
@@ -98,7 +97,7 @@
 
   #about-section {
     .about-card {
-      border: 1px solid #00967C;
+      border: 1px solid #00967c;
       border-radius: 25px;
       background-color: transparent;
       padding: 20px;
@@ -107,7 +106,7 @@
       height: 100%;
 
       &:hover {
-        background: #0B1E37;
+        background: #0b1e37;
       }
 
       .person-img {
@@ -158,7 +157,7 @@
           font-weight: 600;
           line-height: 42px;
           letter-spacing: -2px;
-          color: #00D7B8;
+          color: #00d7b8;
         }
 
         .count-label {
@@ -194,8 +193,8 @@
     .box {
       gap: 3px;
       border-radius: 25px;
-      border: 1.5px solid #01554E;
-      background: #0B1E37;
+      border: 1.5px solid #01554e;
+      background: #0b1e37;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -214,7 +213,7 @@
       .image-container {
         width: 105.77px;
         height: 105.23px;
-        background: linear-gradient(180deg, #004FB3 0%, #006960 72.5%);
+        background: linear-gradient(180deg, #004fb3 0%, #006960 72.5%);
         border-radius: 14px;
         display: flex;
         justify-content: center;
@@ -243,14 +242,14 @@
       font-size: 19px;
       font-weight: 400;
       line-height: 32px;
-      color: #E4E4E4;
+      color: #e4e4e4;
     }
 
     .payment-step-item {
       .icon {
         width: 65px;
         height: 65px;
-        background: linear-gradient(180deg, #004FB3 0%, #006960 72.5%);
+        background: linear-gradient(180deg, #004fb3 0%, #006960 72.5%);
         border-radius: 50%;
         display: flex;
         justify-content: center;
@@ -260,7 +259,7 @@
         img {
           object-fit: fill;
           width: 45px;
-        height: 45px;
+          height: 45px;
         }
       }
 
@@ -269,7 +268,7 @@
           font-size: 23px;
           font-weight: 700;
           line-height: 32px;
-          color: #E4E4E4;
+          color: #e4e4e4;
           text-align: initial;
         }
 
@@ -277,9 +276,47 @@
           font-size: 16px;
           font-weight: 400;
           line-height: 30px;
-          color: #E4E4E4;
+          color: #e4e4e4;
         }
       }
+    }
+  }
+
+  #questions {
+    .title {
+      font-size: 55px;
+      font-weight: 700;
+      line-height: 80px;
+    }
+
+    .decription {
+      font-size: 19px;
+      font-weight: 400;
+      line-height: 32px;
+      color: #f0f0f0;
+    }
+  }
+}
+:host::ng-deep {
+  .p-accordion {
+    .p-accordion-header-link {
+      border: 0;
+      background-color: #0f1f35;
+      color: #cfd3d7;
+      justify-content: space-between;
+      gap: 5px;
+      font-weight: 500;
+      flex-direction: row-reverse;
+    }
+    .p-accordion-tab {
+      margin-bottom: 20px;
+      font-size: 15px;
+    }
+    .p-accordion-content {
+      border: 0;
+      padding-top: 5px;
+      background-color: #0f1f35;
+      color: #cfd3d7;
     }
   }
 }
@@ -295,7 +332,7 @@
       }
 
       &.p-rating-item-active .p-rating-icon {
-        color: #FADC42;
+        color: #fadc42;
       }
     }
   }
@@ -340,14 +377,12 @@
   }
 
   #home-page {
-
     .fs-2,
     .fs-1 {
       font-size: 1.3rem !important;
     }
 
     #hero-section {
-
       .title,
       .sub-title,
       .description {
