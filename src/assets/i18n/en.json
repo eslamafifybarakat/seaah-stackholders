@@ -116,6 +116,9 @@
     "title":"Frequently asked questions",
     "description":"See our FAQs for better understanding; It is possible to find answers to queries"
   },
+  "testimonial":{
+    "title":"Opinions of some customers about their experience with us"
+  },
   "userInfo": {
     "my_profile": "My Profile",
     "my_performance": "My Performance",

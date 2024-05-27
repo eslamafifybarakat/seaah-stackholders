@@ -1,3 +1,4 @@
+import { ReviewsCarouselComponent } from './../../shared/carousels/reviews-carousel/reviews-carousel.component';
 import { PublicService } from 'src/app/services/generic/public.service';
 // Modules
 import { TranslateModule } from '@ngx-translate/core';
@@ -25,9 +26,10 @@ import { FormsModule } from '@angular/forms';
     RouterModule,
     RatingModule,
     CommonModule,
-    FormsModule
+    FormsModule,
 
     // Components
+    ReviewsCarouselComponent,
   ],
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -78,8 +80,14 @@ export class HomeComponent {
       title: "How Quickly will i start seeing result after working with TanahAir?",
       description: "TanahAir offers a service for creating a website design, illustration, icon set, website development, animation and digital marketing."
     }
-  ]
+  ];
 
+  reviews: any = [
+    { id: 1, name: 'محمد طارق', position: 'طالب جامعي', description: 'خدمة سعة وفرت عليَ كثيراً ، فقد تمكنت من تقسيط  رسوم جامعتي بدون أي فوائد أو رسوم إضافية لذلك أشكركم كثيراً' },
+    { id: 1, name: 'محمد طارق', position: 'طالب جامعي', description: 'خدمة سعة وفرت عليَ كثيراً ، فقد تمكنت من تقسيط  رسوم جامعتي بدون أي فوائد أو رسوم إضافية لذلك أشكركم كثيراً' },
+    { id: 1, name: 'محمد طارق', position: 'طالب جامعي', description: 'خدمة سعة وفرت عليَ كثيراً ، فقد تمكنت من تقسيط  رسوم جامعتي بدون أي فوائد أو رسوم إضافية لذلك أشكركم كثيراً' },
+    { id: 1, name: 'محمد طارق', position: 'طالب جامعي', description: 'خدمة سعة وفرت عليَ كثيراً ، فقد تمكنت من تقسيط  رسوم جامعتي بدون أي فوائد أو رسوم إضافية لذلك أشكركم كثيراً' }
+  ];
   constructor(
     private localizationLanguageService: LocalizationLanguageService,
     private metadataService: MetadataService,
