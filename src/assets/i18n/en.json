@@ -254,6 +254,7 @@
     },
     "kids": {
       "kids": "Kids",
+      "allKids": "All Kids",
       "addKid": "Add Kid",
       "editKid": "Edit Kid",
       "kidsDetails": "Kid Details",
@@ -274,7 +275,8 @@
         "phone":"Phone",
         "bank":"Bank",
         "location":"Location",
-        "school":"School"
+        "school":"School",
+        "level":"Level"
       }
     },
     "tuitionExpenses": {

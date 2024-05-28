@@ -125,7 +125,7 @@ export class KidsListComponent {
     private alertsService: AlertsService,
     private kidsService: KidsService,
     private cdr: ChangeDetectorRef,
-    private authService:AuthService,
+    private authService: AuthService,
     private fb: FormBuilder,
     private router: Router
   ) {
@@ -196,7 +196,7 @@ export class KidsListComponent {
   // Start Kids List Functions
   getAllKids(isFiltering?: boolean): void {
     this.isSearch ? this.publicService.showGlobalLoader.next(true) : this.isLoadingKidsList = true;
-    let kidsSubscription: Subscription = this.kidsService?.getKidsList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null, this.statusValue ?? null,null,this.currentUserInformation?.id)
+    let kidsSubscription: Subscription = this.kidsService?.getKidsList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null, this.statusValue ?? null, null, this.currentUserInformation?.id)
       .pipe(
         tap((res: KidsListApiResponse) => {
           this.processKidsListResponse(res);
@@ -316,7 +316,7 @@ export class KidsListComponent {
   // End Show Expenses Modal
 
   itemDetails(item?: any): void {
-    // this.router.navigate(['Dashboard/Kids/Details/' + item.id]);
+    this.router.navigate(['/Dashboard/Parent/Kids/Details/' + item.id]);
   }
   // Add Edit Kid
   addEditItem(item?: any, type?: any): void {

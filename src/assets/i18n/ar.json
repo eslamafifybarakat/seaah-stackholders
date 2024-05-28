@@ -242,6 +242,7 @@
     },
     "kids": {
       "kids": "الأطفال",
+      "allKids": "جميع الأطفال",
       "addKid": "إضافة طفل",
       "editKid": "تعديل الطفل",
       "kidsDetails": "تفاصيل الطفل",
@@ -262,7 +263,8 @@
         "phone": "الهاتف",
         "bank": "البنك",
         "location": "الموقع",
-        "school": "المدرسة"
+        "school": "المدرسة",
+        "level":"المستوي"
     }
     },
     "tuitionExpenses": {

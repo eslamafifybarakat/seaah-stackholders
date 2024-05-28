@@ -96,7 +96,7 @@
           [isLoadingSearch]="isLoadingSearch" [showActionsButtons]="true"
           (clearHandler)="enableSortFilter?clearTable():''" [tableHeaders]="tableHeaders" [tableData]="kidsList"
           [enableDateFormate]="true" [dateFormateString]="'d MMMM y'" [showActions]="true" [showEdit]="true"
-          [showDelete]="true" (deleteHandler)="deleteItem($event)" [showDetails]="false"
+          [showDelete]="true" (deleteHandler)="deleteItem($event)" [showDetails]="true"
           (detailsHandler)="itemDetails($event)" (editHandler)="addEditItem($event,'edit')"
           (customSortHandler)="enableSortFilter?sortItems($event):''"
           (filterHandler)="enableSortFilter?filterItemsTable($event):''" [results]="kidsCount" [paginatorRows]="perPage"
