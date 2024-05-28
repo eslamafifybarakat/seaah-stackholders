@@ -19,6 +19,8 @@
     "dashboard": "لوحة التحكم"
   },
   "general": {
+    "expensesPaidSoFar":"تم دفع المصاريف المستحقة حتى الان",
+    "submitRequest": "إرسال طلب",
     "readMore":"اقرأ المزيد",
     "changeStatus":"تغيير الحالة",
     "no_result_found":"لا يوجد بيانات",

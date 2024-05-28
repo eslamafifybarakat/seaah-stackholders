@@ -19,3 +19,33 @@
     overflow: auto;
   }
 }
+.pricing-table {
+  thead {
+    background: var(--bg-main-color) !important;
+    color: var(--bg-white-color) !important;
+  }
+
+  tr {
+    font-weight: 500 !important;
+  }
+
+  thead,
+  tbody,
+  tfoot,
+  tr,
+  td,
+  th {
+    padding: 0.5rem !important;
+  }
+
+  td {
+    background: #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  tfoot {
+    td {
+      background-color: #d3ebff66 !important;
+    }
+  }
+}

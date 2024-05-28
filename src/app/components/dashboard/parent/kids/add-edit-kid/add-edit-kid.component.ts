@@ -92,13 +92,13 @@ export class AddEditKidComponent {
           Validators.required,
           Validators?.minLength(3)], updateOn: "blur"
       }],
-      code: ['', {
-        validators: [
-          Validators.required,
-          Validators.pattern(this.englishAndNumbersPattern)
-        ], updateOn: "blur",
+      // code: ['', {
+      //   validators: [
+      //     Validators.required,
+      //     Validators.pattern(this.englishAndNumbersPattern)
+      //   ], updateOn: "blur",
 
-      }],
+      // }],
       school: [null, {
         validators: [
           Validators.required]
@@ -181,7 +181,7 @@ export class AddEditKidComponent {
   private patchValue(): void {
     this.kidForm.patchValue({
       name: this.kidData?.item?.name,
-      code: this.kidData?.item?.code,
+      // code: this.kidData?.item?.code,
     });
     this.kidImageSrc = this.kidData?.item?.image_path;
     this.patchStreet(this.kidData?.item?.address);
@@ -350,7 +350,8 @@ export class AddEditKidComponent {
     let kidFormData: any = this.kidForm?.value;
     let formData = new FormData();
     formData.append('name', kidFormData?.name ?? '');
-    formData.append('code', kidFormData?.code ?? '');
+    formData.append('code', '2222');
+    // formData.append('code', kidFormData?.code ?? '');
     formData.append('school_id', kidFormData?.school?.id);
     formData.append('class', kidFormData?.class?.id ?? '');
     formData.append('level', kidFormData?.level?.id ?? '');

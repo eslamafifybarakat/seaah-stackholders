@@ -1,37 +1,98 @@
 <div id="modal-form">
   <form [formGroup]="tuitionExpensesForm" (ngSubmit)="submit()" aria-label="add-kid-form">
-    <div class="form-content">
-      <div class="row m-0">
-        <div class="col-md-12">
-          <div class="mb-3">
-            <label class="mb-2 required">
-              {{'dashboard.sideMenu.tuitionExpenses'|translate}}
-            </label>
-            <span class="p-input-icon-right select-loading d-block">
-              <p-multiSelect appendTo="body" [options]="tuitionExpensesList" formControlName="tuitionExpenses"
-                display="chip" [readonly]="isLoadingTuitionExpensesList" [virtualScroll]="true" [showClear]="true"
-                [virtualScrollItemSize]="38" [dropdownIcon]="'fas fa-caret-down'" scrollHeight="200px"
-                defaultLabel="{{'placeholders.select'|translate}}"
-                [filterPlaceHolder]="'placeholders.search'|translate" [showToggleAll]="true" [optionLabel]="'titleName'"
-                [class.ng-dirty]="formControls?.tuitionExpenses?.invalid && (formControls?.tuitionExpenses?.dirty || formControls?.tuitionExpenses?.touched)"></p-multiSelect>
-              <ng-container *ngIf="isLoadingTuitionExpensesList">
-                <i class="pi pi-spin pi-spinner"></i>
-              </ng-container>
-            </span>
-            <div class="mt-2">
-              <ng-container
-                *ngIf="formControls?.tuitionExpenses?.invalid && (formControls?.tuitionExpenses?.dirty || formControls?.tuitionExpenses?.touched)">
-                <ng-container *ngIf="formControls?.tuitionExpenses?.errors?.['required']">
-                  <span class="text-danger fs-8">
-                    {{'validations.requiredField'|translate}}
-                  </span>
-                </ng-container>
-              </ng-container>
+    <ng-container *ngIf="isLoadingTuitionExpensesList; else noLoading">
+      <skeleton [type]="'add-expenses'"></skeleton>
+    </ng-container>
+    <ng-template #noLoading>
+      <ng-container *ngIf="tuitionExpensesList?.length>0;else noExpenses">
+        <div class="form-content">
+          <div class="row m-0">
+            <div class="col-md-12">
+              <div class="mb-3">
+                <div class="d-flex justify-content-between align-items-center gap-2 mn-2">
+                  <label class="required">
+                    {{'dashboard.sideMenu.tuitionExpenses'|translate}}
+                  </label>
+                  <span *ngIf="selectedExpenses?.length>0">({{totalExpenses()}})</span>
+                </div>
+                <span class="p-input-icon-right select-loading d-block">
+                  <p-multiSelect appendTo="body" [options]="tuitionExpensesList" formControlName="tuitionExpenses"
+                    display="chip" [readonly]="isLoadingTuitionExpensesList" [virtualScroll]="true" [showClear]="true"
+                    [virtualScrollItemSize]="38" [dropdownIcon]="'fas fa-caret-down'" scrollHeight="200px"
+                    defaultLabel="{{'placeholders.select'|translate}}"
+                    [filterPlaceHolder]="'placeholders.search'|translate" [showToggleAll]="true"
+                    [optionLabel]="'titleName'"
+                    [class.ng-dirty]="formControls?.tuitionExpenses?.invalid && (formControls?.tuitionExpenses?.dirty || formControls?.tuitionExpenses?.touched)"></p-multiSelect>
+                  <ng-container *ngIf="isLoadingTuitionExpensesList">
+                    <i class="pi pi-spin pi-spinner"></i>
+                  </ng-container>
+                </span>
+                <div class="mt-2">
+                  <ng-container
+                    *ngIf="formControls?.tuitionExpenses?.invalid && (formControls?.tuitionExpenses?.dirty || formControls?.tuitionExpenses?.touched)">
+                    <ng-container *ngIf="formControls?.tuitionExpenses?.errors?.['required']">
+                      <span class="text-danger fs-8">
+                        {{'validations.requiredField'|translate}}
+                      </span>
+                    </ng-container>
+                  </ng-container>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+      </ng-container>
+      <ng-template #noExpenses>
+        <div class="d-flex flex-column justify-content-center align-items-center">
+          <app-dynamic-svg [name]="'noExpenses'"></app-dynamic-svg>
+          <p class="text-center mt-3">
+            {{'general.expensesPaidSoFar'|translate}}
+          </p>
+        </div>
+      </ng-template>
+    </ng-template>
+
+    <ng-container *ngIf="selectedExpenses?.length>0">
+      <div class="form-content">
+        <div class="row m-0 px-3">
+          <table class="pricing-table">
+            <thead>
+              <tr class="pricing-table-header">
+                <th>
+                  {{'general.title' | translate}}
+                </th>
+                <th>
+                  {{'general.price' | translate}}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let item of selectedExpenses">
+                <tr class="pricing-table-list">
+                  <td>
+                    {{item?.titleName || ''}}
+                  </td>
+                  <td>
+                    {{item?.total || 0}}
+                  </td>
+                  <!-- <td><span class="fa fa-check"></span></td> -->
+                </tr>
+              </ng-container>
+            </tbody>
+            <tfoot>
+              <tr class="pricing-table-footer">
+                <td class="fw-bold">
+                  {{'general.total' | translate}}
+                </td>
+                <td class="fw-bold">
+                  {{ totalExpenses() }} <!-- Dynamically calculated total expenses -->
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
       </div>
-    </div>
+    </ng-container>
     <div class="d-flex justify-content-end gap-3 flex-wrap mt-4">
       <button type="submit" class="btn btn-solid-main d-flex align-items-center justify-content-center gap-2">
         <span>

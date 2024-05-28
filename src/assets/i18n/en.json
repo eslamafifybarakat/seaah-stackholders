@@ -19,6 +19,8 @@
     "dashboard": "Dashboard"
   },
   "general": {
+    "expensesPaidSoFar":"The expenses due have been paid so far",
+    "submitRequest":"Submit Request",
     "readMore":"read more",
     "changeStatus":"Change Status",
     "no_result_found":"No Result Founded",

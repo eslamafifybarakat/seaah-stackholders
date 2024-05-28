@@ -1,4 +1,5 @@
-import { KidsService } from './../../../services/kids.service';
+import { SkeletonComponent } from 'src/app/shared/skeleton/skeleton/skeleton.component';
+import { DynamicSvgComponent } from './../../../../../shared/components/icons/dynamic-svg/dynamic-svg.component';
 
 // Modules
 import { MultiSelectModule } from 'primeng/multiselect';
@@ -34,7 +35,11 @@ import { Subscription } from 'rxjs';
     CalendarModule,
     DropdownModule,
     CommonModule,
-    FormsModule
+    FormsModule,
+
+    // Components
+    DynamicSvgComponent,
+    SkeletonComponent,
   ],
   templateUrl: './add-expenses.component.html',
   styleUrls: ['./add-expenses.component.scss']
@@ -49,8 +54,9 @@ export class AddExpensesComponent {
   tuitionExpensesCount: number = 0;
   // End Tuition Expenses List Variables
 
-
   tuitionExpensesData: any;
+  kidId: any;
+  selectedExpenses: any = [];
 
   tuitionExpensesForm = this.fb?.group(
     {
@@ -84,9 +90,14 @@ export class AddExpensesComponent {
   ngOnInit(): void {
     this.currentLanguage = this.publicService.getCurrentLanguage();
     this.tuitionExpensesData = this.config.data;
+    this.kidId = this.tuitionExpensesData?.event?.id;
     this.getAllTuitionExpenses();
     // this.updateMetaTagsForSEO();
     this.getCurrentUserInfo();
+    this.tuitionExpensesForm.get('tuitionExpenses').valueChanges.subscribe(value => {
+      this.selectedExpenses = value;
+    });
+
   }
   getCurrentUserInfo(): void {
     this.currentUserInformation = this.authService.getCurrentUserInformationLocally();
@@ -103,7 +114,7 @@ export class AddExpensesComponent {
   // Start Tuition Expenses List Functions
   getAllTuitionExpenses(isFiltering?: boolean): void {
     isFiltering ? this.publicService.showGlobalLoader.next(true) : this.isLoadingTuitionExpensesList = true;
-    let tuitionSubscription: Subscription = this.tuitionExpensesService?.getTuitionExpensesList()
+    let tuitionSubscription: Subscription = this.tuitionExpensesService?.getTuitionExpensesList(null, null, null, null, null, null, this.kidId)
       .pipe(
         tap((res: any) => this.processTuitionExpensesListResponse(res)),
         catchError(err => this.handleError(err)),
@@ -124,18 +135,19 @@ export class AddExpensesComponent {
         item['detailsAR'] = item?.details['ar'];
         item['detailsEN'] = item?.details['en'];
       });
-      if (this.tuitionExpensesData?.event?.expenses&& this.tuitionExpensesData?.event?.expenses?.length>0) {
-       let expensesPatch:any=[];
-        this.tuitionExpensesData?.event?.expenses?.forEach((expense:any) => {
+      if (this.tuitionExpensesData?.event?.expenses && this.tuitionExpensesData?.event?.expenses?.length > 0) {
+        let expensesPatch: any = [];
+        this.tuitionExpensesData?.event?.expenses?.forEach((expense: any) => {
           this.tuitionExpensesList?.forEach((item: any) => {
             if (expense?.id == item?.id) {
               expensesPatch?.push(item);
             }
           });
-       }); 
-       this.tuitionExpensesForm.patchValue({
-        tuitionExpenses:expensesPatch
-       });
+        });
+        this.tuitionExpensesForm.patchValue({
+          tuitionExpenses: expensesPatch
+        });
+        this.selectedExpenses = expensesPatch;
       }
     } else {
       this.handleError(response.error);
@@ -146,7 +158,13 @@ export class AddExpensesComponent {
     this.isLoadingTuitionExpensesList = false;
   }
   // End Tuition Expenses List Functions
-
+  totalExpenses(): any {
+    let total: any = 0;
+    this.selectedExpenses?.forEach((element: any) => {
+      total = total + +element?.total;
+    });
+    return total;
+  }
   // Start Add Edit Tuition Expenses
   submit(): void {
     if (this.tuitionExpensesForm?.valid) {

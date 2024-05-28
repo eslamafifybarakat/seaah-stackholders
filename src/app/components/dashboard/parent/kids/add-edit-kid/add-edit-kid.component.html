@@ -29,7 +29,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6">
+        <!-- <div class="col-md-6">
           <div class="mb-3">
             <label for="code" class="mb-2 required">
               {{'labels.code'|translate}}
@@ -48,7 +48,7 @@
               </ng-container>
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="col-md-6">
           <div class="mb-3">
             <label class="mb-2 required">
@@ -59,8 +59,9 @@
               <p-dropdown [options]="schools" formControlName="school" optionLabel="schoolName" [filter]="true"
                 [dropdownIcon]="'fas fa-caret-down'" [virtualScroll]="true" [virtualScrollItemSize]="38"
                 filterBy="school" appendTo="body" [filterPlaceholder]="'placeholders.search'|translate"
-                [readonly]="isLoadingSchools" scrollHeight="200px" emptyMessage="{{'general.no_result_found'|translate}}"
-                [showClear]="true" placeholder="{{'placeholders.school'|translate}}">
+                [readonly]="isLoadingSchools" scrollHeight="200px"
+                emptyMessage="{{'general.no_result_found'|translate}}" [showClear]="true"
+                placeholder="{{'placeholders.school'|translate}}">
               </p-dropdown>
               <ng-container *ngIf="isLoadingSchools">
                 <i class="pi pi-spin pi-spinner"></i>
@@ -87,10 +88,10 @@
             <span class="p-input-icon-right select-loading d-block"
               [class.border-red]="formControls?.level?.invalid && (formControls?.level?.dirty || formControls?.level?.touched)">
               <p-dropdown [options]="levels" formControlName="level" optionLabel="name" [filter]="true"
-                [dropdownIcon]="'fas fa-caret-down'" [virtualScroll]="true" [virtualScrollItemSize]="38"
-                filterBy="name" appendTo="body" [filterPlaceholder]="'placeholders.search'|translate"
-                [readonly]="isLoadingLevels" scrollHeight="200px" emptyMessage="{{'general.no_result_found'|translate}}"
-                [showClear]="true" placeholder="{{'placeholders.level'|translate}}">
+                [dropdownIcon]="'fas fa-caret-down'" [virtualScroll]="true" [virtualScrollItemSize]="38" filterBy="name"
+                appendTo="body" [filterPlaceholder]="'placeholders.search'|translate" [readonly]="isLoadingLevels"
+                scrollHeight="200px" emptyMessage="{{'general.no_result_found'|translate}}" [showClear]="true"
+                placeholder="{{'placeholders.level'|translate}}">
               </p-dropdown>
               <ng-container *ngIf="isLoadingLevels">
                 <i class="pi pi-spin pi-spinner"></i>
@@ -116,9 +117,9 @@
             <span class="p-input-icon-right select-loading d-block"
               [class.border-red]="formControls?.class?.invalid && (formControls?.class?.dirty || formControls?.class?.touched)">
               <p-dropdown [options]="classes" formControlName="class" optionLabel="name" [filter]="true"
-                [dropdownIcon]="'fas fa-caret-down'" [virtualScroll]="true" [virtualScrollItemSize]="38"
-                filterBy="name" appendTo="body" [filterPlaceholder]="'placeholders.search'|translate"
-                [showClear]="true" placeholder="{{'placeholders.class'|translate}}">
+                [dropdownIcon]="'fas fa-caret-down'" [virtualScroll]="true" [virtualScrollItemSize]="38" filterBy="name"
+                appendTo="body" [filterPlaceholder]="'placeholders.search'|translate" [showClear]="true"
+                placeholder="{{'placeholders.class'|translate}}">
               </p-dropdown>
               <!-- <ng-container *ngIf="isLoadingLevels">
                 <i class="pi pi-spin pi-spinner"></i>
