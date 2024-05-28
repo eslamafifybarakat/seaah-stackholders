@@ -7,6 +7,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { CheckboxModule } from 'primeng/checkbox';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-show-expenses-modal',
@@ -14,7 +16,9 @@ import { Subscription } from 'rxjs';
   imports: [
     // Modules
     TranslateModule,
+    CheckboxModule,
     CommonModule,
+    FormsModule,
 
     DynamicSvgComponent,
   ],
@@ -27,6 +31,7 @@ export class ShowExpensesModalComponent {
 
   KidData: any;
   currentUserInformation: any | null;
+  selectedExpenses: any = [];
 
   constructor(
     private alertsService: AlertsService,
@@ -37,9 +42,12 @@ export class ShowExpensesModalComponent {
   ) { }
 
   ngOnInit(): void {
+    this.currentLanguage = this.publicService.getCurrentLanguage();
     this.KidData = this.config?.data?.event;
     console.log("data come to list ex ", this.KidData);
-    this.currentLanguage = this.publicService.getCurrentLanguage();
+    this.KidData?.expenses.forEach((element: any) => {
+      element['checked'] = false;
+    });
   }
 
   totalExpenses(): any {
@@ -51,7 +59,7 @@ export class ShowExpensesModalComponent {
   }
   // Start Pay Noe Modal
   payNow(event: any): void {
-    console.log("data = ", event);
+    this.KidData['expenses'] = this.selectedExpenses;
     this.cancel();
     const refPayNow: any = this.dialogService?.open(PayTuitionNowModalComponent, {
       data: this.KidData,
@@ -68,6 +76,15 @@ export class ShowExpensesModalComponent {
     });
   }
   // End Pay Noe Modal
+  onChangeItem(item: any): void {
+    let arr: any = [];
+    this.KidData?.expenses?.forEach((element: any) => {
+      if (element.checked == true) {
+        arr?.push(element);
+      }
+    });
+    this.selectedExpenses = arr;
+  }
 
   cancel(): void {
     this.ref?.close({ listChanged: false });

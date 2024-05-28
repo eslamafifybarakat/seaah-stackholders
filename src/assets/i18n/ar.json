@@ -19,6 +19,7 @@
     "dashboard": "لوحة التحكم"
   },
   "general": {
+    "totalSelectedExpenses":"اجمالي المصاريف المختارة",
     "expensesPaidSoFar":"تم دفع المصاريف المستحقة حتى الان",
     "submitRequest": "إرسال طلب",
     "readMore":"اقرأ المزيد",

@@ -19,6 +19,7 @@
     "dashboard": "Dashboard"
   },
   "general": {
+    "totalSelectedExpenses":"Total selected expenses",
     "expensesPaidSoFar":"The expenses due have been paid so far",
     "submitRequest":"Submit Request",
     "readMore":"read more",
