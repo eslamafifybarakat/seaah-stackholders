@@ -19,6 +19,7 @@
     "dashboard": "Dashboard"
   },
   "general": {
+    "tuition":"Tuition",
     "changeBank":"Change Bank",
     "editMyExpensesRequest":"Edit my expense request",
     "requestToPayExpenses":"A request to pay these expenses to the bank has been added",

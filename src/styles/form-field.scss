@@ -456,7 +456,10 @@ body:dir(rtl) {
 .p-dropdown timesicon {
   width: 2rem !important;
 }
-
+.p-dropdown-item,
+.p-multiselect-item {
+  text-wrap: wrap;
+}
 .p-multiselect-panel .p-multiselect-items {
   padding-inline: 5px;
 }

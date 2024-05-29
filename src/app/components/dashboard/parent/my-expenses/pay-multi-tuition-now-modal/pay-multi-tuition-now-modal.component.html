@@ -12,7 +12,7 @@
           </div>
         </div> -->
         <!-- Multi Kids Selection -->
-        <ng-container *ngIf="step==1">
+        <div [class.d-none]="step==2">
           <div class="col-md-12">
             <div class="mb-3">
               <label class="mb-2 required">
@@ -62,19 +62,20 @@
             </div>
           </ng-container>
           <ng-container *ngIf="selectedExpenses?.length>0">
-            <h5 class="text-center mb-0 fw-bold fs-5-1">
-              {{'general.totalSelectedExpenses'|translate}}
-            </h5>
-            <hr class="my-3">
             <div class="row m-0">
-              <table class="pricing-table">
+              <table class="pricing-table caption-top">
+                <caption>
+                  <h5 class="mb-0 fw-bold fs-5-1">
+                    {{'general.totalSelectedExpenses'|translate}}
+                  </h5>
+                </caption>
                 <thead>
                   <tr class="pricing-table-header">
                     <th>
-                      {{'general.title' | translate}}
+                      {{'dashboard.tableHeader.kidName' | translate}}
                     </th>
                     <th>
-                      {{'dashboard.tableHeader.kidName' | translate}}
+                      {{'general.tuition' | translate}}
                     </th>
                     <th>
                       {{'general.price' | translate}}
@@ -85,10 +86,10 @@
                   <ng-container *ngFor="let item of selectedExpenses">
                     <tr class="pricing-table-list">
                       <td>
-                        {{item?.title[currentLanguage] || ''}}
+                        {{item?.kidName || '---'}}
                       </td>
                       <td>
-                        {{item?.kidName || '---'}}
+                        {{item?.title[currentLanguage] || ''}}
                       </td>
                       <td>
                         {{item?.total || 0}}
@@ -112,9 +113,9 @@
               </table>
             </div>
           </ng-container>
-        </ng-container>
+        </div>
 
-        <ng-container *ngIf="step==2">
+        <div [class.d-none]="step==1">
           <!-- Bank Selection -->
           <div class="col-12">
             <div class="mb-3">
@@ -183,7 +184,7 @@
               </div>
             </div>
           </div>
-        </ng-container>
+        </div>
 
       </div>
     </div>

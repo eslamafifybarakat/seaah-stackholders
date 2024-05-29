@@ -19,6 +19,7 @@
     "dashboard": "لوحة التحكم"
   },
   "general": {
+    "tuition":"الرسوم",
     "changeBank":"تغيير البنك",
     "requestToPayExpenses":"تم اضافه طلب دفع هذه المصاريف للبنك",
     "editMyExpensesRequest":"تعديل طلب المصاريف الخاص بي",
