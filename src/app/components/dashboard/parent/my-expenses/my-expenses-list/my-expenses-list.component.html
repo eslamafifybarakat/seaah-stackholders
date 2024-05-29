@@ -12,6 +12,10 @@
           </span>
         </p>
       </div>
+      <button class="btn btn-solid-main d-flex align-items-center gap-2 text-nowrap" (click)="addMyExpense()">
+        <i class="pi pi-plus"></i>
+        <span>{{'dashboard.tuitionExpenses.addMyExpense'|translate}}</span>
+      </button>
       <!-- <div>
           <form [formGroup]="filterForm" aria-label="filter-kid-form">
             <div class="form-content">
@@ -54,10 +58,10 @@
       <div class="d-flex gap-3 flex-lg-nowrap flex-wrap justify-content-sm-start justify-content-center"
         *ngIf="MyExpenseList.length>0|| ifFilteration()">
         <!-- Add Kid -->
-        <button class="btn btn-solid-main d-flex align-items-center gap-2 text-nowrap" (click)="addMyExpense()">
+        <!-- <button class="btn btn-solid-main d-flex align-items-center gap-2 text-nowrap" (click)="addMyExpense()">
           <i class="pi pi-plus"></i>
           <span>{{'dashboard.tuitionExpenses.addMyExpense'|translate}}</span>
-        </button>
+        </button> -->
         <!-- Filter Button -->
         <div [class.d-none]="dataStyleType=='list'">
           <button [class.disabled-actions]="isLoadingMyExpenseList" *ngIf="MyExpenseList?.length>0|| ifFilteration()"
@@ -102,7 +106,7 @@
           [paginatorRows]="perPage" [pages]="pagesCount" (paginateHandler)="onPageChange($event)"
           [rowsPerPageOptions]="rowsOptions" [enableConfirmDeleteDialog]="true" [keyDelete]="'name'"
           (paginateOptionsHandler)="onPaginatorOptionsChange($event)" [isSearch]="isSearch" [arrayChildKey]="'name'"
-           [enableAddBtn]="false" [addBtnText]="'dashboard.kids.addKid'" (addHandler)="addEditItem()"
+          [enableAddBtn]="false" [addBtnText]="'dashboard.kids.addKid'" (addHandler)="addEditItem()"
           [notFoundImage]="'assets/images/not-found/no-user.svg'" [showActionItemBtn]="true"
           [actionButtonText]="'general.details'" (actionHandlerEmit)="showExpensesDetails($event)"></dynamic-table-v2>
       </ng-container>
