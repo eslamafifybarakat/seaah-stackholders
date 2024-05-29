@@ -15,6 +15,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { KidsService } from '../../../services/kids.service';
 import { KidsListApiResponse } from 'src/app/interfaces/dashboard/kids';
 import { AuthService } from 'src/app/services/authentication/auth.service';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @Component({
   selector: 'app-pay-multi-tuition-now-modal',
@@ -26,7 +27,8 @@ import { AuthService } from 'src/app/services/authentication/auth.service';
     DropdownModule,
     CommonModule,
     FormsModule,
-    MultiSelectModule
+    MultiSelectModule,
+    CheckboxModule,
   ],
   templateUrl: './pay-multi-tuition-now-modal.component.html',
   styleUrls: ['./pay-multi-tuition-now-modal.component.scss']
@@ -50,6 +52,10 @@ export class PayMultiTuitionNowModalComponent {
   installmentWays: any = [];
   isLoadingInstallmentWays: boolean = false;
   // End Installment Ways Variables
+  step: number = 1;
+  selectedKids: any = [];
+  selectedExpenses: any = [];
+  allSelectedExpenses: any = [];
 
   expensesForm = this.fb?.group(
     {
@@ -61,10 +67,10 @@ export class PayMultiTuitionNowModalComponent {
         validators: [
           Validators.required]
       }],
-      me: [false, {
-        validators: [
-          Validators.required]
-      }],
+      // me: [false, {
+      //   validators: [
+      //     Validators.required]
+      // }],
       installmentWay: [null, {
         validators: [
           Validators.required], updateOn: "blur"
@@ -96,6 +102,10 @@ export class PayMultiTuitionNowModalComponent {
     this.currentLanguage = this.publicService.getCurrentLanguage();
     this.currentUserInformation = this.authService.getCurrentUserInformationLocally();
     this.getBanks();
+    this.expensesForm.get('kids').valueChanges.subscribe(value => {
+      this.selectedKids = value;
+      console.log(value);
+    });
   }
 
   // Start Kids List Functions
@@ -115,6 +125,11 @@ export class PayMultiTuitionNowModalComponent {
     if (response.status == 200) {
       this.kidsList = response?.data?.items;
       this.kidsList?.forEach((item: any) => {
+        if (item?.expenses?.length > 0) {
+          item?.expenses.forEach((element: any) => {
+            element['checked'] = false;
+          });
+        }
         item['addressName'] = `${item?.address?.region ?? ''}, ${item?.address?.city ?? ''}, ${item?.address?.street ?? ''}, ${item?.address?.zip ?? ''}`;
         let name: any = JSON.parse(item?.school?.name[this.currentLanguage] || '{}');
         item['schoolName'] = name[this.currentLanguage];
@@ -211,13 +226,13 @@ export class PayMultiTuitionNowModalComponent {
         tuitionExpenseIds?.push(expense?.id);
       });
     });
-    if (this.expensesForm?.value?.me) {
-      kidsIds?.push(this.currentUserInformation?.id);
-      organizationsIds?.push(this.currentUserInformation?.school?.id);
-      this.currentUserInformation?.expenses?.forEach((expense: any) => {
-        tuitionExpenseIds?.push(expense?.id);
-      });
-    }
+    // if (this.expensesForm?.value?.me) {
+    //   kidsIds?.push(this.currentUserInformation?.id);
+    //   organizationsIds?.push(this.currentUserInformation?.school?.id);
+    //   this.currentUserInformation?.expenses?.forEach((expense: any) => {
+    //     tuitionExpenseIds?.push(expense?.id);
+    //   });
+    // }
     // Prepear Banks Array
     let BanksIds: any = [];
     BanksIds?.push(expenseFormData?.bank?.id);
@@ -258,7 +273,34 @@ export class PayMultiTuitionNowModalComponent {
   cancel(): void {
     this.ref?.close({ listChanged: false });
   }
+  // Assuming `this.selectedExpenses` is already defined as an array
+  onChangeItem(el: any): void {
+    let arr: any = [];
+    this.kidsList?.forEach((item: any) => {
+      item.expenses?.forEach((element: any) => {
+        element['kidName'] = item.name;
+        if (element.checked == true) {
+          arr?.push(element);
+        }
+      });
+    });
+    this.selectedExpenses = arr;
+  }
 
+  totalExpenses(): any {
+    let total: any = 0;
+    this.selectedExpenses?.forEach((element: any) => {
+      total = total + +element?.total;
+    });
+    return total;
+  }
+
+  next(): void {
+    this.step = 2;
+  }
+  back(): void {
+    this.step = 1;
+  }
   /* --- Handle api requests messages --- */
   private handleSuccess(msg: string | null): any {
     this.setMessage(msg || this.publicService.translateTextFromJson('general.successRequest'), 'succss');
