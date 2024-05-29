@@ -1,0 +1,60 @@
+#modal-form {
+  .btn {
+    height: 2.9rem;
+    padding: 1rem;
+    border-radius: 10px;
+  }
+  .btn-solid-main {
+    background-color: var(--bg-main-color);
+    border-color: var(--bg-main-color);
+    color: var(--text-white-color);
+  }
+  .btn-outline-main {
+    background-color: transparent;
+    border-color: var(--bg-main-color);
+    color: var(--text-main-color);
+  }
+  .form-content {
+    max-height: 63vh;
+    overflow: auto;
+  }
+}
+.all-status {
+  .item .position-relative::after {
+    content: "";
+    position: absolute;
+    height: calc(100% + 10px);
+    width: 1.5px;
+    border-radius: 2px;
+    background-color: #8c95a336;
+    top: 40px;
+    z-index: -1;
+    left: calc(50% - 1px);
+  }
+  .item:last-child .position-relative::after {
+    display: none;
+  }
+  .status-icon {
+    width: 2.5rem;
+    min-width: 2.5rem;
+    height: 2.5rem;
+    z-index: 1;
+    color: #939393;
+    background-color: #93939314;
+  }
+  .status-Pending {
+    color: #f9bc61;
+    background-color: #f9bc6114;
+  }
+  .status-Missed {
+    color: #f1416c;
+    background-color: #fff5f8;
+  }
+  .status-Paid {
+    color: #1071b8 !important;
+    background-color: #dbeaf5 !important;
+  }
+  .small {
+    font-size: 0.875em;
+  }
+}

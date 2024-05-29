@@ -33,6 +33,7 @@ import { InstallmentRequestsService } from '../../../services/installment_reques
 import { PayTuitionNowModalComponent } from '../../kids/pay-tuition-now-modal/pay-tuition-now-modal.component';
 import { ExpenseCardComponent } from '../expense-card/expense-card.component';
 import { AuthService } from 'src/app/services/authentication/auth.service';
+import { EditMyExpenseRequestComponent } from './edit-my-expense-request/edit-my-expense-request.component';
 
 
 @Component({
@@ -119,7 +120,7 @@ export class MyExpensesListComponent {
   get formControls(): any {
     return this.filterForm?.controls;
   }
-  currentUserInformation:any| null;
+  currentUserInformation: any | null;
 
   constructor(
     private localizationLanguageService: LocalizationLanguageService,
@@ -202,7 +203,7 @@ export class MyExpensesListComponent {
   // Start My Expenses List Functions
   getAllMyExpenseList(isFiltering?: boolean): void {
     this.isSearch ? this.publicService.showGlobalLoader.next(true) : this.isLoadingMyExpenseList = true;
-    let myExpensesSubscription: Subscription = this.installmentRequestsService?.getMyExpenseList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null, this.statusValue ?? null,null,this.currentUserInformation?.id)
+    let myExpensesSubscription: Subscription = this.installmentRequestsService?.getMyExpenseList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null, this.statusValue ?? null, null, this.currentUserInformation?.id)
       .pipe(
         tap((res: any) => {
           this.processMyExpenseListResponse(res);
@@ -218,6 +219,50 @@ export class MyExpensesListComponent {
       this.pagesCount = Math.ceil(this.myExpensesCount / this.perPage);
       this.MyExpenseList = response?.data?.items?.data;
       this.MyExpenseList?.forEach((item: any) => {
+        item['tuitions'] = [
+          {
+            "id": 20,
+            "school_id": "86",
+            "level": "1",
+            "title": {
+              "en": "first",
+              "ar": "اول"
+            },
+            "details": {
+              "ar": "لتليبتل",
+              "en": "gjhjh"
+            },
+            "total": "300",
+            "deserved_date": "2024-05-26",
+            "created_at": "2024-05-26T19:33:17.000000Z",
+            "updated_at": "2024-05-26T19:33:17.000000Z",
+            "pivot": {
+              "kids_id": "64",
+              "expenses_id": "20"
+            }
+          },
+          {
+            "id": 21,
+            "school_id": "86",
+            "level": "1",
+            "title": {
+              "en": "term",
+              "ar": "رسوم الترم الاول"
+            },
+            "details": {
+              "ar": "التلت",
+              "en": "kjkjhhkj"
+            },
+            "total": "1200",
+            "deserved_date": "2024-06-29",
+            "created_at": "2024-05-26T19:37:17.000000Z",
+            "updated_at": "2024-05-26T19:37:17.000000Z",
+            "pivot": {
+              "kids_id": "64",
+              "expenses_id": "21"
+            }
+          }
+        ]
         item['kidImage'] = item?.kids?.image_path;
         if (item?.person_pay_type == 'mykids') {
           item['kidName'] = item?.kids?.name;
@@ -278,9 +323,114 @@ export class MyExpensesListComponent {
     console.log("item = ", item);
     item['kids']['installmentways'] = item?.installmentways;
     item['kids']['banks'] = item?.banks;
-    const ref = this.dialogService?.open(PayTuitionNowModalComponent, {
-      data: item?.kids,
-      header: this.publicService?.translateTextFromJson('dashboard.tuitionExpenses.editExpense'),
+    item['kids'] = {
+      banks: item?.banks,
+      "id": 64,
+      "name": "Eligendi velit aliqu",
+      "code": "2222",
+      "level": "1",
+      "class": "A",
+      "address": {
+        "region": "Amet facere magna d",
+        "city": "Autem et enim aut et",
+        "street": "Amet facere magna d",
+        "zip": "14552"
+      },
+      "paid_status": false,
+      "school_id": "86",
+      "parent_id": "144",
+      "image_path": "https://saeeh.ora-systems.fun/uploads/kids/RaghisT3Frffn4cCsevpYH4YR9EoQRn7R6eSq7kK.jpg",
+      "full_code": "2222",
+      "approve_status": {
+        "id": 3,
+        "label": "Approved"
+      },
+      "parent": {
+        "id": 144,
+        "name": "Mohammad Dominguez",
+        "email": "hexo@mailinator.com",
+        "email_verified_at": null,
+        "type": "parent",
+        "phone": "512114411",
+        "iqama_No": "-1912156815",
+        "ip_address": "197.40.142.246",
+        "device_token": null,
+        "source_register": "web",
+        "created_at": "2024-05-28T12:12:25.000000Z",
+        "updated_at": "2024-05-28T12:12:25.000000Z",
+        "organization_id": null
+      },
+      "school": {
+        "id": 86,
+        "name": {
+          "en": "{\"en\":\"School Eslam\",\"ar\":\"School Eslam\"}",
+          "ar": "{\"en\":\"School Eslam\",\"ar\":\"School Eslam\"}"
+        },
+        "type": "school",
+        "location": {
+          "en": "SchoolEslam",
+          "ar": "SchoolEslam"
+        },
+        "prefix": null,
+        "start_time": "21:28:08",
+        "end_time": "21:28:11",
+        "image": "org/5biuypI2PwNtH65tJrkwcZ4Qfisd5IUIWmrhAB9C.jpg",
+        "installment_ways": null,
+        "status": true,
+        "created_at": "2024-05-26T17:28:22.000000Z",
+        "updated_at": "2024-05-26T17:30:01.000000Z",
+        "image_path": "https://saeeh.ora-systems.fun/org/5biuypI2PwNtH65tJrkwcZ4Qfisd5IUIWmrhAB9C.jpg"
+      },
+      "expenses": [
+        {
+          "id": 20,
+          "school_id": "86",
+          "level": "1",
+          "title": {
+            "en": "first",
+            "ar": "اول"
+          },
+          "details": {
+            "ar": "لتليبتل",
+            "en": "gjhjh"
+          },
+          "total": "300",
+          "deserved_date": "2024-05-26",
+          "created_at": "2024-05-26T19:33:17.000000Z",
+          "updated_at": "2024-05-26T19:33:17.000000Z",
+          "pivot": {
+            "kids_id": "64",
+            "expenses_id": "20"
+          }
+        },
+        {
+          "id": 21,
+          "school_id": "86",
+          "level": "1",
+          "title": {
+            "en": "term",
+            "ar": "رسوم الترم الاول"
+          },
+          "details": {
+            "ar": "التلت",
+            "en": "kjkjhhkj"
+          },
+          "total": "1200",
+          "deserved_date": "2024-06-29",
+          "created_at": "2024-05-26T19:37:17.000000Z",
+          "updated_at": "2024-05-26T19:37:17.000000Z",
+          "pivot": {
+            "kids_id": "64",
+            "expenses_id": "21"
+          }
+        }
+      ]
+    };
+    const ref: any = this.dialogService?.open(EditMyExpenseRequestComponent, {
+      data: {
+        event: item
+      },
+      header: this.publicService?.translateTextFromJson('general.editMyExpensesRequest'),
       dismissableMask: false,
       width: '60%',
       styleClass: 'custom-modal',

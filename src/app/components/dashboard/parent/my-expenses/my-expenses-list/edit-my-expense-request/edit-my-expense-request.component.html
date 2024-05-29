@@ -1,0 +1,138 @@
+<div id="modal-form">
+  <ng-container *ngIf="step==1">
+    <div>
+      <div class="all-status px-2">
+        <ng-container *ngFor="let item of data?.kids?.expenses">
+          <div class="item d-flex gap-3 mt-4">
+            <div
+              class="position-relative status-icon rounded-circle status-{{item.paid_status}} d-flex justify-content-center align-items-center ">
+              <i class="pi pi-info-circle"></i>
+            </div>
+            <div class="w-100">
+              <div class="d-flex align-items-center justify-content-between w-100 flex-wrap">
+                <h3 class="fs-6 fw-bold text-dark-color mb-0">
+                  {{item.title[currentLanguage]}}
+                </h3>
+                <ng-container *ngIf="true">
+                  <span class="text-muted-color fw-500 fs-8">
+                    {{item?.deserved_date}}
+                  </span>
+                </ng-container>
+              </div>
+              <p class="mb-0 text-main-color fs-8 fw-normal mt-0">
+                {{item.details[currentLanguage]}}
+              </p>
+              <p class="text-main-color mt-1 mb-0 fw-normal fs-8">
+                {{item.total||0}}
+              </p>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      <p class="text-center fw-bold mt-4">
+        {{"general.requestToPayExpenses"|translate}}
+      </p>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="step==2">
+    <form [formGroup]="expenseForm" (ngSubmit)="submit()" aria-label="pay-form">
+      <div class="form-content">
+        <div class="row m-0">
+          <div class="col-12">
+            <div class="mb-3">
+              <label class="mb-2 required">
+                {{'labels.bank'|translate}}
+              </label>
+              <span class="p-input-icon-right select-loading d-block"
+                [class.border-red]="formControls?.bank?.invalid && (formControls?.bank?.dirty || formControls?.bank?.touched)">
+                <p-dropdown [options]="banksList" formControlName="bank" optionLabel="bankName" [filter]="true"
+                  [dropdownIcon]="'fas fa-caret-down'" [virtualScroll]="true" [virtualScrollItemSize]="38"
+                  filterBy="bankName" appendTo="body" [filterPlaceholder]="'placeholders.search'|translate"
+                  [readonly]="isLoadingBank" scrollHeight="200px" emptyMessage="{{'general.no_result_found'|translate}}"
+                  [showClear]="true" placeholder="{{'placeholders.select'|translate}}"
+                  (onChange)="onBankChange($event)">
+                </p-dropdown>
+                <ng-container *ngIf="isLoadingBank">
+                  <i class="pi pi-spin pi-spinner"></i>
+                </ng-container>
+              </span>
+              <div class="mt-2">
+                <ng-container
+                  *ngIf="formControls?.bank?.invalid && (formControls?.bank?.dirty || formControls?.bank?.touched)">
+                  <ng-container *ngIf="formControls?.bank?.errors?.['required']">
+                    <span class="text-danger fs-8">
+                      {{'validations.requiredField'|translate}}
+                    </span>
+                  </ng-container>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="mb-3">
+              <label class="mb-2 required">
+                {{'labels.installmentWay'|translate}}
+              </label>
+              <span class="p-input-icon-right select-loading d-block"
+                [class.border-red]="formControls?.installmentWay?.invalid && (formControls?.installmentWay?.dirty || formControls?.installmentWay?.touched)">
+                <p-dropdown [options]="installmentWays" formControlName="installmentWay" optionLabel="name"
+                  [filter]="true" [dropdownIcon]="'fas fa-caret-down'" [virtualScroll]="true"
+                  [virtualScrollItemSize]="38" filterBy="name" appendTo="body"
+                  [filterPlaceholder]="'placeholders.search'|translate"
+                  [readonly]="isLoadingInstallmentWays || isLoadingBank || formControls?.bank?.value ==null"
+                  scrollHeight="200px" emptyMessage="{{'general.no_result_found'|translate}}" [showClear]="true"
+                  placeholder="{{'placeholders.installmentWay'|translate}}">
+                </p-dropdown>
+                <ng-container *ngIf="isLoadingInstallmentWays">
+                  <i class="pi pi-spin pi-spinner"></i>
+                </ng-container>
+              </span>
+              <div class="mt-2">
+                <ng-container
+                  *ngIf="formControls?.installmentWay?.invalid && (formControls?.installmentWay?.dirty || formControls?.installmentWay?.touched)">
+                  <ng-container *ngIf="formControls?.installmentWay?.errors?.['required']">
+                    <span class="text-danger fs-8">
+                      {{'validations.requiredField'|translate}}
+                    </span>
+                  </ng-container>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+  <div class="d-flex  justify-content-end gap-3 flex-wrap mt-4" [ngClass]="{'justify-content-between': step==2}">
+    <button *ngIf="step==2" type="button" (click)="back()"
+      class="btn btn-solid-main d-flex align-items-center justify-content-center gap-2">
+      <span>
+        {{'paginator.previous'|translate}}
+      </span>
+      <i class="pi pi-arrow-left"></i>
+    </button>
+    <div class="d-flex justify-content-end gap-3 flex-wrap">
+      <button *ngIf="step==1" type="button" (click)="next()"
+        class="btn btn-solid-main d-flex align-items-center justify-content-center gap-2">
+        <span>
+          {{'general.changeBank'|translate}}
+        </span>
+        <i class="pi pi-arrow-right"></i>
+      </button>
+      <button *ngIf="step==2" type="submit"
+        class="btn btn-solid-main d-flex align-items-center justify-content-center gap-2">
+        <span>
+          {{'general.save'|translate}}
+        </span>
+        <i class="pi pi-save"></i>
+      </button>
+      <button type="button" class="btn btn-outline-main d-flex align-items-center gap-2" (click)="cancel()">
+        <span>
+          {{'general.cancel'|translate}}
+        </span>
+        <i class="pi pi-times"></i>
+      </button>
+    </div>
+  </div>
+</div>

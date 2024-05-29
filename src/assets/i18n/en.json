@@ -19,6 +19,9 @@
     "dashboard": "Dashboard"
   },
   "general": {
+    "changeBank":"Change Bank",
+    "editMyExpensesRequest":"Edit my expense request",
+    "requestToPayExpenses":"A request to pay these expenses to the bank has been added",
     "totalSelectedExpenses":"Total selected expenses",
     "expensesPaidSoFar":"The expenses due have been paid so far",
     "submitRequest":"Submit Request",

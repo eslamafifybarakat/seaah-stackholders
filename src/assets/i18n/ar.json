@@ -19,6 +19,9 @@
     "dashboard": "لوحة التحكم"
   },
   "general": {
+    "changeBank":"تغيير البنك",
+    "requestToPayExpenses":"تم اضافه طلب دفع هذه المصاريف للبنك",
+    "editMyExpensesRequest":"تعديل طلب المصاريف الخاص بي",
     "totalSelectedExpenses":"اجمالي المصاريف المختارة",
     "expensesPaidSoFar":"تم دفع المصاريف المستحقة حتى الان",
     "submitRequest": "إرسال طلب",

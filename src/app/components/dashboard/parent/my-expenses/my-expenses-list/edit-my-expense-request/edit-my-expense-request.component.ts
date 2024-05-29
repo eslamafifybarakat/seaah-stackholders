@@ -1,34 +1,34 @@
-import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { BanksService } from './../../../../services/banks.service';
 import { PublicService } from 'src/app/services/generic/public.service';
 import { AlertsService } from 'src/app/services/generic/alerts.service';
+import { InstallmentRequestsService } from './../../../../services/installment_requests.service';
+import { keys } from './../../../../../../shared/configs/localstorage-key';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { catchError, finalize, tap } from 'rxjs/operators';
-import { SchoolsService } from '../../../services/schools.service';
 import { DropdownModule } from 'primeng/dropdown';
-import { BanksService } from '../../../services/banks.service';
-import { InstallmentRequestsService } from '../../../services/installment_requests.service';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Subscription, catchError, finalize, tap } from 'rxjs';
 
 @Component({
-  selector: 'app-pay-tuition-now-modal',
   standalone: true,
   imports: [
-    // Modules
     ReactiveFormsModule,
     TranslateModule,
     DropdownModule,
     CommonModule,
     FormsModule
   ],
-  templateUrl: './pay-tuition-now-modal.component.html',
-  styleUrls: ['./pay-tuition-now-modal.component.scss']
+  selector: 'app-edit-my-expense-request',
+  templateUrl: './edit-my-expense-request.component.html',
+  styleUrls: ['./edit-my-expense-request.component.scss']
 })
-export class PayTuitionNowModalComponent {
+export class EditMyExpenseRequestComponent {
   private subscriptions: Subscription[] = [];
   currentLanguage: string;
+  step: number = 1;
+  data: any;
 
   KidData: any;
   currentUserInformation: any | null;
@@ -58,9 +58,9 @@ export class PayTuitionNowModalComponent {
     return this.expenseForm?.controls;
   }
 
-
   constructor(
     private installmentRequestsService: InstallmentRequestsService,
+    @Inject(PLATFORM_ID) private platformId: Object,
     private alertsService: AlertsService,
     private publicService: PublicService,
     private config: DynamicDialogConfig,
@@ -70,23 +70,25 @@ export class PayTuitionNowModalComponent {
   ) { }
 
   ngOnInit(): void {
-    this.KidData = this.config?.data;
-    console.log(this.KidData);
+    if (isPlatformBrowser(this.platformId)) {
+      this.currentLanguage = window?.localStorage?.getItem(keys?.language);
+    }
+    this.data = this.config.data.event;
+
+    this.KidData = this.config?.data.event;
 
     this.currentLanguage = this.publicService.getCurrentLanguage();
     this.getBanks();
-    if (this.KidData) {
-      let data: any = {};
-      data['description'] = this.KidData.installmentways?.description[this.currentLanguage];
-      data['id'] = 1;
-      data['name'] = this.KidData.installmentways?.name[this.currentLanguage];
-      data['period'] = '5';
-      this.expenseForm.patchValue({
-        installmentWay: data
-      });
-      console.log(data);
-
-    }
+    // if (this.KidData) {
+    //   let data: any = {};
+    //   data['description'] = this.KidData.installmentways?.description[this.currentLanguage];
+    //   data['id'] = 1;
+    //   data['name'] = this.KidData.installmentways?.name[this.currentLanguage];
+    //   data['period'] = '5';
+    //   this.expenseForm.patchValue({
+    //     installmentWay: data
+    //   });
+    // }
   }
 
   // Start Banks List Functions
@@ -193,9 +195,13 @@ export class PayTuitionNowModalComponent {
   }
   // End Add Expenses Functions
 
-  cancel(): void {
-    this.ref?.close({ listChanged: false });
+  next(): void {
+    this.step = 2;
   }
+  back(): void {
+    this.step = 1;
+  }
+  cancel(): void { }
 
   /* --- Handle api requests messages --- */
   private handleSuccess(msg: string | null): any {
