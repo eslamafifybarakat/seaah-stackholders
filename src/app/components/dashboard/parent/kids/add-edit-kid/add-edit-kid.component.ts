@@ -350,7 +350,7 @@ export class AddEditKidComponent {
     let kidFormData: any = this.kidForm?.value;
     let formData = new FormData();
     formData.append('name', kidFormData?.name ?? '');
-    formData.append('code', '2222');
+    // formData.append('code', '2222');
     // formData.append('code', kidFormData?.code ?? '');
     formData.append('school_id', kidFormData?.school?.id);
     formData.append('class', kidFormData?.class?.id ?? '');
