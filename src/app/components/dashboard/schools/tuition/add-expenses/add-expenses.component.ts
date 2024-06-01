@@ -144,10 +144,15 @@ export class AddExpensesComponent {
             }
           });
         });
-        this.tuitionExpensesForm.patchValue({
-          tuitionExpenses: expensesPatch
-        });
-        this.selectedExpenses = expensesPatch;
+        // this.tuitionExpensesForm.patchValue({
+        //   tuitionExpenses: expensesPatch
+        // });
+        // this.selectedExpenses = expensesPatch;
+        console.log(this.tuitionExpensesList);
+        expensesPatch?.forEach((expense: any) => {
+          // Update tuitionExpensesList to a new array excluding the item with matching id
+          this.tuitionExpensesList = this.tuitionExpensesList?.filter(item => item.id !== expense.id);
+        });        
       }
     } else {
       this.handleError(response.error);
@@ -178,13 +183,15 @@ export class AddExpensesComponent {
     let tuitionExpensesFormData: any = this.tuitionExpensesForm?.value;
     let selectedIds: any = [];
     tuitionExpensesFormData?.tuitionExpenses?.forEach((element: any) => {
-      selectedIds?.push(element.id);
-    });
-    // let formData = new FormData();
-    // formData.append('expenses_ids', selectedIds);
+      selectedIds?.push({
+        id:element.id,
+        pay_status:true
+      });
+      
+    })
     let objData: any = {};
     objData = {
-      expenses_ids: selectedIds
+      expenses: selectedIds
     }
     return objData;
   }

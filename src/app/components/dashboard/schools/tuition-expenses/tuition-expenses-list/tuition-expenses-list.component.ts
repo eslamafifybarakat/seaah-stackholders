@@ -85,7 +85,7 @@ export class TuitionExpensesListComponent {
   showToggleAction: boolean = false;
   showActionFiles: boolean = false;
   // End Permissions Variables
-  schoolId: string | number | null = 1;
+  // schoolId: string | number | null = 1;
   currentLanguage: string | null;
   currentUserInformation: any | null;
 
@@ -113,7 +113,7 @@ export class TuitionExpensesListComponent {
     ).subscribe(event => { this.searchHandler(event) });
     this.currentLanguage = this.publicService.getCurrentLanguage();
     this.currentUserInformation = this.authService.getCurrentUserInformationLocally();
-    this.schoolId = this.currentUserInformation?.id;
+    // this.schoolId = this.currentUserInformation?.id;
   }
   private loadData(): void {
     this.tableHeaders = [
@@ -166,7 +166,7 @@ export class TuitionExpensesListComponent {
   // Start Tuition Expenses List Functions
   getAllTuitionExpenses(isFiltering?: boolean): void {
     this.isSearch ? this.publicService.showGlobalLoader.next(true) : this.isLoadingTuitionExpensesList = true;
-    let tuitionSubscription: Subscription = this.tuitionExpensesService?.getTuitionExpensesList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null, this.schoolId ?? null)
+    let tuitionSubscription: Subscription = this.tuitionExpensesService?.getTuitionExpensesList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null)
       .pipe(
         tap((res: any) => this.processTuitionExpensesListResponse(res)),
         catchError(err => this.handleError(err)),
