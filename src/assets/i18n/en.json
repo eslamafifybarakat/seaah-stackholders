@@ -215,6 +215,7 @@
       "interactiveBanks":"The most interactive banks",
       "bankName":"Bank Name",
       "usersNumber":"Users number",
+      "parents":"Parents",
       "parentName":"Parent Name",
       "kidsNumber":"Kids Number",
       "schoolsNumber":"Schools Number",

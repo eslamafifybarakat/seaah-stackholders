@@ -120,7 +120,7 @@
         </div>
       </div>
       <div class="col-lg-5">
-        <div class="global-card h-100 p-3 border-0">
+        <div class="global-card h-100 p-3 border-0 mt-lg-0 mt-4">
           <h2 class="fs-5-1 fw-bold">
             {{'dashboard.statistics.interactiveBanks'|translate}}
           </h2>
@@ -146,6 +146,9 @@
       </div>
     </div>
     <div class="global-card p-3 border-0 mt-4">
+      <h2 class="fs-5-1 fw-bold mb-3">
+        {{'dashboard.statistics.parents'|translate}}
+      </h2>
       <p-table [columns]="parentHeaders" [value]="parents" [scrollable]="true" scrollHeight="18rem">
         <ng-template pTemplate="header" let-columns>
           <tr>
@@ -162,6 +165,9 @@
           </tr>
         </ng-template>
       </p-table>
+    </div>
+    <div class="row mt-4">
+
     </div>
 
     <div class="row gy-4 d-none">

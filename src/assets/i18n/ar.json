@@ -283,6 +283,7 @@
       "interactiveBanks":"البنوك الاكثر تفاعلا",
       "bankName":"اسم البنك",
       "usersNumber":"عدد المستخدمين",
+      "parents":"الاباء",
       "parentName":"اسم الأب",
       "kidsNumber":"عدد الأطفال",
       "schoolsNumber":"عدد المدارس",
