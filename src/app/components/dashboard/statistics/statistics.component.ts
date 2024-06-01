@@ -18,6 +18,10 @@ export class StatisticsComponent {
   bankHeaders: any;
   parents: any = [];
   parentHeaders: any;
+  schools: any = [];
+  schoolHeaders: any;
+  universities: any = [];
+  universitiesHeaders: any;
   constructor(
     private publicService: PublicService,
     private authService: AuthService,
@@ -51,6 +55,28 @@ export class StatisticsComponent {
       { name: 'Ahmed Ibrahim', kidsNumber: 3, schoolsNumber: 2, banksNumber: 1 },
       { name: 'Ahmed Ibrahim', kidsNumber: 3, schoolsNumber: 2, banksNumber: 1 },
       { name: 'Ahmed Ibrahim', kidsNumber: 3, schoolsNumber: 2, banksNumber: 1 },
+    ];
+    this.schoolHeaders = [
+      { field: 'name', header: 'dashboard.statistics.parentName' },
+      { field: 'parentNumber', header: 'dashboard.statistics.parentNumber' },
+      { field: 'kidsNumber', header: 'dashboard.statistics.kidsNumber' }
+    ];
+    this.schools = [
+      { name: 'Kareem Ali', parentNumber: 2, kidsNumber: 4 },
+      { name: 'Kareem Ali', parentNumber: 2, kidsNumber: 4 },
+      { name: 'Kareem Ali', parentNumber: 2, kidsNumber: 4 },
+      { name: 'Kareem Ali', parentNumber: 2, kidsNumber: 4 },
+    ]
+    this.universitiesHeaders = [
+      { field: 'name', header: 'dashboard.statistics.universityName' },
+      { field: 'parentNumber', header: 'dashboard.statistics.parentNumber' },
+      { field: 'kidsNumber', header: 'dashboard.statistics.kidsNumber' }
+    ];
+    this.universities = [
+      { name: 'marwan Ali', parentNumber: 2, kidsNumber: 4 },
+      { name: 'marwan Ali', parentNumber: 2, kidsNumber: 4 },
+      { name: 'marwan Ali', parentNumber: 2, kidsNumber: 4 },
+      { name: 'marwan Ali', parentNumber: 2, kidsNumber: 4 },
     ]
   }
   getUserData(): void {
