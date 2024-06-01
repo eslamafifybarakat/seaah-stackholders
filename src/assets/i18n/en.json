@@ -212,6 +212,13 @@
     "hello": "Hello",
     "statistics": {
       "hi": "Hi",
+      "interactiveBanks":"The most interactive banks",
+      "bankName":"Bank Name",
+      "usersNumber":"Users number",
+      "parentName":"Parent Name",
+      "kidsNumber":"Kids Number",
+      "schoolsNumber":"Schools Number",
+      "banksNumber":"Banks Number",
       "welcomeBack": "Welcome Back!",
       "pageIsDesigned": "This page is designed to give some important information about the website. Let's make someting together!",
       "congratulations": "Congratulations",

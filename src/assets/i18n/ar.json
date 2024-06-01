@@ -280,6 +280,13 @@
     },
     "statistics": {
       "hi": "أهلاً",
+      "interactiveBanks":"البنوك الاكثر تفاعلا",
+      "bankName":"اسم البنك",
+      "usersNumber":"عدد المستخدمين",
+      "parentName":"اسم الأب",
+      "kidsNumber":"عدد الأطفال",
+      "schoolsNumber":"عدد المدارس",
+      "banksNumber":"عدد البنوك",
       "welcomeBack": "مرحبًا بعودتك!",
       "pageIsDesigned": "تم تصميم هذه الصفحة لإعطاء بعض المعلومات الهامة حول الموقع. دعونا نجعل بعض الوقت معا!",
       "congratulations": "تهانينا",

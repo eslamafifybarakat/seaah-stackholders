@@ -1,5 +1,50 @@
 #statistics {
   background-color: #fafafa;
+  .profile {
+    background-color: #00377e17;
+    border-radius: 10px;
+    padding: 0.7rem;
+    min-height: 2.5rem;
+  }
+  .statistic-card {
+    border-radius: 13px;
+    padding: 1rem;
+    .statistic-icon {
+      background-color: var(--bg-white-color);
+      border-radius: 7px;
+      width: 2rem;
+      min-width: 2rem;
+      height: 2rem;
+      .icon {
+        width: 1.4rem;
+      }
+    }
+    &.kids {
+      background-color: #e3ede2;
+      .icon {
+        color: #77a13b;
+      }
+    }
+    &.banks {
+      background-color: #f4eddd;
+      .icon {
+        color: #f9bc61;
+      }
+    }
+    &.schools {
+      background-color: #dbedeb;
+      .icon {
+        color: #32a071;
+      }
+    }
+    &.university {
+      background-color: #e6ebf0;
+      .icon {
+        color: #8c95a3;
+      }
+    }
+  }
+
   .star {
     width: 40px;
     height: 40px;
