@@ -2,7 +2,7 @@
   <ng-container *ngIf="step==1">
     <div>
       <div class="all-status px-2">
-        <ng-container *ngFor="let item of data?.kids?.expenses">
+        <ng-container *ngFor="let item of data?.tuitions">
           <div class="item d-flex gap-3 mt-4">
             <div
               class="position-relative status-icon rounded-circle status-{{item.paid_status}} d-flex justify-content-center align-items-center ">
@@ -121,7 +121,7 @@
         <i class="pi pi-arrow-right"></i>
       </button>
       <button *ngIf="step==2" type="submit"
-        class="btn btn-solid-main d-flex align-items-center justify-content-center gap-2">
+        class="btn btn-solid-main d-flex align-items-center justify-content-center gap-2" (click)="submit()">
         <span>
           {{'general.save'|translate}}
         </span>

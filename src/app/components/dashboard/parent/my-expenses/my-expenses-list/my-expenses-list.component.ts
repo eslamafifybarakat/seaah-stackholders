@@ -217,52 +217,52 @@ export class MyExpensesListComponent {
     if (response.status == 200) {
       this.myExpensesCount = response?.data?.total;
       this.pagesCount = Math.ceil(this.myExpensesCount / this.perPage);
-      this.MyExpenseList = response?.data?.items?.data;
+      this.MyExpenseList = response?.data?.items;
       this.MyExpenseList?.forEach((item: any) => {
-        item['tuitions'] = [
-          {
-            "id": 20,
-            "school_id": "86",
-            "level": "1",
-            "title": {
-              "en": "first",
-              "ar": "اول"
-            },
-            "details": {
-              "ar": "لتليبتل",
-              "en": "gjhjh"
-            },
-            "total": "300",
-            "deserved_date": "2024-05-26",
-            "created_at": "2024-05-26T19:33:17.000000Z",
-            "updated_at": "2024-05-26T19:33:17.000000Z",
-            "pivot": {
-              "kids_id": "64",
-              "expenses_id": "20"
-            }
-          },
-          {
-            "id": 21,
-            "school_id": "86",
-            "level": "1",
-            "title": {
-              "en": "term",
-              "ar": "رسوم الترم الاول"
-            },
-            "details": {
-              "ar": "التلت",
-              "en": "kjkjhhkj"
-            },
-            "total": "1200",
-            "deserved_date": "2024-06-29",
-            "created_at": "2024-05-26T19:37:17.000000Z",
-            "updated_at": "2024-05-26T19:37:17.000000Z",
-            "pivot": {
-              "kids_id": "64",
-              "expenses_id": "21"
-            }
-          }
-        ]
+        // item['tuitions'] = [
+        //   {
+        //     "id": 20,
+        //     "school_id": "86",
+        //     "level": "1",
+        //     "title": {
+        //       "en": "first",
+        //       "ar": "اول"
+        //     },
+        //     "details": {
+        //       "ar": "لتليبتل",
+        //       "en": "gjhjh"
+        //     },
+        //     "total": "300",
+        //     "deserved_date": "2024-05-26",
+        //     "created_at": "2024-05-26T19:33:17.000000Z",
+        //     "updated_at": "2024-05-26T19:33:17.000000Z",
+        //     "pivot": {
+        //       "kids_id": "64",
+        //       "expenses_id": "20"
+        //     }
+        //   },
+        //   {
+        //     "id": 21,
+        //     "school_id": "86",
+        //     "level": "1",
+        //     "title": {
+        //       "en": "term",
+        //       "ar": "رسوم الترم الاول"
+        //     },
+        //     "details": {
+        //       "ar": "التلت",
+        //       "en": "kjkjhhkj"
+        //     },
+        //     "total": "1200",
+        //     "deserved_date": "2024-06-29",
+        //     "created_at": "2024-05-26T19:37:17.000000Z",
+        //     "updated_at": "2024-05-26T19:37:17.000000Z",
+        //     "pivot": {
+        //       "kids_id": "64",
+        //       "expenses_id": "21"
+        //     }
+        //   }
+        // ]
         item['kidImage'] = item?.kids?.image_path;
         if (item?.person_pay_type == 'mykids') {
           item['kidName'] = item?.kids?.name;
@@ -323,7 +323,7 @@ export class MyExpensesListComponent {
     console.log("item = ", item);
     item['kids']['installmentways'] = item?.installmentways;
     item['kids']['banks'] = item?.banks;
-    item['kids'] = {
+    item['kijds'] = {
       banks: item?.banks,
       "id": 64,
       "name": "Eligendi velit aliqu",

@@ -127,6 +127,7 @@ export class EditMyExpenseRequestComponent {
   }
   onBankChange(event: any): void {
     this.installmentWays = event?.value?.installment_ways;
+    console.log(this.installmentWays);
 
     // this.installmentWays?.forEach((item: any) => {
     //   let nameObj: any = JSON.parse(item?.name || '{}');
@@ -140,6 +141,13 @@ export class EditMyExpenseRequestComponent {
   }
   // End Banks List Functions
 
+  totalExpenses(): any {
+    let total: any = 0;
+    this.KidData?.tuitions?.forEach((element: any) => {
+      total = total + +element?.total;
+    });
+    return total;
+  }
   // Start Add Expenses Functions
   submit(): void {
     if (this.expenseForm?.valid) {
@@ -152,33 +160,41 @@ export class EditMyExpenseRequestComponent {
   private extractFormData(): any {
     let kidFormData: any = this.expenseForm?.value;
     let expensesIds: any = [];
-    let expensesTotal: any = [];
-    this.KidData?.expenses?.forEach((element: any) => {
+    this.KidData?.tuitions?.forEach((element: any) => {
       expensesIds?.push(element?.id);
-      expensesTotal?.push(element?.total);
     });
-    if (expensesIds?.length <= 0) {
-      expensesIds = [0];
-    }
-    if (expensesTotal?.length <= 0) {
-      expensesTotal = [0];
-    }
-    let finalData: any = {
-      kids_id: [this.KidData?.id],
-      parent_id: this.KidData?.parent_id,
-      organization_id: [this.KidData?.school_id],
+    let formData = new FormData();
+    formData.append('kids_id', this.KidData?.id);
+    formData.append('parent_id', this.KidData?.parent_id);
+    formData.append('organization_id', this.KidData?.organizations?.id);
+    formData.append('tuition_expense_ids', this.KidData?.tuition_expense_ids);
+    formData.append('total_amount', this.KidData?.total_amount);
+    formData.append('bank_id', kidFormData?.bank?.id);
+    formData.append('installment_ways_id', kidFormData?.installmentWay?.id);
+    formData.append('_method', 'put');
+    formData.append('installment_1_status', this.KidData?.installment_1_status);
+    formData.append('installment_2_status', this.KidData?.installment_2_status);
+    formData.append('installment_3_status', this.KidData?.installment_3_status);
+    // let finalData: any = {
+    //   kids_id: this.KidData?.id.toString(),
+    //   bank_id: this.KidData?.bank_id,
+    //   parent_id: this.KidData?.parent_id,
+    //   organization_id: this.KidData?.organizations?.id.toString(),
 
-      tuition_expense_ids: expensesIds,
-      total_amount: expensesTotal,
+    //   tuition_expense_ids: this.KidData?.tuition_expense_ids,
+    //   total_amount: this.KidData?.total_amount,
+    //   installment_ways_id: kidFormData?.installmentWay?.id.toString(),
+    //   _method: 'put',
 
-      bank_id: [kidFormData?.bank?.id],
-      installment_ways_id: [kidFormData?.installmentWay?.id],
-    }
-    return finalData;
+    //   installment_1_status: this.KidData?.installment_1_status,
+    //   installment_2_status: this.KidData?.installment_2_status,
+    //   installment_3_status: this.KidData?.installment_3_status
+    // }
+    return formData;
   }
   private addEditExpensesRequests(formData: any): void {
     this.publicService?.showGlobalLoader?.next(true);
-    let subscribeAddEditExpense: Subscription = this.installmentRequestsService?.addEditInstallmentRequest(formData, null).pipe(
+    let subscribeAddEditExpense: Subscription = this.installmentRequestsService?.addEditInstallmentRequest(formData, this.KidData?.id ? this.KidData?.id : null).pipe(
       tap(res => this.handleAddEditExpensesRequests(res)),
       catchError(err => this.handleError(err))
     ).subscribe();
@@ -201,7 +217,9 @@ export class EditMyExpenseRequestComponent {
   back(): void {
     this.step = 1;
   }
-  cancel(): void { }
+  cancel(): void {
+    this.ref.close();
+  }
 
   /* --- Handle api requests messages --- */
   private handleSuccess(msg: string | null): any {
