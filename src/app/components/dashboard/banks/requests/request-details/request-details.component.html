@@ -1,0 +1,177 @@
+<div id="kid-details" class="pb-4">
+  <div class="container-fluid">
+    <div>
+      <a class="d-flex gap-3 align-items-center text-main-color fw-500"
+        [routerLink]="['/Dashboard/Bank/Requests/List']">
+        <i class="pi pi-arrow-left scaleX-rtl"></i>
+        <span>
+          {{'dashboard.kids.details.allExpenses'|translate}}
+        </span>
+      </a>
+      <h3 class="mt-2 fw-bold">
+        {{'dashboard.kids.details.expensesDetails'|translate}}
+      </h3>
+    </div>
+    <ng-container *ngIf="isLoadingKidDetails; else noLoading">
+      <skeleton [type]="'expenses-details'"></skeleton>
+
+    </ng-container>
+    <ng-template #noLoading>
+      <div class="row mt-4">
+        <div class="col-lg-6">
+          <div class="global-card p-4" *ngIf="kidDetails?.kids">
+            <h5 class="fw-bold fs-5-1">
+              {{'dashboard.kids.details.KidsInfo'|translate}}
+            </h5>
+            <div>
+              <div class="d-flex gap-3 mt-4">
+                <img [src]="kidDetails?.kids.image_path" class="rounded-circle" width="50" height="50"
+                  alt="Provider-img" onerror="src='assets/images/not-found/no-img.webp'">
+                <div class="">
+                  <h3 class="fs-8 fw-normal text-muted-color mb-1">
+                    {{'dashboard.kids.details.kid'|translate}}
+                  </h3>
+                  <div class="d-flex gap-xl-3 gap-lg-2 gap-md-3 gap-2 flex-wrap">
+                    <p class="mb-0 text-dark-color small fw-500 fs-6">
+                      {{kidDetails?.kids?.name}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex gap-3 mt-4">
+                <div class="second-icon d-flex justify-content-center align-items-center rounded-circle">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-school" width="25"
+                    height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" />
+                    <path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" />
+                  </svg>
+                </div>
+                <div class="">
+                  <h3 class="fs-8 fw-normal text-muted-color mb-1">
+                    {{'dashboard.kids.details.class'|translate}}
+                  </h3>
+                  <p class="mb-0 text-dark-color small fw-500 fs-6">
+                    {{kidDetails?.kids?.class}}
+                  </p>
+                </div>
+              </div>
+              <div class="d-flex gap-3 mt-4">
+                <div class="second-icon d-flex justify-content-center align-items-center rounded-circle">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-school" width="25"
+                    height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" />
+                    <path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" />
+                  </svg>
+                </div>
+                <div class="">
+                  <h3 class="fs-8 fw-normal text-muted-color mb-1">
+                    {{'dashboard.kids.details.level'|translate}}
+                  </h3>
+                  <p class="mb-0 text-dark-color small fw-500 fs-6">
+                    {{kidDetails?.kids?.level}}
+                  </p>
+                </div>
+              </div>
+              <div class="d-flex gap-3 mt-4">
+                <div class="second-icon d-flex justify-content-center align-items-center rounded-circle">
+                  <span class="fs-4">#</span>
+                </div>
+                <div class="">
+                  <h3 class="fs-8 fw-normal text-muted-color mb-1">
+                    {{'labels.code'|translate}}
+                  </h3>
+                  <p class="mb-0 text-dark-color small fw-500 fs-6">
+                    {{kidDetails?.kids?.code}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 mt-lg-0 mt-4">
+          <div class="global-card p-4" *ngIf="kidDetails.parents">
+            <h5 class="fw-bold fs-5-1">
+              {{'dashboard.kids.details.parentsInfo'|translate}}
+            </h5>
+            <div class="body mt-4">
+              <div class="d-flex align-items-center gap-3">
+                <div class="">
+                  <p class="mb-1 text-muted-color small text-capitalize">
+                    {{'dashboard.kids.details.parent'|translate}}
+                  </p>
+                  <h2 class="fs-6 text-dark-color fw-bold mb-0">
+                    {{kidDetails?.parents?.name||'---'}}
+                  </h2>
+                </div>
+              </div>
+              <div class="mt-4">
+                <div class="content-body d-flex align-items-center gap-5">
+                  <div class="">
+                    <p class="text-muted-color mb-1 small text-capitalize">
+                      {{'dashboard.kids.details.email'|translate}}
+                    </p>
+                    <span class="fw-500 small">{{kidDetails?.parents?.email}}</span>
+                  </div>
+                  <div class="">
+                    <p class="text-muted-color mb-1 small text-capitalize">
+                      {{'dashboard.kids.details.phone'|translate}}
+                    </p>
+                    <span class="fw-500 small">
+                      {{kidDetails?.parents?.phone}}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="global-card p-4 mt-4" *ngIf="kidDetails.organizations">
+            <h5 class="fw-bold fs-5-1">
+              {{'dashboard.kids.details.organizationInfo'|translate}}
+            </h5>
+            <div>
+              <div class="d-flex gap-3 mt-4">
+                <img *ngIf="kidDetails.organizations.image_path" [src]="kidDetails.organizations.image_path"
+                  class="rounded-circle" width="50" height="50" alt="Provider-img"
+                  onerror="src='assets/images/not-found/no-img.webp'">
+                <div class="">
+                  <h3 class="fs-8 fw-normal text-muted-color mb-1">
+                    {{'dashboard.kids.details.school'|translate}}
+                  </h3>
+                  <div class="d-flex gap-xl-3 gap-lg-2 gap-md-3 gap-2 flex-wrap">
+                    <p class="mb-0 text-dark-color small fw-500 fs-6">
+                      {{getName(kidDetails.organizations?.name.en)[currentLanguage]||'----'}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex gap-3 mt-4">
+                <div class="second-icon d-flex justify-content-center align-items-center rounded-circle">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-pin-filled" width="23"
+                    height="23" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path
+                      d="M18.364 4.636a9 9 0 0 1 .203 12.519l-.203 .21l-4.243 4.242a3 3 0 0 1 -4.097 .135l-.144 -.135l-4.244 -4.243a9 9 0 0 1 12.728 -12.728zm-6.364 3.364a3 3 0 1 0 0 6a3 3 0 0 0 0 -6z"
+                      stroke-width="0" fill="currentColor" />
+                  </svg>
+                </div>
+                <div class="">
+                  <h3 class="fs-8 fw-normal text-muted-color mb-1">
+                    {{'dashboard.kids.details.location'|translate}}
+                  </h3>
+                  <p class="mb-0 text-dark-color small fw-500 fs-6">
+                    {{kidDetails.organizations?.location[currentLanguage]||'---'}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>

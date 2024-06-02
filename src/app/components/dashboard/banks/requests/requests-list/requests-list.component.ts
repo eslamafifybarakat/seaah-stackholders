@@ -257,7 +257,7 @@ export class RequestsListComponent {
   // End Show Details Modal
 
   itemDetails(item?: any): void {
-    this.router.navigate(['Dashboard/Kids/Details/' + item.id]);
+    this.router.navigate(['Dashboard/Bank/Requests/Details/' + item.id]);
   }
   // Add Edit Kid
   addEditItem(item?: any, type?: any): void {

@@ -1,6 +1,7 @@
 
 import { errorsChildrenRoutes } from 'src/app/components/errors/errors-children-routes';
 import { RequestsListComponent } from './requests-list/requests-list.component';
+import { RequestDetailsComponent } from './request-details/request-details.component';
 
 
 export const banksRequestsChildrenRoutes: any[] = [
@@ -15,23 +16,32 @@ export const banksRequestsChildrenRoutes: any[] = [
     },
     pathMatch: 'full'
   },
-
-    // Errors
-    {
-      path: ':lang/Errors',
-      loadComponent: () =>
-        import('./../../../../components/errors/errors.component').then(
-          (c) => c.ErrorsComponent
-        ),
-      children: errorsChildrenRoutes
+  {
+    path: 'Details/:id',
+    component: RequestDetailsComponent,
+    // canActivate: [PermissionGuard],
+    data: {
+      permission: 'Pages.Client.List',
+      title: 'kidDetails'
     },
-    {
-      path: 'Errors',
-      loadComponent: () =>
-        import('./../../../../components/errors/errors.component').then(
-          (c) => c.ErrorsComponent
-        ),
-      children: errorsChildrenRoutes
-    },
-    { path: '**', redirectTo: '/en/Errors' } // Redirect all unknown paths to '/Errors'
+    pathMatch: 'full'
+  },
+  // Errors
+  {
+    path: ':lang/Errors',
+    loadComponent: () =>
+      import('./../../../../components/errors/errors.component').then(
+        (c) => c.ErrorsComponent
+      ),
+    children: errorsChildrenRoutes
+  },
+  {
+    path: 'Errors',
+    loadComponent: () =>
+      import('./../../../../components/errors/errors.component').then(
+        (c) => c.ErrorsComponent
+      ),
+    children: errorsChildrenRoutes
+  },
+  { path: '**', redirectTo: '/en/Errors' } // Redirect all unknown paths to '/Errors'
 ];
