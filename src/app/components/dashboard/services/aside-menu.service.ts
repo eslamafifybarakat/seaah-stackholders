@@ -231,21 +231,38 @@ export class AsideMenuService {
     return menuListItems;
   }
   getBankAsideMenuItem(): any {
-    let menuListItems: MenuItem[] = [{
-      id: 'requests',
-      text: 'dashboard.sideMenu.requests',
-      icon: `<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-currency-dollar" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    let menuListItems: MenuItem[] = [
+      {
+        id: 'Statistics',
+        text: this.publicService.translateTextFromJson('dashboard.sideMenu.statistics'),
+        icon: `<svg width="29" height="29" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_192_85" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="32" height="32">
+<rect width="32" height="32" fill="currentColor"/>
+</mask>
+<g mask="url(#mask0_192_85)">
+<path d="M13.6712 7.8457L14.0424 13.3656L14.2266 16.14C14.2286 16.4254 14.2733 16.7088 14.3596 16.9812C14.5821 17.51 15.1176 17.846 15.7001 17.8226L24.5764 17.2419C24.9608 17.2356 25.332 17.3794 25.6082 17.6416C25.8385 17.8602 25.9872 18.146 26.0341 18.4535L26.0498 18.6402C25.6825 23.7264 21.9469 27.9688 16.8712 29.0639C11.7954 30.159 6.59045 27.8456 4.08225 23.3798C3.35915 22.0823 2.9075 20.6563 2.75381 19.1852C2.68961 18.7498 2.66134 18.3099 2.66927 17.8699C2.66134 12.4169 6.54459 7.70253 11.9804 6.56601C12.6346 6.46413 13.276 6.81048 13.5384 7.40729C13.6062 7.5455 13.651 7.69353 13.6712 7.8457Z" fill="currentColor"/>
+<path opacity="0.4" d="M29.3327 13.0829L29.3234 13.1263L29.2965 13.1895L29.3002 13.363C29.2863 13.5928 29.1975 13.8138 29.0447 13.9925C28.8854 14.1785 28.6678 14.3052 28.4282 14.3544L28.2821 14.3744L18.041 15.038C17.7003 15.0716 17.3611 14.9617 17.1079 14.7358C16.8967 14.5474 16.7618 14.2933 16.7237 14.0194L16.0363 3.79325C16.0243 3.75868 16.0243 3.7212 16.0363 3.68661C16.0457 3.40473 16.1698 3.13829 16.3809 2.94681C16.5918 2.75533 16.8723 2.65477 17.1594 2.6676C23.2393 2.82228 28.3491 7.19422 29.3327 13.0829Z" fill="currentColor"/>
+</g></svg>`,
+        routerLink: '/Dashboard/Statistics',
+        state: false, //Opened Or Closed
+        // permission: this.checkPermissionService.hasPermission('Pages.Statistics'),
+        permission: true,
+      },
+      {
+        id: 'requests',
+        text: 'dashboard.sideMenu.requests',
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-currency-dollar" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
       <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
       <path d="M12 3a4 4 0 0 0 -4 4v3a4 4 0 0 0 4 4h8" />
       <path d="M16 17a4 4 0 0 0 4 -4v-3a4 4 0 0 0 -4 -4h-8" />
       <path d="M8 11h8" />
       <path d="M8 13h8" />
     </svg>`,
-      routerLink: '/Dashboard/Bank/Requests',
-      state: false, //Opened Or Closed
-      permission: true,
-      // permission: this.checkPermissionService.hasPermission('Pages.Messages.List'),
-    }
+        routerLink: '/Dashboard/Bank/Requests',
+        state: false, //Opened Or Closed
+        permission: true,
+        // permission: this.checkPermissionService.hasPermission('Pages.Messages.List'),
+      }
     ];
     return menuListItems;
   }
