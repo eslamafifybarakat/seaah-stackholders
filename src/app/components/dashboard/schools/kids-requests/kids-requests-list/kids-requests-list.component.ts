@@ -523,10 +523,10 @@ export class KidsListComponent {
     this.subscriptions.push(subscribeAddKid);
   }
   private handleUpdateAproveKid(response: any): void {
-    this.getAllKids();
     this.publicService?.showGlobalLoader?.next(false);
     if (response?.status == 200) {
       this.handleSuccess(response?.message);
+      this.getAllKids();
     } else {
       this.handleError(response?.message);
     }

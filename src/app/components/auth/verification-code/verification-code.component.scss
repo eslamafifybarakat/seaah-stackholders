@@ -12,6 +12,8 @@
 }
 :host::ng-deep {
   .otp-code {
+    display: flex;
+    flex-wrap: wrap;
     input {
       height: 3.9rem !important;
       width: 3.4rem !important;
