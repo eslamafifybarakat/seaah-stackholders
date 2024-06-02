@@ -74,7 +74,8 @@ export class EditMyExpenseRequestComponent {
       this.currentLanguage = window?.localStorage?.getItem(keys?.language);
     }
     this.data = this.config.data.event;
-
+    let bankNameObj: any = JSON.parse(this.data?.banks?.name?.en);
+    this.data['bankName'] = bankNameObj[this.currentLanguage];
     this.KidData = this.config?.data.event;
 
     this.currentLanguage = this.publicService.getCurrentLanguage();
@@ -130,7 +131,7 @@ export class EditMyExpenseRequestComponent {
     this.installmentWays?.forEach((item: any) => {
       let nameObj: any = item?.name;
       item['name'] = nameObj[this.currentLanguage];
-      if (this.KidData?.installmentways && (this.KidData?.installmentways?.id == item?.id)) {
+      if (this.data?.installmentways && (this.data?.installmentways?.id == item?.id)) {
         this.expenseForm.patchValue({
           installmentWay: item
         });

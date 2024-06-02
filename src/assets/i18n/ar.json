@@ -19,6 +19,7 @@
     "dashboard": "لوحة التحكم"
   },
   "general": {
+    "rsa":"ر.س",
     "tuition":"الرسوم",
     "changeBank":"تغيير البنك",
     "requestToPayExpenses":"تم اضافه طلب دفع هذه المصاريف للبنك",

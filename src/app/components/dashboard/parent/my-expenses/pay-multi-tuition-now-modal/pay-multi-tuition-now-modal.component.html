@@ -92,7 +92,7 @@
                         {{item?.title[currentLanguage] || ''}}
                       </td>
                       <td>
-                        {{item?.total || 0}}
+                        {{item?.total || 0}}<span class="px-1">{{'general.rsa'|translate}}</span>
                       </td>
                       <!--
                        <td><span class="fa fa-check"></span></td> -->
@@ -106,7 +106,8 @@
                     </td>
                     <td></td>
                     <td class="fw-bold">
-                      {{ totalExpenses() }} <!-- Dynamically calculated total expenses -->
+                      {{ totalExpenses() }} <span
+                        class="px-1">{{'general.rsa'|translate}}</span><!-- Dynamically calculated total expenses -->
                     </td>
                   </tr>
                 </tfoot>

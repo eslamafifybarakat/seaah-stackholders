@@ -19,7 +19,7 @@
           <li class="aside-nav-item position-relative w-100 my-2">
             <a class="aside-nav-link position-relative d-flex align-items-center gap-3"
               [class.active]="url.includes(item.id)" [class.justify-content-center]="!collapsed" [id]="item?.id"
-              (click)="item?.id=='logout'?logout():handelClick(item)" (click)="!collapsed?toggleCollapse():''">
+              (click)="handelClick(item)">
               <div *ngIf="!collapsed" [pTooltip]="item.text|translate" tooltipPosition="left"
                 [innerHTML]="sanitizer.bypassSecurityTrustHtml(item.icon)"></div>
               <div *ngIf="collapsed" [innerHTML]="sanitizer.bypassSecurityTrustHtml(item.icon)"></div>

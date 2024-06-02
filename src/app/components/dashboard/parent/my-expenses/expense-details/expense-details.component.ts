@@ -14,7 +14,7 @@ import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-expense-details',
   standalone: true,
-  imports: [CommonModule, RouterModule, SkeletonComponent, TranslateModule],
+  imports: [CommonModule, RouterModule, SkeletonComponent, TranslateModule, RouterModule],
   templateUrl: './expense-details.component.html',
   styleUrls: ['./expense-details.component.scss']
 })
@@ -82,14 +82,15 @@ export class ExpenseDetailsComponent {
       let bankNameObj: any = JSON.parse(this.expenseDetails.banks?.name?.en || '{}');
       this.expenseDetails.banks['bankName'] = bankNameObj[this.currentLanguage];
 
-      let bankLocationObj: any = JSON.parse(this.expenseDetails.banks?.location?.en || '{}');
-      this.expenseDetails.banks['bankLocation'] = bankLocationObj[this.currentLanguage];
+      let bankLocationObj: any = JSON.parse(this.expenseDetails.banks?.location || '{}');
+      this.expenseDetails.banks['bankLocation'] = this.expenseDetails.banks?.location[this.currentLanguage];
 
-      let organizationNameObj: any = JSON.parse(this.expenseDetails.organizations?.name?.en || '{}');
-      this.expenseDetails.organizations['name'] = organizationNameObj[this.currentLanguage];
+      // let organizationNameObj: any = JSON.parse(this.expenseDetails.organizations?.name?.en || '{}');
 
-      let organizationLocationObj: any = JSON.parse(this.expenseDetails.banks?.location?.en || '{}');
-      this.expenseDetails.organizations['location'] = organizationLocationObj[this.currentLanguage];
+      // this.expenseDetails.organizations['name'] = organizationNameObj[this.currentLanguage];
+
+      // let organizationLocationObj: any = JSON.parse(this.expenseDetails.organizations?.location?.en || '{}');
+      // this.expenseDetails.organizations['location'] = organizationLocationObj[this.currentLanguage];
 
       this.isLoadingExpenseDetails = false;
     } else {
@@ -97,7 +98,9 @@ export class ExpenseDetailsComponent {
     }
   }
   // End Get Record By Client Id
-
+  getName(name: any): any {
+    return JSON.parse(name)
+  }
   /* --- Handle api requests messages --- */
   private handleSuccess(msg: any): any {
     // this.setMessage(msg || this.publicService.translateTextFromJson('general.successRequest'), 'success');

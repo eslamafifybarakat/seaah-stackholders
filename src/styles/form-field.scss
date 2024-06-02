@@ -23,7 +23,11 @@ select.form-control.has-value {
   color: var(--placeholder-input-color);
   font-size: 0.9rem;
 }
-
+.p-dropdown-label.p-placeholder {
+  font-size: 0.9rem;
+  font-family: "Almarai", sans-serif;
+  color: var(--placeholder-input-color);
+}
 input[type]:-ms-input-placeholder,
 textarea:-ms-input-placeholder,
 select:-ms-input-placeholder,
@@ -305,6 +309,7 @@ input::-webkit-inner-spin-button {
   .p-password-input,
   .p-calendar-w-btn .p-inputtext,
   .p-dropdown {
+    font-family: "Almarai", sans-serif;
     box-shadow: none !important;
     outline: none !important;
     background-color: var(--bg-white-color);
