@@ -127,17 +127,15 @@ export class EditMyExpenseRequestComponent {
   }
   onBankChange(event: any): void {
     this.installmentWays = event?.value?.installment_ways;
-    console.log(this.installmentWays);
-
-    // this.installmentWays?.forEach((item: any) => {
-    //   let nameObj: any = JSON.parse(item?.name || '{}');
-    //   item['name'] = nameObj[this.currentLanguage];
-    //   if (this.KidData?.installmentways && (this.KidData?.installmentways?.id == item?.id)) {
-    //     this.expenseForm.patchValue({
-    //       installmentWay: item
-    //     });
-    //   }
-    // });
+    this.installmentWays?.forEach((item: any) => {
+      let nameObj: any = item?.name;
+      item['name'] = nameObj[this.currentLanguage];
+      if (this.KidData?.installmentways && (this.KidData?.installmentways?.id == item?.id)) {
+        this.expenseForm.patchValue({
+          installmentWay: item
+        });
+      }
+    });
   }
   // End Banks List Functions
 
