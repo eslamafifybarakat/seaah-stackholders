@@ -117,9 +117,9 @@ export class ChangeRequestStatusForExpenseComponent {
     }
   }
   private extractFormData(): any {
-    let formData:any=new FormData();
-    formData.append('approve_status',this.selectedStatus?.value,);
-    formData.append('_method','PUT');
+    let formData: any = new FormData();
+    formData.append('approve_status', this.selectedStatus?.value,);
+    formData.append('_method', 'PUT');
     return formData;
   }
   private changeExpensesRequests(formData: any): void {

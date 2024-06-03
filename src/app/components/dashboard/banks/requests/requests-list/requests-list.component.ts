@@ -1,3 +1,4 @@
+import { OrganizationsService } from './../../../services/organizations.service';
 import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -22,6 +23,7 @@ import { Router } from '@angular/router';
 import { DeleteKidApiResponse } from 'src/app/interfaces/dashboard/kids';
 import { EditRequestComponent } from '../edit-request/edit-request.component';
 import { ChangeRequestStatusForExpenseComponent } from '../change-request-status-for-expense/change-request-status-for-expense.component';
+import { RequestCardComponent } from '../request-card/request-card.component';
 
 @Component({
   selector: 'app-requests-list',
@@ -33,9 +35,12 @@ import { ChangeRequestStatusForExpenseComponent } from '../change-request-status
     PaginatorModule,
     CommonModule,
     FormsModule,
+
+    // Components
     DynamicTableLocalActionsComponent,
     DynamicTableV2Component,
     DynamicTableComponent,
+    RequestCardComponent,
     DynamicSvgComponent,
     SkeletonComponent
   ],
@@ -181,7 +186,7 @@ export class RequestsListComponent {
 
   // Start My Requests List Functions
   getAllMyRequestsList(isFiltering?: boolean): void {
-    isFiltering ? this.publicService.showGlobalLoader.next(true) : this.isLoadingMyRequestsList = true;
+    this.isSearch ? this.publicService.showGlobalLoader.next(true) : this.isLoadingMyRequestsList = true;
     let myRequestsSubscription: Subscription = this.installmentRequestsService?.getBankExpenseRequestsList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null, this.statusValue ?? null)
       .pipe(
         tap((res: any) => {
@@ -204,8 +209,8 @@ export class RequestsListComponent {
         item['parentId'] = item?.parents?.id ?? null;
         item['parentName'] = item?.kids?.name ?? '--';
 
-        item['schoolId'] = item?.kids?.schools?.id ?? null;
-        let schoolNameObj: any = JSON.parse(item?.kids?.schools?.name[this.currentLanguage] || '{}');
+        item['schoolId'] = item?.organizations?.id ?? null;
+        let schoolNameObj: any = JSON.parse(item?.organizations?.name[this.currentLanguage] || '{}');
         item['schoolName'] = schoolNameObj[this.currentLanguage] ?? '--';
         let kidAddressObj: any = JSON.parse(item?.kids?.address || '{}');
         item['kidAddress'] = `${kidAddressObj?.region ?? ''}, ${kidAddressObj?.city ?? ''}, ${kidAddressObj?.street ?? ''}, ${kidAddressObj?.zip ?? ''}`;
@@ -316,6 +321,7 @@ export class RequestsListComponent {
     this.page = 1;
     this.perPage = 10;
     this.searchKeyword = keyWord;
+    this.isSearch = true;
     this.isLoadingMyRequestsList = true;
     this.getAllMyRequestsList(true);
     if (keyWord?.length > 0) {
@@ -326,6 +332,7 @@ export class RequestsListComponent {
   clearSearch(search: any): void {
     search.value = null;
     this.searchKeyword = null;
+    this.isSearch = false;
     this.getAllMyRequestsList(true);
   }
   // End Search Functions
@@ -480,13 +487,13 @@ export class RequestsListComponent {
     if (type == 'Preview') {
       if (this.currentLanguage == 'ar') {
         this.statusesList = [
-          { id: 1, value: 'Preview', name: "مراجعة" },
+          // { id: 1, value: 'Preview', name: "مراجعة" },
           { id: 2, value: 'Approved', name: "موافقة" },
           { id: 3, value: 'Rejected', name: "رفض" }
         ];
       } else {
         this.statusesList = [
-          { id: 1, value: 'Preview', name: "Preview" },
+          // { id: 1, value: 'Preview', name: "Preview" },
           { id: 2, value: 'Approved', name: "Accept" },
           { id: 3, value: 'Rejected', name: "Reject" }
         ];
