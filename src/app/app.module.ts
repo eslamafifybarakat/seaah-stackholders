@@ -41,7 +41,7 @@ registerLocaleData(localeAr);
     FooterComponent,
     LoaderComponent,
 
-    // BrowserModule.withServerTransition({ appId: 'my-app', }),
+    BrowserModule.withServerTransition({ appId: 'my-app', }),
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,

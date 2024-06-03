@@ -25,10 +25,10 @@
     </div>
     <div class="mt-3">
       <p class="text-muted-color mb-0 fs-5-2">
-        {{'labels.address'|translate}}
+        {{'dashboard.tableHeader.parentName'|translate}}
       </p>
       <p class="mb-0 fs-5-2">
-        {{item?.address||'--'}}
+        {{item?.parentName||'--'}}
       </p>
     </div>
     <div class="d-flex gap-lg-4 gap-3  flex-wrap mt-3">
@@ -50,18 +50,18 @@
       </div>
       <div>
         <p class="text-muted-color mb-0 fs-5-2">
-          {{'labels.paidStatus'|translate}}
+          {{'dashboard.tableHeader.status'|translate}}
         </p>
-        <p class="mb-0 fs-5-2">
-          {{item?.paid_status||'--'}}
-        </p>
+        <span class="mb-0 fs-5-2 status-bg status-bg-{{item.status}}">
+          {{item?.status||'--'}}
+        </span>
       </div>
     </div>
   </div>
   <div>
     <hr>
     <div class="d-flex justify-content-end gap-3 flex-wrap">
-      <button class="badge-btn d-flex align-items-center justify-content-center">
+      <!-- <button class="badge-btn d-flex align-items-center justify-content-center">
         {{'general.details'|translate}}
       </button>
       <button (click)="editItem(item)" class="badge-btn d-flex align-items-center justify-content-center">
@@ -70,6 +70,28 @@
       <button (click)="deleteItem(item)"
         class="badge-btn badge-danger d-flex align-items-center justify-content-center">
         {{'general.delete'|translate}}
+      </button> -->
+      <button
+        class="btn btn-solid-main badge-btn px-3 position-relative overflow-hidden d-flex align-items-center justify-content-center"
+        (click)="acceptHandlerEmit(item)">
+        <div *ngIf="item?.isLoadingActive"
+          class="btn-overlay position-absolute d-flex justify-content-center align-items-center">
+          <i class="pi pi-spin pi-spinner text-main-color"></i>
+        </div>
+        <span class="fw-500">
+          {{'general.accept'|translate}}
+        </span>
+      </button>
+      <button
+        class="btn btn-solid-main badge-btn px-3 position-relative overflow-hidden d-flex align-items-center justify-content-center"
+        (click)="rejectHandlerEmit(item)">
+        <div *ngIf="item?.isLoadingActive"
+          class="btn-overlay position-absolute d-flex justify-content-center align-items-center">
+          <i class="pi pi-spin pi-spinner text-main-color"></i>
+        </div>
+        <span class="fw-500">
+          {{'general.reject'|translate}}
+        </span>
       </button>
     </div>
   </div>

@@ -62,10 +62,4 @@ export class KidCardComponent {
     }
   }
 
-  acceptHandlerEmit(item: any): void {
-    this.acceptHandler.emit({ item: item });
-  }
-  rejectHandlerEmit(item: any): void {
-    this.rejectHandler.emit({ item: item });
-  }
 }

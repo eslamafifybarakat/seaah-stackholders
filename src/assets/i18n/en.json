@@ -152,6 +152,9 @@
     "total": "Total",
     "isTotal": "There is a total",
     "sideMenu": {
+      "kidsTuitions":"Kids Tuitions",
+      "schoolTuitions":"School Tuitions",
+      "kidsExpenses":"Kids Expenses",
       "expenses":"Expenses",
       "myExpenses":"My Expenses",
       "Tuition": "Tuitions",

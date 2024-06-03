@@ -1,0 +1,58 @@
+<div class="global-card p-3 h-100 d-flex flex-column justify-content-between" id="client-card">
+  <div class="overflow-hidden">
+    <div class="kid-image">
+      <img class="w-100 h-100" [src]="item?.kidImage" alt="organization">
+    </div>
+    <div class="d-flex gap-lg-4 gap-3  flex-wrap mt-3">
+      <div>
+        <p class="text-muted-color mb-0 fs-5-2">
+          {{'dashboard.tableHeader.nameStudent'|translate}}
+        </p>
+        <p class="mb-0 fs-5-2">
+          {{item?.kidName||'--'}}
+        </p>
+      </div>
+      <div>
+        <p class="text-muted-color mb-0 fs-5-2">
+          {{'dashboard.tableHeader.bankName'|translate}}
+        </p>
+        <p class="mb-0 fs-5-2">
+          {{item?.bankName||'--'}}
+        </p>
+      </div>
+    </div>
+    <div class="d-flex gap-lg-4 gap-3  flex-wrap mt-3">
+      <div>
+        <p class="text-muted-color mb-0 fs-5-2">
+          {{'dashboard.tableHeader.parentName'|translate}}
+        </p>
+        <p class="mb-0 fs-5-2">
+          {{item?.parentName||'--'}}
+        </p>
+      </div>
+      <div>
+        <p class="text-muted-color mb-0 fs-5-2">
+          {{'dashboard.tableHeader.status'|translate}}
+        </p>
+        <span class="mb-0 fs-5-2 status-bg status-bg-{{item.status}}">
+          {{item?.status||'--'}}
+        </span>
+      </div>
+    </div>
+  </div>
+  <div>
+    <hr>
+    <div class="d-flex justify-content-end gap-3 flex-wrap">
+      <button class="badge-btn d-flex align-items-center justify-content-center" (click)="itemDetails(item)">
+        {{'general.details'|translate}}
+      </button>
+      <!-- <button (click)="editItem(item)" class="badge-btn d-flex align-items-center justify-content-center">
+        {{'general.edit'|translate}}
+      </button>
+      <button (click)="deleteItem(item)"
+        class="badge-btn badge-danger d-flex align-items-center justify-content-center">
+        {{'general.delete'|translate}}
+      </button> -->
+    </div>
+  </div>
+</div>

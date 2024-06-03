@@ -195,7 +195,7 @@ export class KidsListComponent {
 
   // Start Kids List Functions
   getAllKids(isFiltering?: boolean): void {
-    isFiltering ? this.publicService.showGlobalLoader.next(true) : this.isLoadingKidsList = true;
+    this.isSearch ? this.publicService.showGlobalLoader.next(true) : this.isLoadingKidsList = true;
     let kidsSubscription: Subscription = this.kidsService?.getKidsList(this.page, this.perPage, this.searchKeyword, this.sortObj, this.filtersArray ?? null, this.statusValue ?? null, this.schoolId ?? null)
       .pipe(
         tap((res: KidsListApiResponse) => {
@@ -302,6 +302,7 @@ export class KidsListComponent {
     this.perPage = 10;
     this.searchKeyword = keyWord;
     this.isLoadingKidsList = true;
+    this.isSearch = true;
     this.getAllKids(true);
     if (keyWord?.length > 0) {
       this.isLoadingSearch = true;
@@ -312,6 +313,7 @@ export class KidsListComponent {
     search.value = null;
     this.searchKeyword = null;
     this.getAllKids(true);
+    this.isSearch = false;
   }
   // End Search Functions
 

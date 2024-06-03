@@ -19,23 +19,27 @@ import { AlertsService } from 'src/app/services/generic/alerts.service';
 import { KidsService } from '../../../services/kids.service';
 import { Router } from '@angular/router';
 import { DeleteKidApiResponse } from 'src/app/interfaces/dashboard/kids';
+import { KidCardComponent } from '../kid-card/kid-card.component';
 
 
 @Component({
   selector: 'app-expenses-list',
   standalone: true,
   imports: [
-     // Modules
-     ReactiveFormsModule,
-     TranslateModule,
-     PaginatorModule,
-     CommonModule,
-     FormsModule,
-     DynamicTableLocalActionsComponent,
-     DynamicTableV2Component,
-     DynamicTableComponent,
-     DynamicSvgComponent,
-     SkeletonComponent
+    // Modules
+    ReactiveFormsModule,
+    TranslateModule,
+    PaginatorModule,
+    CommonModule,
+    FormsModule,
+
+    // Components
+    DynamicTableLocalActionsComponent,
+    DynamicTableV2Component,
+    DynamicTableComponent,
+    DynamicSvgComponent,
+    SkeletonComponent,
+    KidCardComponent,
   ],
   templateUrl: './expenses-list.component.html',
   styleUrls: ['./expenses-list.component.scss']
@@ -82,7 +86,7 @@ export class ExpensesListComponent {
   // End Permissions Variables
   currentLanguage: string;
 
-  statusValue:string| null=null;
+  statusValue: string | null = null;
 
   // Dropdown Element
   @ViewChild('dropdown') dropdown: any;
@@ -218,7 +222,7 @@ export class ExpensesListComponent {
   // End My Expenses List Functions
 
   itemDetails(item?: any): void {
-    this.router.navigate(['Dashboard/Kids/Details/' + item.id]);
+    this.router.navigate(['/Dashboard/Schools/Expenses/Details/' + item.id]);
   }
   // Add Edit Kid
   addEditItem(item?: any, type?: any): void {

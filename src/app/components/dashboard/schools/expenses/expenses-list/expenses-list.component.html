@@ -3,7 +3,7 @@
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 px-4">
       <div>
         <h4 class="mb-0 text-capitalize">
-          {{'dashboard.sideMenu.expenses'|translate}}
+          {{'dashboard.sideMenu.kidsExpenses'|translate}}
         </h4>
         <p class="mt-2 text-muted-color d-flex gap-1">
           {{'dashboard.total'|translate}}
@@ -91,17 +91,18 @@
       <!-- Table -->
       <ng-container *ngIf="dataStyleType=='list'">
         <!-- Table List -->
-        <dynamic-table-v2 [isLoading]="isLoadingExpensesList" [showHeader]="false" [showClear]="false" [showSearch]="false"
-          [isLoadingSearch]="isLoadingSearch" [showActionsButtons]="true"
+        <dynamic-table-v2 [isLoading]="isLoadingExpensesList" [showHeader]="false" [showClear]="false"
+          [showSearch]="false" [isLoadingSearch]="isLoadingSearch" [showActionsButtons]="true"
           (clearHandler)="enableSortFilter?clearTable():''" [tableHeaders]="tableHeaders" [tableData]="MyExpensesList"
           [enableDateFormate]="true" [dateFormateString]="'d MMMM y'" [showActions]="true" [showEdit]="false"
           [showDelete]="false" (deleteHandler)="deleteItem($event)" [showDetails]="true"
           (detailsHandler)="itemDetails($event)" (editHandler)="addEditItem($event,'edit')"
           (customSortHandler)="enableSortFilter?sortItems($event):''"
-          (filterHandler)="enableSortFilter?filterItemsTable($event):''" [results]="myExpensesCount" [paginatorRows]="perPage"
-          [pages]="pagesCount" (paginateHandler)="onPageChange($event)" [rowsPerPageOptions]="rowsOptions"
-          [enableConfirmDeleteDialog]="true" [keyDelete]="'name'"
-          (paginateOptionsHandler)="onPaginatorOptionsChange($event)" [isSearch]="isSearch" [arrayChildKey]="'name'" [enableAddBtn]="false" [addBtnText]="'dashboard.kids.addKid'" (addHandler)="addEditItem()"
+          (filterHandler)="enableSortFilter?filterItemsTable($event):''" [results]="myExpensesCount"
+          [paginatorRows]="perPage" [pages]="pagesCount" (paginateHandler)="onPageChange($event)"
+          [rowsPerPageOptions]="rowsOptions" [enableConfirmDeleteDialog]="true" [keyDelete]="'name'"
+          (paginateOptionsHandler)="onPaginatorOptionsChange($event)" [isSearch]="isSearch" [arrayChildKey]="'name'"
+          [enableAddBtn]="false" [addBtnText]="'dashboard.kids.addKid'" (addHandler)="addEditItem()"
           [notFoundImage]="'assets/images/not-found/no-user.svg'"></dynamic-table-v2>
       </ng-container>
       <!-- Card -->
@@ -118,7 +119,8 @@
               <ng-container *ngIf="MyExpensesList?.length>0; else noUsers">
                 <ng-container *ngFor="let card of MyExpensesList; let i=index">
                   <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-                    <!-- <kid-card [item]="card" (editItemHandler)="addEditItem($event,'edit')"></kid-card> -->
+                    <kid-card [item]="card" (editItemHandler)="addEditItem($event,'edit')"
+                      (itemDetailsHandler)="itemDetails($event)"></kid-card>
                   </div>
                 </ng-container>
               </ng-container>
@@ -161,7 +163,8 @@
             <ng-container *ngIf="MyExpensesList?.length>0; else noUsers2">
               <ng-container *ngFor="let card of MyExpensesList; let i=index">
                 <div class="col-xl-3 col-lg-4 col-sm-6 mb-4">
-                  <!-- <kid-card (editItemHandler)="addEditItem($event,'edit')" [item]="card"></kid-card> -->
+                  <kid-card (editItemHandler)="addEditItem($event,'edit')" [item]="card"
+                    (itemDetailsHandler)="itemDetails($event)"></kid-card>
                 </div>
               </ng-container>
             </ng-container>

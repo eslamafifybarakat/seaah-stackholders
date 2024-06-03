@@ -152,6 +152,9 @@
     "total": "الاجمالي",
     "isTotal": "يوجد اجمالا",
     "sideMenu": {
+      "kidsTuitions": "رسوم الأطفال",
+      "schoolTuitions": "رسوم المدرسة",
+      "kidsExpenses": "نفقات الأطفال",
       "expenses":"المصاريف",
       "myExpenses":"مصاريفي",
       "Tuition": "المصاريف",

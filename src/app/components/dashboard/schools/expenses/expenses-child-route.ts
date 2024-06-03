@@ -1,6 +1,7 @@
 
 import { errorsChildrenRoutes } from 'src/app/components/errors/errors-children-routes';
 import { ExpensesListComponent } from './expenses-list/expenses-list.component';
+import { ExpenseDetailsComponent } from './expense-details/expense-details.component';
 
 
 export const ExpensesChildrenRoutes: any[] = [
@@ -16,7 +17,16 @@ export const ExpensesChildrenRoutes: any[] = [
     },
     pathMatch: 'full'
   },
-
+  {
+    path: 'Details/:id',
+    component: ExpenseDetailsComponent,
+    // canActivate: [PermissionGuard],
+    data: {
+      permission: 'Pages.ExpenseDetails',
+      title: 'ExpenseDetails'
+    },
+    pathMatch: 'full'
+  },
   // Errors
   {
     path: ':lang/Errors',

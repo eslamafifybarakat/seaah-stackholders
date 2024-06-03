@@ -12,6 +12,8 @@ export interface TuitionExpensesListApiResponse {
 export interface TuitionExpenseListingItem {
   id: number | string;
   title: string;
+  titleName?: string;
+  detailsName?: string;
   details: string;
   level: string;
   total: number;
