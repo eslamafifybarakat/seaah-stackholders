@@ -245,8 +245,8 @@
             <ng-container *ngFor="let item of questions;let i=index">
               <div class="col-lg-6">
                 <p-accordionTab [header]="item?.title" [selected]="i==0">
-                  <p class="mb-0">
-                    {{item?.description}}
+                  <p class="mb-0" [innerHtml]="item?.description">
+                    <!-- {{item?.description}} -->
                   </p>
                 </p-accordionTab>
               </div>
