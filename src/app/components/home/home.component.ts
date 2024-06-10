@@ -1,3 +1,4 @@
+import { SkeletonComponent } from './../../shared/skeleton/skeleton/skeleton.component';
 import { ReviewsCarouselComponent } from './../../shared/carousels/reviews-carousel/reviews-carousel.component';
 import { PublicService } from 'src/app/services/generic/public.service';
 // Modules
@@ -18,6 +19,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { EventCardComponent } from './event-card/event-card.component';
 import { eventsAr, eventsEn, questionsAr, questionsEn, reviewsAr, reviewsEn } from './home';
+import { HomeService } from '../dashboard/services/home.service';
 
 @Component({
   standalone: true,
@@ -33,6 +35,7 @@ import { eventsAr, eventsEn, questionsAr, questionsEn, reviewsAr, reviewsEn } fr
     // Components
     ReviewsCarouselComponent,
     EventCardComponent,
+    SkeletonComponent
   ],
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -43,6 +46,8 @@ export class HomeComponent {
   currentLanguage: string = '';
 
   translatedText: any = {};
+  isLoadingHome: boolean = false;
+  homeData: any;
 
   jobOpportunities: any = [
     { img: 'assets/images/home/persons/1.svg' },
@@ -62,6 +67,7 @@ export class HomeComponent {
     private localizationLanguageService: LocalizationLanguageService,
     private metadataService: MetadataService,
     private publicService: PublicService,
+    private homeService: HomeService
   ) {
     localizationLanguageService.updatePathAccordingLang();
   }
@@ -70,8 +76,9 @@ export class HomeComponent {
     this.currentLanguage = this.publicService.getCurrentLanguage();
     this.questions = this.currentLanguage == 'ar' ? questionsAr : questionsEn;
     this.reviews = this.currentLanguage == 'ar' ? reviewsAr : reviewsEn;
-    this.events = this.currentLanguage == 'ar' ? eventsAr : eventsEn;
+    // this.events = this.currentLanguage == 'ar' ? eventsAr : eventsEn;
     this.loadData();
+    this.getHomeData();
   }
   private loadData(): void {
     this.updateMetaTagsForSEO();
@@ -84,6 +91,28 @@ export class HomeComponent {
     this.metadataService.updateMetaTagsForSEO(metaData);
   }
   /* --- Start Hero Section Functions --- */
+  getHomeData(): void {
+    this.isLoadingHome = true;
+    let subscribeHome: Subscription = this.homeService?.getHomeData().pipe(
+      tap(res => this.handleHomeSuccess(res)),
+      catchError(err => this.handleError(err)),
+      finalize(() => this.isLoadingHome = false)
+    ).subscribe();
+    this.subscriptions.push(subscribeHome);
+  }
+  private handleHomeSuccess(response: any): void {
+    this.isLoadingHome = false;
+    if (response?.status == 200) {
+      this.homeData = response?.data;
+      this.events = this.homeData?.blogs?.data;
+      this.events.forEach((item: any) => {
+        item['title'] = item.title[this.currentLanguage];
+        item['description'] = item.description[this.currentLanguage];
+      });
+    } else {
+      this.handleError(response?.message);
+    }
+  }
 
   /* --- End Hero Section Functions --- */
 

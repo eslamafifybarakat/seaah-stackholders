@@ -282,11 +282,16 @@
       </p>
       <div class="mt-4">
         <div class="row pt-2 gy-4">
-          <ng-container *ngFor="let item of events">
-            <div class="col-lg-4 col-md-6">
-              <app-event-card [item]="item"></app-event-card>
-            </div>
+          <ng-container *ngIf="isLoading; else noLoadingEvents">
+            <skeleton [type]="'blogs'"></skeleton>
           </ng-container>
+          <ng-template #noLoadingEvents>
+            <ng-container *ngFor="let item of events">
+              <div class="col-lg-4 col-md-6">
+                <app-event-card [item]="item"></app-event-card>
+              </div>
+            </ng-container>
+          </ng-template>
         </div>
       </div>
     </div>

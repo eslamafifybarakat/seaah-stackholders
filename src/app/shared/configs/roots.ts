@@ -16,6 +16,7 @@ export const roots = {
     checkCompanyNameAvailability: 'Supplier/checkCompanyNameAvailability',
     register: "/Application/Register",
   },
+  home: 'home',
   supplier: {
     getCountries: "/Country/GetCountrys",
     getCitiesByCountryId: "/City/GetCitysByCountryId",
@@ -69,12 +70,12 @@ export const roots = {
       addEditVehicle: '/addEditVehicle'
     },
     myExpenses: {
-      getAll:'installment_requests',
+      getAll: 'installment_requests',
       addEdit: 'installment_requests'
     },
-    rqeuests:{
-      getAll:'bank/requests',
-      changeRequestStatus:'bank'
+    rqeuests: {
+      getAll: 'bank/requests',
+      changeRequestStatus: 'bank'
     }
   }
 }
