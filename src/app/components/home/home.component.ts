@@ -74,7 +74,7 @@ export class HomeComponent {
 
   ngOnInit(): void {
     this.currentLanguage = this.publicService.getCurrentLanguage();
-    this.questions = this.currentLanguage == 'ar' ? questionsAr : questionsEn;
+    // this.questions = this.currentLanguage == 'ar' ? questionsAr : questionsEn;
     this.reviews = this.currentLanguage == 'ar' ? reviewsAr : reviewsEn;
     // this.events = this.currentLanguage == 'ar' ? eventsAr : eventsEn;
     this.loadData();
@@ -105,10 +105,15 @@ export class HomeComponent {
     if (response?.status == 200) {
       this.homeData = response?.data;
       this.events = this.homeData?.blogs?.data;
-      this.events.forEach((item: any) => {
+      this.events?.length > 0 ? this.events.forEach((item: any) => {
         item['title'] = item.title[this.currentLanguage];
         item['description'] = item.description[this.currentLanguage];
-      });
+      }) : '';
+      this.questions = this.homeData?.faqs?.data;
+      this.questions.length > 0 ? this.questions.forEach((item: any) => {
+        item['title'] = item.title[this.currentLanguage];
+        item['description'] = item.description[this.currentLanguage];
+      }) : '';
     } else {
       this.handleError(response?.message);
     }

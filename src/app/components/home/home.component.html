@@ -282,7 +282,7 @@
       </p>
       <div class="mt-4">
         <div class="row pt-2 gy-4">
-          <ng-container *ngIf="isLoading; else noLoadingEvents">
+          <ng-container *ngIf="isLoadingHome; else noLoadingEvents">
             <skeleton [type]="'blogs'"></skeleton>
           </ng-container>
           <ng-template #noLoadingEvents>
