@@ -46,3 +46,12 @@
     </ng-container>
   </div>
 </ng-container>
+<ng-container *ngIf="type=='faqs'">
+  <div class="row pt-2 gy-4">
+    <ng-container *ngFor="let item of [4,3,2]">
+      <div class="col-md-6">
+        <p-skeleton width="100%" height="4rem" borderRadius="13px"></p-skeleton>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
